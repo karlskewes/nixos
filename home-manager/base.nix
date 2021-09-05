@@ -109,7 +109,6 @@
   programs.git = {
     enable = true;
     userName = "Karl Skewes";
-    userEmail = "karl.skewes@gmail.com";
     
     aliases = {
       ca = "commit --amend";
