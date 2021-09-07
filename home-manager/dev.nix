@@ -3,19 +3,21 @@
 # laptop not server
 
 {
-  imports = [
-    ./base.nix
-  ];
+  imports = [ ./base.nix ];
 
   home.packages = with pkgs; [
     # dev
+    bats
     go-jsonnet
     jsonnet-bundler
     openssl
     shellcheck
     shfmt
-    terraform  # terraform_0_12
-    
+    terraform # terraform_0_12
+
+    # clouds
+    awscli2
+
     # kubernetes
     kind
     kubectl
@@ -23,8 +25,6 @@
     stern
   ];
 
-  programs.go = {
-    enable = true;
-  };
+  programs.go = { enable = true; };
 
 }

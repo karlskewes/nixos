@@ -3,11 +3,9 @@
 # laptop not server
 
 {
-  imports = [
-    ./dev.nix
-  ];
+  imports = [ ./dev.nix ./xwindows.nix ];
 
-  programs.git = {
-    userEmail = "karl.skewes@gmail.com";
-  };
+  home.packages = with pkgs; [ slack ];
+
+  programs.git = { userEmail = "karl.skewes@gmail.com"; };
 }

@@ -24,9 +24,7 @@
       '';
     };
 
-    windowManager = {
-      i3.enable = true;
-    };
+    windowManager = { i3.enable = true; };
   };
 
   # Enable sound.
@@ -37,4 +35,4 @@
     # package = pkgs.pulseaudioFull;
     support32Bit = true;
   };
-} 
+}

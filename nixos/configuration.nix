@@ -12,7 +12,7 @@ let
   };
 
 in {
-  imports = [ 
+  imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     (import "${home-manager}/nixos")
@@ -25,11 +25,11 @@ in {
   users.users.karl = {
     home = "/home/karl";
     isNormalUser = true;
-    extraGroups = [ "audio" "docker" "wheel"];
+    extraGroups = [ "audio" "docker" "wheel" ];
     # nix-shell -p mkpasswd
     # mkpasswd -m sha-512
     # set password that will need resetting on first login
-    initialHashedPassword = ""
+    initialHashedPassword = "";
   };
 
   # Define your hostname.
@@ -37,7 +37,7 @@ in {
 
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
-  
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -47,7 +47,7 @@ in {
     gnumake
     home-manager
     rxvt_unicode
-    xclip 
+    xclip
     vim
     wget
   ];

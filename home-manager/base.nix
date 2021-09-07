@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 
-{
+let nixos-unstable = import <nixos-unstable> { };
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -11,11 +12,8 @@
 
   # manage XDG directories
   xdg.enable = true;
+  xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
 
-  imports = [
-    ./xwindows.nix
-  ];
-  
   #---------------------------------------------------------------------
   # Packages
   #---------------------------------------------------------------------
@@ -34,12 +32,19 @@
     psmisc
     rename
     ripgrep
-    rpl 
+    rpl
     tree
     unzip
     zip
+
+    # neovim
+    luaformatter
+    gcc # treesitter
+    nixos-unstable.neovim
+    nodejs
+    nodePackages.npm
   ];
-  
+
   #---------------------------------------------------------------------
   # Env vars and dotfiles
   #---------------------------------------------------------------------
@@ -53,8 +58,6 @@
     MANPAGER = "less --ignore-case --hilite-unread";
   };
 
-  # TODO # xdg.configFile."i3/config".text = builtins.readFile ./i3;
-
   #---------------------------------------------------------------------
   # Programs
   #---------------------------------------------------------------------
@@ -66,11 +69,31 @@
       env.TERM = "xterm-256color";
 
       key_bindings = [
-        { key = "V"; mods = "Command"; action = "Paste"; }
-        { key = "C"; mods = "Command"; action = "Copy"; }
-        { key = "Key0"; mods = "Command"; action = "ResetFontSize"; }
-        { key = "Equals"; mods = "Command"; action = "IncreaseFontSize"; }
-        { key = "Minus"; mods = "Command"; action = "DecreaseFontSize"; }
+        {
+          key = "V";
+          mods = "Command";
+          action = "Paste";
+        }
+        {
+          key = "C";
+          mods = "Command";
+          action = "Copy";
+        }
+        {
+          key = "Key0";
+          mods = "Command";
+          action = "ResetFontSize";
+        }
+        {
+          key = "Equals";
+          mods = "Command";
+          action = "IncreaseFontSize";
+        }
+        {
+          key = "Minus";
+          mods = "Command";
+          action = "DecreaseFontSize";
+        }
       ];
     };
   };
@@ -82,7 +105,7 @@
     initExtra = ''
       # source our session variables otherwise not used - unsure why
       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-       
+
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
 
@@ -93,9 +116,16 @@
       shopt -s cdspell
     '';
 
+    sessionVariables = { CDPATH = ".:~/src/github.com"; };
+
     shellAliases = {
-      pbcopy= "xclip -selection clipboard";
-      pbpaste= "xclip -selection clipboard -o";
+      pbcopy = "xclip -selection clipboard";
+      pbpaste = "xclip -selection clipboard -o";
+
+      v = "nvim";
+      vi = "nvim";
+      vim = "nvim";
+      vimdiff = "nvim -d";
 
       # Easier navigation: .., ..., ...., ....., ~ and -
       ".." = "cd ..";
@@ -103,13 +133,13 @@
       "...." = "cd ../../..";
       "....." = "cd ../../../..";
       "......" = "cd ../../../../..";
-     };
+    };
   };
 
   programs.git = {
     enable = true;
     userName = "Karl Skewes";
-    
+
     aliases = {
       ca = "commit --amend";
       caa = "commit --amend -a";
@@ -123,20 +153,19 @@
       rbms = "rebase master";
       rbupm = "rebase upstream/main";
       rbupms = "rebase upstream/master";
-      prettylog = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+      prettylog =
+        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
     };
-    
+
     extraConfig = {
       # branch.autosetuprebase = "always";
-      push.default = "current"; 
+      push.default = "current";
     };
   };
-  
+
   programs.gpg = {
     enable = true;
-    settings = {
-      pinentry-mode = "loopback";
-    };
+    settings = { pinentry-mode = "loopback"; };
   };
 
   programs.tmux = {
@@ -145,10 +174,10 @@
     clock24 = true;
     escapeTime = 0;
     historyLimit = 30000;
-    keyMode  = "vi";
+    keyMode = "vi";
     shortcut = "z";
     terminal = "xterm-256color";
-    
+
     extraConfig = ''
       set -ga terminal-overrides ",*256col*:Tc"
       # Highlight current window with black background.
@@ -163,7 +192,7 @@
       bind % split-window -h -c "#{pane_current_path}"
       bind '"' split-window -v -c "#{pane_current_path}"
     '';
-    
+
     plugins = with pkgs; [
       {
         plugin = tmuxPlugins.resurrect;
@@ -176,23 +205,23 @@
           set -g @continuum-save-interval '60' # minutes
         '';
       }
-      {
-        plugin = tmuxPlugins.yank;
-      }
+      { plugin = tmuxPlugins.yank; }
     ];
   };
 
+  programs.zoxide = { enable = true; };
+
   services.gpg-agent = {
-      enable = true;
-      pinentryFlavor = "tty";
+    enable = true;
+    pinentryFlavor = "tty";
 
-      # cache the keys forever so we don't get asked for a password
-      defaultCacheTtl = 31536000;
-      maxCacheTtl = 31536000;
+    # cache the keys forever so we don't get asked for a password
+    defaultCacheTtl = 31536000;
+    maxCacheTtl = 31536000;
 
-      extraConfig = ''
-        allow-loopback-pinentry
-      '';
+    extraConfig = ''
+      allow-loopback-pinentry
+    '';
   };
 
   # This value determines the Home Manager release that your
