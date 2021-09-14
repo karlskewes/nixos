@@ -9,6 +9,7 @@
     google-chrome
     libnotify # required by dunst
     pavucontrol
+    qalculate-gtk
     xclip
 
     # move to programs.rofi.plugins after 21.05

@@ -6,12 +6,20 @@
 #
 
 # customizations - pull default config changes to var for discoverability
-set $term alacritty
+set $term kitty
 set $menu rofi -modi drun -show drun -show-icons -drun-match-fields name
 
-bindsym Mod1+Tab workspace prev
-bindsym Mod1+Shift+Tab workspace next
+# TODO better alt tab to last used workspace(window)
+# bindsym Mod1+Shift+Tab rofi -show window -selected-row 1
+# ALT+Tab to cycle through workspaces
+bindsym Mod1+Tab workspace next_on_output
+# ALT+Shift+Tab to switch to toggle between previous and current workspace
+bindsym Mod1+Shift+Tab workspace back_and_forth
 bindsym Print exec flameshot gui
+
+# Constrain floating windows so they are usable
+floating_minimum_size 102 x 76
+floating_maximum_size 800 x 600
 
 # i3 config file (v4)
 #

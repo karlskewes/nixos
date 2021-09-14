@@ -262,7 +262,8 @@ M.config = {
 
     -- Default colorscheme
     -- @default = doom-one
-    colorscheme = "doom-one",
+    -- colorscheme = "doom-solarized-dark",
+    colorscheme = "doom-dark+",
 
     -- Background color
     -- @default = dark
@@ -399,6 +400,7 @@ M.config = {
        'set smartcase',                -- " ... but not when search pattern contains upper case characters
        'set autowrite',                   -- " Automatically save before :next, :make etc.
        'set autoread',                    -- " Automatically reread changed files without asking me anything
+       'colorscheme doom-dark+'
     },
 
     -- Set custom functions

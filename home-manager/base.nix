@@ -4,6 +4,7 @@ let nixos-unstable = import <nixos-unstable> { };
 in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  news.display = "silent";
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -25,6 +26,7 @@ in {
     fzf
     htop
     jq
+    libqalculate  # qalc - CLI calculator
     lsof
     usbutils
     nixfmt
@@ -62,42 +64,6 @@ in {
   # Programs
   #---------------------------------------------------------------------
 
-  programs.alacritty = {
-    enable = true;
-
-    settings = {
-      env.TERM = "xterm-256color";
-
-      key_bindings = [
-        {
-          key = "V";
-          mods = "Command";
-          action = "Paste";
-        }
-        {
-          key = "C";
-          mods = "Command";
-          action = "Copy";
-        }
-        {
-          key = "Key0";
-          mods = "Command";
-          action = "ResetFontSize";
-        }
-        {
-          key = "Equals";
-          mods = "Command";
-          action = "IncreaseFontSize";
-        }
-        {
-          key = "Minus";
-          mods = "Command";
-          action = "DecreaseFontSize";
-        }
-      ];
-    };
-  };
-
   programs.bash = {
     enable = true;
 
@@ -114,18 +80,31 @@ in {
 
       # Autocorrect typos in path names when using `cd`
       shopt -s cdspell
+
+      PATH=$PATH:~/.local/bin
+
+      ${builtins.readFile ../dotfiles/functions.sh}
+      kubeconfigs
+
+      ${builtins.readFile ../dotfiles/bash_prompt.sh}
     '';
 
     sessionVariables = { CDPATH = ".:~/src/github.com"; };
 
     shellAliases = {
+
+      # Always enable colored `grep` output
+      grep = "grep --color=auto ";
+
+      # Copy Paste between apps and in/out vm's
       pbcopy = "xclip -selection clipboard";
       pbpaste = "xclip -selection clipboard -o";
 
-      v = "nvim";
-      vi = "nvim";
-      vim = "nvim";
-      vimdiff = "nvim -d";
+      # Remove if switch away from doom-nvim to home-manager managed neovim
+      v = "lvim";
+      vi = "lvim";
+      vim = "lvim";
+      vimdiff = "lvim -d";
 
       # Easier navigation: .., ..., ...., ....., ~ and -
       ".." = "cd ..";
@@ -133,6 +112,12 @@ in {
       "...." = "cd ../../..";
       "....." = "cd ../../../..";
       "......" = "cd ../../../../..";
+
+      # IP addresses
+      pubip = "dig +short myip.opendns.com @resolver1.opendns.com";
+      localip = "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
+      ips = "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
+
     };
   };
 
@@ -168,6 +153,10 @@ in {
     settings = { pinentry-mode = "loopback"; };
   };
 
+  programs.kitty = {
+    enable = true;
+  };
+
   programs.tmux = {
     enable = true;
     baseIndex = 1;
@@ -191,24 +180,19 @@ in {
       bind c new-window      -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"
       bind '"' split-window -v -c "#{pane_current_path}"
+      # Automatically restore last tmux session
+      set -g @continuum-restore 'on'
+      set -g @continuum-save-interval '60' # minutes
     '';
 
     plugins = with pkgs; [
-      {
-        plugin = tmuxPlugins.resurrect;
-        # extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-      }
-      {
-        plugin = tmuxPlugins.continuum;
-        extraConfig = ''
-          set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '60' # minutes
-        '';
-      }
+      { plugin = tmuxPlugins.resurrect; }
+      { plugin = tmuxPlugins.continuum; }
       { plugin = tmuxPlugins.yank; }
     ];
   };
 
+  # z - jump rust replacement
   programs.zoxide = { enable = true; };
 
   services.gpg-agent = {

@@ -22,6 +22,7 @@
     kind
     kubectl
     kubectx
+    kubeval
     stern
   ];
 

@@ -16,7 +16,7 @@ M.source = debug.getinfo(1, "S").source:sub(2)
 M.modules = {
   ui = {
     "dashboard",          -- Start screen
-    -- "doom-themes",     -- Additional doom emacs' colorschemes
+    "doom-themes",     -- Additional doom emacs' colorschemes
     -- "indentlines",     -- Show indent lines
     -- "show_registers",  -- popup that shows register contents
     "statusline",         -- Statusline
