@@ -21,6 +21,9 @@ in {
     ./vmware.nix
   ];
 
+  # only allow users with sudo access ability to access nix daemon
+  nix.allowedUsers = [ "@wheel" ];
+
   # system user
   users.users.karl = {
     home = "/home/karl";
@@ -75,6 +78,7 @@ in {
   networking.useDHCP = false;
   networking.interfaces.ens33.useDHCP = true;
 
+  networking.firewall.enable = true;
   # networking.firewall.allowedTCPPorts (https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts) = [ 22 ];
   # networking.firewall.allowedTCPPortRanges (https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPortRanges) = [
   #  { from = 4000; to = 4007; }

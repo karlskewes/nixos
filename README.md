@@ -1,7 +1,9 @@
 # NixOS
 
-TODO: Read docs again and figure out better pattern with imports/overlays/overrides/flakes?
-for composition - per machine config.
+## TODO
+
+1. Per machine config.
+1. LunarVim install derivation?
 
 ## Bootstrap VM
 

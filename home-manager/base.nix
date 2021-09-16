@@ -14,6 +14,7 @@ in {
   # manage XDG directories
   xdg.enable = true;
   xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
+  xdg.configFile."lvim/config".text = builtins.readFile ../dotfiles/config.lua;
 
   #---------------------------------------------------------------------
   # Packages
@@ -56,8 +57,8 @@ in {
     LC_CTYPE = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
     EDITOR = "vim";
-    PAGER = "less --ignore-case --hilite-unread";
-    MANPAGER = "less --ignore-case --hilite-unread";
+    PAGER = "less --ignore-case --hilite-unread --silent";
+    MANPAGER = "less --ignore-case --hilite-unread --silent";
   };
 
   #---------------------------------------------------------------------
@@ -84,6 +85,7 @@ in {
       PATH=$PATH:~/.local/bin
 
       ${builtins.readFile ../dotfiles/functions.sh}
+      KUBECONFIG=~/.kube/config
       kubeconfigs
 
       ${builtins.readFile ../dotfiles/bash_prompt.sh}
@@ -197,6 +199,7 @@ in {
 
   services.gpg-agent = {
     enable = true;
+    enableSshSupport = true;
     pinentryFlavor = "tty";
 
     # cache the keys forever so we don't get asked for a password
