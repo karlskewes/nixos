@@ -157,6 +157,9 @@ in {
 
   programs.kitty = {
     enable = true;
+    settings = {
+      enable_audio_bell = false;
+    };
   };
 
   programs.tmux = {

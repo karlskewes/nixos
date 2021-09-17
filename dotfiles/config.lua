@@ -12,7 +12,7 @@ an executable
 lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
-vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespace showing - can't += here 
+vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespace showing - can't += here
 vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no-changes
 vim.opt.relativenumber = false -- set relative numbered lines
 vim.opt.clipboard = "" -- don't default to system clipboard (<C-y|p>)
@@ -25,22 +25,7 @@ lvim.keys.insert_mode["<C-p>"] = '<ESC>p' -- paste from unamed register - <C-V> 
 lvim.keys.normal_mode["<C-y>"] = '"+y' -- 10<C-y><CR> - copy 10 lines to system clipboard
 lvim.keys.normal_mode["<C-p>"] = '"+p' -- paste from system clipboard
 lvim.keys.visual_mode["<C-y>"] = '"+y' -- copy block to system clipboard
-lvim.keys.visual_mode["<C-p>"] = '"+p' -- paste block from system clipboard 
-
--- TODO: 
--- " =================== vim-shfmt ========================
--- TODO: check also runs for .sh files
--- autocmd BufWritePost *.bats !shfmt -w -ln bats <afile>
--- let g:shfmt_fmt_on_save = 1
--- 
--- " =================== vim-terraform ========================
--- 
--- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
--- let g:terraform_fold_sections=0
--- 
--- " Run terraform fmt on save.
--- let g:terraform_fmt_on_save=1
-
+lvim.keys.visual_mode["<C-p>"] = '"+p' -- paste block from system clipboard
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -131,11 +116,28 @@ lvim.builtin.treesitter.highlight.enabled = true
 lvim.plugins = {
 	{ 'aliou/bats.vim' },
 	{ 'google/vim-jsonnet' },
-	{ 'hashivim/vim-terraform' },
-	{ 'z0mbix/vim-shfmt' },
+	{
+    'hashivim/vim-terraform',
+    config = function()
+      vim.cmd("let g:terraform_fmt_on_save=1")
+      -- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
+      -- vim.cmd("let g:terraform_fold_sections=0")
+    end,
+  },
+	{
+    'z0mbix/vim-shfmt',
+    config = function()
+      vim.cmd("let g:shfmt_fmt_on_save = 1")
+    end,
+  },
+
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- lvim.autocommands.custom_groups = {
---   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
--- }
+lvim.autocommands.custom_groups = {
+  -- Trim all trailing whitespace
+  -- @ separater, double back slash for lua escape
+  { 'BufWritePre', '*', ':%s@\\s\\+$@@e' },
+  -- TODO: PR this change to vim-shfmt
+  { 'BufWritePre', '*.bats', 'Shfmt -ln bats' },
+}
