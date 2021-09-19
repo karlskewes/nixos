@@ -4,22 +4,17 @@
 
 { config, pkgs, ... }:
 
-let
-  home-manager = builtins.fetchGit {
-    url = "https://github.com/nix-community/home-manager.git";
-    rev = "9f2b766d0f46fcc87881531e6a86eba514b8260d";
-    ref = "release-21.05";
-  };
-
-in {
+{
   imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    (import "${home-manager}/nixos")
-    ./xserver.nix
-    # TODO only add vmnware import if VM
-    ./vmware.nix
+    # defined per machine
+    ../secrets/secrets.nix
   ];
+
+  # Enable support for nix flakes - remove when `nix --version` >= 2.4
+  nix.package = pkgs.nixFlakes;
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
 
   # only allow users with sudo access ability to access nix daemon
   nix.allowedUsers = [ "@wheel" ];
@@ -30,13 +25,9 @@ in {
     isNormalUser = true;
     extraGroups = [ "audio" "docker" "wheel" ];
     # nix-shell -p mkpasswd
-    # mkpasswd -m sha-512
-    # set password that will need resetting on first login
-    initialHashedPassword = "";
+    # vim -> :read !mkpasswd -m sha-512
+    # hashedPassword = "";
   };
-
-  # Define your hostname.
-  networking.hostName = "";
 
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
@@ -46,13 +37,12 @@ in {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs; [ 
     gnumake
-    home-manager
-    rxvt_unicode
-    xclip
-    vim
-    wget
+    home-manager 
+    xclip 
+    vim 
+    wget 
   ];
 
   # Users password/etc are set from source
@@ -76,7 +66,9 @@ in {
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.ens33.useDHCP = true;
+  # set network interface in ${machine}.nix
+  # :read !ip link | grep ': en'  
+  # networking.interfaces.ens33.useDHCP = true;
 
   networking.firewall.enable = true;
   # networking.firewall.allowedTCPPorts (https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts) = [ 22 ];

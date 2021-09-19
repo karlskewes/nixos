@@ -13,7 +13,6 @@ in {
 
   # manage XDG directories
   xdg.enable = true;
-  xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
   xdg.configFile."lvim/config".text = builtins.readFile ../dotfiles/config.lua;
 
   #---------------------------------------------------------------------
@@ -27,7 +26,7 @@ in {
     fzf
     htop
     jq
-    libqalculate  # qalc - CLI calculator
+    libqalculate # qalc - CLI calculator
     lsof
     usbutils
     nixfmt
@@ -38,6 +37,7 @@ in {
     rpl
     tree
     unzip
+    xclip
     zip
 
     # neovim
@@ -117,8 +117,10 @@ in {
 
       # IP addresses
       pubip = "dig +short myip.opendns.com @resolver1.opendns.com";
-      localip = "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
-      ips = "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
+      localip =
+        "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
+      ips =
+        "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
 
     };
   };
@@ -140,6 +142,7 @@ in {
       rbms = "rebase master";
       rbupm = "rebase upstream/main";
       rbupms = "rebase upstream/master";
+      st = "status";
       prettylog =
         "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
     };
@@ -153,13 +156,6 @@ in {
   programs.gpg = {
     enable = true;
     settings = { pinentry-mode = "loopback"; };
-  };
-
-  programs.kitty = {
-    enable = true;
-    settings = {
-      enable_audio_bell = false;
-    };
   };
 
   programs.tmux = {

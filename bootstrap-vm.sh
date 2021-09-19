@@ -37,7 +37,10 @@ sudo cp ./nixos/* /mnt/etc/nixos
 cd /mnt/etc/nixos
 sed -i 's@swapDevices.*$@swapDevices = [ { device = "/swapfile"; size = 8000; } ];@' hardware-configuration.nix
 
-# TODO nix-channel or tarball home-manager install?
-echo "start nix-shell with git for home manager"
+echo "start nix-shell with git to fetch flake configuration"
 nix-shell -p git
-sudo nixos-install
+git clone https://github.com/kskewes/nixos.git
+cd nixos
+# TODO - validate from here, untested after conversion to flake
+make build
+# sudo nixos-install

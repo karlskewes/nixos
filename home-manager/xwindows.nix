@@ -2,6 +2,8 @@
 { config, pkgs, ... }:
 
 {
+  xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
+
   # required for google-chrome
   nixpkgs.config = { allowUnfree = true; };
 
@@ -10,7 +12,6 @@
     libnotify # required by dunst
     pavucontrol
     qalculate-gtk
-    xclip
 
     # move to programs.rofi.plugins after 21.05
     rofi-calc
@@ -28,6 +29,11 @@
     };
   };
 
+  programs.kitty = {
+    enable = true;
+    settings = { enable_audio_bell = false; };
+  };
+
   programs.rofi = {
     enable = true;
     font = "Monospace 14";
@@ -42,15 +48,4 @@
   services.dunst = { enable = true; };
 
   services.flameshot = { enable = true; };
-
-  # Make terminal not tiny on HiDPI screens
-  xresources.properties = { "Xft.dpi" = "220"; };
-  # Make cursor not tiny on HiDPI screens
-  xsession = {
-    pointerCursor = {
-      name = "Vanilla-DMZ";
-      package = pkgs.vanilla-dmz;
-      size = 128;
-    };
-  };
 }
