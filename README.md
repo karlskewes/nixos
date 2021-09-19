@@ -28,7 +28,7 @@
     1. USB & Bluetooth → USB 3.1 - required for Logitech Camera & acceptable cpu in Google Meet
     1. Isolation → Both ticked
 1. vmware mouse fix side buttons and scoll skips - https://communities.vmware.com/t5/VMware-Fusion-Discussions/Mouse-wheel-scrolling-skips-clicks/td-p/463246
-   ```
+   ```sh
    cat <<EOF >> ~/Virtual\ Machines.localized/karl-mac-nixos.vmwarevm/karl-mac-nixos.vmx
    mouse.vusb.enable = "TRUE"
    mouse.vusb.useBasicMouse = "FALSE"
@@ -44,16 +44,9 @@
 
 ## Update
 
-```
+```sh
 git clone git@github.com:kskewes/nixos.git
-```
 
-System:
-```
-make switch
-```
-
-Home Manager
-```
-make home
+# update packages from nix and then system & home-manager
+make update
 ```

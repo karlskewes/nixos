@@ -34,7 +34,9 @@ switch: build ## Build latest and switch
 
 .PHONY: update
 update: ## Update packages
-	echo "Not implemented yet"
+	nix flake update
+	$(MAKE) switch
+	$(MAKE) home
 
 .PHONY: help
 help:
