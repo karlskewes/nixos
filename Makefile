@@ -30,7 +30,7 @@ home: ## Run home-manager switch
 
 .PHONY: switch
 switch: build ## Build latest and switch
-	nixos-rebuild switch --flake .#
+	sudo nixos-rebuild switch --flake .#
 
 .PHONY: update
 update: ## Update packages

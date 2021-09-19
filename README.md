@@ -42,24 +42,18 @@
     1. `cd nixos && ./bootstrap-vm.sh`
     1. `sudo reboot`
 
-## Configure home-manager (user)
+## Update
 
-1. Login using graphical interface
-1. Open terminal
-1. `git clone git@github.com:kskewes/nixos.git`
-1. `cd nixos && ./configure-home-manager.sh`
-
-## updates
+```
+git clone git@github.com:kskewes/nixos.git
+```
 
 System:
 ```
-nixos-rebuild switch -I nixos-config=./nixos/configuration.nix
+make switch
 ```
 
-### user
-
+Home Manager
 ```
-# or other file
-vim base.nix
-home-manager switch -f ./home-manager/base.nix
+make home
 ```
