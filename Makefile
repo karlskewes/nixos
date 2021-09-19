@@ -24,6 +24,10 @@ build: ## Build latest NixOS configuration
 	# rebuild configuration per --flake .#${hostname}
 	nixos-rebuild build --flake .#
 
+.PHONY: home
+home: ## Run home-manager switch
+	 home-manager -f "home-manager/$$(hostname).nix" switch
+
 .PHONY: switch
 switch: build ## Build latest and switch
 	nixos-rebuild switch --flake .#

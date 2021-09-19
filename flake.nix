@@ -23,6 +23,19 @@
       lib = nixpkgs.lib;
 
     in {
+      # TODO:
+      # homeManagerConfigurations = {
+      # karl = home-manager.lib.homeManagerConfiguration {
+      # inherit system pkgs;
+      # username = "karl";
+      # homeDirectory = "/home/karl";
+      # configuration = {
+      # imports = [
+
+      # ];
+      # };
+      # };
+      # };
 
       nixosConfigurations = {
         karl-desktop = lib.nixosSystem {

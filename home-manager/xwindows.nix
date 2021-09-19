@@ -8,6 +8,7 @@
   nixpkgs.config = { allowUnfree = true; };
 
   home.packages = with pkgs; [
+    i3lock-fancy
     google-chrome
     libnotify # required by dunst
     pavucontrol
@@ -19,15 +20,7 @@
     rofi-power-menu
   ];
 
-  programs.i3status = {
-    enable = true;
-
-    modules = {
-      # VM so these aren't available
-      "wireless _first_".enable = false;
-      "battery all".enable = false;
-    };
-  };
+  programs.i3status.enable = true;
 
   programs.kitty = {
     enable = true;
@@ -48,4 +41,13 @@
   services.dunst = { enable = true; };
 
   services.flameshot = { enable = true; };
+
+  services.screen-locker = {
+    enable = true;
+    inactiveInterval = 10; # minutes
+    lockCmd =
+      "\${pkgs.i3lock-fancy}/bin/i3lock-fancy & sleep 5 && xset dpms force off";
+    # disable xautolock when mouse in bottom right corner
+    xautolockExtraOptions = [ "-corners" "000-" ];
+  };
 }
