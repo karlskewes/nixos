@@ -6,21 +6,25 @@
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules =
+    [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/4e80e22c-a52f-4c05-b61a-762894494032";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/4e80e22c-a52f-4c05-b61a-762894494032";
+    fsType = "ext4";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A403-09E9";
-      fsType = "vfat";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/A403-09E9";
+    fsType = "vfat";
+  };
 
-  swapDevices = [ { device = "/swapfile"; size = 8000; } ];
+  swapDevices = [{
+    device = "/swapfile";
+    size = 8000;
+  }];
 
 }

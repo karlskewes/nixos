@@ -3,8 +3,6 @@
 # laptop not server
 
 {
-  imports = [ ./base.nix ];
-
   home.packages = with pkgs; [
     # dev
     bats

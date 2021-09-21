@@ -20,17 +20,17 @@ setup: ## Setup
 	git submodule add ~/src/secrets/ secrets
 
 .PHONY: build
-build: ## Build latest NixOS configuration
+build: ## Build latest NixOS & home-manager configuration
 	# rebuild configuration per --flake .#${hostname}
 	nixos-rebuild build --flake .#
-
-.PHONY: home
-home: ## Run home-manager switch
-	 home-manager -f "home-manager/$$(hostname).nix" switch
+	# build home-manager
+	nix build .#homeManagerConfigurations.$$(hostname).activationPackage
 
 .PHONY: switch
 switch: build ## Build latest and switch
 	sudo nixos-rebuild switch --flake .#
+	./result/activate
+
 
 .PHONY: update
 update: ## Update packages

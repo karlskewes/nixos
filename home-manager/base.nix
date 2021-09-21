@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
-let nixos-unstable = import <nixos-unstable> { };
-in {
+{
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
@@ -13,7 +12,8 @@ in {
 
   # manage XDG directories
   xdg.enable = true;
-  xdg.configFile."lvim/config".text = builtins.readFile ../dotfiles/config.lua;
+  xdg.configFile."lvim/config.lua".text =
+    builtins.readFile ../dotfiles/config.lua;
 
   #---------------------------------------------------------------------
   # Packages
@@ -43,7 +43,8 @@ in {
     # neovim
     luaformatter
     gcc # treesitter
-    nixos-unstable.neovim
+    # TODO - consider using nightly overlay
+    unstable.neovim
     nodejs
     nodePackages.npm
   ];
