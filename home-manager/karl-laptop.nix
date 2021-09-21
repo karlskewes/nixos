@@ -3,7 +3,7 @@
 {
   imports = [ ./dev.nix ./xwindows.nix ];
 
-  home.packages = with pkgs; [ slack ];
+  home.packages = with pkgs; [ discord slack ];
 
   programs.git = { userEmail = "karl.skewes@gmail.com"; };
 

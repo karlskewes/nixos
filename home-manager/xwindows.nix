@@ -42,6 +42,13 @@
 
   services.flameshot = { enable = true; };
 
+  services.redshift = {
+    enable = true;
+    dawnTime = "07:00";
+    duskTime = "18:00";
+    tray = true;
+  };
+
   services.screen-locker = {
     enable = true;
     inactiveInterval = 10; # minutes
