@@ -92,7 +92,11 @@
       ${builtins.readFile ../dotfiles/bash_prompt.sh}
     '';
 
-    sessionVariables = { CDPATH = ".:~/src/github.com"; };
+    sessionVariables = {
+      CDPATH = ".:~/src/github.com";
+      # TODO - enable after setup lunarvim as part of flake
+      # EDITOR = "lvim";
+    };
 
     shellAliases = {
 

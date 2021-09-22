@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./dev.nix ./xwindows.nix ];
-
   programs.i3status = {
     modules = {
       # VM so these aren't available

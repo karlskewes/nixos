@@ -9,6 +9,7 @@
     go-jsonnet
     jsonnet-bundler
     openssl
+    rnix-lsp
     shellcheck
     shfmt
     terraform # terraform_0_12
