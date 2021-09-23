@@ -39,6 +39,11 @@
     unzip
     xclip
     zip
+
+    # check how to pass 'unstable' through to programs.neovim.extraPackages
+    # plus fix paths for neovim to find it
+    gcc # treesitter
+    unstable.tree-sitter
   ];
 
   /* tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/"; */
@@ -164,8 +169,6 @@
     withPython3 = true;
     extraPackages = with pkgs; [
       luaformatter
-      gcc # treesitter
-      unstable.tree-sitter
       rnix-lsp
       sumneko-lua-language-server
     ];
