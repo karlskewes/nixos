@@ -15,7 +15,7 @@
       1. Option → Win
    1. General → Mouse always optimize for gaming (otherwise scroll speed too slow!)
 1. vmware Virtual Camera (sharing) disable - https://kb.vmware.com/s/article/2145940
-   1. `echo 'vusbcamera.passthrough = "TRUE"' >>  ~/Library/Preferences/VMware\ Fusion/preferences` 
+   1. `echo 'vusbcamera.passthrough = "TRUE"' >>  ~/Library/Preferences/VMware\ Fusion/preferences`
    1. quit and restart vmware
 1. download minimal iso https://nixos.org/download.html#nixos-iso
 1. create vm in vmware fusion

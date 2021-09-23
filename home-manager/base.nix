@@ -39,16 +39,6 @@
     unzip
     xclip
     zip
-
-    # neovim
-    luaformatter
-    gcc # treesitter
-    unstable.tree-sitter
-    # TODO - consider using nightly overlay
-    # unstable.neovim
-    neovim-nightly
-    nodejs
-    nodePackages.npm
   ];
 
   /* tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/"; */
@@ -166,6 +156,21 @@
   programs.gpg = {
     enable = true;
     settings = { pinentry-mode = "loopback"; };
+  };
+
+  programs.neovim = {
+    enable = true;
+    withNodeJs = true;
+    withPython3 = true;
+    extraPackages = with pkgs; [
+      luaformatter
+      gcc # treesitter
+      unstable.tree-sitter
+      rnix-lsp
+      sumneko-lua-language-server
+    ];
+    package = pkgs.neovim-nightly;
+    # vimAlias = true; # bash alias to LunarVim lvim instead
   };
 
   programs.tmux = {

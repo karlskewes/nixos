@@ -16,11 +16,10 @@ vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespac
 vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no-changes
 vim.opt.relativenumber = false -- set relative numbered lines
 vim.opt.clipboard = "" -- don't default to system clipboard (<C-y|p>)
-vim.opt.wrap = false -- don't display lines as one long line
 vim.opt.colorcolumn = "80"
--- TODO: setup auto line wrapping.
--- vim.opt.textwidth = 79
--- vim.opt.formatoptions = "qrn1"
+vim.opt.formatoptions = "qrn1" -- handle formatting nicely
+vim.opt.textwidth = 79 -- wrap at this character number on whitespace
+vim.opt.wrap = true -- don't display lines as one long line
 lvim.keys.insert_mode["<C-p>"] = '<ESC>p' -- paste from unamed register - <C-V> for pasting from system clipboard
 lvim.keys.normal_mode["<C-y>"] = '"+y' -- 10<C-y><CR> - copy 10 lines to system clipboard
 lvim.keys.normal_mode["<C-p>"] = '"+p' -- paste from system clipboard
