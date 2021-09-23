@@ -43,11 +43,16 @@
     # neovim
     luaformatter
     gcc # treesitter
+    unstable.tree-sitter
     # TODO - consider using nightly overlay
-    unstable.neovim
+    # unstable.neovim
+    neovim-nightly
     nodejs
     nodePackages.npm
   ];
+
+  /* tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/"; */
+  /* home.file.${tree_sitter_bin}.source = "${pkgs.tree-sitter}/bin/tree-sitter"; */
 
   #---------------------------------------------------------------------
   # Env vars and dotfiles

@@ -49,7 +49,6 @@
     in
       {
         homeManagerConfigurations = {
-
           karl-laptop = inputs.home-manager.lib.homeManagerConfiguration {
             inherit system pkgs username homeDirectory stateVersion;
             configuration = { config, pkgs, ... }: {
@@ -94,7 +93,6 @@
                   # :read !head -c4 /dev/urandom | od -A none -t x4
                   networking.hostId = "f299660e";
                   networking.hostName = "karl-desktop";
-                  networking.nameservers = [ "1.1.1.1" ];
                   boot.supportedFilesystems = [ "zfs" ];
                   networking.interfaces.enp8s0.useDHCP = true;
                 }
@@ -114,7 +112,6 @@
                   # :read !head -c4 /dev/urandom | od -A none -t x4
                   networking.hostId = "ff8fd5cb";
                   networking.hostName = "karl-laptop";
-                  networking.nameservers = [ "1.1.1.1" ];
                   boot.supportedFilesystems = [ "zfs" ];
                   networking.interfaces.ens33.useDHCP = true;
                 }

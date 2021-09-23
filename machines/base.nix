@@ -62,12 +62,15 @@
   services.openssh.passwordAuthentication = false;
   services.openssh.permitRootLogin = "no";
 
+  # Still problematic in 2021
+  networking.enableIPv6 = false;
+
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
   # set network interface in ${machine}.nix
-  # :read !ip link | grep ': en'  
+  # :read !ip link | grep ': en'
   # networking.interfaces.ens33.useDHCP = true;
 
   networking.firewall.enable = true;
