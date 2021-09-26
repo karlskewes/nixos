@@ -13,7 +13,11 @@
   # required for google-chrome
   nixpkgs.config = { allowUnfree = true; };
 
+  fonts.fontconfig.enable = true;
+
   home.packages = with pkgs; [
+    (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
+
     i3lock-fancy
     google-chrome
     libnotify # required by dunst
@@ -30,12 +34,13 @@
 
   programs.kitty = {
     enable = true;
+    font.name = "Hack Nerd Font";
     settings = { enable_audio_bell = false; };
   };
 
   programs.rofi = {
     enable = true;
-    font = "Monospace 14";
+    font = "Hack Nerd Font 14";
     # not in 21.05
     # plugins = with pkgs; [
     #   rofi-calc

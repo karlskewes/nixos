@@ -46,101 +46,94 @@
       # NixOS
       modulesCommon = [ ./machines/base.nix ./machines/xserver.nix ];
 
-    in
-      {
-        homeManagerConfigurations = {
-          karl-laptop = inputs.home-manager.lib.homeManagerConfiguration {
-            inherit system pkgs username homeDirectory stateVersion;
-            configuration = { config, pkgs, ... }: {
-              nixpkgs.overlays = overlaysCommon;
-              imports = importsCommon;
-              home.packages = with pkgs; [ discord slack ];
-              programs.git = { userEmail = "karl.skewes@gmail.com"; };
-              xresources.properties = { "Xft.dpi" = "109"; };
-            };
-          };
-
-          karl-desktop = inputs.home-manager.lib.homeManagerConfiguration {
-            inherit system pkgs username homeDirectory stateVersion;
-            configuration = { config, pkgs, ... }: {
-              nixpkgs.overlays = overlaysCommon;
-              imports = importsCommon;
-              home.packages = with pkgs; [ discord slack ];
-              programs.git = { userEmail = "karl.skewes@gmail.com"; };
-              xresources.properties = { "Xft.dpi" = "109"; };
-            };
-          };
-
-          karl-mac-vmware = inputs.home-manager.lib.homeManagerConfiguration {
-            inherit system pkgs username homeDirectory stateVersion;
-            configuration = { config, pkgs, ... }: {
-              nixpkgs.overlays = overlaysCommon;
-              imports = importsCommon ++ [ ./home-manager/karl-mac-vmware.nix ];
-            };
+    in {
+      homeManagerConfigurations = {
+        karl-laptop = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit system pkgs username homeDirectory stateVersion;
+          configuration = { config, pkgs, ... }: {
+            nixpkgs.overlays = overlaysCommon;
+            imports = importsCommon;
+            home.packages = with pkgs; [ discord slack ];
+            programs.git = { userEmail = "karl.skewes@gmail.com"; };
+            xresources.properties = { "Xft.dpi" = "109"; };
           };
         };
 
-        nixosConfigurations = {
-          karl-desktop = lib.nixosSystem {
-            inherit system;
-            modules = modulesCommon ++ [
-              ./machines/hardware-configuration-karl-desktop.nix
-              (
-                { config, ... }: {
-                  # Let 'nixos-version --json' know about the Git revision
-                  system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-                  # Define hostId for zfs pool machine 'binding'
-                  # :read !head -c4 /dev/urandom | od -A none -t x4
-                  networking.hostId = "f299660e";
-                  networking.hostName = "karl-desktop";
-                  boot.supportedFilesystems = [ "zfs" ];
-                  networking.interfaces.enp8s0.useDHCP = true;
-                }
-              )
-            ];
-          };
-
-          karl-laptop = lib.nixosSystem {
-            inherit system;
-            modules = modulesCommon ++ [
-              ./machines/hardware-configuration-karl-desktop.nix
-              (
-                { config, ... }: {
-                  # Let 'nixos-version --json' know about the Git revision
-                  system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-                  # Define hostId for zfs pool machine 'binding'
-                  # :read !head -c4 /dev/urandom | od -A none -t x4
-                  networking.hostId = "ff8fd5cb";
-                  networking.hostName = "karl-laptop";
-                  boot.supportedFilesystems = [ "zfs" ];
-                  networking.interfaces.ens33.useDHCP = true;
-                }
-              )
-            ];
-          };
-
-          karl-mac-vmware = lib.nixosSystem {
-            inherit system;
-            modules = modulesCommon ++ [
-              ./machines/hardware-configuration-karl-mac-vmware.nix
-              (
-                { config, ... }: {
-                  # Let 'nixos-version --json' know about the Git revision
-                  system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-                  networking.hostName = "karl-mac-vmware";
-                  environment.systemPackages = with pkgs;
-                    # This is needed for the vmware user tools clipboard to work.
-                    # You can test if you don't need this by deleting this and seeing
-                    # if the clipboard still works.
-                    [ gtkmm3 ];
-                  hardware.video.hidpi.enable = true;
-                  services.xserver.dpi = 220;
-                  virtualisation.vmware.guest.enable = true;
-                }
-              )
-            ];
+        karl-desktop = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit system pkgs username homeDirectory stateVersion;
+          configuration = { config, pkgs, ... }: {
+            nixpkgs.overlays = overlaysCommon;
+            imports = importsCommon;
+            home.packages = with pkgs; [ discord slack ];
+            programs.git = { userEmail = "karl.skewes@gmail.com"; };
+            xresources.properties = { "Xft.dpi" = "109"; };
           };
         };
 
+        karl-mac-vmware = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit system pkgs username homeDirectory stateVersion;
+          configuration = { config, pkgs, ... }: {
+            nixpkgs.overlays = overlaysCommon;
+            imports = importsCommon ++ [ ./home-manager/karl-mac-vmware.nix ];
+          };
+        };
       };
+
+      nixosConfigurations = {
+        karl-desktop = lib.nixosSystem {
+          inherit system;
+          modules = modulesCommon ++ [
+            ./machines/hardware-configuration-karl-desktop.nix
+            ({ config, ... }: {
+              # Let 'nixos-version --json' know about the Git revision
+              system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+              # Define hostId for zfs pool machine 'binding'
+              # :read !head -c4 /dev/urandom | od -A none -t x4
+              networking.hostId = "f299660e";
+              networking.hostName = "karl-desktop";
+              boot.supportedFilesystems = [ "zfs" ];
+              networking.interfaces.enp8s0.useDHCP = true;
+            })
+          ];
+        };
+
+        karl-laptop = lib.nixosSystem {
+          inherit system;
+          modules = modulesCommon ++ [
+            ./machines/hardware-configuration-karl-desktop.nix
+            ({ config, ... }: {
+              # Let 'nixos-version --json' know about the Git revision
+              system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+              # Define hostId for zfs pool machine 'binding'
+              # :read !head -c4 /dev/urandom | od -A none -t x4
+              networking.hostId = "ff8fd5cb";
+              networking.hostName = "karl-laptop";
+              boot.supportedFilesystems = [ "zfs" ];
+              networking.interfaces.ens33.useDHCP = true;
+            })
+          ];
+        };
+
+        karl-mac-vmware = lib.nixosSystem {
+          inherit system;
+          modules = modulesCommon ++ [
+            ./machines/hardware-configuration-karl-mac-vmware.nix
+            ({ config, ... }: {
+              # Let 'nixos-version --json' know about the Git revision
+              system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+              networking.hostName = "karl-mac-vmware";
+              environment.systemPackages = with pkgs;
+              # This is needed for the vmware user tools clipboard to work.
+              # You can test if you don't need this by deleting this and seeing
+              # if the clipboard still works.
+                [ gtkmm3 ];
+              hardware.video.hidpi.enable = true;
+              services.xserver.dpi = 220;
+              virtualisation.vmware.guest.enable = true;
+            })
+          ];
+        };
+      };
+
+    };
 }

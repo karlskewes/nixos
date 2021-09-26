@@ -46,8 +46,8 @@
     unstable.tree-sitter
   ];
 
-  /* tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/"; */
-  /* home.file.${tree_sitter_bin}.source = "${pkgs.tree-sitter}/bin/tree-sitter"; */
+  # tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/";
+  # home.file.${tree_sitter_bin}.source = "${pkgs.tree-sitter}/bin/tree-sitter";
 
   #---------------------------------------------------------------------
   # Env vars and dotfiles
@@ -169,6 +169,7 @@
     withPython3 = true;
     extraPackages = with pkgs; [
       luaformatter
+      nerdfonts
       rnix-lsp
       sumneko-lua-language-server
     ];

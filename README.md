@@ -2,8 +2,11 @@
 
 ## TODO
 
-1. Per machine config.
 1. LunarVim install derivation?
+1. Lualine custom colors as onedarker not visible - https://www.lunarvim.org/configuration/06-statusline.html#component
+1. LSP setup - https://www.lunarvim.org/languages/#lsp
+1. Linting/etc - https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#available-sources
+1. Flake overlay taking this and extending it
 
 ## Bootstrap VM
 

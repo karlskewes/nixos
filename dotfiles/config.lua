@@ -60,8 +60,17 @@ lvim.leader = "space"
 --   w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
 -- }
 
--- TODO: User Config for predefined plugins
+-- User Config for predefined plugins
+
+
+
+
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+lvim.builtin.lualine.active = true
+lvim.builtin.lualine.style = "default"
+lvim.builtin.lualine.options.theme = "solarized_dark"
+-- broken
+-- lvim.builtin.lualine.options.theme = "auto"
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.side = "left"
@@ -129,7 +138,19 @@ lvim.plugins = {
       vim.cmd("let g:shfmt_fmt_on_save = 1")
     end,
   },
-
+  {
+		"ethanholz/nvim-lastplace",
+		event = "BufRead",
+		config = function()
+			require("nvim-lastplace").setup({
+				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
+				lastplace_ignore_filetype = {
+					"gitcommit", "gitrebase", "svn", "hgcommit",
+				},
+				lastplace_open_folds = true,
+			})
+		end,
+	},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
