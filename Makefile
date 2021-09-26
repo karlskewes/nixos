@@ -36,7 +36,6 @@ switch: build ## Build latest and switch
 update: ## Update packages
 	nix flake update
 	$(MAKE) switch
-	$(MAKE) home
 
 .PHONY: help
 help:

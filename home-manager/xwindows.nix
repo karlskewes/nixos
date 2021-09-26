@@ -3,6 +3,12 @@
 
 {
   xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
+  xdg.configFile."discord/settings.json".text = ''
+    {
+      "BACKGROUND_COLOR": "#202225",
+      "SKIP_HOST_UPDATE": true
+    }
+  '';
 
   # required for google-chrome
   nixpkgs.config = { allowUnfree = true; };
