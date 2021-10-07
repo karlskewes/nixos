@@ -10,6 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay.url = "github:mjlbach/neovim-nightly-overlay";
+
+    nix-extra.url = "path:/home/karl/src/nix-extra";
+    nix-extra.flake = false;
   };
 
   # pass all inputs to outputs
@@ -44,7 +47,11 @@
         [ nixos-unstable-overlay inputs.neovim-nightly-overlay.overlay ];
 
       # NixOS
-      modulesCommon = [ ./machines/base.nix ./machines/xserver.nix ];
+      modulesCommon = [
+        "${inputs.nix-extra.outPath}/nixos.nix"
+        ./machines/base.nix
+        ./machines/xserver.nix
+      ];
 
     in {
       homeManagerConfigurations = {

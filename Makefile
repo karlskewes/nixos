@@ -17,7 +17,8 @@ fmt: ## Format *.nix
 .PHONY: setup
 setup: ## Setup
 	# TODO: something better
-	git submodule add ~/src/secrets/ secrets
+	mkdir -p ~/src/nix-extra
+	vim ~/src/nix-extra/nixos.nix
 
 .PHONY: build
 build: ## Build latest NixOS & home-manager configuration

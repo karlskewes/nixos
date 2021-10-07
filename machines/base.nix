@@ -5,11 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    # defined per machine
-    ../secrets/secrets.nix
-  ];
-
   # Enable support for nix flakes - remove when `nix --version` >= 2.4
   nix.package = pkgs.nixFlakes;
   nix.extraOptions = ''

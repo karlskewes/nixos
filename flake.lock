@@ -96,6 +96,18 @@
         "type": "github"
       }
     },
+    "nix-extra": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-pwYkmTsKSRb5yAkxgBayF2jmzZ62H5zlU7HKYdfyVG8=",
+        "path": "/home/karl/src/nix-extra",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/karl/src/nix-extra",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1632411313,
@@ -147,6 +159,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
+        "nix-extra": "nix-extra",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
