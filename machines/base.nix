@@ -11,9 +11,6 @@
     experimental-features = nix-command flakes
   '';
 
-  # only allow users with sudo access ability to access nix daemon
-  nix.allowedUsers = [ "@wheel" ];
-
   # system user
   users.users.karl = {
     home = "/home/karl";
@@ -23,12 +20,15 @@
     # vim -> :read !mkpasswd -m sha-512
     # hashedPassword = "";
   };
+  # Users password/etc are set from source
+  users.mutableUsers = false;
 
   # Set your time zone.
   time.timeZone = "Pacific/Auckland";
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -40,22 +40,8 @@
     wget
   ];
 
-  # Users password/etc are set from source
-  users.mutableUsers = false;
-
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # TODO: Enable when not experimental?
-  # nix.autoOptimiseStore = true;
-
-  security.sudo.wheelNeedsPassword = false;
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.passwordAuthentication = false;
-  services.openssh.permitRootLogin = "no";
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
 
   # Still problematic in 2021
   networking.enableIPv6 = false;
@@ -76,6 +62,28 @@
   # ];
   # networking.firewall.allowedUDPPorts = [];
   # networking.firewall.allowedUDPPortRanges = [];
+
+  nix = {
+    # only allow users with sudo access ability to access nix daemon
+    allowedUsers = [ "@wheel" ];
+
+    # TODO: Enable when not experimental?
+    # autoOptimiseStore = true;
+    # automatically trigger garbage collection
+    gc = {
+      automatic = true;
+      persistent = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+  };
+
+  security.sudo.wheelNeedsPassword = false;
+
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+  services.openssh.passwordAuthentication = false;
+  services.openssh.permitRootLogin = "no";
 
   # Virtualization settings
   virtualisation.docker.enable = true;
