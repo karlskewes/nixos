@@ -57,7 +57,7 @@
     LANG = "en_US.UTF-8";
     LC_CTYPE = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    EDITOR = "vim";
+    EDITOR = "lvim";
     PAGER = "less --ignore-case --hilite-unread --silent";
     MANPAGER = "less --ignore-case --hilite-unread --silent";
   };

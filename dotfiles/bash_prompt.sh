@@ -127,7 +127,7 @@ if [[ -r "$kubeps1" ]] && [[ -f "$kubeps1" ]]; then
 	source "$kubeps1"
 else
 	kube_ps1() {
-		echo "kubectl not installed"
+		echo "kubeps1 not installed"
 	}
 fi
 
