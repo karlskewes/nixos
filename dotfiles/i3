@@ -14,15 +14,26 @@ bindsym Mod1+Tab workspace next_on_output
 bindsym Mod1+Shift+Tab workspace back_and_forth
 bindsym Print exec flameshot gui
 
-
 # Constrain floating windows so they are usable
-floating_minimum_size 102 x 76
+floating_minimum_size 200 x 150
 floating_maximum_size 800 x 600
 
+# Prevent unintentional focus switch when moving mouse to another app during split screen
+focus_follows_mouse no
+
+# Don't warp mouse to middle of screen
+mouse_warping none
+
+# Mod4 Windows key
 set $mod Mod4
 
 # lock screen, wait then turn screen off
 bindsym Control+Mod1+l exec --no-startup-id i3lock-fancy & sleep 5 && xset dpms force off
+
+# Assign applications to static workspaces
+assign [class="^kitty$"] 1
+assign [class="^Google-chrome$"] 2
+assign [class="^Slack$"] 3
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -120,9 +131,9 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
+set $ws1 "1: terminal"
+set $ws2 "2: browser"
+set $ws3 "3: slack"
 set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
