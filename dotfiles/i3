@@ -30,10 +30,14 @@ set $mod Mod4
 # lock screen, wait then turn screen off
 bindsym Control+Mod1+l exec --no-startup-id i3lock-fancy & sleep 5 && xset dpms force off
 
-# Assign applications to static workspaces
-assign [class="^kitty$"] 1
-assign [class="^Google-chrome$"] 2
-assign [class="^Slack$"] 3
+# assign applications to static workspaces
+assign [class="^kitty$"] $ws1
+assign [class="^Google-chrome$"] $ws2
+assign [class="^Slack$"] $ws3
+
+# startup-programs
+exec kitty
+exec google-chrome-stable
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -72,6 +76,10 @@ bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec $menu
+
+# start power menu
+bindsym $mod+q exec rofi -show power-menu -modi power-menu:rofi-power-menu -show-icons
+
 # bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
