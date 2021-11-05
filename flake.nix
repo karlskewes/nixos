@@ -63,6 +63,7 @@
             home.packages = with pkgs; [ discord slack ];
             programs.git = { userEmail = "karl.skewes@gmail.com"; };
             xresources.properties = { "Xft.dpi" = "109"; };
+            xsession.pointerCursor.size = 64;
           };
         };
 
@@ -74,6 +75,7 @@
             home.packages = with pkgs; [ discord slack ];
             programs.git = { userEmail = "karl.skewes@gmail.com"; };
             xresources.properties = { "Xft.dpi" = "109"; };
+            xsession.pointerCursor.size = 64;
           };
         };
 
@@ -81,7 +83,16 @@
           inherit system pkgs username homeDirectory stateVersion;
           configuration = { config, pkgs, ... }: {
             nixpkgs.overlays = overlaysCommon;
-            imports = importsCommon ++ [ ./home-manager/karl-mac-vmware.nix ];
+            imports = importsCommon;
+            programs.i3status.modules = {
+              # VM so these aren't available
+              "wireless _first_".enable = false;
+              "battery all".enable = false;
+            };
+            # Make terminal not tiny on HiDPI screens
+            xresources.properties = { "Xft.dpi" = "220"; };
+            # Make cursor not tiny on HiDPI screens
+            xsession.pointerCursor.size = 128;
           };
         };
       };

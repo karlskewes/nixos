@@ -1,21 +1,22 @@
 { config, pkgs, ... }:
 
-# laptop not server
-
 {
   home.packages = with pkgs; [
     # dev
     bats
     go-jsonnet
+    unstable.golangci-lint
     jsonnet-bundler
     openssl
     rnix-lsp
     shellcheck
     shfmt
-    terraform # terraform_0_12
 
     # clouds
     awscli2
+    nodejs # cdktf and neovim
+    unstable.nodePackages.cdktf-cli
+    unstable.terraform
 
     # kubernetes
     kind

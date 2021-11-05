@@ -63,7 +63,7 @@ g() {
 	else
 		git clone "${1}" "${fullpath}"
 	fi
-	cd "${fullpath}" || exit 1
+	cd "${fullpath}"
 }
 
 # `flushgit` removes any merged branches

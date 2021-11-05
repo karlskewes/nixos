@@ -68,4 +68,15 @@
     # disable xautolock when mouse in bottom right corner
     xautolockExtraOptions = [ "-corners" "000-" ];
   };
+
+  xsession = {
+    numlock.enable = true;
+    # Make cursor not tiny on HiDPI screens
+    pointerCursor = {
+      name = "Vanilla-DMZ";
+      package = pkgs.vanilla-dmz;
+      # size = 64;
+    };
+  };
+
 }
