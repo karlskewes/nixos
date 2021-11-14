@@ -35,8 +35,9 @@
   programs.bat = {
     enable = true;
     config = {
+      style = "plain";
       theme = "Solarized (dark)";
-      pager = "less --ignore-case --hilite-unread --silent";
+      pager = "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent";
     };
   };
 
@@ -74,7 +75,7 @@
   services.screen-locker = {
     enable = true;
     inactiveInterval = 10; # minutes
-    lockCmd = "i3lock-fancy & sleep 5 && xset dpms force off";
+    lockCmd = "${pkgs.i3lock-fancy}/bin/i3lock-fancy & sleep 5 && xset dpms force off";
     # disable xautolock when mouse in bottom right corner
     xautolockExtraOptions = [ "-corners" "000-" ];
   };

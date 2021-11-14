@@ -26,6 +26,7 @@
     fzf
     htop
     jq
+    jid # json repl
     libqalculate # qalc - CLI calculator
     lsof
     usbutils
@@ -83,20 +84,13 @@
       # Autocorrect typos in path names when using `cd`
       shopt -s cdspell
 
-      PATH=$PATH:~/.local/bin
+      PATH=$PATH:~/.local/bin:~/go/bin/
 
       ${builtins.readFile ../dotfiles/functions.sh}
       KUBECONFIG=~/.kube/config
-      kubeconfigs
 
       ${builtins.readFile ../dotfiles/bash_prompt.sh}
     '';
-
-    sessionVariables = {
-      CDPATH = ".:~/src/github.com";
-      # TODO - enable after setup lunarvim as part of flake
-      # EDITOR = "lvim";
-    };
 
     shellAliases = {
 
