@@ -32,10 +32,21 @@
 
   programs.i3status.enable = true;
 
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "Solarized (dark)";
+      pager = "less --ignore-case --hilite-unread --silent";
+    };
+  };
+
   programs.kitty = {
     enable = true;
     font.name = "Hack Nerd Font";
     settings = { enable_audio_bell = false; };
+    extraConfig = ''
+      map ctrl+shift+enter new_window_with_cwd
+    '';
   };
 
   programs.rofi = {
@@ -63,8 +74,7 @@
   services.screen-locker = {
     enable = true;
     inactiveInterval = 10; # minutes
-    lockCmd =
-      "\${pkgs.i3lock-fancy}/bin/i3lock-fancy & sleep 5 && xset dpms force off";
+    lockCmd = "i3lock-fancy & sleep 5 && xset dpms force off";
     # disable xautolock when mouse in bottom right corner
     xautolockExtraOptions = [ "-corners" "000-" ];
   };

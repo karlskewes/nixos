@@ -19,7 +19,7 @@
     unstable.terraform
 
     # kubernetes
-    kind
+    unstable.kind
     kubectl
     kubectx
     kubeval

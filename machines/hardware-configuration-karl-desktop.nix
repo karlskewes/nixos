@@ -22,6 +22,11 @@
     fsType = "vfat";
   };
 
+  fileSystems."/var/lib/docker" = {
+    device = "/dev/disk/by-uuid/a4f24755-a566-4508-852c-30ab5e474576";
+    fsType = "ext4";
+  };
+
   swapDevices =
     [{ device = "/dev/disk/by-uuid/b2fb8548-6032-497e-9960-9341ff1e10db"; }];
 

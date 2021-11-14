@@ -45,6 +45,7 @@
 
   # Still problematic in 2021
   networking.enableIPv6 = false;
+  networking.nat.enableIPv6 = true;
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -86,6 +87,8 @@
   services.openssh.permitRootLogin = "no";
 
   # Virtualization settings
+  # Make sure to mount ext4 partition at /var/lib/docker else Kind doesn't work.
+  # TODO: check why... zfs related?
   virtualisation.docker.enable = true;
 
   # This value determines the NixOS release from which the default
