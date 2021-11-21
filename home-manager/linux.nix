@@ -1,6 +1,13 @@
 { config, pkgs, ... }:
 
 {
+
+  home.packages = with pkgs; [
+    pciutils
+    psmisc
+    usbutils
+  ];
+
   programs.gpg = {
     enable = true;
     settings = { pinentry-mode = "loopback"; };

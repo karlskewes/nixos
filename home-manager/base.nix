@@ -33,10 +33,7 @@
     jid # json repl
     libqalculate # qalc - CLI calculator
     lsof
-    usbutils
     nixfmt
-    pciutils
-    psmisc
     rename
     ripgrep
     rpl
