@@ -75,7 +75,8 @@
   services.screen-locker = {
     enable = true;
     inactiveInterval = 10; # minutes
-    lockCmd = "${pkgs.i3lock-fancy}/bin/i3lock-fancy & sleep 5 && xset dpms force off";
+    lockCmd =
+      "${pkgs.i3lock-fancy}/bin/i3lock-fancy & sleep 5 && xset dpms force off";
     # disable xautolock when mouse in bottom right corner
     xautolockExtraOptions = [ "-corners" "000-" ];
   };

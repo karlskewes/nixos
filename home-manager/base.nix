@@ -12,8 +12,12 @@
 
   # manage XDG directories
   xdg.enable = true;
-  xdg.configFile."lvim/config.lua".text =
-    builtins.readFile ../dotfiles/config.lua;
+  # recursively symlink LunarVim configuration
+  # Note: lvim adds other files we don't need to persist into git
+  xdg.configFile."lvim" = {
+    source = ../dotfiles/lvim;
+    recursive = true;
+  };
 
   #---------------------------------------------------------------------
   # Packages
@@ -152,11 +156,6 @@
     };
   };
 
-  programs.gpg = {
-    enable = true;
-    settings = { pinentry-mode = "loopback"; };
-  };
-
   programs.neovim = {
     enable = true;
     withNodeJs = true;
@@ -240,23 +239,6 @@
 
   # z - jump rust replacement
   programs.zoxide = { enable = true; };
-
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    pinentryFlavor = "tty";
-
-    # cache the keys forever, rotate as require
-    maxCacheTtl = 31536000;
-    maxCacheTtlSsh = 31536000;
-    # cache passwords for 12 hours
-    defaultCacheTtl = 43200;
-    defaultCacheTtlSsh = 43200;
-
-    extraConfig = ''
-      allow-loopback-pinentry
-    '';
-  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

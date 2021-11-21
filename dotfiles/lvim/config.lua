@@ -107,17 +107,14 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   end
 -- end
 
+-- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
+-- TODO: Fix lua
+-- require("lvim.lsp.manager").setup("sumneko_lua")
+
 -- set a formatter if you want to override the default lsp one (if it exists)
--- lvim.lang.python.formatters = {
---   {
---     exe = "black",
---   }
--- }
--- set an additional linter
--- lvim.lang.python.linters = {
---   {
---     exe = "flake8",
---   }
+-- local formatters = require "lvim.lsp.null-ls.formatters"
+-- formatters.setup {
+--   go = { "gofumpt" }
 -- }
 
 -- Additional Plugins

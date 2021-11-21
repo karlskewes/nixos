@@ -30,6 +30,7 @@
       importsCommon = [
         ./home-manager/base.nix
         ./home-manager/dev.nix
+        ./home-manager/linux.nix
         ./home-manager/xwindows.nix
       ];
 

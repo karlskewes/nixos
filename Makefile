@@ -32,6 +32,9 @@ switch: build ## Build latest and switch
 	sudo nixos-rebuild switch --flake .#
 	./result/activate
 
+.PHONY: go
+go: go ## Install go utils
+	go install mvdan.cc/gofumpt@latest
 
 .PHONY: update
 update: ## Update packages

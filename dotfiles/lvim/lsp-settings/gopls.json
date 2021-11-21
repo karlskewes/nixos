@@ -1,0 +1,7 @@
+{
+  "gopls": {
+    "ui.completion.usePlaceholders": true,
+    "ui.diagnostic.staticcheck": true,
+    "formatting.gofumpt": true
+  }
+}
