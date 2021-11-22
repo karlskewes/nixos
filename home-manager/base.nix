@@ -161,7 +161,7 @@
       luaformatter
       nerdfonts
       rnix-lsp
-      sumneko-lua-language-server
+      # sumneko-lua-language-server # linux only - not working
     ];
     package = pkgs.neovim-nightly;
     # vimAlias = true; # bash alias to LunarVim lvim instead
