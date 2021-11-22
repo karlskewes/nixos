@@ -5,11 +5,6 @@
   programs.home-manager.enable = true;
   news.display = "silent";
 
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "karl";
-  home.homeDirectory = "/home/karl";
-
   # manage XDG directories
   xdg.enable = true;
   # recursively symlink LunarVim configuration
