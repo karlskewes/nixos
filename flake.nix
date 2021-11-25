@@ -95,6 +95,22 @@
               boot.supportedFilesystems = [ "zfs" ];
               networking.interfaces.enp8s0.useDHCP = true;
             })
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              # TODO: consider moving home-manager config to nixos module - build as one
+              #   home-manager.users.karl = {
+              #     home.username = "karl";
+              #     home.homeDirectory = "/home/karl";
+              #     home.stateVersion = "21.05"; # HACK for version mismatch error
+              #     # nixpkgs.overlays = overlaysCommon;
+              #     # imports = importsCommon;
+              #     # home.packages = with pkgs; [ discord slack ];
+              #     xresources.properties = { "Xft.dpi" = "109"; };
+              #     xsession.pointerCursor.size = 64;
+              #   };
+            }
           ];
         };
 

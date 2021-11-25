@@ -32,6 +32,17 @@ switch: build ## Build latest and switch
 	sudo nixos-rebuild switch --flake .#
 	./result/activate
 
+.PHONY: clean
+clean: ## Clean old generations
+	# home manager
+	nix-collect-garbage -d
+	# nixos generations
+	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
+	sudo nix-collect-garbage -d
+	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
+	# optimise store, soon nix.autoOptimise?
+	nix-store --optimise
+
 .PHONY: go
 go: go ## Install go utils
 	go install mvdan.cc/gofumpt@latest

@@ -5,12 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  # Enable support for nix flakes - remove when `nix --version` >= 2.4
-  nix.package = pkgs.nixFlakes;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
   # system user
   users.users.karl = {
     home = "/home/karl";
@@ -65,17 +59,22 @@
   # networking.firewall.allowedUDPPortRanges = [];
 
   nix = {
+    # Enable support for nix flakes - remove when `nix --version` >= 2.4
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
     # only allow users with sudo access ability to access nix daemon
     allowedUsers = [ "@wheel" ];
 
-    # TODO: Enable when not experimental?
-    # autoOptimiseStore = true;
+    autoOptimiseStore = true;
     # automatically trigger garbage collection
     gc = {
       automatic = true;
       persistent = true;
       dates = "weekly";
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 8d";
     };
   };
 

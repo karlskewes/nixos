@@ -180,7 +180,6 @@
     withPython3 = true;
     extraPackages = with pkgs; [
       luaformatter
-      nerdfonts
       rnix-lsp
       # sumneko-lua-language-server # linux only - not working
     ];
