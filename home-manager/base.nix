@@ -5,6 +5,11 @@
   programs.home-manager.enable = true;
   news.display = "silent";
 
+  # Home Manager needs a bit of information about you and the
+  # paths it should manage.
+  home.username = "karl";
+  home.homeDirectory = "/home/karl";
+
   # manage XDG directories
   xdg.enable = true;
   # recursively symlink LunarVim configuration
@@ -19,6 +24,9 @@
   #---------------------------------------------------------------------
 
   home.packages = with pkgs; [
+    pciutils
+    psmisc
+    usbutils
     dnsutils
     fd
     file
@@ -37,10 +45,8 @@
     xclip
     zip
 
-    # check how to pass 'unstable' through to programs.neovim.extraPackages
-    # plus fix paths for neovim to find it
     gcc # treesitter
-    unstable.tree-sitter
+    tree-sitter
   ];
 
   # tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/";
@@ -123,6 +129,7 @@
   programs.git = {
     enable = true;
     userName = "Karl Skewes";
+    userEmail = "karl.skewes@gmail.com";
 
     aliases = {
       ca = "commit --amend";
@@ -146,6 +153,25 @@
       # branch.autosetuprebase = "always";
       push.default = "current";
     };
+  };
+
+  programs.gpg = {
+    enable = true;
+    settings = { pinentry-mode = "loopback"; };
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    enableSshSupport = true;
+    pinentryFlavor = "tty";
+
+    # cache the keys forever, rotate as require
+    maxCacheTtl = 31536000;
+    maxCacheTtlSsh = 31536000;
+
+    extraConfig = ''
+      allow-loopback-pinentry
+    '';
   };
 
   programs.neovim = {

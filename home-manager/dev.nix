@@ -5,7 +5,7 @@
     # dev
     bats
     go-jsonnet
-    unstable.golangci-lint
+    golangci-lint
     jsonnet-bundler
     openssl
     rnix-lsp
@@ -15,11 +15,11 @@
     # clouds
     awscli2
     nodejs # cdktf and neovim
-    unstable.nodePackages.cdktf-cli
-    unstable.terraform
+    nodePackages.cdktf-cli
+    terraform
 
     # kubernetes
-    unstable.kind
+    kind
     kubectl
     kubectx
     kubeval

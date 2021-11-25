@@ -2,8 +2,9 @@
   description = "NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-21.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # use unstable by default for freshest packages, pin stable if need be.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-21.05";
     home-manager = {
       url = "github:nix-community/home-manager/release-21.05";
       # tell home-manager to use same packages as nixpkgs
@@ -30,7 +31,6 @@
       importsCommon = [
         ./home-manager/base.nix
         ./home-manager/dev.nix
-        ./home-manager/linux.nix
         ./home-manager/xwindows.nix
       ];
 
@@ -41,11 +41,11 @@
       };
 
       lib = inputs.nixpkgs.lib;
-      nixos-unstable-overlay = final: prev: {
-        unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      nixos-stable-overlay = final: prev: {
+        stable = inputs.nixpkgs-stable.legacyPackages.${system};
       };
       overlaysCommon =
-        [ nixos-unstable-overlay inputs.neovim-nightly-overlay.overlay ];
+        [ nixos-stable-overlay inputs.neovim-nightly-overlay.overlay ];
 
       # NixOS
       modulesCommon = [
@@ -62,7 +62,6 @@
             nixpkgs.overlays = overlaysCommon;
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
-            programs.git = { userEmail = "karl.skewes@gmail.com"; };
             xresources.properties = { "Xft.dpi" = "109"; };
             xsession.pointerCursor.size = 64;
           };
@@ -74,28 +73,11 @@
             nixpkgs.overlays = overlaysCommon;
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
-            programs.git = { userEmail = "karl.skewes@gmail.com"; };
             xresources.properties = { "Xft.dpi" = "109"; };
             xsession.pointerCursor.size = 64;
           };
         };
 
-        karl-mac-vmware = inputs.home-manager.lib.homeManagerConfiguration {
-          inherit system pkgs username homeDirectory stateVersion;
-          configuration = { config, pkgs, ... }: {
-            nixpkgs.overlays = overlaysCommon;
-            imports = importsCommon;
-            programs.i3status.modules = {
-              # VM so these aren't available
-              "wireless _first_".enable = false;
-              "battery all".enable = false;
-            };
-            # Make terminal not tiny on HiDPI screens
-            xresources.properties = { "Xft.dpi" = "220"; };
-            # Make cursor not tiny on HiDPI screens
-            xsession.pointerCursor.size = 128;
-          };
-        };
       };
 
       nixosConfigurations = {
@@ -133,25 +115,6 @@
           ];
         };
 
-        karl-mac-vmware = lib.nixosSystem {
-          inherit system;
-          modules = modulesCommon ++ [
-            ./machines/hardware-configuration-karl-mac-vmware.nix
-            ({ config, ... }: {
-              # Let 'nixos-version --json' know about the Git revision
-              system.configurationRevision = lib.mkIf (self ? rev) self.rev;
-              networking.hostName = "karl-mac-vmware";
-              environment.systemPackages = with pkgs;
-              # This is needed for the vmware user tools clipboard to work.
-              # You can test if you don't need this by deleting this and seeing
-              # if the clipboard still works.
-                [ gtkmm3 ];
-              hardware.video.hidpi.enable = true;
-              services.xserver.dpi = 220;
-              virtualisation.vmware.guest.enable = true;
-            })
-          ];
-        };
       };
 
     };
