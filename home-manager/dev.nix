@@ -7,10 +7,17 @@
     go-jsonnet
     golangci-lint
     jsonnet-bundler
+    lua
+    luaformatter
     openssl
     rnix-lsp
     shellcheck
     shfmt
+    stylua
+    sumneko-lua-language-server
+
+    # web
+    hugo
 
     # clouds
     awscli2

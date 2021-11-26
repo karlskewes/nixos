@@ -5,9 +5,7 @@ Linters should be
 filled in as strings with either
 a global executable or a path to
 an executable
-]]
--- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
-
+]] -- THESE ARE EXAMPLE CONFIGS FEEL FREE TO CHANGE TO WHATEVER YOU WANT
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
@@ -62,10 +60,8 @@ lvim.leader = "space"
 
 -- User Config for predefined plugins
 
-
-
-
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
+
 lvim.builtin.lualine.active = true
 lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.theme = "solarized_dark"
@@ -78,7 +74,7 @@ lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = "maintained"
-lvim.builtin.treesitter.ignore_install = { "haskell" }
+lvim.builtin.treesitter.ignore_install = {"haskell"}
 lvim.builtin.treesitter.highlight.enabled = true
 
 -- generic LSP settings
@@ -112,56 +108,47 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- require("lvim.lsp.manager").setup("sumneko_lua")
 
 -- set a formatter if you want to override the default lsp one (if it exists)
--- local formatters = require "lvim.lsp.null-ls.formatters"
--- formatters.setup {
---   go = { "gofumpt" }
--- }
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+    {exe = "lua-format", filetypes = {"lua"}},
+    {exe = "nixfmt", filetypes = {"nix"}}
+}
 
 -- Additional Plugins
 lvim.plugins = {
-	{ 'aliou/bats.vim' },
-	{ 'google/vim-jsonnet' },
-	{
-    'hashivim/vim-terraform',
-    config = function()
-      vim.cmd("let g:terraform_fmt_on_save=1")
-      -- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
-      -- vim.cmd("let g:terraform_fold_sections=0")
-    end,
-  },
-	{
-    'z0mbix/vim-shfmt',
-    config = function()
-      vim.cmd("let g:shfmt_fmt_on_save = 1")
-    end,
-  },
-  {
-  "ray-x/lsp_signature.nvim",
-  event = "BufRead",
-  config = function()
-    require "lsp_signature".setup()
-  end
-  },
-  {
-		"ethanholz/nvim-lastplace",
-		event = "BufRead",
-		config = function()
-			require("nvim-lastplace").setup({
-				lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-				lastplace_ignore_filetype = {
-					"gitcommit", "gitrebase", "svn", "hgcommit",
-				},
-				lastplace_open_folds = true,
-			})
-		end,
-	},
+    {'aliou/bats.vim'}, {'google/vim-jsonnet'}, {
+        'hashivim/vim-terraform',
+        config = function()
+            vim.cmd("let g:terraform_fmt_on_save=1")
+            -- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
+            -- vim.cmd("let g:terraform_fold_sections=0")
+        end
+    }, {
+        'z0mbix/vim-shfmt',
+        config = function() vim.cmd("let g:shfmt_fmt_on_save = 1") end
+    }, {
+        "ray-x/lsp_signature.nvim",
+        event = "BufRead",
+        config = function() require"lsp_signature".setup() end
+    }, {
+        "ethanholz/nvim-lastplace",
+        event = "BufRead",
+        config = function()
+            require("nvim-lastplace").setup({
+                lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
+                lastplace_ignore_filetype = {
+                    "gitcommit", "gitrebase", "svn", "hgcommit"
+                },
+                lastplace_open_folds = true
+            })
+        end
+    }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 lvim.autocommands.custom_groups = {
-  -- Trim all trailing whitespace
-  -- @ separater, double back slash for lua escape
-  { 'BufWritePre', '*', ':%s@\\s\\+$@@e' },
-  -- TODO: PR this change to vim-shfmt
-  { 'BufWritePre', '*.bats', 'Shfmt -ln bats' },
+    -- Trim all trailing whitespace
+    -- @ separater, double back slash for lua escape
+    {'BufWritePre', '*', ':%s@\\s\\+$@@e'}, -- TODO: PR this change to vim-shfmt
+    {'BufWritePre', '*.bats', 'Shfmt -ln bats'}
 }

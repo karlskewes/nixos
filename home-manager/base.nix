@@ -168,6 +168,9 @@
     # cache the keys forever, rotate as require
     maxCacheTtl = 31536000;
     maxCacheTtlSsh = 31536000;
+    # cache the keys forever so we don't get asked for a password
+    defaultCacheTtl = 31536000;
+    defaultCacheTtlSsh = 31536000;
 
     extraConfig = ''
       allow-loopback-pinentry
@@ -178,11 +181,6 @@
     enable = true;
     withNodeJs = true;
     withPython3 = true;
-    extraPackages = with pkgs; [
-      luaformatter
-      rnix-lsp
-      # sumneko-lua-language-server # linux only - not working
-    ];
     package = pkgs.neovim-nightly;
     # vimAlias = true; # bash alias to LunarVim lvim instead
   };

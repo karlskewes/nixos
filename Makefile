@@ -1,12 +1,6 @@
 # NixOS Makefile
 
-# Make defaults
-# Use commonly available shell
-SHELL := bash
-# Fail if piped commands fail - critical for CI/etc
-.SHELLFLAGS := -o errexit -o nounset -o pipefail -c
-# Use one shell for a target, rather than shell per line
-.ONESHELL:
+SHELL := /usr/bin/env bash -o errexit -o nounset -o pipefail -c
 
 all: help
 
