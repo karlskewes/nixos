@@ -103,9 +103,39 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   end
 -- end
 
--- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
--- TODO: Fix lua
--- require("lvim.lsp.manager").setup("sumneko_lua")
+-- fix Lua with manual installation
+vim.list_extend(lvim.lsp.override, {"sumneko_lua"})
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, "lua/?.lua")
+table.insert(runtime_path, "lua/?/init.lua")
+
+-- require("lspconfig")["sumneko_lua"].setup({
+require("lvim.lsp.manager").setup("sumneko_lua", {
+    cmd = {
+        "/home/karl/.nix_profile/bin/lua-language-server", "-E",
+        "/home/karl/.nix_profile/share/lua-language-server/main.lua"
+    },
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+                -- Setup your lua path
+                path = runtime_path
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'}
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true)
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {enable = false}
+        }
+    }
+})
 
 -- set a formatter if you want to override the default lsp one (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
