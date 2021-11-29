@@ -24,6 +24,34 @@ lvim.keys.normal_mode["<C-p>"] = '"+p' -- paste from system clipboard
 lvim.keys.visual_mode["<C-y>"] = '"+y' -- copy block to system clipboard
 lvim.keys.visual_mode["<C-p>"] = '"+p' -- paste block from system clipboard
 
+-- Inspiration https://fnune.com/2021/11/20/nuking-most-of-my-vimrc-and-just-using-lunarvim/
+function GrepWordUnderCursor()
+    local default = vim.api.nvim_eval([[expand("<cword>")]])
+    local input = vim.fn.input({prompt = "Search for: ", default = default})
+    require("telescope.builtin").grep_string({search = input})
+end
+lvim.builtin.which_key.mappings["sw"] = {
+    "<cmd>lua GrepWordUnderCursor()<CR>", "Text word under cursor"
+}
+
+function GrepStringUnderCursor()
+    local default = vim.api.nvim_eval([[expand("<cWORD>")]])
+    local input = vim.fn.input({prompt = "Search for: ", default = default})
+    require("telescope.builtin").grep_string({search = input})
+end
+lvim.builtin.which_key.mappings["ss"] = {
+    "<cmd>lua GrepStringUnderCursor()<CR>", "Text string under cursor"
+}
+
+function GrepYankedString()
+    local default = vim.fn.getreg('"')
+    local input = vim.fn.input({prompt = "Search for: ", default = default})
+    require("telescope.builtin").grep_string({search = input})
+end
+lvim.builtin.which_key.mappings["sy"] = {
+    "<cmd>lua GrepYankedString()<CR>", "Text yanked"
+}
+
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
 -- add your own keymapping

@@ -63,7 +63,6 @@
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
-            xsession.pointerCursor.size = 64;
           };
         };
 
@@ -74,7 +73,6 @@
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
-            xsession.pointerCursor.size = 64;
           };
         };
 
