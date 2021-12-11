@@ -15,6 +15,7 @@
   home.packages = with pkgs; [
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
 
+    firefox
     i3lock-fancy
     google-chrome
     libnotify # required by dunst

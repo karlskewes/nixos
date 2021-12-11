@@ -85,6 +85,9 @@
   services.openssh.passwordAuthentication = false;
   services.openssh.permitRootLogin = "no";
 
+  # Enable ZFS automatic snapshot
+  services.zfs.autoSnapshot.enable = true;
+
   # Virtualization settings
   # Make sure to mount ext4 partition at /var/lib/docker else Kind doesn't work.
   # TODO: check why... zfs related?
