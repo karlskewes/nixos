@@ -7,8 +7,9 @@
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "karl";
-  home.homeDirectory = "/home/karl";
+  # supplied via flake let -> inherit
+  # home.username = "karl";
+  # home.homeDirectory = "/home/karl";
 
   # manage XDG directories
   xdg.enable = true;
@@ -129,7 +130,6 @@
   programs.git = {
     enable = true;
     userName = "Karl Skewes";
-    userEmail = "karl.skewes@gmail.com";
 
     aliases = {
       ca = "commit --amend";

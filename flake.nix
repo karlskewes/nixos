@@ -24,9 +24,12 @@
       system = "x86_64-linux";
 
       # Home Manager
+      # https://github.com/nix-community/home-manager/blob/3d46c011d2cc2c9ca24d9b803e9daf156d9429ea/flake.nix#L54
       username = "karl";
-      homeDirectory = "/home/karl";
+      homeDirectory = "/home/${username}";
       stateVersion = "21.05"; # HACK for version mismatch error
+
+      emailAddress = "karl.skewes@gmail.com";
 
       importsCommon = [
         ./home-manager/base.nix
@@ -63,6 +66,7 @@
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
+            programs.git.userEmail = emailAddress;
           };
         };
 
@@ -73,6 +77,7 @@
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
+            programs.git.userEmail = emailAddress;
           };
         };
 
