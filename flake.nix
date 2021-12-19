@@ -6,7 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-21.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.05";
+      url = "github:nix-community/home-manager/release-21.11";
       # tell home-manager to use same packages as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -106,7 +106,7 @@
               #   home-manager.users.karl = {
               #     home.username = "karl";
               #     home.homeDirectory = "/home/karl";
-              #     home.stateVersion = "21.05"; # HACK for version mismatch error
+              #     home. = "21.05"; # HACK for version mismatch error
               #     # nixpkgs.overlays = overlaysCommon;
               #     # imports = importsCommon;
               #     # home.packages = with pkgs; [ discord slack ];

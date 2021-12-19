@@ -21,11 +21,6 @@
     libnotify # required by dunst
     pavucontrol
     qalculate-gtk
-
-    # move to programs.rofi.plugins after 21.05
-    rofi-calc
-    rofi-emoji
-    rofi-power-menu
   ];
 
   programs.i3status.enable = true;
@@ -51,12 +46,7 @@
   programs.rofi = {
     enable = true;
     font = "Hack Nerd Font 14";
-    # not in 21.05
-    # plugins = with pkgs; [
-    #   rofi-calc
-    #   rofi-emoji
-    #   rofi-power-menu
-    # ];
+    plugins = with pkgs; [ rofi-calc rofi-emoji rofi-power-menu ];
   };
 
   services.dunst = { enable = true; };
@@ -76,7 +66,7 @@
     lockCmd =
       "${pkgs.i3lock-fancy}/bin/i3lock-fancy & sleep 5 && xset dpms force off";
     # disable xautolock when mouse in bottom right corner
-    xautolockExtraOptions = [ "-corners" "000-" ];
+    xautolock.extraOptions = [ "-corners" "000-" ];
   };
 
   xsession = {
