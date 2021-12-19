@@ -109,7 +109,7 @@ formatters.setup {
 
 -- Additional Plugins
 lvim.plugins = {
-    {'aliou/bats.vim'}, {'google/vim-jsonnet'}, {
+    {'aliou/bats.vim'}, {'kdheepak/lazygit.nvim'}, {'google/vim-jsonnet'}, {
         'hashivim/vim-terraform',
         config = function()
             vim.cmd("let g:terraform_fmt_on_save=1")

@@ -171,6 +171,8 @@
     '';
   };
 
+  programs.lazygit = { enable = true; };
+
   programs.neovim = {
     enable = true;
     withNodeJs = true;

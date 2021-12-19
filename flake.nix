@@ -4,7 +4,7 @@
   inputs = {
     # use unstable by default for freshest packages, pin stable if need be.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-21.05";
+    nixpkgs-stable.url = "nixpkgs/nixos-21.11";
     home-manager = {
       url = "github:nix-community/home-manager/release-21.11";
       # tell home-manager to use same packages as nixpkgs
