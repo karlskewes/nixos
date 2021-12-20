@@ -80,6 +80,9 @@ bindsym $mod+d exec $menu
 # start power menu
 bindsym $mod+q exec rofi -show power-menu -modi power-menu:rofi-power-menu -show-icons
 
+# start calculator
+bindsym XF86Calculator exec rofi -show calc
+
 # bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"

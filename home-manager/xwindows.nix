@@ -21,6 +21,8 @@
     libnotify # required by dunst
     pavucontrol
     qalculate-gtk
+    rofi-power-menu # doesn't work as extra package
+
   ];
 
   programs.i3status.enable = true;
@@ -46,7 +48,11 @@
   programs.rofi = {
     enable = true;
     font = "Hack Nerd Font 14";
-    plugins = with pkgs; [ rofi-calc rofi-emoji rofi-power-menu ];
+    plugins = with pkgs; [
+      rofi-calc
+      rofi-emoji
+      # rofi-power-menu # doesn't work here
+    ];
   };
 
   services.dunst = { enable = true; };
