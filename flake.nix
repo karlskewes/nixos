@@ -59,7 +59,7 @@
 
     in {
       homeManagerConfigurations = {
-        karl-laptop = inputs.home-manager.lib.homeManagerConfiguration {
+        karl-desktop = inputs.home-manager.lib.homeManagerConfiguration {
           inherit system pkgs username homeDirectory stateVersion;
           configuration = { config, pkgs, ... }: {
             nixpkgs.overlays = overlaysCommon;
@@ -70,13 +70,13 @@
           };
         };
 
-        karl-desktop = inputs.home-manager.lib.homeManagerConfiguration {
+        karl-laptop = inputs.home-manager.lib.homeManagerConfiguration {
           inherit system pkgs username homeDirectory stateVersion;
           configuration = { config, pkgs, ... }: {
             nixpkgs.overlays = overlaysCommon;
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
-            xresources.properties = { "Xft.dpi" = "109"; };
+            xresources.properties = { "Xft.dpi" = "96"; };
             programs.git.userEmail = emailAddress;
           };
         };
@@ -95,8 +95,12 @@
               # :read !head -c4 /dev/urandom | od -A none -t x4
               networking.hostId = "f299660e";
               networking.hostName = "karl-desktop";
-              boot.supportedFilesystems = [ "zfs" ];
               networking.interfaces.enp8s0.useDHCP = true;
+              hardware.opengl.extraPackages = with pkgs; [
+                rocm-opencl-icd
+                rocm-opencl-runtime
+              ];
+              services.xserver.videoDrivers = [ "amdgpu" ];
             })
             inputs.home-manager.nixosModules.home-manager
             {
@@ -128,8 +132,17 @@
               # :read !head -c4 /dev/urandom | od -A none -t x4
               networking.hostId = "624e2a63";
               networking.hostName = "karl-laptop";
-              boot.supportedFilesystems = [ "zfs" ];
               networking.interfaces.enp0s20u3.useDHCP = true;
+              nixpkgs.config.packageOverrides = pkgs: {
+                vaapiIntel =
+                  pkgs.vaapiIntel.override { enableHybridCodec = true; };
+              };
+              hardware.opengl.extraPackages = with pkgs; [
+                intel-media-driver # LIBVA_DRIVER_NAME=iHD
+                vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+                vaapiVdpau
+                libvdpau-va-gl
+              ];
             })
             inputs.home-manager.nixosModules.home-manager
             {

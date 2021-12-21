@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  hardware.opengl.enable = true;
+  hardware.opengl.driSupport = true;
+  # doesn't exist?
+  # hardware.opengl.driSupport32bit = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -8,6 +13,8 @@
   services.xserver = {
     enable = true;
     layout = "us";
+    # enable touchpad on laptops
+    libinput.enable = true;
 
     desktopManager = {
       xterm.enable = false;
