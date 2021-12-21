@@ -27,7 +27,7 @@
       # https://github.com/nix-community/home-manager/blob/3d46c011d2cc2c9ca24d9b803e9daf156d9429ea/flake.nix#L54
       username = "karl";
       homeDirectory = "/home/${username}";
-      stateVersion = "21.05"; # HACK for version mismatch error
+      stateVersion = "21.11";
 
       emailAddress = "karl.skewes@gmail.com";
 
@@ -120,21 +120,25 @@
         karl-laptop = lib.nixosSystem {
           inherit system;
           modules = modulesCommon ++ [
-            ./machines/hardware-configuration-karl-desktop.nix
+            ./machines/hardware-configuration-karl-laptop.nix
             ({ config, ... }: {
               # Let 'nixos-version --json' know about the Git revision
               system.configurationRevision = lib.mkIf (self ? rev) self.rev;
               # Define hostId for zfs pool machine 'binding'
               # :read !head -c4 /dev/urandom | od -A none -t x4
-              networking.hostId = "ff8fd5cb";
+              networking.hostId = "624e2a63";
               networking.hostName = "karl-laptop";
               boot.supportedFilesystems = [ "zfs" ];
-              networking.interfaces.ens33.useDHCP = true;
+              networking.interfaces.enp0s20u3.useDHCP = true;
             })
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
           ];
         };
 
       };
-
     };
 }
