@@ -31,6 +31,7 @@
     jid # json repl
     libqalculate # qalc - CLI calculator
     lsof
+    mage
     nixfmt
     rename
     ripgrep
@@ -67,7 +68,6 @@
   programs.bash = {
     enable = true;
 
-    # source our session variables otherwise not used - unsure why
     initExtra = ''
       # source our session variables otherwise not used - unsure why
       . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
@@ -82,6 +82,8 @@
       shopt -s cdspell
 
       PATH=$PATH:~/.local/bin:~/go/bin/
+
+      ${builtins.readFile ../dotfiles/mage_completions.sh}
 
       ${builtins.readFile ../dotfiles/functions.sh}
       KUBECONFIG=~/.kube/config
@@ -144,8 +146,8 @@
     };
 
     extraConfig = {
-      # branch.autosetuprebase = "always";
       push.default = "current";
+      rebase.autosquash = "true";
     };
   };
 
@@ -211,41 +213,6 @@
       # Readline used by Bash 4.)
       set skip-completed-text on
     '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    baseIndex = 1;
-    clock24 = true;
-    escapeTime = 0;
-    historyLimit = 30000;
-    keyMode = "vi";
-    shortcut = "z";
-    terminal = "xterm-256color";
-
-    extraConfig = ''
-      set -ga terminal-overrides ",*256col*:Tc"
-      # Highlight current window with black background.
-      setw -g window-status-current-style fg=white,bg=black,bright
-      # renumber windows on close
-      set-option -g renumber-windows on
-      # Automatically set window title
-      set-window-option -g automatic-rename on
-      set-option -g set-titles on
-      # Open new panes in PWD
-      bind c new-window      -c "#{pane_current_path}"
-      bind % split-window -h -c "#{pane_current_path}"
-      bind '"' split-window -v -c "#{pane_current_path}"
-      # Automatically restore last tmux session
-      set -g @continuum-restore 'on'
-      set -g @continuum-save-interval '60' # minutes
-    '';
-
-    plugins = with pkgs; [
-      { plugin = tmuxPlugins.resurrect; }
-      { plugin = tmuxPlugins.continuum; }
-      { plugin = tmuxPlugins.yank; }
-    ];
   };
 
   # z - jump rust replacement

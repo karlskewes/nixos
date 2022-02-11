@@ -21,8 +21,8 @@
 
     # clouds
     awscli2
-    nodejs # cdktf and neovim
-    nodePackages.cdktf-cli
+    nodejs # neovim
+    pulumi-bin
     terraform
 
     # kubernetes
