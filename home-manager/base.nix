@@ -136,10 +136,13 @@
       com = "checkout main";
       coms = "checkout master";
       fup = "fetch upstream";
+      fuppr =
+        "!f(){ git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
       rbm = "rebase main";
       rbms = "rebase master";
       rbupm = "rebase upstream/main";
       rbupms = "rebase upstream/master";
+      rupa = "remote upstream add";
       st = "status";
       prettylog =
         "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";

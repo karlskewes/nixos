@@ -39,12 +39,7 @@ mkd() {
 	mkdir -p "${1}" && cd "${1}" || return
 }
 
-# https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/checking-out-pull-requests-locally
-gchpr() {
-	git fetch upstream "pull/${1}/head:${2}"
-}
-
-g() {
+gc() {
 	base="${HOME}/src"
 
 	# check http prefix otherwise assume ssh

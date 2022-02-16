@@ -66,10 +66,12 @@
       experimental-features = nix-command flakes
     '';
 
-    # only allow users with sudo access ability to access nix daemon
-    allowedUsers = [ "@wheel" ];
+    settings = {
+      # only allow users with sudo access ability to access nix daemon
+      allowed-users = [ "@wheel" ];
+      auto-optimise-store = true;
+    };
 
-    autoOptimiseStore = true;
     # automatically trigger garbage collection
     gc = {
       automatic = true;
