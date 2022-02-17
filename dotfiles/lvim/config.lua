@@ -66,6 +66,14 @@ lvim.builtin.treesitter.ensure_installed = "maintained"
 lvim.builtin.treesitter.ignore_install = {"haskell"}
 lvim.builtin.treesitter.highlight.enabled = true
 
+-- additional key mappings on leader
+lvim.builtin.which_key.mappings["t"] = {
+    name = "Test",
+    f = {"<cmd>Ultest<cr>", "File"},
+    n = {"<cmd>UltestNearest<cr>", "Nearest"},
+    s = {"<cmd>UltestSummary<cr>", "Summary"}
+}
+
 -- fix Lua with manual installation
 vim.list_extend(lvim.lsp.override, {"sumneko_lua"})
 local runtime_path = vim.split(package.path, ';')
@@ -110,16 +118,6 @@ formatters.setup {
 -- Additional Plugins
 lvim.plugins = {
     {'aliou/bats.vim'}, {'kdheepak/lazygit.nvim'}, {'google/vim-jsonnet'}, {
-        'hashivim/vim-terraform',
-        config = function()
-            vim.cmd("let g:terraform_fmt_on_save=1")
-            -- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
-            -- vim.cmd("let g:terraform_fold_sections=0")
-        end
-    }, {
-        'z0mbix/vim-shfmt',
-        config = function() vim.cmd("let g:shfmt_fmt_on_save = 1") end
-    }, {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
         config = function() require"lsp_signature".setup() end
@@ -135,6 +133,24 @@ lvim.plugins = {
                 lastplace_open_folds = true
             })
         end
+    }, {
+        'z0mbix/vim-shfmt',
+        config = function() vim.cmd("let g:shfmt_fmt_on_save = 1") end
+    }, {
+        'hashivim/vim-terraform',
+        config = function()
+            vim.cmd("let g:terraform_fmt_on_save=1")
+            -- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
+            -- vim.cmd("let g:terraform_fold_sections=0")
+        end
+    }, {
+        "rcarriga/vim-ultest",
+        cmd = {"Ultest", "UltestSummary", "UltestNearest"},
+        wants = "vim-test",
+        requires = {"vim-test/vim-test"},
+        run = ":UpdateRemotePlugins",
+        opt = true,
+        event = {"BufEnter *_test.*,*_spec.*"}
     }
 }
 

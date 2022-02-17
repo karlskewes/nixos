@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     # dev
     bats
+    delve
     go-jsonnet
     golangci-lint
     jsonnet-bundler
