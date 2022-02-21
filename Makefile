@@ -39,7 +39,8 @@ clean: ## Clean old generations
 
 .PHONY: go
 go: go ## Install go utils
-	go install mvdan.cc/gofumpt@latest
+	go install -v mvdan.cc/gofumpt@latest
+	go install -v golang.org/x/tools/cmd/godoc@latest
 
 .PHONY: update
 update: ## Update packages
