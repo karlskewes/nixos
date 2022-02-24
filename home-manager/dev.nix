@@ -10,6 +10,9 @@
     jsonnet-bundler
     lua
     luaformatter
+    languagetool
+    nodePackages.prettier
+    nodePackages.write-good
     openssl
     rnix-lsp
     shellcheck

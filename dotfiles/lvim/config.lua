@@ -112,12 +112,27 @@ require("lvim.lsp.manager").setup("sumneko_lua", {
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
     {exe = "lua-format", filetypes = {"lua"}},
+    {exe = "prettier", filetypes = {"markdown"}},
     {exe = "nixfmt", filetypes = {"nix"}}
 }
+
+-- set additional linters
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {{exe = "write-good"}}
 
 -- Additional Plugins
 lvim.plugins = {
     {'aliou/bats.vim'}, {'kdheepak/lazygit.nvim'}, {'google/vim-jsonnet'}, {
+        'rhysd/vim-grammarous',
+        config = function()
+            -- TODO: figure out why this doesn't work.
+            -- ideal if we can manage tool install in nix instead of vim
+            -- vim.cmd(
+            -- "let g:grammarous#languagetool_cmd = 'languagetool-commandline'")
+            vim.cmd(
+                "let g:grammarous#default_comments_only_filetypes = {'*': 1, 'help': 0, 'markdown': 0}")
+        end
+    }, {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
         config = function() require"lsp_signature".setup() end

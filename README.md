@@ -17,6 +17,7 @@ make update
 ## New host
 
 ZFS setup:
+
 - https://openzfs.github.io/openzfs-docs/Getting%20Started/NixOS/Root%20on%20ZFS/2-system-configuration.html
 - https://nixos.wiki/wiki/ZFS#How_to_install_NixOS_on_a_ZFS_root_filesystem
 - create separate swap partition not on zfs because reasons...
@@ -24,8 +25,8 @@ ZFS setup:
 - rpool-<host/etc>/sys - encrypted base no mount
 - rpool-<host/etc>/sys/root|nix - mount points, snapshots on root only
 
-
 Enable flakes, add to `/etc/nixos/configuration.nix`
+
 ```
   # Enable support for nix flakes - remove when `nix --version` >= 2.4
   nix.package = pkgs.nixFlakes;
@@ -33,7 +34,9 @@ Enable flakes, add to `/etc/nixos/configuration.nix`
     experimental-features = nix-command flakes
   '';
 ```
+
 then
+
 ```
 sudo nixos-rebuild switch
 ```
@@ -42,6 +45,7 @@ Modify `flake.nix` with temporary location of `nix-extra` containing default
 user and their password.
 
 then:
+
 ```
 make update
 ```
