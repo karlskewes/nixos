@@ -56,6 +56,9 @@ lvim.builtin.lualine.style = "default"
 lvim.builtin.lualine.options.theme = "solarized_dark"
 -- broken
 -- lvim.builtin.lualine.options.theme = "auto"
+
+lvim.builtin.dap.active = true
+
 lvim.builtin.dashboard.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.side = "left"
