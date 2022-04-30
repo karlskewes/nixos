@@ -96,6 +96,7 @@
               networking.hostId = "f299660e";
               networking.hostName = "karl-desktop";
               networking.interfaces.enp8s0.useDHCP = true;
+              nixpkgs.config.allowUnfree = true; # memtest86+
               hardware.opengl.extraPackages = with pkgs; [
                 rocm-opencl-icd
                 rocm-opencl-runtime
@@ -133,6 +134,7 @@
               networking.hostId = "624e2a63";
               networking.hostName = "karl-laptop";
               networking.interfaces.enp0s20u3.useDHCP = true;
+              nixpkgs.config.allowUnfree = true; # memtest86+
               nixpkgs.config.packageOverrides = pkgs: {
                 vaapiIntel =
                   pkgs.vaapiIntel.override { enableHybridCodec = true; };

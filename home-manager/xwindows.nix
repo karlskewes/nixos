@@ -18,7 +18,7 @@
     firefox
     i3lock-fancy
     google-chrome
-    libnotify # required by dunst
+    # libnotify # required by dunst
     pavucontrol
     qalculate-gtk
     rofi-power-menu # doesn't work as extra package
@@ -58,6 +58,8 @@
   services.dunst = { enable = true; };
 
   services.flameshot = { enable = true; };
+
+  # services.notify-osd.enable = true;
 
   services.redshift = {
     enable = true;

@@ -151,7 +151,7 @@ lvim.plugins = {
             -- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
             -- vim.cmd("let g:terraform_fold_sections=0")
         end
-    }, {
+    }, {"rcarriga/nvim-dap-ui"}, {
         "rcarriga/vim-ultest",
         cmd = {"Ultest", "UltestSummary", "UltestNearest"},
         wants = "vim-test",
