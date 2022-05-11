@@ -6,7 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "nixpkgs/nixos-21.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager/master";
       # tell home-manager to use same packages as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -116,7 +116,7 @@
               #     # imports = importsCommon;
               #     # home.packages = with pkgs; [ discord slack ];
               #     xresources.properties = { "Xft.dpi" = "109"; };
-              #     xsession.pointerCursor.size = 64;
+              #     home.pointerCursor.size = 64;
               #   };
             }
           ];

@@ -17,6 +17,7 @@ function GrepWordUnderCursor()
     local input = vim.fn.input({prompt = "Search for: ", default = default})
     require("telescope.builtin").grep_string({search = input})
 end
+
 lvim.builtin.which_key.mappings["sw"] = {
     "<cmd>lua GrepWordUnderCursor()<CR>", "Text word under cursor"
 }
@@ -26,6 +27,7 @@ function GrepStringUnderCursor()
     local input = vim.fn.input({prompt = "Search for: ", default = default})
     require("telescope.builtin").grep_string({search = input})
 end
+
 lvim.builtin.which_key.mappings["ss"] = {
     "<cmd>lua GrepStringUnderCursor()<CR>", "Text string under cursor"
 }
@@ -35,6 +37,7 @@ function GrepYankedString()
     local input = vim.fn.input({prompt = "Search for: ", default = default})
     require("telescope.builtin").grep_string({search = input})
 end
+
 lvim.builtin.which_key.mappings["sy"] = {
     "<cmd>lua GrepYankedString()<CR>", "Text yanked"
 }
@@ -57,15 +60,19 @@ lvim.builtin.lualine.options.theme = "solarized_dark"
 -- broken
 -- lvim.builtin.lualine.options.theme = "auto"
 
+lvim.builtin.alpha.active = true
+lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.dap.active = true
-
-lvim.builtin.dashboard.active = true
+lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.side = "left"
+lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 0
 
--- if you don't want all the parsers change this to a table of the ones you want
-lvim.builtin.treesitter.ensure_installed = "maintained"
+lvim.builtin.treesitter.ensure_installed = {
+    "bash", "c", "dockerfile", "go", "gomod", "gowork", "hcl", "html",
+    "javascript", "json", "kotlin", "lua", "make", "markdown", "nix", "proto",
+    "python", "typescript", "toml", "tsx", "css", "rust", "java", "yaml"
+}
 lvim.builtin.treesitter.ignore_install = {"haskell"}
 lvim.builtin.treesitter.highlight.enabled = true
 
@@ -78,7 +85,8 @@ lvim.builtin.which_key.mappings["t"] = {
 }
 
 -- fix Lua with manual installation
-vim.list_extend(lvim.lsp.override, {"sumneko_lua"})
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers,
+                {"sumneko_lua"})
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
@@ -86,8 +94,8 @@ table.insert(runtime_path, "lua/?/init.lua")
 -- require("lspconfig")["sumneko_lua"].setup({
 require("lvim.lsp.manager").setup("sumneko_lua", {
     cmd = {
-        "/home/karl/.nix_profile/bin/lua-language-server", "-E",
-        "/home/karl/.nix_profile/share/lua-language-server/main.lua"
+        "/home/karl/.nix-profile/bin/lua-language-server", "-E",
+        "/home/karl/.nix-profile/share/lua-language-server/main.lua"
     },
     settings = {
         Lua = {

@@ -18,13 +18,19 @@
     firefox
     i3lock-fancy
     google-chrome
-    # libnotify # required by dunst
+    libnotify # required by dunst
     pavucontrol
     qalculate-gtk
     rofi-power-menu # doesn't work as extra package
 
   ];
 
+  home.pointerCursor = {
+    x11.enable = true;
+    name = "Vanilla-DMZ";
+    package = pkgs.vanilla-dmz;
+    # size = 64;
+  };
   programs.i3status.enable = true;
 
   programs.bat = {
@@ -80,11 +86,6 @@
   xsession = {
     numlock.enable = true;
     # Make cursor not tiny on HiDPI screens
-    pointerCursor = {
-      name = "Vanilla-DMZ";
-      package = pkgs.vanilla-dmz;
-      # size = 64;
-    };
   };
 
 }
