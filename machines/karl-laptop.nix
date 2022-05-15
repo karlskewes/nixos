@@ -32,7 +32,9 @@
     fsType = "vfat";
   };
 
-  swapDevices = [{ device = "/rpool-asus/nosnap/swap"; }];
+  swapDevices = [{
+    device = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B-part4";
+  }];
 
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;

@@ -14,19 +14,44 @@ git clone git@github.com:kskewes/nixos.git
 make update
 ```
 
-## New host
+## New machine
 
-ZFS setup:
+ZFS setup per [docs](https://nixos.wiki/wiki/ZFS#How_to_install_NixOS_on_a_ZFS_root_filesystem):
 
-- https://openzfs.github.io/openzfs-docs/Getting%20Started/NixOS/Root%20on%20ZFS/2-system-configuration.html
-- https://nixos.wiki/wiki/ZFS#How_to_install_NixOS_on_a_ZFS_root_filesystem
-- create separate swap partition not on zfs because reasons...
-- consider separate docker partition not on zfs because reasons...
-- rpool-<host> - encrypted
-- rpool-<host>/snap/root|other - snapshots
-- rpool-<host>/nosnap/nix|docker|swap - no snapshots
+### Create partitions
 
-Enable flakes, add to `/mnt/etc/nixos/configuration.nix`
+- 1GB EFI/ESP
+- 4GB or so for swap. Swap on ZFS can deadlock on high memory pressure.
+- rest for files.
+- possibly docker - maybe without snapshots it's ok?
+
+```
+parted
+```
+
+### Create `zfs` pool and datasets
+
+- rpool-<machine> - encrypted
+- rpool-<machine>/snap/root|other - snapshots
+- rpool-<machine>/nosnap/nix|docker - no snapshots
+
+```
+# create password for `nixos` user
+passwd
+
+# from another computer scp volume script to nixos (or curl it from github)
+scp ./zfs-vol.sh nixos@<ip>:.
+
+# edit script globals
+vim ./zfs-vol.sh
+
+# run it!
+sudo ./zfs-vol.sh
+```
+
+### Enable flakes
+
+Add to `/etc/nixos/configuration.nix`:
 
 ```
   # Enable support for nix flakes - remove when `nix --version` >= 2.4
@@ -36,28 +61,36 @@ Enable flakes, add to `/mnt/etc/nixos/configuration.nix`
   '';
 ```
 
-Install default NixOS - will prompt for root password:
+Install Flakes:
 
 ```
-nixos-install --show-trace --root /mnt
-
-reboot
+sudo nixos-rebuild switch
 ```
 
-Login and clone this repository:
+### Install this flake
+
+Add machine to this repository:
 
 ```
-nix-shell -p git
+scp nixos@<ip>:/mnt/etc/nixos/hardware-configuration.nix machines/<name>.nix
+vim flake.nix
+```
+
+Login and clone this repository on new machine:
+
+```
+nix-shell -p gnumake git
 
 git clone https://github.com/kskewes/nixos.git
 ```
 
-Update `./machines/<machine>` based on `/etc/nixos/hardware-configuration.nix`
+Set user password:
 
-Modify `flake.nix` with temporary location of `nix-extra` containing default
-user and their password.
+```
+make setup
+```
 
-then:
+final install:
 
 ```
 make update
@@ -70,8 +103,8 @@ make update
 zpool import
 
 # decrypt pool
-zfs load-key -r rpool/sys/
+zfs load-key -r rpool/
 
 # mount fs
-mount -t zfs rpool/sys/root /mnt/root
+mount -t zfs rpool/root /mnt/root
 ```

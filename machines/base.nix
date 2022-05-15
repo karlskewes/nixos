@@ -25,6 +25,7 @@
   boot.loader.systemd-boot.memtest86.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
+  boot.kernelParams = [ "nohibernate" ]; # not supported by zfs
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

@@ -8,11 +8,12 @@ fmt: ## Format *.nix
 	find . -name '*.nix' -print | \
 		xargs -n 1 -- nixfmt
 
-.PHONY: setup
-setup: ## Setup
+.PHONY: password
+password: ## Create password hash
 	# TODO: something better
 	mkdir -p ~/src/nix-extra
-	vim ~/src/nix-extra/nixos.nix
+	password='$(shell mkpasswd -m sha-512)' && \
+					 echo "{ config, pkgs, ... }: { users.users.karl.hashedPassword = \"$${password}\"; }" > ~/src/nix-extra/nixos.nix
 
 .PHONY: build
 build: ## Build latest NixOS & home-manager configuration
