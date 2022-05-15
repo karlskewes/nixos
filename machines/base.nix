@@ -26,6 +26,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelParams = [ "nohibernate" ]; # not supported by zfs
+  boot.zfs.devNodes = "/dev/disk/by-path";
   boot.zfs.requestEncryptionCredentials = true; # prompt for encryption password
 
   # List packages installed in system profile. To search, run:

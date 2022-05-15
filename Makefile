@@ -30,8 +30,8 @@ switch: build ## Build latest and switch
 
 .PHONY: install
 install: install ## Install NixOS for the first time
-	sudo git config --global --add safe.directory /home/nixos/nixos
-	sudo nixos-install --impure --root /mnt --flake .#
+	nixos-rebuild build --flake .#$$(hostname)
+	sudo nixos-install --impure --root /mnt --flake .#$$(hostname)
 
 .PHONY: clean
 clean: ## Clean old generations
