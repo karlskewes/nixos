@@ -21,9 +21,10 @@ ZFS setup per [docs](https://nixos.wiki/wiki/ZFS#How_to_install_NixOS_on_a_ZFS_r
 ### Create partitions
 
 - 1GB EFI/ESP
-- 4GB or so for swap. Swap on ZFS can deadlock on high memory pressure.
-- rest for files.
+- 4GB or so for swap because swap on ZFS can deadlock under high memory pressure
+  (COW)
 - possibly docker - maybe without snapshots it's ok?
+- rest for files
 
 ```
 parted
@@ -36,16 +37,16 @@ parted
 - rpool-<machine>/nosnap/nix|docker - no snapshots
 
 ```
-# create password for `nixos` user
+# create password for `nixos` user so can ssh to new machine
 passwd
 
 # from another computer scp volume script to nixos (or curl it from github)
-scp ./zfs-vol.sh nixos@<ip>:.
+scp ./zfs-vol.sh nixos@<new_machine>:.
 
-# edit script globals
+# edit zfs volume script globals
 vim ./zfs-vol.sh
 
-# run it!
+# run
 sudo ./zfs-vol.sh
 ```
 
@@ -59,6 +60,10 @@ Add to `/etc/nixos/configuration.nix`:
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
+
+  # Add appropriate machine here
+  networking.hostId = "624e2a63";
+  networking.hostName = "karl-laptop";
 ```
 
 Install Flakes:
@@ -72,7 +77,7 @@ sudo nixos-rebuild switch
 Add machine to this repository:
 
 ```
-scp nixos@<ip>:/mnt/etc/nixos/hardware-configuration.nix machines/<name>.nix
+scp nixos@<new_machine>:/mnt/etc/nixos/hardware-configuration.nix machines/<name>.nix
 vim flake.nix
 ```
 
@@ -93,7 +98,7 @@ make setup
 final install:
 
 ```
-make update
+make install
 ```
 
 ## Recovery

@@ -14,6 +14,7 @@ password: ## Create password hash
 	mkdir -p ~/src/nix-extra
 	password='$(shell mkpasswd -m sha-512)' && \
 					 echo "{ config, pkgs, ... }: { users.users.karl.hashedPassword = \"$${password}\"; }" > ~/src/nix-extra/nixos.nix
+	sed -i 's@home/karl/src/nix-extra@home/nixos/src/nix-extra@' flake.nix
 
 .PHONY: build
 build: ## Build latest NixOS & home-manager configuration
@@ -26,6 +27,11 @@ build: ## Build latest NixOS & home-manager configuration
 switch: build ## Build latest and switch
 	sudo nixos-rebuild switch --flake .#
 	./result/activate
+
+.PHONY: install
+install: install ## Install NixOS for the first time
+	sudo git config --global --add safe.directory /home/nixos/nixos
+	sudo nixos-install --impure --root /mnt --flake .#
 
 .PHONY: clean
 clean: ## Clean old generations

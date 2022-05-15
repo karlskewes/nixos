@@ -87,7 +87,7 @@
         karl-desktop = lib.nixosSystem {
           inherit system;
           modules = modulesCommon ++ [
-            ./machines/hardware-configuration-karl-desktop.nix
+            ./machines/karl-desktop.nix
             ({ config, ... }: {
               # Let 'nixos-version --json' know about the Git revision
               system.configurationRevision = lib.mkIf (self ? rev) self.rev;
@@ -125,7 +125,7 @@
         karl-laptop = lib.nixosSystem {
           inherit system;
           modules = modulesCommon ++ [
-            ./machines/hardware-configuration-karl-laptop.nix
+            ./machines/karl-laptop.nix
             ({ config, ... }: {
               # Let 'nixos-version --json' know about the Git revision
               system.configurationRevision = lib.mkIf (self ? rev) self.rev;
