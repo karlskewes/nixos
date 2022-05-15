@@ -26,6 +26,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelParams = [ "nohibernate" ]; # not supported by zfs
+  boot.zfs.requestEncryptionCredentials = true; # prompt for encryption password
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -94,6 +95,7 @@
   services.zfs = {
     autoScrub.enable = true;
     autoSnapshot.enable = true;
+    trim.enable = true;
   };
 
   # Virtualization settings

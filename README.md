@@ -16,7 +16,10 @@ make update
 
 ## New machine
 
-ZFS setup per [docs](https://nixos.wiki/wiki/ZFS#How_to_install_NixOS_on_a_ZFS_root_filesystem):
+### Prepare USB stick
+
+Until nix >= 2.4 available the simplest way to get flakes support is to use
+[unstable ISO](https://releases.nixos.org/nixos/unstable)
 
 ### Create partitions
 
@@ -31,6 +34,8 @@ parted
 ```
 
 ### Create `zfs` pool and datasets
+
+[ZFS docs](https://nixos.wiki/wiki/ZFS#How_to_install_NixOS_on_a_ZFS_root_filesystem):
 
 - rpool-<machine> - encrypted
 - rpool-<machine>/snap/root|other - snapshots
@@ -48,28 +53,6 @@ vim ./zfs-vol.sh
 
 # run
 sudo ./zfs-vol.sh
-```
-
-### Enable flakes
-
-Add to `/etc/nixos/configuration.nix`:
-
-```
-  # Enable support for nix flakes - remove when `nix --version` >= 2.4
-  nix.package = pkgs.nixFlakes;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
-
-  # Add appropriate machine here
-  networking.hostId = "624e2a63";
-  networking.hostName = "karl-laptop";
-```
-
-Install Flakes:
-
-```
-sudo nixos-rebuild switch
 ```
 
 ### Install this flake
@@ -92,7 +75,7 @@ git clone https://github.com/kskewes/nixos.git
 Set user password:
 
 ```
-make setup
+make password
 ```
 
 final install:
