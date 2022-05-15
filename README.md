@@ -22,10 +22,11 @@ ZFS setup:
 - https://nixos.wiki/wiki/ZFS#How_to_install_NixOS_on_a_ZFS_root_filesystem
 - create separate swap partition not on zfs because reasons...
 - consider separate docker partition not on zfs because reasons...
-- rpool-<host/etc>/sys - encrypted base no mount
-- rpool-<host/etc>/sys/root|nix - mount points, snapshots on root only
+- rpool-<host> - encrypted
+- rpool-<host>/snap/root|other - snapshots
+- rpool-<host>/nosnap/nix|docker|swap - no snapshots
 
-Enable flakes, add to `/etc/nixos/configuration.nix`
+Enable flakes, add to `/mnt/etc/nixos/configuration.nix`
 
 ```
   # Enable support for nix flakes - remove when `nix --version` >= 2.4
@@ -35,11 +36,23 @@ Enable flakes, add to `/etc/nixos/configuration.nix`
   '';
 ```
 
-then
+Install default NixOS - will prompt for root password:
 
 ```
-sudo nixos-rebuild switch
+nixos-install --show-trace --root /mnt
+
+reboot
 ```
+
+Login and clone this repository:
+
+```
+nix-shell -p git
+
+git clone https://github.com/kskewes/nixos.git
+```
+
+Update `./machines/<machine>` based on `/etc/nixos/hardware-configuration.nix`
 
 Modify `flake.nix` with temporary location of `nix-extra` containing default
 user and their password.

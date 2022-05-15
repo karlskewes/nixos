@@ -17,6 +17,11 @@
     fsType = "zfs";
   };
 
+  fileSystems."/mnt/data" = {
+    device = "data";
+    fsType = "zfs";
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/6D29-2988";
     fsType = "vfat";

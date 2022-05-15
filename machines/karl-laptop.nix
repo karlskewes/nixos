@@ -13,12 +13,17 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "rpool-asus/sys/root";
+    device = "rpool-asus/snap/root";
     fsType = "zfs";
   };
 
   fileSystems."/nix" = {
-    device = "rpool-asus/sys/nix";
+    device = "rpool-asus/nosnap/nix";
+    fsType = "zfs";
+  };
+
+  fileSystems."/var/lib/docker" = {
+    device = "rpool-asus/nosnap/docker";
     fsType = "zfs";
   };
 
@@ -27,12 +32,8 @@
     fsType = "vfat";
   };
 
-  swapDevices = [{
-    device = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B-part5";
-    randomEncryption = true;
-  }];
+  swapDevices = [{ device = "/rpool-asus/nosnap/swap"; }];
 
   hardware.cpu.intel.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
-
 }
