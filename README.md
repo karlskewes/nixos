@@ -23,8 +23,7 @@ Until nix >= 2.4 available the simplest way to get flakes support is to use
 
 ### Create partitions
 
-Make sure to recreate swap partition or perform `zpool label-clear` to avoid
-`cannot import, more than 1 matching pool` error.
+Make sure to recreate swap partition or perform `zpool labelclear /dev/<swap|zpool-root>` to avoid `cannot import, more than 1 matching pool` error.
 
 - 1GB EFI/ESP
 - 4GB or so for swap because swap on ZFS can deadlock under high memory pressure
@@ -76,20 +75,34 @@ nix-shell -p gnumake git
 
 git clone https://github.com/kskewes/nixos.git
 cd nixos
-```
 
-```
-# create user password
-make password
+# create nix-extra
+make nix-extra
 
 # set hostname for flake to match on (default nixos)
 sudo hostname <machine>
 
 # build and install flake without Home Manager (FIXME)
 make install
+
+reboot
 ```
 
-Reboot and then install flake again with home-manager.
+Login and install `home-manager`:
+
+```
+mkdir -p ~/src/github.com/kskewes
+cd ~/src/github.com/kskewes
+
+git clone https://github.com/kskewes
+
+# create nix-extra again for `karl` instead of `nixos`
+make nix-extra
+
+make build
+
+make switch
+```
 
 ## Recovery
 

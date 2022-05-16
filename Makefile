@@ -8,16 +8,17 @@ fmt: ## Format *.nix
 	find . -name '*.nix' -print | \
 		xargs -n 1 -- nixfmt
 
-.PHONY: password
-password: ## Create password hash
-	# TODO: something better
+.PHONY: nix-extra
+nix-extra: ## Create nix-extra with any sensitive values
 	mkdir -p ~/src/nix-extra
 	password='$(shell mkpasswd -m sha-512)' && \
-					 echo "{ config, pkgs, ... }: { users.users.karl.hashedPassword = \"$${password}\"; }" > ~/src/nix-extra/nixos.nix
-	sed -i 's@home/karl/src/nix-extra@home/nixos/src/nix-extra@' flake.nix
+					 echo "{ config, pkgs, ... }: { users.users.karl.hashedPassword = \"$${password}\"; }" \
+					 > ~/src/nix-extra/nixos.nix
 
 .PHONY: build
 build: ## Build latest NixOS & home-manager configuration
+	# update nix-extra reference in case changed
+	nix flake lock --update-input nix-extra
 	# rebuild configuration per --flake .#${hostname}
 	nixos-rebuild build --flake .#
 	# build home-manager
@@ -25,11 +26,15 @@ build: ## Build latest NixOS & home-manager configuration
 
 .PHONY: switch
 switch: build ## Build latest and switch
+	# Workaround CVE mitigation issue: https://github.com/NixOS/nixpkgs/pull/173170
+	sudo git config --global --add safe.directory "$${PWD}"
 	sudo nixos-rebuild switch --flake .#
 	./result/activate
 
 .PHONY: install
-install: install ## Install NixOS for the first time
+install: nix-extra ## Install NixOS for the first time
+	sed -i 's@home/karl/src/nix-extra@home/nixos/src/nix-extra@' flake.nix
+	nix flake lock --update-input nix-extra
 	nixos-rebuild build --flake .#$$(hostname)
 	sudo nixos-install --impure --root /mnt --flake .#$$(hostname)
 
