@@ -18,14 +18,9 @@ RPOOL=
 #ROOT_DISK='/dev/disk/by-id/ata-FOO'
 ROOT_DISK=
 
-#BOOT_PART=1
-BOOT_PART=
-
-#SWAP_PART=2
-SWAP_PART=
-
-#ROOT_PART=3
-ROOT_PART=
+BOOT_PART=1
+SWAP_PART=2
+ROOT_PART=3
 
 zpool_create() {
 	sudo zpool create \
@@ -65,7 +60,7 @@ zfs_create() {
 
 	zfs create \
 		-o canmount=on \
-		-o mountpoint=/ \
+		-o mountpoint=legacy \
 		"${RPOOL}/snap/root"
 
 	# create datasets that have snapshots DISABLED
@@ -80,13 +75,13 @@ zfs_create() {
 	# /nix volume can be recreated through download/update/etc
 	zfs create \
 		-o canmount=on \
-		-o mountpoint=/nix \
+		-o mountpoint=legacy \
 		"${RPOOL}/nosnap/nix"
 
 	# docker manages its own snapshots and containers can be rebuilt
 	zfs create \
 		-o canmount=on \
-		-o mountpoint=/var/lib/docker \
+		-o mountpoint=legacy \
 		"${RPOOL}/nosnap/docker"
 }
 
@@ -98,6 +93,15 @@ make_boot_dir() {
 make_swap() {
 	mkswap -L swap "${ROOT_DISK}-part${SWAP_PART}"
 	swapon -av
+}
+
+mount_volumes() {
+  mkdir -p /mnt
+  zfs mount "${RPOOL}/snap/root" /mnt
+  mkdir -p /mnt/nix
+  zfs mount "${RPOOL}/nosnap/nix" /mnt/nix
+  mkdir -p /mnt/var/lib/docker
+  zfs mount "${RPOOL}/nosnap/docker" /mnt/var/lib/docker 
 }
 
 nixos_generate_config() {
@@ -119,19 +123,23 @@ Disks:"
 
 	echo "
 Settings:
-ROOT_DISK=${ROOT_DISK}
-ROOT_PART=${ROOT_PART}
 RPOOL=${RPOOL}
+ROOT_DISK=${ROOT_DISK}
+BOOT_PART=${BOOT_PART}
+SWAP_PART=${SWAP_PART}
+ROOT_PART=${ROOT_PART}
   "
 
 	confirm zpool_create
-	# zpool_create
+	zpool_create
 	confirm zfs_create
-	# zfs_create
+	zfs_create
 	confirm make_boot_dir
-	# make_boot_dir
+	make_boot_dir
 	confirm make_swap
-	# make_swap
+	make_swap
+  confirm mount_volumes
+  mount_volumes
 	confirm nixos_generate_config
 	nixos_generate_config
 }

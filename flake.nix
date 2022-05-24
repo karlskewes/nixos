@@ -95,7 +95,7 @@
               # :read !head -c4 /dev/urandom | od -A none -t x4
               networking.hostId = "f299660e";
               networking.hostName = "karl-desktop";
-              networking.interfaces.enp8s0.useDHCP = true;
+              networking.interfaces.enp9s0.useDHCP = true;
               nixpkgs.config.allowUnfree = true; # memtest86+
               hardware.opengl.extraPackages = with pkgs; [
                 rocm-opencl-icd
