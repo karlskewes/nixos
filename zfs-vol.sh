@@ -96,12 +96,12 @@ make_swap() {
 }
 
 mount_volumes() {
-  mkdir -p /mnt
-  zfs mount "${RPOOL}/snap/root" /mnt
-  mkdir -p /mnt/nix
-  zfs mount "${RPOOL}/nosnap/nix" /mnt/nix
-  mkdir -p /mnt/var/lib/docker
-  zfs mount "${RPOOL}/nosnap/docker" /mnt/var/lib/docker 
+	mkdir -p /mnt
+	zfs mount "${RPOOL}/snap/root" /mnt
+	mkdir -p /mnt/nix
+	zfs mount "${RPOOL}/nosnap/nix" /mnt/nix
+	mkdir -p /mnt/var/lib/docker
+	zfs mount "${RPOOL}/nosnap/docker" /mnt/var/lib/docker
 }
 
 nixos_generate_config() {
@@ -138,8 +138,8 @@ ROOT_PART=${ROOT_PART}
 	make_boot_dir
 	confirm make_swap
 	make_swap
-  confirm mount_volumes
-  mount_volumes
+	confirm mount_volumes
+	mount_volumes
 	confirm nixos_generate_config
 	nixos_generate_config
 }
