@@ -64,7 +64,7 @@
           configuration = { config, pkgs, ... }: {
             nixpkgs.overlays = overlaysCommon;
             imports = importsCommon;
-            home.packages = with pkgs; [ discord slack ];
+            home.packages = with pkgs; [ discord slack kind ];
             xresources.properties = { "Xft.dpi" = "109"; };
             programs.git.userEmail = emailAddress;
           };
@@ -77,6 +77,18 @@
             imports = importsCommon;
             home.packages = with pkgs; [ discord slack ];
             xresources.properties = { "Xft.dpi" = "96"; };
+            programs.git.userEmail = emailAddress;
+          };
+        };
+
+        rpi = inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs username homeDirectory stateVersion;
+          system = "aarch64-linux";
+          configuration = { config, pkgs, ... }: {
+            nixpkgs.overlays = overlaysCommon;
+            imports = importsCommon;
+            home.packages = with pkgs; [ ];
+            xresources.properties = { "Xft.dpi" = "64"; };
             programs.git.userEmail = emailAddress;
           };
         };
@@ -133,7 +145,7 @@
               # :read !head -c4 /dev/urandom | od -A none -t x4
               networking.hostId = "624e2a63";
               networking.hostName = "karl-laptop";
-              networking.interfaces.enp0s20u3.useDHCP = true;
+              networking.networkmanager.enable = true;
               nixpkgs.config.allowUnfree = true; # memtest86+
               nixpkgs.config.packageOverrides = pkgs: {
                 vaapiIntel =
@@ -145,6 +157,37 @@
                 vaapiVdpau
                 libvdpau-va-gl
               ];
+              # Need full for bluetooth support
+              hardware.pulseaudio.package = pkgs.pulseaudioFull;
+            })
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+          ];
+        };
+
+        rpi = lib.nixosSystem {
+          system = aarch64-linux;
+          modules = modulesCommon ++ [
+            ./machines/rpi.nix
+            ({ config, ... }: {
+              # Let 'nixos-version --json' know about the Git revision
+              system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+              # Define hostId for zfs pool machine 'binding'
+              # :read !head -c4 /dev/urandom | od -A none -t x4
+              networking.hostId = "c3f22703";
+              networking.hostName = "rpi";
+              networking.networkmanager.enable = true;
+              nixpkgs.config.allowUnfree = true; # memtest86+
+              # https://nixos.wiki/wiki/NixOS_on_ARM/Raspberry_Pi_3
+              boot.kernelParams = [ "console=ttyS1,115200n8" ];
+              boot.loader.raspberryPi.firmwareConfig = ''
+                dtparam=audio=on
+              '';
+              hardware.enableRedistributableFirmware = true;
+              # additional configuration required to enable bluetooth
             })
             inputs.home-manager.nixosModules.home-manager
             {

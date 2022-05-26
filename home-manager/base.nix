@@ -26,9 +26,9 @@
     fd
     file
     fzf
+    gron # sed'able json
     htop
     jq
-    jid # json repl
     libqalculate # qalc - CLI calculator
     lsof
     mage

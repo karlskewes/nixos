@@ -19,29 +19,14 @@
     stylua
     sumneko-lua-language-server
 
-    # java
-    gradle_6
-    groovy
-    # java-language-server
-    jdk11
-    kotlin
-    kotlin-language-server
-
-    # web
-    hugo
-
     # clouds
-    awscli2
+    # awscli2
     nodejs # neovim
-    pulumi-bin
-    terraform
 
     # kubernetes
-    kind
     kubectl
     kubectx
     kubeval
-    stern
   ];
 
   programs.go = {
