@@ -171,9 +171,13 @@ lvim.plugins = {
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
-lvim.autocommands.custom_groups = {
-    -- Trim all trailing whitespace
+-- Trim all trailing whitespace
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*"},
     -- @ separater, double back slash for lua escape
-    {'BufWritePre', '*', ':%s@\\s\\+$@@e'}, -- TODO: PR this change to vim-shfmt
-    {'BufWritePre', '*.bats', 'Shfmt -ln bats'}
-}
+    command = ":%s@\\s\\+$@@e"
+})
+
+-- TODO: PR this change to vim-shfmt
+vim.api.nvim_create_autocmd("BufWritePre",
+                            {pattern = {"*.bats"}, command = "shfmt -ln bats"})
