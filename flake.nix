@@ -169,7 +169,7 @@
         };
 
         rpi = lib.nixosSystem {
-          system = aarch64-linux;
+          system = "aarch64-linux";
           modules = modulesCommon ++ [
             ./machines/rpi.nix
             ({ config, ... }: {
