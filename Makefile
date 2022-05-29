@@ -22,12 +22,10 @@ nix-extra: ## Create nix-extra with any sensitive values
 
 .PHONY: build
 build: ## Build latest NixOS & home-manager configuration
-	# update nix-extra reference in case changed
+	# update nix-extra reference if first time after install
 	nix flake lock --update-input nix-extra
 	# rebuild configuration per --flake .#${hostname}
 	nixos-rebuild build --flake .#
-	# build home-manager
-	nix build .#homeManagerConfigurations.$$(hostname).activationPackage
 
 .PHONY: switch
 switch: build ## Build latest and switch

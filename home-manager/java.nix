@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    java
     gradle_6
     groovy
     java-language-server

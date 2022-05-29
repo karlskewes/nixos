@@ -5,6 +5,10 @@
   programs.home-manager.enable = true;
   news.display = "silent";
 
+  home.username = "karl";
+  home.homeDirectory = "/home/karl";
+  home.stateVersion = "22.05";
+
   # manage XDG directories
   xdg.enable = true;
   # recursively symlink LunarVim configuration
@@ -69,8 +73,10 @@
     enable = true;
 
     initExtra = ''
-      # source our session variables otherwise not used - unsure why
-      . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      # https://github.com/nix-community/home-manager/issues/1011
+      # https://nix-community.github.io/home-manager/index.html#_why_are_the_session_variables_not_set
+      # source our session variables otherwise not used in x sessions
+      . "/etc/profiles/per-user/karl/etc/profile.d/hm-session-vars.sh"
 
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
