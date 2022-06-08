@@ -27,6 +27,10 @@ build: ## Build latest NixOS & home-manager configuration
 	# rebuild configuration per --flake .#${hostname}
 	nixos-rebuild build --flake .#
 
+.PHONY: diff
+diff: build ## Build and diff
+	nix-diff /run/current-system ./result
+
 .PHONY: switch
 switch: build ## Build latest and switch
 	# Workaround CVE mitigation issue: https://github.com/NixOS/nixpkgs/pull/173170

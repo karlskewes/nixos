@@ -2,12 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
-{
+let username = "karl";
+
+in {
   # system user
-  users.users.karl = {
-    home = "/home/karl";
+  users.users.${username} = {
+    home = "/home/${username}";
     isNormalUser = true;
     extraGroups = [ "audio" "docker" "wheel" ];
     # nix-shell -p mkpasswd
@@ -34,6 +36,7 @@
     git # can't build without it
     gnumake
     home-manager
+    nix-diff # nix-diff /run/current-system ./result
     xclip
     vim
     wget

@@ -94,8 +94,9 @@ table.insert(runtime_path, "lua/?/init.lua")
 -- require("lspconfig")["sumneko_lua"].setup({
 require("lvim.lsp.manager").setup("sumneko_lua", {
     cmd = {
-        "/home/karl/.nix-profile/bin/lua-language-server", "-E",
-        "/home/karl/.nix-profile/share/lua-language-server/main.lua"
+        -- TODO: support home-manager only lua-language server under /home/..
+        "/etc/profiles/per-user/karl/bin/lua-language-server", "-E",
+        "/etc/profiles/per-user/karl/share/lua-language-server/main.lua"
     },
     settings = {
         Lua = {

@@ -1,6 +1,8 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, username, emailAddress, ... }:
 
-let username = "karl";
+let
+  username = "karl";
+  emailAddress = "karl.skewes@gmail.com";
 
 in {
   # Let Home Manager install and manage itself.
@@ -78,7 +80,7 @@ in {
       # https://github.com/nix-community/home-manager/issues/1011
       # https://nix-community.github.io/home-manager/index.html#_why_are_the_session_variables_not_set
       # source our session variables otherwise not used in x sessions
-      . "/etc/profiles/per-user/karl/etc/profile.d/hm-session-vars.sh"
+      . "/etc/profiles/per-user/${username}/etc/profile.d/hm-session-vars.sh"
 
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
@@ -134,6 +136,7 @@ in {
   programs.git = {
     enable = true;
     userName = "Karl Skewes";
+    userEmail = "${emailAddress}";
 
     aliases = {
       ca = "commit --amend";

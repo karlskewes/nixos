@@ -86,7 +86,6 @@
                   slack
                 ];
                 xresources.properties = { "Xft.dpi" = "109"; };
-                programs.git.userEmail = emailAddress;
               };
             }
           ];
@@ -132,7 +131,6 @@
                   slack
                 ];
                 xresources.properties = { "Xft.dpi" = "96"; };
-                programs.git.userEmail = emailAddress;
               };
             }
           ];
@@ -176,7 +174,6 @@
               home-manager.users.${username} = {
                 imports = importsCommon;
                 xresources.properties = { "Xft.dpi" = "64"; };
-                programs.git.userEmail = emailAddress;
               };
             }
           ];
