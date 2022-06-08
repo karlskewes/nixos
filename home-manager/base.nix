@@ -1,12 +1,14 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
-{
+let username = "karl";
+
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
 
-  home.username = "karl";
-  home.homeDirectory = "/home/karl";
+  home.username = "${username}";
+  home.homeDirectory = "/home/${username}";
   home.stateVersion = "22.05";
 
   # manage XDG directories
