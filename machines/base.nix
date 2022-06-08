@@ -2,14 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, username, ... }:
+{ config, pkgs, currentUser, currentSystem, currentSystemName, ... }:
 
-let username = "karl";
-
-in {
+{
   # system user
-  users.users.${username} = {
-    home = "/home/${username}";
+  users.users.${currentUser} = {
+    home = "/home/${currentUser}";
     isNormalUser = true;
     extraGroups = [ "audio" "docker" "wheel" ];
     # nix-shell -p mkpasswd
@@ -21,14 +19,33 @@ in {
 
   time.timeZone = "Pacific/Auckland";
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.kernelParams = [ "nohibernate" ]; # not supported by zfs
-  boot.zfs.devNodes = "/dev/disk/by-path";
-  boot.zfs.requestEncryptionCredentials = true; # prompt for encryption password
+  # TODO: tidy/de-dupe/other?
+  boot = if currentSystem == "x86_64-linux" then {
+    loader.systemd-boot.enable = true;
+    loader.systemd-boot.memtest86.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    supportedFilesystems = [ "zfs" ];
+    kernelParams = [ "nohibernate" ]; # not supported by zfs
+    zfs.devNodes = "/dev/disk/by-path";
+    zfs.requestEncryptionCredentials = true; # prompt for encryption password
+  } else if currentSystem == "aarch64-linux" then {
+    loader.grub.enable = false;
+    # loader.generic-extlinux-compatible.enable = true;
+    loader.raspberryPi.enable = true;
+    loader.raspberryPi.version = 3;
+    loader.raspberryPi.uboot.enable = true;
+    loader.raspberryPi.firmwareConfig = ''
+      dtparam=audio=on
+    '';
+    consoleLogLevel = pkgs.lib.mkDefault 7;
+    supportedFilesystems = [ "zfs" ];
+    kernelParams = [ "console=ttyS1,115200n8" "nohibernate" ];
+    kernelPackages = pkgs.linuxPackages_rpi3;
+    zfs.devNodes = "/dev/disk/by-path";
+    zfs.requestEncryptionCredentials = true; # prompt for encryption password
+  } else
+  # unknown arch, build should fail due to lack of boot.loader
+    { };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -46,6 +63,7 @@ in {
 
   # Still problematic in 2021
   networking.enableIPv6 = false;
+  networking.hostName = "${currentSystemName}";
   networking.nat.enableIPv6 = true;
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.

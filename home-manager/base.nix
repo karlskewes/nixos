@@ -1,7 +1,7 @@
-{ config, pkgs, username, emailAddress, ... }:
+{ config, pkgs, user, emailAddress, ... }:
 
 let
-  username = "karl";
+  user = "karl";
   emailAddress = "karl.skewes@gmail.com";
 
 in {
@@ -9,8 +9,8 @@ in {
   programs.home-manager.enable = true;
   news.display = "silent";
 
-  home.username = "${username}";
-  home.homeDirectory = "/home/${username}";
+  home.username = "${user}";
+  home.homeDirectory = "/home/${user}";
   home.stateVersion = "22.05";
 
   # manage XDG directories
@@ -80,7 +80,7 @@ in {
       # https://github.com/nix-community/home-manager/issues/1011
       # https://nix-community.github.io/home-manager/index.html#_why_are_the_session_variables_not_set
       # source our session variables otherwise not used in x sessions
-      . "/etc/profiles/per-user/${username}/etc/profile.d/hm-session-vars.sh"
+      . "/etc/profiles/per-user/${user}/etc/profile.d/hm-session-vars.sh"
 
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
