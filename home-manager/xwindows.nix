@@ -17,7 +17,7 @@
 
     firefox
     i3lock-fancy
-    google-chrome
+    # google-chrome # no aarch64-linux
     libnotify # required by dunst
     pavucontrol
     qalculate-gtk

@@ -18,8 +18,7 @@ make update
 
 ### Prepare USB stick
 
-Until nix >= 2.4 available the simplest way to get flakes support is to use
-[unstable ISO](https://releases.nixos.org/nixos/unstable)
+[Download ISO](https://nixos.org/download.html)
 
 ### Create partitions
 

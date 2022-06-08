@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     # dev
     bats
-    delve
+    # delve # no aarch64-linux
     go-jsonnet
     golangci-lint
     jsonnet-bundler
@@ -22,6 +22,11 @@
     # clouds
     # awscli2
     nodejs # neovim
+
+    python39 # neovim # https://docs.python.org/3/
+    python39Packages.flake8
+    pylint
+    black
 
     # kubernetes
     kubectl

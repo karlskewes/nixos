@@ -78,7 +78,13 @@
               home-manager.useUserPackages = true;
               home-manager.users.${username} = {
                 imports = importsCommon;
-                home.packages = with pkgs; [ discord kind slack ];
+                home.packages = with pkgs; [
+                  delve
+                  discord
+                  google-chrome
+                  kind
+                  slack
+                ];
                 xresources.properties = { "Xft.dpi" = "109"; };
                 programs.git.userEmail = emailAddress;
               };
@@ -119,7 +125,12 @@
               home-manager.useUserPackages = true;
               home-manager.users.${username} = {
                 imports = importsCommon;
-                home.packages = with pkgs; [ discord slack ];
+                home.packages = with pkgs; [
+                  delve
+                  google-chrome
+                  discord
+                  slack
+                ];
                 xresources.properties = { "Xft.dpi" = "96"; };
                 programs.git.userEmail = emailAddress;
               };
@@ -129,8 +140,7 @@
 
         rpi = inputs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          # FIXME: need to use pkgsArm as 'pkgs'
-          inherit pkgsArm;
+          pkgs = pkgsArm;
           modules = modulesCommon ++ [
             ./machines/rpi.nix
             ({ config, ... }: {
