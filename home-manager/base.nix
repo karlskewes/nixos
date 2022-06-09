@@ -76,7 +76,13 @@
       # https://github.com/nix-community/home-manager/issues/1011
       # https://nix-community.github.io/home-manager/index.html#_why_are_the_session_variables_not_set
       # source our session variables otherwise not used in x sessions
-      . "/etc/profiles/per-user/${currentUser}/etc/profile.d/hm-session-vars.sh"
+      if [[ -f "/etc/profiles/per-user/${currentUser}/etc/profile.d/hm-session-vars.sh" ]]; then
+        source "/etc/profiles/per-user/${currentUser}/etc/profile.d/hm-session-vars.sh"
+      fi
+      if [[ -f "/home/${currentUser}/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
+        source "/home/${currentUser}/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      fi
+
 
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
