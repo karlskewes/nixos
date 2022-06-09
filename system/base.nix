@@ -120,7 +120,7 @@
   };
 
   # Let 'nixos-version --json' know about the Git revision
-  system.configurationRevision = currentRevision;
+  # system.configurationRevision = currentRevision;
 
   # Virtualization settings
   # Make sure to mount ext4 partition at /var/lib/docker else Kind doesn't work.

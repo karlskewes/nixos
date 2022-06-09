@@ -7,6 +7,7 @@
     # delve # no aarch64-linux
     go-jsonnet
     golangci-lint
+    gotools
     jsonnet-bundler
     lua
     luaformatter
@@ -36,6 +37,6 @@
 
   programs.go = {
     enable = true;
-    package = pkgs.go_1_17;
+    package = pkgs.go_1_18;
   };
 }

@@ -123,15 +123,20 @@ require("lvim.lsp.manager").setup("sumneko_lua", {
 -- set a formatter if you want to override the default lsp one (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-    {exe = "black", filetypes = {"python"}},
-    {exe = "lua-format", filetypes = {"lua"}},
-    {exe = "prettier", filetypes = {"markdown"}},
-    {exe = "nixfmt", filetypes = {"nix"}}
+    {command = "black", filetypes = {"python"}},
+    {command = "goimports", filetypes = {"go"}}, -- be nice if this was in gopls
+    {command = "lua-format", filetypes = {"lua"}},
+    {command = "prettier", filetypes = {"markdown"}},
+    {command = "nixfmt", filetypes = {"nix"}}
 }
 
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {{exe = "flake8"}, {exe = "pylint"}, {exe = "write-good"}}
+linters.setup {
+    {command = "flake8", filetypes = {"python"}},
+    {command = "pylint", filetypes = {"python"}}, --
+    {command = "write-good"}
+}
 
 -- Additional Plugins
 lvim.plugins = {

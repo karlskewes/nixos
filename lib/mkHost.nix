@@ -39,6 +39,5 @@ nixpkgs.lib.nixosSystem rec {
         currentEmailAddress = emailAddress;
       };
     }
-
   ];
 }
