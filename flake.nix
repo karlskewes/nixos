@@ -27,7 +27,6 @@
       configRev = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
 
       user = "karl";
-      # TODO: use email address
       emailAddress = "karl.skewes@gmail.com";
       # TODO: move imports into mkHost.nix
       importsCommon = [
@@ -39,7 +38,7 @@
     in {
       nixosConfigurations = {
         karl-desktop = mkHost "karl-desktop" rec {
-          inherit nixpkgs home-manager overlays nix-extra user;
+          inherit nixpkgs home-manager overlays nix-extra user emailAddress;
           system = "x86_64-linux";
           machineConfig = ({ config, pkgs, ... }: {
             system.configurationRevision = configRev;
@@ -69,7 +68,7 @@
         };
 
         karl-laptop = mkHost "karl-laptop" rec {
-          inherit nixpkgs home-manager overlays nix-extra user;
+          inherit nixpkgs home-manager overlays nix-extra user emailAddress;
           system = "x86_64-linux";
           machineConfig = ({ config, pkgs, ... }: {
             system.configurationRevision = configRev;
@@ -98,7 +97,7 @@
         };
 
         rpi = mkHost "rpi" rec {
-          inherit nixpkgs home-manager overlays nix-extra user;
+          inherit nixpkgs home-manager overlays nix-extra user emailAddress;
           system = "aarch64-linux";
           machineConfig = ({ config, pkgs, ... }: {
             system.configurationRevision = configRev;

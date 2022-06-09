@@ -1,8 +1,8 @@
 # based on: https://github.com/mitchellh/nixos-config/blob/main/lib/mkvm.nix
 # This function creates a NixOS system based for a particular architecture.
 name:
-{ nixpkgs, home-manager, system, user, overlays, nix-extra, machineConfig ? { }
-, homeConfig ? { } }:
+{ nixpkgs, home-manager, system, user, emailAddress, overlays, nix-extra
+, machineConfig ? { }, homeConfig ? { } }:
 
 nixpkgs.lib.nixosSystem rec {
   inherit system;
@@ -24,6 +24,12 @@ nixpkgs.lib.nixosSystem rec {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${user} = homeConfig;
+      # We expose some extra arguments so that our imports can parameterize
+      # better based on these values.
+      home-manager.extraSpecialArgs = {
+        currentUser = user;
+        currentEmailAddress = emailAddress;
+      };
     }
 
     # We expose some extra arguments so that our modules can parameterize
