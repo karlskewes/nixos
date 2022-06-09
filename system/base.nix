@@ -2,7 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, currentUser, currentSystem, currentSystemName, ... }:
+{ config, pkgs, currentRevision, currentUser, currentSystem, currentSystemName
+, ... }:
 
 {
   # system user
@@ -117,6 +118,9 @@
     autoSnapshot.enable = true;
     trim.enable = true;
   };
+
+  # Let 'nixos-version --json' know about the Git revision
+  system.configurationRevision = currentRevision;
 
   # Virtualization settings
   # Make sure to mount ext4 partition at /var/lib/docker else Kind doesn't work.
