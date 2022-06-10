@@ -32,6 +32,7 @@
     fzf
     gron # sed'able json
     htop
+    iptraf-ng
     jq
     libqalculate # qalc - CLI calculator
     lsof
@@ -40,6 +41,7 @@
     rename
     ripgrep
     rpl
+    sshfs # android phone SimpleSSHD
     tree
     unzip
     xclip
