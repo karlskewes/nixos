@@ -28,9 +28,6 @@ lsblk
 # dd if=~/Downloads/nixos-minimal-22.05.538.d9794b04bff-x86_64-linux.iso of=
 ```
 
-Resize the main partition to give room for nix store to build else we'll fail
-during build later.
-
 ### Create partitions
 
 Make sure to recreate swap partition or perform `zpool labelclear /dev/<swap|zpool-root>` to avoid `cannot import, more than 1 matching pool` error.
@@ -81,18 +78,22 @@ git add .
 Login and clone this repository on new machine:
 
 ```
-nix-shell -p gnumake git
+nix-shell -p git
 
 git clone https://github.com/kskewes/nixos.git
 cd nixos
 
-# create nix-extra
-make nix-extra
-
 # set hostname for flake to match on (default nixos)
 sudo hostname <machine>
 
-# build and install flake without Home Manager (FIXME)
+# increase tmpfs
+mount -o remount,size=10G /nix/.rw-store
+
+# remove as many imports as can otherwise can run out of space on low memory
+# machines, eg: xwindows, dev, xserver
+vim flake.nix
+
+# build and install flake
 make install
 
 reboot

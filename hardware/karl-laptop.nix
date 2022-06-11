@@ -28,12 +28,12 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/4AD5-E80C";
+    device = "/dev/disk/by-uuid/6D29-2988";
     fsType = "vfat";
   };
 
   swapDevices = [{
-    device = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B-part4";
+    device = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B-part2";
   }];
 
   hardware.cpu.intel.updateMicrocode =
