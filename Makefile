@@ -41,9 +41,11 @@ switch: build ## Build latest and switch
 .PHONY: install
 install: nix-extra ## Install NixOS for the first time
 	sed -i 's@home/karl/src/nix-extra@home/nixos/src/nix-extra@' flake.nix
-	nix flake lock --update-input nix-extra
+	nix --extra-experimental-features "nix-command flakes" flake lock --update-input nix-extra
+	hn='$(shell read -p "enter hostname: ")' && \
+		 sudo hostname "$${hn}"
 	nixos-rebuild build --flake .#$$(hostname)
-	sudo nixos-install --impure --root /mnt --flake .#$$(hostname)
+	sudo nixos-install --extra-experimental-features "nix-command flakes" --impure --root /mnt --flake .#$$(hostname)
 
 .PHONY: clean
 clean: ## Clean old generations

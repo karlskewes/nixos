@@ -23,7 +23,7 @@ SWAP_PART=2
 ROOT_PART=3
 
 zpool_create() {
-	sudo zpool create \
+	zpool create \
 		-o ashift=12 \
 		-o autotrim=on \
 		-R /mnt \
@@ -97,11 +97,11 @@ make_swap() {
 
 mount_volumes() {
 	mkdir -p /mnt
-	zfs mount "${RPOOL}/snap/root" /mnt
+	mount -t zfs "${RPOOL}/snap/root" /mnt
 	mkdir -p /mnt/nix
-	zfs mount "${RPOOL}/nosnap/nix" /mnt/nix
+	mount -t zfs "${RPOOL}/nosnap/nix" /mnt/nix
 	mkdir -p /mnt/var/lib/docker
-	zfs mount "${RPOOL}/nosnap/docker" /mnt/var/lib/docker
+	mount -t zfs "${RPOOL}/nosnap/docker" /mnt/var/lib/docker
 }
 
 nixos_generate_config() {
@@ -144,4 +144,4 @@ ROOT_PART=${ROOT_PART}
 	nixos_generate_config
 }
 
-main
+main "$@"

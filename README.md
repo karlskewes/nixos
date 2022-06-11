@@ -20,6 +20,17 @@ make update
 
 [Download ISO](https://nixos.org/download.html)
 
+Burn to usb
+
+```
+lsblk
+
+# dd if=~/Downloads/nixos-minimal-22.05.538.d9794b04bff-x86_64-linux.iso of=
+```
+
+Resize the main partition to give room for nix store to build else we'll fail
+during build later.
+
 ### Create partitions
 
 Make sure to recreate swap partition or perform `zpool labelclear /dev/<swap|zpool-root>` to avoid `cannot import, more than 1 matching pool` error.
