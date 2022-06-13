@@ -51,6 +51,7 @@ lvim.keys.visual_mode["<C-y>"] = '"+y' -- copy block to system clipboard
 lvim.keys.visual_mode["<C-p>"] = '"+p' -- paste block from system clipboard
 lvim.keys.insert_mode["<F9>"] = "<ESC>:make<CR>==gi"
 lvim.keys.normal_mode["<F9>"] = ":make<CR>=="
+lvim.keys.normal_mode["<F8>"] = '<CMD>lua require("dapui").toggle()<CR>'
 
 -- User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -66,7 +67,8 @@ lvim.builtin.dap.active = true
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+lvim.builtin.nvimtree.setup.renderer.highlight_git = true
+lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 
 lvim.builtin.treesitter.ensure_installed = {
     "bash", "c", "dockerfile", "go", "gomod", "gowork", "hcl", "html",
@@ -140,10 +142,14 @@ linters.setup {
 
 -- Additional Plugins
 lvim.plugins = {
-    {'aliou/bats.vim'}, {'kdheepak/lazygit.nvim'}, {'google/vim-jsonnet'}, {
+    {'aliou/bats.vim'}, {'kdheepak/lazygit.nvim'},
+    {'leoluz/nvim-dap-go', config = function() require"dap-go".setup() end},
+    {'mfussenegger/nvim-dap-python'}, {'google/vim-jsonnet'}, {
         "ray-x/lsp_signature.nvim",
-        event = "BufRead",
-        config = function() require"lsp_signature".setup() end
+        config = function()
+            require"lsp_signature".on_attach({fix_pos = true})
+        end,
+        event = "BufRead"
     }, {
         "ethanholz/nvim-lastplace",
         event = "BufRead",
@@ -166,7 +172,24 @@ lvim.plugins = {
             -- "Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code.
             -- vim.cmd("let g:terraform_fold_sections=0")
         end
-    }, {"rcarriga/nvim-dap-ui"}, {
+    }, {
+        "rcarriga/nvim-dap-ui",
+        config = function()
+            require"dapui".setup({
+                sidebar = {elements = {}, size = 0, position = "bottom"},
+                tray = {
+                    elements = {
+                        {id = "scopes", size = 0.40},
+                        {id = "breakpoints", size = 0.20},
+                        {id = "stacks", size = 0.40}
+                        -- {id = "watches", size = 0.25}
+                    },
+                    size = 15,
+                    position = "bottom"
+                }
+            })
+        end
+    }, {
         "rcarriga/vim-ultest",
         cmd = {"Ultest", "UltestSummary", "UltestNearest"},
         wants = "vim-test",

@@ -26,6 +26,7 @@
 
     python39 # neovim # https://docs.python.org/3/
     python39Packages.flake8
+    python39Packages.pip
     pylint
     black
 

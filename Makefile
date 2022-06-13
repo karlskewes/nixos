@@ -36,7 +36,7 @@ switch: build ## Build latest and switch
 	# Workaround CVE mitigation issue: https://github.com/NixOS/nixpkgs/pull/173170
 	sudo git config --global --add safe.directory "$${PWD}"
 	sudo nixos-rebuild switch --flake .#
-	./result/activate
+	sudo ./result/activate
 
 .PHONY: install
 install: nix-extra ## Install NixOS for the first time

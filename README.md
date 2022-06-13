@@ -83,11 +83,8 @@ nix-shell -p git
 git clone https://github.com/kskewes/nixos.git
 cd nixos
 
-# set hostname for flake to match on (default nixos)
-sudo hostname <machine>
-
-# increase tmpfs
-mount -o remount,size=10G /nix/.rw-store
+# increase tmpfs so we don't run out of space during nix build & install
+sudo mount -o remount,size=10G /nix/.rw-store
 
 # remove as many imports as can otherwise can run out of space on low memory
 # machines, eg: xwindows, dev, xserver
@@ -122,7 +119,7 @@ make switch
 zpool import
 
 # decrypt pool
-zfs load-key -r rpool/
+zfs load-key -r rpool
 
 # mount fs
 mount -t zfs rpool/root /mnt/root
