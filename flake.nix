@@ -28,6 +28,9 @@
 
       user = "karl";
       emailAddress = "karl.skewes@gmail.com";
+      authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew karl.skewes@gmail.com"
+      ];
       importsCommon = [
         ./home-manager/base.nix
         ./home-manager/dev.nix
@@ -43,7 +46,7 @@
       nixosConfigurations = {
         karl-desktop = mkHost "karl-desktop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress extraModules;
+            emailAddress extraModules authorizedKeys;
           system = "x86_64-linux";
           homeConfig = ({ config, pkgs, ... }: {
             imports = importsCommon;
@@ -60,7 +63,7 @@
 
         karl-laptop = mkHost "karl-laptop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress extraModules;
+            emailAddress extraModules authorizedKeys;
           system = "x86_64-linux";
           homeConfig = ({ config, pkgs, ... }: {
             imports = importsCommon;
@@ -71,7 +74,7 @@
 
         rpi = mkHost "rpi" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress extraModules;
+            emailAddress extraModules authorizedKeys;
           system = "aarch64-linux";
           homeConfig = ({ config, pkgs, ... }: {
             imports = importsCommon;

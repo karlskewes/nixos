@@ -12,12 +12,8 @@ fmt: ## Format *.nix
 nix-extra: ## Create nix-extra with any sensitive values
 	mkdir -p ~/src/nix-extra
 	password='$(shell mkpasswd -m sha-512)' && \
-					 read -p "enter authorized ssh pub key: " key && \
 					 echo "{ config, pkgs, ... }:" \
-					 "{ users.users.karl = { " \
-					 "hashedPassword = \"$${password}\"; " \
-					 "openssh.authorizedKeys.keys = [ \"$${key}\" ];" \
-					 "}; }" \
+					 "{ users.users.karl.hashedPassword = \"$${password}\"; }" \
 					 > ~/src/nix-extra/nixos.nix
 
 .PHONY: build

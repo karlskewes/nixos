@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, currentRevision, currentUser, currentSystem, currentSystemName
-, ... }:
+, currentAuthorizedKeys, ... }:
 
 {
   # system user
@@ -14,6 +14,7 @@
     # nix-shell -p mkpasswd
     # vim -> :read !mkpasswd -m sha-512
     # hashedPassword = "";
+    openssh.authorizedKeys.keys = currentAuthorizedKeys;
   };
   # Users password/etc are set from source
   users.mutableUsers = false;
