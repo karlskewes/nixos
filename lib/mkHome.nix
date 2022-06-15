@@ -2,7 +2,7 @@
 # This function creates a standalone Home Manager configuration.
 name:
 { nixpkgs, home-manager, system, user, emailAddress, overlays, homeDirectory
-, stateVersion, homeConfig ? { }, extraModules ? [ ] }:
+, stateVersion, homeConfig ? { }, hmExtraModules ? [ ] }:
 
 home-manager.lib.homeManagerConfiguration rec {
   inherit system homeDirectory stateVersion;
@@ -16,7 +16,7 @@ home-manager.lib.homeManagerConfiguration rec {
 
     } + homeConfig;
 
-  extraModules = extraModules;
+  extraModules = hmExtraModules;
   extraSpecialArgs = {
     currentUser = user;
     currentEmailAddress = emailAddress;
