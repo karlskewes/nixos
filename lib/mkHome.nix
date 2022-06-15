@@ -14,7 +14,7 @@ home-manager.lib.homeManagerConfiguration rec {
       nixpkgs.config.allowUnfreePredicate = pkg:
         builtins.elem (nixpkgs.lib.getName pkg) [ "google-chrome" "slack" ];
 
-    } + homeConfig;
+    } // homeConfig;
 
   extraModules = hmExtraModules;
   extraSpecialArgs = {
