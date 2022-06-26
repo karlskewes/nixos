@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     # dev
     bats
-    # delve # no aarch64-linux
+    delve
     go-jsonnet
     golangci-lint
     gotools
@@ -22,6 +22,7 @@
 
     # clouds
     # awscli2
+
     nodejs # neovim
 
     python39 # neovim # https://docs.python.org/3/

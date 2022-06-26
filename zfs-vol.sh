@@ -12,18 +12,22 @@ set -x -o errexit -o nounset -o pipefail
 
 #RPOOL should be unique across machines so can 'zfs import' without collisions.
 #RPOOL=rpool-asus
-RPOOL=
+RPOOL=rpool-rpi1
 
 # Read disks into vim: `read !ls /dev/disk/by-id/*`
 #ROOT_DISK='/dev/disk/by-id/ata-FOO'
-ROOT_DISK=
+ROOT_DISK=/dev/disk/by-id/usb-Apacer_A_S340_120GB_0123456789ABCDEF-0:0
 
 BOOT_PART=1
 SWAP_PART=2
 ROOT_PART=3
 
+# disable encryption for rpi's as no easy way to unlock (without doing ssh)
+ENCRYPTION="false"
+# ENCRYPTION="true"
+
 zpool_create() {
-	zpool create \
+	cmd='zpool create \
 		-o ashift=12 \
 		-o autotrim=on \
 		-R /mnt \
@@ -34,12 +38,15 @@ zpool_create() {
 		-O dnodesize=auto \
 		-O normalization=formD \
 		-O relatime=on \
-		-O xattr=sa \
-		-O encryption=aes-256-gcm \
-		-O keylocation=prompt \
-		-O keyformat=passphrase \
-		"${RPOOL}" \
-		"${ROOT_DISK}-part${ROOT_PART}"
+		-O xattr=sa'
+
+	if [[ "${ENCRYPTION}" == "true" ]]; then
+		cmd+=' -O encryption=aes-256-gcm -O keylocation=prompt -O keyformat=passphrase'
+	fi
+
+	cmd+=" ${RPOOL}"
+	cmd+=" ${ROOT_DISK}-part${ROOT_PART}"
+	eval "${cmd}"
 }
 
 zfs_create() {
@@ -86,8 +93,9 @@ zfs_create() {
 }
 
 make_boot_dir() {
-	mkdir /mnt/boot
-	mount "${ROOT_DISK}-part${BOOT_PART}" /mnt/boot
+	mkdir /mnt/install/boot
+	# mkfs.vfat "${ROOT_DISK}-part${BOOT_PART}"
+	mount "${ROOT_DISK}-part${BOOT_PART}" /mnt/install/boot
 }
 
 make_swap() {
@@ -96,16 +104,16 @@ make_swap() {
 }
 
 mount_volumes() {
-	mkdir -p /mnt
-	mount -t zfs "${RPOOL}/snap/root" /mnt
-	mkdir -p /mnt/nix
-	mount -t zfs "${RPOOL}/nosnap/nix" /mnt/nix
-	mkdir -p /mnt/var/lib/docker
-	mount -t zfs "${RPOOL}/nosnap/docker" /mnt/var/lib/docker
+	mkdir -p /mnt/install/
+	mount -t zfs "${RPOOL}/snap/root" /mnt/install/
+	mkdir -p /mnt/install/nix
+	mount -t zfs "${RPOOL}/nosnap/nix" /mnt/install/nix
+	mkdir -p /mnt/install/var/lib/docker
+	mount -t zfs "${RPOOL}/nosnap/docker" /mnt/install/var/lib/docker
 }
 
 nixos_generate_config() {
-	nixos-generate-config --root /mnt
+	nixos-generate-config --root /mnt/install/
 }
 
 confirm() {
@@ -131,17 +139,17 @@ ROOT_PART=${ROOT_PART}
   "
 
 	confirm zpool_create
-	zpool_create
+	# zpool_create
 	confirm zfs_create
-	zfs_create
+	# zfs_create
 	confirm make_boot_dir
-	make_boot_dir
+	# make_boot_dir
 	confirm make_swap
 	make_swap
 	confirm mount_volumes
 	mount_volumes
-	confirm nixos_generate_config
-	nixos_generate_config
+	# confirm nixos_generate_config
+	# nixos_generate_config
 }
 
 main "$@"

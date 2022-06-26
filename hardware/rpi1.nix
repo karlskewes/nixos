@@ -13,14 +13,31 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
-    fsType = "ext4";
+    device = "rpool-rpi1/snap/root";
+    fsType = "zfs";
+  };
+
+  fileSystems."/nix" = {
+    device = "rpool-rpi1/nosnap/nix";
+    fsType = "zfs";
+  };
+
+  fileSystems."/var/lib/docker" = {
+    device = "rpool-rpi1/nosnap/docker";
+    fsType = "zfs";
   };
 
   swapDevices = [{
-    device = "/swapfile";
-    size = 1024;
+    device =
+      "/dev/disk/by-id/usb-Apacer_A_S340_120GB_0123456789ABCDEF-0:0-part2";
   }];
+
+  /* sd-card
+     swapDevices = [{
+       device = "/swapfile";
+       size = 1024;
+     }];
+  */
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 }

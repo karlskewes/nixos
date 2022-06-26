@@ -31,16 +31,8 @@
     package = pkgs.vanilla-dmz;
     # size = 64;
   };
-  programs.i3status.enable = true;
 
-  programs.bat = {
-    enable = true;
-    config = {
-      style = "plain";
-      theme = "Solarized (dark)";
-      pager = "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent";
-    };
-  };
+  programs.i3status.enable = true;
 
   programs.kitty = {
     enable = true;

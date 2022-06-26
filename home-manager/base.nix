@@ -137,6 +137,15 @@
     };
   };
 
+  programs.bat = {
+    enable = true;
+    config = {
+      style = "plain";
+      theme = "Solarized (dark)";
+      pager = "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent";
+    };
+  };
+
   programs.git = {
     enable = true;
     userName = "Karl Skewes";

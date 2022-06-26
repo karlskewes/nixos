@@ -41,6 +41,10 @@
         ./system/base.nix
         ./system/xserver.nix
       ];
+      extraModulesRPi = extraModules ++ [
+        ./system/rpi.nix
+        # "${nixpkgs.outPath}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+      ];
 
     in {
       nixosConfigurations = {
@@ -50,13 +54,7 @@
           system = "x86_64-linux";
           homeConfig = ({ config, pkgs, ... }: {
             imports = importsCommon;
-            home.packages = with pkgs; [
-              delve
-              discord
-              google-chrome
-              kind
-              slack
-            ];
+            home.packages = with pkgs; [ discord google-chrome kind slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
         };
@@ -67,19 +65,18 @@
           system = "x86_64-linux";
           homeConfig = ({ config, pkgs, ... }: {
             imports = importsCommon;
-            home.packages = with pkgs; [ delve discord google-chrome slack ];
+            home.packages = with pkgs; [ discord google-chrome slack ];
             xresources.properties = { "Xft.dpi" = "96"; };
           });
         };
 
-        rpi = mkHost "rpi" rec {
+        rpi1 = mkHost "rpi1" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress extraModules authorizedKeys;
+            emailAddress authorizedKeys;
           system = "aarch64-linux";
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = importsCommon;
-            xresources.properties = { "Xft.dpi" = "64"; };
-          });
+          extraModules = extraModulesRPi;
+          homeConfig =
+            ({ config, pkgs, ... }: { imports = [ ./home-manager/base.nix ]; });
         };
       };
     };

@@ -5,7 +5,24 @@
 { config, pkgs, currentRevision, currentUser, currentSystem, currentSystemName
 , currentAuthorizedKeys, ... }:
 
-{
+let
+  bootOptions = if currentSystem == "x86_64-linux" then {
+    loader.systemd-boot.enable = true;
+    loader.systemd-boot.memtest86.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    kernelParams = [ "nohibernate" ]; # not supported by zfs
+  } else if currentSystem == "aarch64-linux" then {
+    # UEFI only - not sdImage
+    loader.systemd-boot.enable = true;
+    loader.systemd-boot.memtest86.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    kernelParams = [ "nohibernate" ]; # not supported by zfs
+    # kernelPackages = pkgs.linuxKernel.packages.linux_5_17;
+  } else
+  # unknown arch, build should fail due to lack of boot.loader
+    { };
+
+in {
   # system user
   users.users.${currentUser} = {
     home = "/home/${currentUser}";
@@ -21,33 +38,11 @@
 
   time.timeZone = "Pacific/Auckland";
 
-  # TODO: tidy/de-dupe/other?
-  boot = if currentSystem == "x86_64-linux" then {
-    loader.systemd-boot.enable = true;
-    loader.systemd-boot.memtest86.enable = true;
-    loader.efi.canTouchEfiVariables = true;
+  boot = {
     supportedFilesystems = [ "zfs" ];
-    kernelParams = [ "nohibernate" ]; # not supported by zfs
     zfs.devNodes = "/dev/disk/by-path";
     zfs.requestEncryptionCredentials = true; # prompt for encryption password
-  } else if currentSystem == "aarch64-linux" then {
-    loader.grub.enable = false;
-    # loader.generic-extlinux-compatible.enable = true;
-    loader.raspberryPi.enable = true;
-    loader.raspberryPi.version = 3;
-    loader.raspberryPi.uboot.enable = true;
-    loader.raspberryPi.firmwareConfig = ''
-      dtparam=audio=on
-    '';
-    consoleLogLevel = pkgs.lib.mkDefault 7;
-    supportedFilesystems = [ "zfs" ];
-    kernelParams = [ "console=ttyS1,115200n8" "nohibernate" ];
-    kernelPackages = pkgs.linuxPackages_rpi3;
-    zfs.devNodes = "/dev/disk/by-path";
-    zfs.requestEncryptionCredentials = true; # prompt for encryption password
-  } else
-  # unknown arch, build should fail due to lack of boot.loader
-    { };
+  } // bootOptions;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
