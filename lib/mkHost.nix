@@ -2,7 +2,8 @@
 # This function creates a NixOS system based for a particular architecture.
 name:
 { nixpkgs, home-manager, nix-extra, overlays, configRev, system, user
-, emailAddress, extraModules ? [ ], homeConfig ? { }, authorizedKeys ? [ ] }:
+, emailAddress, stateVersion, extraModules ? [ ], homeConfig ? { }
+, authorizedKeys ? [ ] }:
 
 nixpkgs.lib.nixosSystem rec {
   inherit system;
@@ -38,6 +39,7 @@ nixpkgs.lib.nixosSystem rec {
       home-manager.extraSpecialArgs = {
         currentUser = user;
         currentEmailAddress = emailAddress;
+        currentStateVersion = stateVersion;
       };
     }
   ];

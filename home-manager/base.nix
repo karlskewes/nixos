@@ -1,4 +1,4 @@
-{ config, pkgs, currentUser, currentEmailAddress, ... }:
+{ config, pkgs, currentUser, currentEmailAddress, currentStateVersion, ... }:
 
 {
   # Let Home Manager install and manage itself.
@@ -7,7 +7,7 @@
 
   home.username = "${currentUser}";
   home.homeDirectory = "/home/${currentUser}";
-  home.stateVersion = "22.05";
+  home.stateVersion = "${currentStateVersion}";
 
   # manage XDG directories
   xdg.enable = true;
