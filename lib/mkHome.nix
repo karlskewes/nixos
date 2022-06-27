@@ -5,7 +5,7 @@ name:
 , hmExtraModules ? [ ] }:
 
 home-manager.lib.homeManagerConfiguration rec {
-  pkgs = nixpkgs.legacyPackges.${system};
+  pkgs = nixpkgs.legacyPackages.${system};
   modules = hmExtraModules ++ [{
     nixpkgs.overlays = overlays;
     nixpkgs.config.allowUnfreePredicate = pkg:
