@@ -12,19 +12,19 @@ set -x -o errexit -o nounset -o pipefail
 
 #RPOOL should be unique across machines so can 'zfs import' without collisions.
 #RPOOL=rpool-asus
-RPOOL=rpool-rpi1
+RPOOL=
 
 # Read disks into vim: `read !ls /dev/disk/by-id/*`
 #ROOT_DISK='/dev/disk/by-id/ata-FOO'
-ROOT_DISK=/dev/disk/by-id/usb-Apacer_A_S340_120GB_0123456789ABCDEF-0:0
+ROOT_DISK=
 
 BOOT_PART=1
 SWAP_PART=2
 ROOT_PART=3
 
 # disable encryption for rpi's as no easy way to unlock (without doing ssh)
-ENCRYPTION="false"
-# ENCRYPTION="true"
+# ENCRYPTION="false"
+ENCRYPTION="true"
 
 zpool_create() {
 	cmd='zpool create \
@@ -139,17 +139,17 @@ ROOT_PART=${ROOT_PART}
   "
 
 	confirm zpool_create
-	# zpool_create
+	zpool_create
 	confirm zfs_create
-	# zfs_create
+	zfs_create
 	confirm make_boot_dir
-	# make_boot_dir
+	make_boot_dir
 	confirm make_swap
 	make_swap
 	confirm mount_volumes
 	mount_volumes
-	# confirm nixos_generate_config
-	# nixos_generate_config
+	confirm nixos_generate_config
+	nixos_generate_config
 }
 
 main "$@"

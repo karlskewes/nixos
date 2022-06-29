@@ -56,7 +56,7 @@ install: nix-extra ## Install NixOS for the first time
 .PHONY: install-rpi-usb
 install-rpi-usb: ## Install NixOS for RPi on USB HDD
 	nixos-rebuild build --flake .#rpi1
-	sudo nixos-install --impure --root /mnt/install/ --flake .#rpi1
+	sudo nixos-install --no-bootloader --impure --root /mnt/install/ --system ./result
 
 .PHONY: clean
 clean: ## Clean old generations
