@@ -41,7 +41,7 @@ install: nix-extra ## Install NixOS for the first time
 	nix --extra-experimental-features "nix-command flakes" flake lock --update-input nix-extra
 	sudo hostname "$$(read -p 'hostname: ' temp && echo $$temp)"
 	nixos-rebuild build --flake .#$$(hostname)
-	sudo nixos-install --impure --root /mnt --flake .#$$(hostname)
+	sudo nixos-install --impure --root /mnt/install/ --flake .#$$(hostname)
 
 .PHONY: clean
 clean: ## Clean old generations

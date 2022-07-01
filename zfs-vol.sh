@@ -143,11 +143,11 @@ ROOT_PART=${ROOT_PART}
 	confirm zfs_create
 	zfs_create
 	confirm make_boot_dir
-	make_boot_dir
-	confirm make_swap
 	make_swap
 	confirm mount_volumes
 	mount_volumes
+	make_boot_dir
+	confirm make_swap
 	confirm nixos_generate_config
 	nixos_generate_config
 }

@@ -32,12 +32,12 @@
       authorizedKeys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew karl.skewes@gmail.com"
       ];
-      importsCommon = [
+      hmModules = [
         ./home-manager/base.nix
         ./home-manager/dev.nix
         ./home-manager/xwindows.nix
       ];
-      extraModules = [
+      nixosModules = [
         "${nix-extra.outPath}/nixos.nix"
         ./system/base.nix
         ./system/xserver.nix
@@ -47,10 +47,11 @@
       nixosConfigurations = {
         karl-desktop = mkHost "karl-desktop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress stateVersion extraModules authorizedKeys;
+            emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
+          extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
-            imports = importsCommon;
+            imports = hmModules;
             home.packages = with pkgs; [ discord kind slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
@@ -58,12 +59,24 @@
 
         karl-laptop = mkHost "karl-laptop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress stateVersion extraModules authorizedKeys;
+            emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
+          extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
-            imports = importsCommon;
+            imports = hmModules;
             home.packages = with pkgs; [ discord slack ];
             xresources.properties = { "Xft.dpi" = "96"; };
+          });
+        };
+
+        shub = mkHost "shub" rec {
+          inherit nixpkgs home-manager nix-extra overlays configRev user
+            emailAddress stateVersion authorizedKeys;
+          system = "x86_64-linux";
+          extraModules = nixosModules;
+          homeConfig = ({ config, pkgs, ... }: {
+            imports = hmModules;
+            home.packages = with pkgs; [ tmux ];
           });
         };
 
