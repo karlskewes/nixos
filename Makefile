@@ -23,16 +23,6 @@ build: ## Build latest NixOS & home-manager configuration
 	# rebuild configuration per --flake .#${hostname}
 	nixos-rebuild build --flake .#
 
-.PHONY: build-rpi-sd-image
-build-rpi-sd-image: ## Build RPi SD Image
-	# update nix-extra reference if first time after install
-	nix flake lock --update-input nix-extra
-	# rebuild configuration per --flake .#${hostname}
-	nixos-rebuild build --flake .#rpi1
-	# build sdImage
-	nix build .#nixosConfigurations.rpi1.config.system.build.sdImage
-	ls -l ./result/sd-image/
-
 .PHONY: diff
 diff: build ## Build and diff
 	nix-diff /run/current-system ./result
@@ -52,11 +42,6 @@ install: nix-extra ## Install NixOS for the first time
 	sudo hostname "$$(read -p 'hostname: ' temp && echo $$temp)"
 	nixos-rebuild build --flake .#$$(hostname)
 	sudo nixos-install --impure --root /mnt --flake .#$$(hostname)
-
-.PHONY: install-rpi-usb
-install-rpi-usb: ## Install NixOS for RPi on USB HDD
-	nixos-rebuild build --flake .#rpi1
-	sudo nixos-install --no-bootloader --impure --root /mnt/install/ --system ./result
 
 .PHONY: clean
 clean: ## Clean old generations

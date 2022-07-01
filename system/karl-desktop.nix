@@ -8,6 +8,4 @@
     rocm-opencl-runtime
   ];
   services.xserver.videoDrivers = [ "amdgpu" ];
-  # enable building aarch64 image
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 }

@@ -17,12 +17,11 @@
 
     firefox
     i3lock-fancy
-    # google-chrome # no aarch64-linux
+    google-chrome
     libnotify # required by dunst
     pavucontrol
     qalculate-gtk
     rofi-power-menu # doesn't work as extra package
-
   ];
 
   home.pointerCursor = {

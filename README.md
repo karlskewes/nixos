@@ -19,7 +19,6 @@ make update
 ### Prepare USB stick
 
 - [x86](https://nixos.org/download.html)
-- [aarch64](https://nixos.wiki/wiki/NixOS_on_ARM/UEFI)
 
 ```
 nix-shell -p zstd --run "unzstd <img-name>.img.zst"

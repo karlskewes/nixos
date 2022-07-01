@@ -5,24 +5,7 @@
 { config, pkgs, currentRevision, currentUser, currentSystem, currentSystemName
 , currentAuthorizedKeys, ... }:
 
-let
-  bootOptions = if currentSystem == "x86_64-linux" then {
-    loader.systemd-boot.enable = true;
-    loader.systemd-boot.memtest86.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    kernelParams = [ "nohibernate" ]; # not supported by zfs
-  } else if currentSystem == "aarch64-linux" then {
-    # UEFI only - not sdImage
-    loader.systemd-boot.enable = true;
-    loader.systemd-boot.memtest86.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    kernelParams = [ "nohibernate" ]; # not supported by zfs
-    # kernelPackages = pkgs.linuxKernel.packages.linux_5_17;
-  } else
-  # unknown arch, build should fail due to lack of boot.loader
-    { };
-
-in {
+{
   # system user
   users.users.${currentUser} = {
     home = "/home/${currentUser}";
@@ -39,10 +22,14 @@ in {
   time.timeZone = "Pacific/Auckland";
 
   boot = {
+    loader.systemd-boot.enable = true;
+    loader.systemd-boot.memtest86.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    kernelParams = [ "nohibernate" ]; # not supported by zfs
     supportedFilesystems = [ "zfs" ];
     zfs.devNodes = "/dev/disk/by-path";
     zfs.requestEncryptionCredentials = true; # prompt for encryption password
-  } // bootOptions;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

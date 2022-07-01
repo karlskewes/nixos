@@ -22,7 +22,7 @@ BOOT_PART=1
 SWAP_PART=2
 ROOT_PART=3
 
-# disable encryption for rpi's as no easy way to unlock (without doing ssh)
+# disable encryption when no easy way to unlock (without doing ssh)
 # ENCRYPTION="false"
 ENCRYPTION="true"
 
