@@ -55,7 +55,7 @@ clean: ## Clean old generations
 	nix-store --optimise
 
 .PHONY: go
-go: go ## Install go utils
+go: ## Install go utils
 	go install -v mvdan.cc/gofumpt@latest
 	go install -v golang.org/x/tools/cmd/godoc@latest
 

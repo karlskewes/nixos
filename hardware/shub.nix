@@ -32,7 +32,10 @@
     fsType = "vfat";
   };
 
-  swapDevices = [ ];
+  swapDevices = [{
+    device =
+      "/dev/disk/by-id/nvme-SAMSUNG_MZVLW128HEGR-000L1_S341NA0K117809-part2";
+  }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

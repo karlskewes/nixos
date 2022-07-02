@@ -90,8 +90,11 @@ cd nixos
 # increase tmpfs so we don't run out of space during nix build & install
 sudo mount -o remount,size=10G /nix/.rw-store
 
-# reduce imports so don't run out of space on low memory machines, for example
-# drop: xwindows, dev, xserver
+# consider mounting swap if run out of memory during build
+sudo swapon /dev/disk/by-id/<disk>-part2
+
+# if still run out of memory, reduce imports, for example
+# comment: xwindows, dev, xserver
 vim flake.nix
 
 # build and install flake
