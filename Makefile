@@ -59,6 +59,10 @@ go: ## Install go utils
 	go install -v mvdan.cc/gofumpt@latest
 	go install -v golang.org/x/tools/cmd/godoc@latest
 
+.PHONY: lunarvim
+lunarvim: ## Install lunarvim
+	LV_BRANCH=rolling bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)
+
 .PHONY: update
 update: ## Update packages
 	nix flake update
