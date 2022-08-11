@@ -24,7 +24,7 @@ make update
 nix-shell -p zstd --run "unzstd <img-name>.img.zst"
 ```
 
-Burn to usb
+Burn to USB
 
 ```
 lsblk
@@ -41,8 +41,8 @@ sudo fdisk /dev/sdX
 ```
 
 - `n`, enter, `+1G` -> `t`, `1`, `uefi`
-- `n`, enter, `+4G` -> `t`, `2`, `swap` - ZFS swap can deadlock under high memory pressure (COW)
-- `n`, enter, enter -> `t`, `3`, `linux` - zfs all files
+- `n`, enter, `+4G` -> `t`, `2`, `swap` - ZFS swap can deadlock under high memory pressure due to copy on write
+- `n`, enter, enter -> `t`, `3`, `linux` - ZFS all files
 - `p`
 - `w`
 

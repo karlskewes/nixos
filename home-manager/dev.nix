@@ -20,16 +20,20 @@
     stylua
     sumneko-lua-language-server
 
-    # clouds
-    # awscli2
+    cargo
+    rustc
 
     nodejs # neovim
 
     python39 # neovim # https://docs.python.org/3/
     python39Packages.flake8
     python39Packages.pip
+    python39Packages.pynvim # lunarvim
     pylint
     black
+
+    # clouds
+    # awscli2
 
     # kubernetes
     kubectl

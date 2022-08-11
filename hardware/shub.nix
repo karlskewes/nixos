@@ -22,6 +22,11 @@
     fsType = "zfs";
   };
 
+  fileSystems."/var/lib/containers" = {
+    device = "rpool-shub/nosnap/containers";
+    fsType = "zfs";
+  };
+
   fileSystems."/var/lib/docker" = {
     device = "rpool-shub/nosnap/docker";
     fsType = "zfs";

@@ -85,6 +85,12 @@ zfs_create() {
 		-o mountpoint=legacy \
 		"${RPOOL}/nosnap/nix"
 
+	# podman manages its own snapshots and containers can be rebuilt
+	zfs create \
+		-o canmount=on \
+		-o mountpoint=legacy \
+		"${RPOOL}/nosnap/containers"
+
 	# docker manages its own snapshots and containers can be rebuilt
 	zfs create \
 		-o canmount=on \
@@ -108,6 +114,8 @@ mount_volumes() {
 	mount -t zfs "${RPOOL}/snap/root" /mnt/install/
 	mkdir -p /mnt/install/nix
 	mount -t zfs "${RPOOL}/nosnap/nix" /mnt/install/nix
+	mkdir -p /mnt/install/var/lib/containers
+	mount -t zfs "${RPOOL}/nosnap/containers" /mnt/install/var/lib/containers
 	mkdir -p /mnt/install/var/lib/docker
 	mount -t zfs "${RPOOL}/nosnap/docker" /mnt/install/var/lib/docker
 }

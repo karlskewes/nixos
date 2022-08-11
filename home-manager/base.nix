@@ -17,6 +17,7 @@
     source = ../dotfiles/lvim;
     recursive = true;
   };
+  xdg.configFile."vale.ini" = { source = ../dotfiles/vale.ini; };
 
   #---------------------------------------------------------------------
   # Packages
@@ -49,6 +50,7 @@
 
     gcc # treesitter
     tree-sitter
+    vale
   ];
 
   # tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/";

@@ -9,7 +9,7 @@
       # tell home-manager to use same packages as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-nightly-overlay.url = "github:mjlbach/neovim-nightly-overlay";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     nix-extra.url = "path:/home/karl/src/nix-extra";
     nix-extra.flake = false;
