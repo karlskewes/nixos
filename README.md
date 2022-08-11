@@ -11,7 +11,7 @@
 git clone git@github.com:kskewes/nixos.git
 
 # update packages from nix and then system & home-manager
-make update
+./run.sh update
 ```
 
 ## New machine
@@ -98,7 +98,7 @@ sudo swapon /dev/disk/by-id/<disk>-part2
 vim flake.nix
 
 # build and install flake
-make install
+./run.sh install
 
 reboot
 ```
@@ -112,11 +112,11 @@ cd ~/src/github.com/kskewes
 git clone https://github.com/kskewes/nixos.git
 
 # create nix-extra again for `karl` instead of `nixos`
-make nix-extra
+./run.sh nix-extra
 
-make build
+./run.sh build
 
-make switch
+./run.sh switch
 ```
 
 ## Recovery

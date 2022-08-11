@@ -109,6 +109,10 @@ kla() {
 	kubectl logs -f -l "app.kubernetes.io/name=$*"
 }
 
+r() {
+	./run.sh "$@"
+}
+
 s() {
 	ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$@"
 }
