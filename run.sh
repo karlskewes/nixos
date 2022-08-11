@@ -80,6 +80,31 @@ update() { ## Update packages
 	switch
 }
 
+guestdisk() { ## Create a guest qcow2 file from base qcow2 file <base> <guest>
+	if [ $# -ne 1 ]; then
+		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <arg> <arg>"
+		exit 3
+	fi
+	qemu-img create \
+		-b "${1}" \
+		-F qcow2 \
+		-f qcow2 \
+		"${2}"
+}
+
+# nix-shell -p cdrkit
+userdata() { ## Generate NoCloud user-data cdrom image <directory>
+	if [ $# -ne 1 ]; then
+		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <arg>"
+		exit 3
+	fi
+	genisoimage \
+		-output cidata.iso \
+		-V cidata \
+		-r \
+		-J "${1}"/meta-data "${1}"/user-data
+}
+
 one-arg-that-is-very-long() { ## Example that requires 1 arg <arg>
 	if [ $# -ne 1 ]; then
 		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <arg>"

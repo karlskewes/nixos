@@ -10,7 +10,7 @@
   users.users.${currentUser} = {
     home = "/home/${currentUser}";
     isNormalUser = true;
-    extraGroups = [ "audio" "docker" "wheel" ];
+    extraGroups = [ "audio" "docker" "libvirtd" "wheel" ];
     # nix-shell -p mkpasswd
     # vim -> :read !mkpasswd -m sha-512
     # hashedPassword = "";
@@ -105,10 +105,20 @@
   # Let 'nixos-version --json' know about the Git revision
   # system.configurationRevision = currentRevision;
 
-  # Virtualization settings
-  # Make sure to mount ext4 partition at /var/lib/docker else Kind doesn't work.
-  # TODO: check why... zfs related?
-  virtualisation.docker.enable = true;
+  # Docker seems to be more reliable for the containers running.
+  virtualisation.docker = {
+    enable = true;
+    storageDriver = "zfs";
+  };
+  virtualisation.oci-containers.backend = "docker";
+
+  # virtualisation = {
+  #   podman = {
+  #     enable = true;
+  #     extraPackages = [ pkgs.zfs ];
+  #     dockerCompat = true;
+  #   };
+  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

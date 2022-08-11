@@ -1,2 +1,9 @@
 # Nix Flake output
 result
+
+# User data CDROM image
+cidata.iso
+# Any libvirt disks or images
+*.img
+*.iso
+*.qcow2
