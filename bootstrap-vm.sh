@@ -39,7 +39,7 @@ sed -i 's@swapDevices.*$@swapDevices = [ { device = "/swapfile"; size = 8000; } 
 
 echo "start nix-shell with git to fetch flake configuration"
 nix-shell -p git
-git clone https://github.com/kskewes/nixos.git
+git clone https://github.com/karlskewes/nixos.git
 cd nixos
 # TODO - validate from here, untested after conversion to flake
 make build

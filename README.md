@@ -8,7 +8,7 @@
 ## Update
 
 ```sh
-git clone git@github.com:kskewes/nixos.git
+git clone git@github.com:karlskewes/nixos.git
 
 # update packages from nix and then system & home-manager
 ./run.sh update
@@ -84,7 +84,7 @@ Login and clone this repository on new machine:
 ```
 nix-shell -p git
 
-git clone https://github.com/kskewes/nixos.git
+git clone https://github.com/karlskewes/nixos.git
 cd nixos
 
 # increase tmpfs so we don't run out of space during nix build & install
@@ -106,10 +106,10 @@ reboot
 Login and install `home-manager`:
 
 ```
-mkdir -p ~/src/github.com/kskewes
-cd ~/src/github.com/kskewes
+mkdir -p ~/src/github.com/karlskewes
+cd ~/src/github.com/karlskewes
 
-git clone https://github.com/kskewes/nixos.git
+git clone https://github.com/karlskewes/nixos.git
 
 # create nix-extra again for `karl` instead of `nixos`
 ./run.sh nix-extra
