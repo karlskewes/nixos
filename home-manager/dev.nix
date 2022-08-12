@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    # dev
     bats
     delve
     go-jsonnet
