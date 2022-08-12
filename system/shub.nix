@@ -37,14 +37,17 @@ in {
     ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" ];
     environment = {
       TZ = "Pacific/Auckland";
+      FTLCONF_REPLY_ADDR4 = "192.168.1.10"; # host machine IP
       WEB_PORT = "80";
       # VIRTUAL_HOST = "192.168.1.114";
       PIHOLE_DNS_ = "1.1.1.3;1.0.0.3";
       REV_SERVER = "true";
-      REV_SERVER_DOMAIN = "router.lan";
+      REV_SERVER_DOMAIN = "lan";
       REV_SERVER_TARGET = "192.168.1.1";
       REV_SERVER_CIDR = "192.168.1.0/24";
-      DNSMASQ_LISTENING = "local";
+      # Podman (10/8) and Docker (172.16/12) differ to LAN 192.168/16 so we need
+      # to tell Pihole to reply to  all source IP's (~similar to listen on all interfaces)
+      DNSMASQ_LISTENING = "all";
     };
     volumes = [ "pihole:/etc/pihole" ];
 
