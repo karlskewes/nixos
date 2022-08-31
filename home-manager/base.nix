@@ -108,6 +108,8 @@
     '';
 
     shellAliases = {
+      # Enable aliases to be run with suo
+      sudo = "sudo ";
 
       # Always enable colored `grep` output
       grep = "grep --color=auto ";

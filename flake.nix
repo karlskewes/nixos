@@ -52,7 +52,7 @@
           extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
-            home.packages = with pkgs; [ discord kind slack ];
+            home.packages = with pkgs; [ discord kind restic slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
         };

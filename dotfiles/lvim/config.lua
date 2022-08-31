@@ -81,12 +81,13 @@ lvim.builtin.treesitter.ignore_install = {"haskell"}
 lvim.builtin.treesitter.highlight.enabled = true
 
 -- additional key mappings on leader
-lvim.builtin.which_key.mappings["t"] = {
-    name = "Test",
-    f = {"<cmd>Ultest<cr>", "File"},
-    n = {"<cmd>UltestNearest<cr>", "Nearest"},
-    s = {"<cmd>UltestSummary<cr>", "Summary"}
-}
+-- FIXME: convert to neotest
+-- lvim.builtin.which_key.mappings["t"] = {
+--     name = "Test",
+--     f = {"<cmd>Ultest<cr>", "File"},
+--     n = {"<cmd>UltestNearest<cr>", "Nearest"},
+--     s = {"<cmd>UltestSummary<cr>", "Summary"}
+-- }
 
 -- fix Lua with manual installation
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers,
@@ -150,10 +151,10 @@ lvim.plugins = {
     --    {'mfussenegger/nvim-dap-python'},
     {'google/vim-jsonnet'}, {
         "ray-x/lsp_signature.nvim",
+        event = "BufRead",
         config = function()
             require"lsp_signature".on_attach({fix_pos = true})
-        end,
-        event = "BufRead"
+        end
     }, {
         "ethanholz/nvim-lastplace",
         event = "BufRead",
