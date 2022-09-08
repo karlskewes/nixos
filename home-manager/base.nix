@@ -28,6 +28,7 @@
     psmisc
     usbutils
     dnsutils
+    fatsort # fat32 file on disk sorter
     fd
     file
     fzf

@@ -11,6 +11,9 @@ vim.opt.formatoptions = "qrn1" -- handle formatting nicely
 vim.opt.textwidth = 79 -- wrap at this character number on whitespace
 vim.opt.wrap = true -- don't display lines as one long line
 
+-- https://github.com/LunarVim/LunarVim/issues/2986
+vim.opt.title = false
+
 -- Inspiration https://fnune.com/2021/11/20/nuking-most-of-my-vimrc-and-just-using-lunarvim/
 function GrepWordUnderCursor()
     local default = vim.api.nvim_eval([[expand("<cword>")]])
