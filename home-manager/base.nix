@@ -167,6 +167,8 @@
       fup = "fetch upstream";
       fuppr =
         "!f(){ git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
+      lg =
+        "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       mupm = "merge upstream/main";
       mupms = "merge upstream/master";
       rbm = "rebase main";

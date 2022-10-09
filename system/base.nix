@@ -68,8 +68,6 @@
   # networking.firewall.allowedUDPPortRanges = [];
 
   nix = {
-    # Enable support for nix flakes - remove when `nix --version` >= 2.4
-    package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';

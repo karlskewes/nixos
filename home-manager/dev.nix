@@ -23,6 +23,7 @@
     rustc
 
     nodejs # neovim
+    nodePackages_latest.wrangler # Cloudflare
 
     python39 # neovim # https://docs.python.org/3/
     python39Packages.flake8
