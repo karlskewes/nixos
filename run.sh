@@ -48,6 +48,9 @@ switch() { ## Build latest and switch
 	sudo nixos-rebuild switch --flake .#
 	sudo ./result/activate
 	sudo /run/current-system/bin/switch-to-configuration boot
+
+	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, consider:
+  rm -rf ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*'
 }
 
 install() { ## Install NixOS for the first time
@@ -57,6 +60,15 @@ install() { ## Install NixOS for the first time
 	sudo hostname "$(read -rp 'hostname: ' temp && echo "$temp")"
 	nixos-rebuild build --flake .#"$(hostname)"
 	sudo nixos-install --impure --root /mnt/install/ --flake .#"$(hostname)"
+}
+
+lvim() { ## Install lunarvim
+	export LV_BRANCH="rolling"
+	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)
+
+	# grep this repo for comment convention: 'MasonInstall: <app1> <app2>'
+	apps="$(grep ':MasonInstall' dotfiles/lvim/lua/user/languages/*.lua | cut -d ' ' -f 3- | xargs)"
+	echo "lvim -c 'MasonInstall ${apps}'"
 }
 
 clean() { ## Clean old generations

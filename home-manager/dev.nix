@@ -29,6 +29,8 @@
     python39Packages.flake8
     python39Packages.pip
     python39Packages.pynvim # lunarvim
+    python39Packages.debugpy # lunarvim DAP
+    python39Packages.pytest # lunarvim DAP
     pylint
     black
 
