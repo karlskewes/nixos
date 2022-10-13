@@ -94,6 +94,14 @@
   services.openssh.passwordAuthentication = false;
   services.openssh.permitRootLogin = "no";
 
+  services.printing.enable = true;
+  hardware.printers.ensurePrinters = [{
+    name = "Brother";
+    deviceUri = "ipp://BRW1CBFC0F36D0B/ipp";
+    model = "everywhere";
+  }];
+  hardware.printers.ensureDefaultPrinter = "Brother";
+
   services.zfs = {
     autoScrub.enable = true;
     autoSnapshot.enable = true;
