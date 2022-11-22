@@ -51,6 +51,8 @@ switch() { ## Build latest and switch
 
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, consider:
   rm -rf ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*'
+
+	clean
 }
 
 install() { ## Install NixOS for the first time
@@ -78,6 +80,8 @@ clean() { ## Clean old generations
 	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
 	sudo nix-collect-garbage -d
 	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
+	# remove old entries from boot loader
+	sudo /run/current-system/bin/switch-to-configuration boot
 	# optimise store, soon nix.autoOptimise?
 	nix-store --optimise
 }
