@@ -96,6 +96,10 @@ update() { ## Update packages
 	switch
 }
 
+mikrotik() { ## Backup Mikrotik router config
+	ssh 192.168.1.1 export terse >../mikrotik_r1_backup_"$(date -Iseconds)".rsc
+}
+
 guestdisk() { ## Create a guest qcow2 file from base qcow2 file <base> <guest>
 	if [ $# -ne 1 ]; then
 		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <arg> <arg>"
