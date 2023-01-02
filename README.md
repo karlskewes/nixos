@@ -2,6 +2,7 @@
 
 ## TODO
 
+1. NixOS custom ISO for install per - https://bmcgee.ie/posts/2022/12/setting-up-my-new-laptop-nix-style/
 1. LunarVim install derivation?
 1. Linting/etc - https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#available-sources
 
