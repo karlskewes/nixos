@@ -51,7 +51,7 @@
           system = "x86_64-linux";
           extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules;
+            imports = hmModules ++ [ ./home-manager/java.nix ];
             home.packages = with pkgs; [ discord kind restic slack ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
