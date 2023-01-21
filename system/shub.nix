@@ -32,12 +32,12 @@ in {
 
   # https://github.com/pi-hole/pi-hole
   virtualisation.oci-containers.containers.pihole = {
-    image = "pihole/pihole:2022.07.1";
+    image = "pihole/pihole:2023.01.6";
     extraOptions = [ "--hostname=pihole" ];
-    ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" ];
+    ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" "443:443/tcp" ];
     environment = {
       TZ = "Pacific/Auckland";
-      FTLCONF_REPLY_ADDR4 = "192.168.1.10"; # host machine IP
+      FTLCONF_REPLY_ADDR4 = "192.168.1.5"; # host machine IP
       WEB_PORT = "80";
       # VIRTUAL_HOST = "192.168.1.114";
       PIHOLE_DNS_ = "1.1.1.3;1.0.0.3";
