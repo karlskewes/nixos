@@ -42,7 +42,7 @@ in {
       # VIRTUAL_HOST = "192.168.1.114";
       PIHOLE_DNS_ = "1.1.1.3;1.0.0.3";
       REV_SERVER = "true";
-      REV_SERVER_DOMAIN = "lan";
+      REV_SERVER_DOMAIN = "home.arpa";
       REV_SERVER_TARGET = "192.168.1.1";
       REV_SERVER_CIDR = "192.168.1.0/24";
       # Podman (10/8) and Docker (172.16/12) differ to LAN 192.168/16 so we need
