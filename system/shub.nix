@@ -3,13 +3,13 @@
 let
   guests = {
     # https://docs.vyos.io/en/latest/installation/virtual/libvirt.html
-    vyos = {
-      memory = "512"; # MB
-      diskSize = "5"; # GB
-      image = "images/vyos.qcow2";
-      mac = "52:54:00:00:00:32";
-      ip = "192.168.1.32"; # Ignored, only for personal reference
-    };
+    # vyos = {
+    #   memory = "512"; # MB
+    #   diskSize = "5"; # GB
+    #   image = "images/vyos.qcow2";
+    #   mac = "52:54:00:00:00:32";
+    #   ip = "192.168.1.32"; # Ignored, only for personal reference
+    # };
   };
   hostNic = "enp0s31f6";
 
@@ -74,7 +74,7 @@ in {
   #     -o parent=${hostNic}
   # '';
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd.enable = false;
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [ cdrkit virt-manager ];
 

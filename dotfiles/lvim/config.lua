@@ -36,7 +36,6 @@ lvim.builtin.lualine.options.theme = "solarized_dark"
 -- lvim.builtin.lualine.options.theme = "auto"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.highlight_git = true
