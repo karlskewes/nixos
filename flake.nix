@@ -57,7 +57,7 @@
           extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules ++ [ ./home-manager/java.nix ];
-            home.packages = with pkgs; [ discord kind restic slack ];
+            home.packages = with pkgs; [ discord kind restic slack zoom-us ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
         };

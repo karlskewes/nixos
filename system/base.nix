@@ -90,9 +90,13 @@
   security.sudo.wheelNeedsPassword = false;
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.passwordAuthentication = false;
-  services.openssh.permitRootLogin = "no";
+  services.openssh = {
+    enable = true;
+    settings = {
+      passwordAuthentication = false;
+      permitRootLogin = "no";
+    };
+  };
 
   services.printing.enable = true;
   hardware.printers.ensurePrinters = [{

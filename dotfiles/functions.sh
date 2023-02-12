@@ -109,6 +109,11 @@ kla() {
 	kubectl logs -f -l "app.kubernetes.io/name=$*"
 }
 
+# I can never remember this and `nix search <package>` doesn't work on flakes.
+nix_search() {
+  nix-env -qaP "$@"
+}
+
 r() {
 	./run.sh "$@"
 }
