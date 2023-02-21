@@ -73,6 +73,11 @@ lvim() { ## Install lunarvim
 	echo "lvim -c 'MasonInstall ${apps}'"
 }
 
+tree-sitter() {
+	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, removing...'
+  rm -rf ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*
+}
+
 clean() { ## Clean old generations
 	# home manager
 	nix-collect-garbage -d
