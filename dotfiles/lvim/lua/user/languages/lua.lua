@@ -1,13 +1,13 @@
+-- :MasonInstall lua-language-server
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {{command = "lua-format", filetypes = {"lua"}}}
 
 -- fix Lua with manual installation
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers,
-                {"sumneko_lua"})
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, {"lua_ls"})
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-require("lvim.lsp.manager").setup("sumneko_lua", {
+require("lvim.lsp.manager").setup("lua_ls", {
     cmd = {
         -- TODO: support home-manager only lua-language server under /home/..
         "/etc/profiles/per-user/karl/bin/lua-language-server", "-E",

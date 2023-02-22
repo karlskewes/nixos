@@ -65,7 +65,8 @@ install() { ## Install NixOS for the first time
 }
 
 lvim() { ## Install lunarvim
-	export LV_BRANCH="rolling"
+	echo "LKG commit: 732fd6fc2b840eb5ecb5f7ba5931363d3c3dafab"
+	export LV_BRANCH="master"
 	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)
 
 	# grep this repo for comment convention: 'MasonInstall: <app1> <app2>'
@@ -75,7 +76,7 @@ lvim() { ## Install lunarvim
 
 tree-sitter() {
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, removing...'
-  rm -rf ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*
+	rm ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*
 }
 
 clean() { ## Clean old generations

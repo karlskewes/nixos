@@ -36,6 +36,16 @@ lvim.builtin.lualine.options.theme = "solarized_dark"
 -- lvim.builtin.lualine.options.theme = "auto"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
+lvim.builtin.dap.ui.config.layouts = {
+    {
+        elements = {
+            {id = "scopes", size = 0.40}, {id = "breakpoints", size = 0.20},
+            {id = "stacks", size = 0.40} -- {id = "watches", size = 0.25}
+        },
+        size = 15,
+        position = "bottom"
+    }
+}
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.highlight_git = true
@@ -47,7 +57,8 @@ linters.setup {{command = "write-good"}}
 
 -- Additional Plugins
 lvim.plugins = {
-    {'kdheepak/lazygit.nvim'}, {
+    {'ChristianChiarulli/nvcode-color-schemes.vim'}, {'kdheepak/lazygit.nvim'},
+    {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
         config = function()
@@ -67,28 +78,6 @@ lvim.plugins = {
             })
         end
     } --
-    --[[
-    -- TODO: convert to lvim style
-    {
-        "rcarriga/nvim-dap-ui",
-        config = function()
-            require"dapui".setup({
-                layouts = {
-                    {
-                        elements = {
-                            {id = "scopes", size = 0.40},
-                            {id = "breakpoints", size = 0.20},
-                            {id = "stacks", size = 0.40}
-                            -- {id = "watches", size = 0.25}
-                        },
-                        size = 15,
-                        position = "bottom"
-                    }
-                }
-            })
-        end
-    },
-  ]] --
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

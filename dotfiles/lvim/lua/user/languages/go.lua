@@ -1,5 +1,5 @@
 -- Modified: https://github.com/LunarVim/starter.lvim/tree/go-ide
--- :MasonInstall gopls golangci-lint-langserver delve goimports gofumpt gomodifytags gotests impl
+-- :MasonInstall delve gopls golangci-lint-langserver goimports gofumpt gomodifytags gotests impl staticcheck
 --
 vim.list_extend(lvim.plugins, {{"leoluz/nvim-dap-go"}, {"olexsmir/gopher.nvim"}})
 
@@ -11,6 +11,9 @@ formatters.setup {
     {command = "gofumpt", filetypes = {"go"}}
 
 }
+
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {{command = "staticcheck", filetypes = {"go"}}}
 
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, {"gopls"})
 

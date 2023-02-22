@@ -1,3 +1,5 @@
+-- :MasonInstall shfmt
+--
 lvim.builtin.dap.active = true
 lvim.builtin.treesitter.ensure_installed = {
     "bash", "c", "dockerfile", "go", "gomod", "gowork", "hcl", "html",
