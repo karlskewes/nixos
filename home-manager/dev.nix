@@ -3,21 +3,28 @@
 {
   home.packages = with pkgs; [
     bats
-    delve
-    go-jsonnet
-    golangci-lint
-    gotools
-    jsonnet-bundler
-    lua
-    luaformatter
-    nodePackages.prettier
-    nodePackages.write-good
-    openssl
-    rnix-lsp
     shellcheck
     shfmt
+
+    buf
+    delve
+    golangci-lint
+    gotools
+
+    go-jsonnet
+    jsonnet-bundler
+
+    lua
+    luaformatter
     stylua
     sumneko-lua-language-server
+
+    nodePackages.prettier
+    nodePackages.write-good
+
+    openssl
+
+    rnix-lsp
 
     cargo
     rustc

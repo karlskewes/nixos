@@ -1,10 +1,12 @@
--- :MasonInstall shfmt
+-- :MasonInstall protolint shfmt
 --
 lvim.builtin.dap.active = true
 lvim.builtin.treesitter.ensure_installed = {
-    "bash", "c", "dockerfile", "go", "gomod", "gowork", "hcl", "html",
-    "javascript", "json", "kotlin", "lua", "make", "markdown", "nix", "proto",
-    "python", "typescript", "toml", "tsx", "css", "rust", "java", "yaml"
+    "bash", "c", "dockerfile", "gitignore", "git_rebase", " go", "gomod",
+    "gosum", "gowork", "hcl", "html", "javascript", "json", "jsonnet", "ini",
+    "kotlin", "lua", "make", "markdown", "markdown_inline", "nix", "proto",
+    "python", "sql", "terraform", "typescript", "toml", "tsx", "css", "rust",
+    "java", "yaml"
 }
 lvim.builtin.treesitter.ignore_install = {"haskell"}
 lvim.builtin.treesitter.highlight.enabled = true
@@ -35,6 +37,9 @@ formatters.setup {
     {command = "prettier", filetypes = {"markdown"}},
     {command = "nixfmt", filetypes = {"nix"}}
 }
+
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {{command = "protolint", filetypes = {"proto"}}}
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- TODO: PR this change to vim-shfmt

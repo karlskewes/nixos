@@ -3,7 +3,7 @@
 --
 vim.list_extend(lvim.plugins, {{"leoluz/nvim-dap-go"}, {"olexsmir/gopher.nvim"}})
 
-lvim.builtin.treesitter.ensure_installed = {"go", "gomod", "gowork"}
+lvim.builtin.treesitter.ensure_installed = {"go", "gomod", "gosum", "gowork"}
 
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {

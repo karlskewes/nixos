@@ -3,7 +3,7 @@
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
+lvim.colorscheme = "onedarker" -- alt: "nightfox" -- onedark theme broken, missing highlighting
 vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespace showing - can't += here
 vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no-changes
 vim.opt.relativenumber = false -- set relative numbered lines
@@ -57,8 +57,8 @@ linters.setup {{command = "write-good"}}
 
 -- Additional Plugins
 lvim.plugins = {
-    {'ChristianChiarulli/nvcode-color-schemes.vim'}, {'kdheepak/lazygit.nvim'},
-    {
+    {"christianchiarulli/nvcode-color-schemes.vim"}, {"EdenEast/nightfox.nvim"},
+    {"lunarvim/Onedarker.nvim"}, {'kdheepak/lazygit.nvim'}, {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
         config = function()
