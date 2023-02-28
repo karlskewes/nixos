@@ -14,6 +14,8 @@ debug() { ## Debug REPL
 	echo
 }
 
+## START NIX
+
 fmt() { ## Format *.nix
 	find . -name '*.nix' -print0 |
 		xargs -n 1 -- nixfmt
@@ -64,6 +66,33 @@ install() { ## Install NixOS for the first time
 	sudo nixos-install --impure --root /mnt/install/ --flake .#"$(hostname)"
 }
 
+clean() { ## Clean old generations
+	# home manager
+	nix-collect-garbage -d
+	# nixos generations
+	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
+	sudo nix-collect-garbage -d
+	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
+	# remove old entries from boot loader
+	sudo /run/current-system/bin/switch-to-configuration boot
+	# optimise store, soon nix.autoOptimise?
+	nix-store --optimise
+}
+
+update() { ## Update packages
+	nix flake update
+	switch
+}
+
+## END Nix
+
+## START Extras
+
+goutils() { ## Install go utils
+	go install -v mvdan.cc/gofumpt@latest
+	go install -v golang.org/x/tools/cmd/godoc@latest
+}
+
 lvim() { ## Install lunarvim
 	echo "LKG commit: 732fd6fc2b840eb5ecb5f7ba5931363d3c3dafab"
 	export LV_BRANCH="master"
@@ -79,35 +108,12 @@ tree-sitter() {
 	rm ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*
 }
 
-clean() { ## Clean old generations
-	# home manager
-	nix-collect-garbage -d
-	# nixos generations
-	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
-	sudo nix-collect-garbage -d
-	sudo nix-env -p /nix/var/nix/profiles/system --list-generations
-	# remove old entries from boot loader
-	sudo /run/current-system/bin/switch-to-configuration boot
-	# optimise store, soon nix.autoOptimise?
-	nix-store --optimise
-}
-
-goutils() { ## Install go utils
-	go install -v mvdan.cc/gofumpt@latest
-	go install -v golang.org/x/tools/cmd/godoc@latest
-}
-
-update() { ## Update packages
-	nix flake update
-	switch
-}
-
 mikrotik() { ## Backup Mikrotik router config
 	ssh 192.168.1.1 export terse >../mikrotik_r1_backup_"$(date -Iseconds)".rsc
 }
 
-guestdisk() { ## Create a guest qcow2 file from base qcow2 file <base> <guest>
-	if [ $# -ne 1 ]; then
+guestdisk() { ## Create a guest qcow2 file from base qcow2 file <input.img> <output.qcow2>
+	if [ $# -ne 2 ]; then
 		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <arg> <arg>"
 		exit 3
 	fi
@@ -116,6 +122,11 @@ guestdisk() { ## Create a guest qcow2 file from base qcow2 file <base> <guest>
 		-F qcow2 \
 		-f qcow2 \
 		"${2}"
+
+  echo "Useful disk size commands:
+  qemu-img info ubuntu-0.qcow2
+  qemu-img resize ubuntu-0.qcow2 +18G
+  "
 }
 
 # nix-shell -p cdrkit
@@ -125,11 +136,13 @@ userdata() { ## Generate NoCloud user-data cdrom image <directory>
 		exit 3
 	fi
 	genisoimage \
-		-output cidata.iso \
+		-output "${1}"-cidata.iso \
 		-V cidata \
 		-r \
 		-J "${1}"/meta-data "${1}"/user-data
 }
+
+## END Extras
 
 one-arg-that-is-very-long() { ## Example that requires 1 arg <arg>
 	if [ $# -ne 1 ]; then

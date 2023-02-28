@@ -54,7 +54,7 @@
           inherit nixpkgs home-manager nix-extra overlays configRev user
             emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
-          extraModules = nixosModules;
+          extraModules = nixosModules ++ [ ./system/libvirtd.nix ];
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules ++ [ ./home-manager/java.nix ];
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];

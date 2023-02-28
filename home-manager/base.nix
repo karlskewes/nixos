@@ -109,7 +109,7 @@
     '';
 
     shellAliases = {
-      # Enable aliases to be run with suo
+      # Enable aliases to be run with sudo
       sudo = "sudo ";
 
       # Always enable colored `grep` output
@@ -119,7 +119,7 @@
       pbcopy = "xclip -selection clipboard";
       pbpaste = "xclip -selection clipboard -o";
 
-      # Remove if switch away from doom-nvim to home-manager managed neovim
+      # Remove if switch away from lunarvim to home-manager managed neovim
       v = "lvim";
       vi = "lvim";
       vim = "lvim";
