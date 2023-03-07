@@ -15,6 +15,8 @@
     layout = "us";
     # enable touchpad on laptops
     libinput.enable = true;
+    xkbOptions =
+      "caps:escape"; # make caps lock function as escape for easier vim
 
     desktopManager = {
       xterm.enable = false;
