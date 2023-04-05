@@ -12,6 +12,21 @@ vim.opt.colorcolumn = "80"
 vim.opt.formatoptions = "qrn1" -- handle formatting nicely
 vim.opt.textwidth = 79 -- wrap at this character number on whitespace
 vim.opt.wrap = true -- don't display lines as one long line
+vim.opt.formatoptions = {
+    ["1"] = true,
+    ["2"] = true, -- Use indent from 2nd line of a paragraph
+    q = true, -- continue comments with gq"
+    c = true, -- Auto-wrap comments using textwidth
+    r = true, -- Continue comments when pressing Enter
+    n = true, -- Recognize numbered lists
+    t = false, -- autowrap lines using text width value
+    j = true, -- remove a comment leader when joining lines.
+    -- Only break if the line was not longer than 'textwidth' when the insert
+    -- started and only at a white character that has been entered during the
+    -- current insert command.
+    l = true,
+    v = true
+}
 
 -- https://github.com/LunarVim/LunarVim/issues/2986
 vim.opt.title = false

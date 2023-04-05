@@ -9,8 +9,10 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
     {command = "goimports", filetypes = {"go"}},
     {command = "gofumpt", filetypes = {"go"}}
-
 }
+
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {}
 
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, {"gopls"})
 
