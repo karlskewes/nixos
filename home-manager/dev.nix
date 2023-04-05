@@ -10,6 +10,7 @@
     delve
     golangci-lint
     gotools
+    graphviz # go tool pprof -http localhost:8080 ./profile.out
 
     go-jsonnet
     jsonnet-bundler
@@ -32,12 +33,12 @@
     nodejs # neovim
     nodePackages_latest.wrangler # Cloudflare
 
-    python39 # neovim # https://docs.python.org/3/
-    python39Packages.flake8
-    python39Packages.pip
-    python39Packages.pynvim # lunarvim
-    python39Packages.debugpy # lunarvim DAP
-    python39Packages.pytest # lunarvim DAP
+    python310 # neovim # https://docs.python.org/3/
+    python310Packages.flake8
+    python310Packages.pip
+    python310Packages.pynvim # lunarvim
+    python310Packages.debugpy # lunarvim DAP
+    python310Packages.pytest # lunarvim DAP
     pylint
     black
 

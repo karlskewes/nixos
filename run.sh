@@ -91,6 +91,7 @@ update() { ## Update packages
 goutils() { ## Install go utils
 	go install -v mvdan.cc/gofumpt@latest
 	go install -v golang.org/x/tools/cmd/godoc@latest
+	go install -v golang.org/x/perf/cmd/benchstat@latest
 }
 
 lvim() { ## Install lunarvim
@@ -123,7 +124,7 @@ guestdisk() { ## Create a guest qcow2 file from base qcow2 file <input.img> <out
 		-f qcow2 \
 		"${2}"
 
-  echo "Useful disk size commands:
+	echo "Useful disk size commands:
   qemu-img info ubuntu-0.qcow2
   qemu-img resize ubuntu-0.qcow2 +18G
   "

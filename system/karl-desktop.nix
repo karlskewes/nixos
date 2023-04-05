@@ -8,4 +8,7 @@
     rocm-opencl-runtime
   ];
   services.xserver.videoDrivers = [ "amdgpu" ];
+
+  # required to use dvd/cdrom in some applications
+  programs.dconf.enable = true;
 }

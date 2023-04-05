@@ -28,7 +28,11 @@
     psmisc
     usbutils
     dnsutils
+
+    # abcde # abcde -a cddb,read,encode,tag,move,playlist,clean,getalbumart -d /dev/cdrom -o mp3:-b320
+    # easytag # requires configuration.nix 'programs.dconf.enable = true;'
     fatsort # fat32 file on disk sorter
+
     fd
     file
     fzf
@@ -38,7 +42,6 @@
     jq
     libqalculate # qalc - CLI calculator
     lsof
-    mage
     nixfmt
     rename
     ripgrep
