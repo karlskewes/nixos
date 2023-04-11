@@ -81,7 +81,7 @@ clean() { ## Clean old generations
 
 update() { ## Update packages
 	nix flake update
-	switch
+	build
 }
 
 ## END Nix
