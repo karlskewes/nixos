@@ -135,6 +135,10 @@
       "....." = "cd ../../../..";
       "......" = "cd ../../../../..";
 
+      # Kitty Terminal inline image viewer kitten (plugin) icat
+      icat = "kitty +kitten icat";
+      kdiff = "kitty +kitten diff $@";
+
       # IP addresses
       pubip = "dig +short myip.opendns.com @resolver1.opendns.com";
       localip =

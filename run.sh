@@ -106,7 +106,7 @@ lvim() { ## Install lunarvim
 
 tree-sitter() {
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, removing...'
-	rm ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*
+	rm ~/.local/share/lunarvim/site/pack/lazy/opt/nvim-treesitter/parser/*
 }
 
 mikrotik() { ## Backup Mikrotik router config
