@@ -21,6 +21,7 @@
     libnotify # required by dunst
     pavucontrol
     qalculate-gtk
+    rofi-power-menu # doesn't work as extra package
   ];
 
   home.pointerCursor = {
@@ -71,7 +72,15 @@
 
   xsession = {
     numlock.enable = true;
-    # Make cursor not tiny on HiDPI screens
+    initExtra = ''
+      # https://www.reddit.com/r/swaywm/comments/i6qlos/how_do_i_use_an_ime_with_sway/g1lk4xh?utm_source=share&utm_medium=web2x&context=3
+      export GLFW_IM_MODULE=ibus
+      export INPUT_METHOD=ibus
+      export QT_IM_MODULE=ibus
+      export GTK_IM_MODULE=ibus
+      export XMODIFIERS=@im=ibus
+      export XIM_SERVERS=ibus
+    '';
   };
 
 }

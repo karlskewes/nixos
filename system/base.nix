@@ -43,7 +43,13 @@
     wget
   ];
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    inputMethod = {
+      enabled = "ibus";
+      ibus.engines = with pkgs.ibus-engines; [ mozc ];
+    };
+  };
 
   # Still problematic in 2021
   networking.enableIPv6 = false;
@@ -90,7 +96,10 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  services.fwupd.enable = true;
+  services.fwupd = {
+    enable = true;
+    extraRemotes = [ "lvfs-testing" ];
+  };
 
   services.openssh = {
     enable = true;

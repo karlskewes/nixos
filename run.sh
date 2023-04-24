@@ -95,9 +95,8 @@ goutils() { ## Install go utils
 }
 
 lvim() { ## Install lunarvim
-	echo "LKG commit: 732fd6fc2b840eb5ecb5f7ba5931363d3c3dafab"
-	export LV_BRANCH="master"
-	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/rolling/utils/installer/install.sh)
+	export LV_BRANCH="release-1.3/neovim-0.9"
+	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/release-1.3/neovim-0.9/utils/installer/install.sh)
 
 	# grep this repo for comment convention: 'MasonInstall: <app1> <app2>'
 	apps="$(grep ':MasonInstall' dotfiles/lvim/lua/user/languages/*.lua | cut -d ' ' -f 3- | xargs)"

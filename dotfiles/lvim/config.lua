@@ -3,10 +3,10 @@
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "onedarker" -- alt: "nightfox" -- onedark theme broken, missing highlighting
+lvim.colorscheme = "catppuccin" -- alt: "carbonfox" or "onedarker" -- onedark theme broken, missing highlighting
 vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespace showing - can't += here
 vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no-changes
-vim.opt.relativenumber = false -- set relative numbered lines
+vim.opt.relativenumber = true -- set relative numbered lines
 vim.opt.clipboard = "" -- don't default to system clipboard (<C-y|p>)
 vim.opt.colorcolumn = "80"
 vim.opt.formatoptions = "qrn1" -- handle formatting nicely
@@ -72,7 +72,7 @@ linters.setup {{command = "write-good"}}
 
 -- Additional Plugins
 lvim.plugins = {
-    {"christianchiarulli/nvcode-color-schemes.vim"}, {"EdenEast/nightfox.nvim"},
+    {"catppuccin/nvim", name = "catppuccin"}, {"EdenEast/nightfox.nvim"},
     {"lunarvim/Onedarker.nvim"}, {'kdheepak/lazygit.nvim'}, {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
