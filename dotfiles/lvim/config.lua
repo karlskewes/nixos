@@ -1,8 +1,8 @@
 -- Shared configuration
 -- Language specific configuration lives in ./lua/user/languages/
 -- general
+lvim.format_on_save.enabled = true
 lvim.log.level = "warn"
-lvim.format_on_save = true
 lvim.colorscheme = "catppuccin" -- alt: "carbonfox" or "onedarker" -- onedark theme broken, missing highlighting
 vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespace showing - can't += here
 vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no-changes
@@ -92,7 +92,13 @@ lvim.plugins = {
                 lastplace_open_folds = true
             })
         end
-    } --
+    }, --
+    {
+        "preservim/vim-markdown",
+        config = function()
+            vim.cmd("let g:vim_markdown_folding_disabled = 1")
+        end
+    }
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -104,7 +110,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- load dotfiles configuration with entry here: ~/.config/lvim/lua/user/init.lua
-require("user")
+reload("user")
 
 -- Inspiration https://fnune.com/2021/11/20/nuking-most-of-my-vimrc-and-just-using-lunarvim/
 function GrepWordUnderCursor()

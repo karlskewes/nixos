@@ -111,7 +111,7 @@ kla() {
 
 # I can never remember this and `nix search <package>` doesn't work on flakes.
 nix_search() {
-  nix-env -qaP "$@"
+	nix-env -qaP "$@"
 }
 
 r() {

@@ -16,11 +16,6 @@ debug() { ## Debug REPL
 
 ## START NIX
 
-fmt() { ## Format *.nix
-	find . -name '*.nix' -print0 |
-		xargs -n 1 -- nixfmt
-}
-
 nix-extra() { ## Create nix-extra with any sensitive values
 	mkdir -p ~/src/nix-extra
 	password=$(mkpasswd -m sha-512)
@@ -95,9 +90,14 @@ goutils() { ## Install go utils
 }
 
 lvim() { ## Install lunarvim
-	export LV_BRANCH="release-1.3/neovim-0.9"
-	bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/release-1.3/neovim-0.9/utils/installer/install.sh)
+	LV_BRANCH="release-1.3/neovim-0.9"
+	curl -s "https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh" -o /tmp/lvim_install.sh
+	less /tmp/lvim_install.sh
+	read -r -p "press any key to execute LunarVim script install.sh"
+	bash /tmp/lvim_install.sh
+}
 
+lvim_mason() {
 	# grep this repo for comment convention: 'MasonInstall: <app1> <app2>'
 	apps="$(grep ':MasonInstall' dotfiles/lvim/lua/user/languages/*.lua | cut -d ' ' -f 3- | xargs)"
 	echo "lvim -c 'MasonInstall ${apps}'"
@@ -106,6 +106,14 @@ lvim() { ## Install lunarvim
 tree-sitter() {
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, removing...'
 	rm ~/.local/share/lunarvim/site/pack/lazy/opt/nvim-treesitter/parser/*
+}
+
+fmt() { ## Format *.{lua,nix,sh}
+	find . -name '*.nix' -exec nixfmt {} \;
+
+	find . -name '*.lua' -exec lua-format -i {} \;
+
+	find . -name '*.sh' -exec shfmt -w {} \;
 }
 
 mikrotik() { ## Backup Mikrotik router config
