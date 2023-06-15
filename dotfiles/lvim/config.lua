@@ -144,10 +144,6 @@ lvim.builtin.which_key.mappings["sy"] = {
     "<cmd>lua GrepYankedString()<CR>", "Text yanked"
 }
 
-lvim.builtin.which_key.mappings["sz"] = {
-    "<cmd>lua require('telescope.builtin').resume()<CR>", 'resume'
-}
-
 lvim.builtin.which_key.mappings["n"] = {
     name = "Neogen",
     f = {"<cmd>lua require('neogen').generate({ type = 'file' })<CR>", "File"},

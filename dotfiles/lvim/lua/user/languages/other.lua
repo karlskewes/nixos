@@ -25,7 +25,7 @@ formatters.setup {
     {command = "prettier", filetypes = {"markdown"}},
     {command = "nixfmt", filetypes = {"nix"}},
     {command = "shfmt", filetypes = {"sh"}},
-    {command = "shfmt -ln bats", filetypes = {"bats"}}
+    {command = "shfmt", args = {"-ln", "bats"}, filetypes = {"bats"}}
 }
 
 vim.filetype.add {extension = {bats = "bats"}}

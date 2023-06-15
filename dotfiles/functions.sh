@@ -58,10 +58,11 @@ gc() {
 	else
 		git clone "${1}" "${fullpath}"
 	fi
-	cd "${fullpath}"
+	cd "${fullpath}" || echo "*** FAILED to change directory to: ${fullpath} ***"
 }
 
-# `flushgit` removes any merged branches
+# `flushgit` deletes any branches merged with a merge commit
+# squash merged branches aren't listed by git command
 flushgit() {
 	git branch --merged |
 		grep -v 'stashes\|master\|main' >/tmp/merged-branches &&
