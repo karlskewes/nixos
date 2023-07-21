@@ -68,10 +68,10 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {{command = "write-good"}}
 
 -- Additional Plugins
 lvim.plugins = {
+    {"nvim-telescope/telescope-live-grep-args.nvim"}, --
     {"catppuccin/nvim", name = "catppuccin"}, {"EdenEast/nightfox.nvim"},
     {"lunarvim/Onedarker.nvim"}, {'kdheepak/lazygit.nvim'}, {
         "ray-x/lsp_signature.nvim",
@@ -100,6 +100,14 @@ lvim.plugins = {
         end
     }
 }
+
+-- Telescope extensions
+lvim.builtin.telescope.on_config_done = function(telescope)
+    pcall(telescope.load_extension, "live_grep_args")
+    -- any other extensions loading
+end
+
+linters.setup {{command = "write-good"}}
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 -- Trim all trailing whitespace
@@ -142,6 +150,12 @@ end
 
 lvim.builtin.which_key.mappings["sy"] = {
     "<cmd>lua GrepYankedString()<CR>", "Text yanked"
+}
+
+lvim.builtin.which_key.mappings["sz"] = {
+    require("telescope").extensions.live_grep_args.live_grep_args,
+    "Text with args (-t go, -g /path/to/files)"
+    -- "<cmd>lua GrepStringUnderCursor()<CR>", "Text string under cursor"
 }
 
 lvim.builtin.which_key.mappings["n"] = {

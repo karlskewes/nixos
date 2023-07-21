@@ -88,6 +88,7 @@ goutils() { ## Install go utils
 	go install -v golang.org/x/tools/cmd/godoc@latest
 	go install -v golang.org/x/perf/cmd/benchstat@latest
 	go install -v honnef.co/go/tools/cmd/staticcheck@latest
+	go install -v github.com/pressly/goose/v3/cmd/goose@latest # TODO here or elsewhere
 }
 
 lvim() { ## Install lunarvim

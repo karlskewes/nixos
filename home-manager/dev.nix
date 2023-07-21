@@ -45,6 +45,7 @@
     # clouds
     # awscli2
     # google-cloud-sdk # gsutil, etc
+    docker-compose
 
     # kubernetes
     kubectl
