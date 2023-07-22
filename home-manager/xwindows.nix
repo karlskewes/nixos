@@ -18,6 +18,7 @@
     firefox
     i3lock-fancy
     google-chrome
+    gwenview # image viewer & editor (crop, resize)
     libnotify # required by dunst
     pavucontrol
     qalculate-gtk

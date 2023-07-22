@@ -72,6 +72,7 @@ local linters = require "lvim.lsp.null-ls.linters"
 -- Additional Plugins
 lvim.plugins = {
     {"nvim-telescope/telescope-live-grep-args.nvim"}, --
+    {"nvim-telescope/telescope-media-files.nvim"}, --
     {"catppuccin/nvim", name = "catppuccin"}, {"EdenEast/nightfox.nvim"},
     {"lunarvim/Onedarker.nvim"}, {'kdheepak/lazygit.nvim'}, {
         "ray-x/lsp_signature.nvim",
@@ -104,8 +105,17 @@ lvim.plugins = {
 -- Telescope extensions
 lvim.builtin.telescope.on_config_done = function(telescope)
     pcall(telescope.load_extension, "live_grep_args")
+    pcall(telescope.load_extension, "media_files")
     -- any other extensions loading
 end
+
+vim.list_extend(lvim.builtin.telescope.extensions, {
+    media_files = {
+        -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+        filetypes = {"png", "webp", "jpg", "jpeg"},
+        find_cmd = "rg"
+    }
+})
 
 linters.setup {{command = "write-good"}}
 

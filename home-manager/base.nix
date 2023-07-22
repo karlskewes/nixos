@@ -33,6 +33,8 @@
     # easytag # requires configuration.nix 'programs.dconf.enable = true;'
     fatsort # fat32 file on disk sorter
 
+    chafa # neovim telescope media_files image preview
+    ffmpegthumbnailer # neovim telescope media_files video preview
     fd
     file
     fzf
