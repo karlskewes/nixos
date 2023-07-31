@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    gradle_6
+    gradle_7
     groovy
     java-language-server
     kotlin
@@ -11,6 +11,6 @@
 
   programs.java = {
     enable = true;
-    package = pkgs.jdk11;
+    package = pkgs.jdk17;
   };
 }

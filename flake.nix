@@ -9,12 +9,14 @@
       # tell home-manager to use same packages as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
-      # inputs.nixpkgs.url =
-      # "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
-    };
+
+    # Nightly on 0.10.0 which is not supported by nvim-treesitter yet.
+    # neovim-nightly-overlay = {
+    # url = "github:nix-community/neovim-nightly-overlay";
+    # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
+    # inputs.nixpkgs.url =
+    # "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
+    # };
 
     nix-extra.url = "path:/home/karl/src/nix-extra";
     nix-extra.flake = false;
@@ -23,7 +25,8 @@
   outputs = { self, home-manager, nixpkgs, nix-extra, ... }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
-      overlays = [ inputs.neovim-nightly-overlay.overlay ];
+      #   overlays = [ inputs.neovim-nightly-overlay.overlay ];
+      overlays = [ ];
 
       # Function to render out our hosts
       mkHost = import ./lib/mkHost.nix;
@@ -56,7 +59,7 @@
           system = "x86_64-linux";
           extraModules = nixosModules ++ [ ./system/libvirtd.nix ];
           homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules ++ [ ./home-manager/java.nix ];
+            imports = hmModules;
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });

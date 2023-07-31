@@ -84,6 +84,7 @@ update() { ## Update packages
 ## START Extras
 
 goutils() { ## Install go utils
+	go install -v golang.org/x/tools/gopls@latest
 	go install -v mvdan.cc/gofumpt@latest
 	go install -v golang.org/x/tools/cmd/godoc@latest
 	go install -v golang.org/x/perf/cmd/benchstat@latest

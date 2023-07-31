@@ -43,7 +43,8 @@
     black
 
     # clouds
-    # awscli2
+    awscli2
+    aws-vault
     # google-cloud-sdk # gsutil, etc
     docker-compose
 

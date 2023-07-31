@@ -176,6 +176,8 @@
       fup = "fetch upstream";
       fuppr =
         "!f(){ git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
+      foppr =
+        "!f(){ git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
       lg =
         "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       mupm = "merge upstream/main";
@@ -225,7 +227,8 @@
     enable = true;
     withNodeJs = true;
     withPython3 = true;
-    package = pkgs.neovim-nightly;
+    # package = pkgs.neovim-nightly;
+    package = pkgs.neovim-unwrapped;
     # vimAlias = true; # bash alias to LunarVim lvim instead
   };
 

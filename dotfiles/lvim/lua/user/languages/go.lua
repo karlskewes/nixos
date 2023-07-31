@@ -1,7 +1,9 @@
 -- Modified: https://github.com/LunarVim/starter.lvim/tree/go-ide
 -- :MasonInstall delve gopls golangci-lint-langserver goimports gofumpt gomodifytags gotests impl staticcheck
 --
-vim.list_extend(lvim.plugins, {{"leoluz/nvim-dap-go"}, {"olexsmir/gopher.nvim"}})
+vim.list_extend(lvim.plugins, {
+    {"leoluz/nvim-dap-go"}, {"olexsmir/gopher.nvim"}, {"fatih/vim-go"}
+})
 
 lvim.builtin.treesitter.ensure_installed = {"go", "gomod", "gosum", "gowork"}
 

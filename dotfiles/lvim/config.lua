@@ -6,7 +6,7 @@ lvim.log.level = "warn"
 lvim.colorscheme = "catppuccin" -- alt: "carbonfox" or "onedarker" -- onedark theme broken, missing highlighting
 vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespace showing - can't += here
 vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no-changes
-vim.opt.relativenumber = true -- set relative numbered lines
+vim.opt.relativenumber = false -- set relative numbered lines
 vim.opt.clipboard = "" -- don't default to system clipboard (<C-y|p>)
 vim.opt.colorcolumn = "80"
 vim.opt.formatoptions = "qrn1" -- handle formatting nicely
