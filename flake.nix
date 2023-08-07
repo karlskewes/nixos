@@ -88,6 +88,17 @@
           });
         };
 
+        tl = mkHost "tl" rec {
+          inherit nixpkgs home-manager nix-extra overlays configRev user
+            emailAddress stateVersion authorizedKeys;
+          system = "x86_64-linux";
+          extraModules = nixosModules;
+          homeConfig = ({ config, pkgs, ... }: {
+            imports = hmModules;
+            xresources.properties = { "Xft.dpi" = "109"; };
+          });
+        };
+
       };
     };
 }
