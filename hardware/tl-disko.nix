@@ -1,17 +1,20 @@
+# TODO: reformat params and make this a lib or similar.
 let
-  machine = "example_machine";
-  disk = "example_disk";
+  machine = "tl";
+  # Find base disk ID `read !ls /dev/disk/by-id/*`
+  disk = "/dev/disk/by-id/nvme-Micron_MTFDKBA512TFK_222340E5EFF6";
+  disk_friendly = "m2-ssd";
 in {
   disko.devices = {
     disk = {
-      x = {
+      "${disk_friendly}" = {
         type = "disk";
         device = "${disk}";
         content = {
           type = "gpt";
           partitions = {
             ESP = {
-              size = "1024";
+              size = "1G";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -41,16 +44,18 @@ in {
     zpool = {
       "rpool-${machine}" = {
         type = "zpool";
-        mode = "mirror";
-        rootFsOptions = {
-          acltype = "posixacl";
+        mode = "";
+        mountpoint = null;
+        options = {
           ashift = "12";
           autotrim = "on";
+        };
+        rootFsOptions = {
+          acltype = "posixacl";
           canmount = "off";
           "com.sun:auto-snapshot" = "false";
           compression = "zstd";
           dnodesize = "auto";
-          mountpoint = "none";
           normalization = "formD";
           relatime = "on";
           xattr = "sa";
@@ -68,7 +73,7 @@ in {
         datasets = {
           reserved = {
             type = "zfs_fs";
-            mountpoint = "none";
+            mountpoint = null;
             options."refreservation" = "1G";
           };
           # snapshots ENABLED

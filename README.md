@@ -71,10 +71,16 @@ machine=
 nix \
   --extra-experimental-features nix-command \
   --extra-experimental-features flakes \
-  run github:nix-community/disko -- no-write-lock-file -- \
+  run github:nix-community/disko --no-write-lock-file -- \
     --dry-run \
-    -m disko \
+    --mode disko \
     ./"${machine}-disko.nix"
+```
+
+Then if ready do a run for real:
+
+```
+# as above without `--dry-run` flag
 ```
 
 ### Add machine to repository

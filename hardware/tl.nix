@@ -15,7 +15,7 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3275-8C1A";
+    device = "/dev/disk/by-uuid/380F-3D2B";
     fsType = "vfat";
   };
 
@@ -40,7 +40,7 @@
   };
 
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/8c6a9258-28b9-475b-afc6-4168a9bec55d"; }];
+    [{ device = "/dev/disk/by-uuid/67ddceaa-2d57-487d-8f31-41ba0f24c520"; }];
 
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
