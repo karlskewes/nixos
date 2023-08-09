@@ -95,8 +95,9 @@
           extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
-            xresources.properties = { "Xft.dpi" = "180"; };
+            home.packages = with pkgs; [ slack ];
             home.pointerCursor.size = 180;
+            xresources.properties = { "Xft.dpi" = "180"; };
           });
         };
 
