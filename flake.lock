@@ -24,8 +24,8 @@
     "nix-extra": {
       "flake": false,
       "locked": {
-        "lastModified": 1691462360,
-        "narHash": "sha256-KLRVWfsQDekabFfmEijoa0SYBMLz6NCdJccC9k30+fs=",
+        "lastModified": 1653774177,
+        "narHash": "sha256-hkdbsjQYyErtxGUgCOeRGmSWhUC+kK8aSZ92CF023ZE=",
         "path": "/home/karl/src/nix-extra",
         "type": "path"
       },

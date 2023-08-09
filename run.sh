@@ -110,7 +110,7 @@ lvim() { ## Install lunarvim
 	bash /tmp/lvim_install.sh
 }
 
-lvim_mason() {
+lvim_deps() { ## Install lunarvim dependencies with Mason
 	# grep this repo for comment convention: 'MasonInstall: <app1> <app2>'
 	apps="$(grep ':MasonInstall' dotfiles/lvim/lua/user/languages/*.lua | cut -d ' ' -f 3- | xargs)"
 	echo "lvim -c 'MasonInstall ${apps}'"

@@ -1,4 +1,4 @@
--- :MasonInstall bash-debug-adaptor bash-language-server dockerfile-language-server
+-- :MasonInstall bash-debug-adapter bash-language-server dockerfile-language-server
 -- :MasonInstall json-lsp jsonlint lua-language-server protolint rnix-lsp
 -- :MasonInstall shellcheck shfmt yaml-language-server
 --
