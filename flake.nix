@@ -96,8 +96,8 @@
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
             home.packages = with pkgs; [ slack ];
-            home.pointerCursor.size = 180;
-            xresources.properties = { "Xft.dpi" = "180"; };
+            # home.pointerCursor.size = 180; # 4k
+            xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
           });
         };
 

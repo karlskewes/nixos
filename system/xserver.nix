@@ -26,7 +26,6 @@
     displayManager = {
       defaultSession = "none+i3";
       lightdm.enable = true;
-
       sessionCommands = ''
         ${pkgs.xorg.xrdb}/bin/xset r rate 200 40
       '';

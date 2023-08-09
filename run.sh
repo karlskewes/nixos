@@ -26,6 +26,16 @@ nix-extra() { ## Create nix-extra with any sensitive values
 EOF
 }
 
+nix-displaylink() { ## Setup DisplayLink driver in nix store
+	# https://nixos.wiki/wiki/Displaylink
+	curl -LO "$HOME"/Downloads/displaylink-570.zip
+	https://www.synaptics.com/sites/default/files/exe_files/2023-04/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.7-EXE.zip
+
+	nix-prefetch-url \
+		--name displaylink.zip \
+		file://"$HOME"/Downloads/displaylink-570.zip
+}
+
 build() { ## Build latest NixOS & home-manager configuration
 	# update nix-extra reference if first time after install
 	nix flake lock --update-input nix-extra
