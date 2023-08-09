@@ -38,7 +38,6 @@ assign [class="^Slack$"] $ws3
 
 # startup-programs
 exec kitty
-exec google-chrome-stable
 exec firefox
 
 # Font for window titles. Will also be used by the bar unless a different font

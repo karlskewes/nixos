@@ -95,7 +95,8 @@
           extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
-            xresources.properties = { "Xft.dpi" = "109"; };
+            xresources.properties = { "Xft.dpi" = "180"; };
+            home.pointerCursor.size = 180;
           });
         };
 
