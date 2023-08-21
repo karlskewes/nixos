@@ -9,8 +9,12 @@
     buf
     delve
     golangci-lint
+    gopls
+    glibc
     gotools
     graphviz # go tool pprof -http localhost:8080 ./profile.out
+
+    hugo
 
     go-jsonnet
     jsonnet-bundler
@@ -57,5 +61,7 @@
   programs.go = {
     enable = true;
     package = pkgs.go_1_20;
+    # export GOPRIVATE=github.com/karlskewes/*
+    goPrivate = [ "github.com/karlskewes/*" ];
   };
 }

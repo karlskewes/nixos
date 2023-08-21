@@ -57,6 +57,19 @@
     gcc # treesitter
     tree-sitter
     vale
+
+    # https://nixos.wiki/wiki/Packaging/Binaries
+    # file path/to/broken/file
+    # ldd path/to/broken/file
+    # Can patch interpreter for downloaded binary to the same interpeter used
+    # by NixOS built package (which has correct interpreter set).
+    # patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) path/to/broken/file
+    patchelf
+
+    pinentry # gpg add ssh key
+    # export GPG_TTY=$(tty)
+    # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    # gpg ssh-add -c -t 31536000 path/to/id_rsa
   ];
 
   # tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/";
@@ -148,6 +161,9 @@
       ips =
         "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
 
+      # Patchelf Binaries that use incorrect interpreter
+      pelf =
+        "patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) $1";
     };
   };
 
@@ -166,27 +182,32 @@
     userEmail = "${currentEmailAddress}";
 
     aliases = {
-      ca = "commit --amend";
-      caa = "commit --amend -a";
-      cm = "commit -m";
       co = "checkout";
       cob = "checkout -b";
       com = "checkout main";
       coms = "checkout master";
+      c = "commit";
+      ca = "commit --amend";
+      caa = "commit --amend -a";
+      cm = "commit -m";
+      d = "diff";
       fup = "fetch upstream";
       fuppr =
         "!f(){ git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
-      foppr =
+      fopr =
         "!f(){ git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
       lg =
         "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       mupm = "merge upstream/main";
       mupms = "merge upstream/master";
+      pr = "pull --rebase";
+      rbi = "rebase --interactive";
       rbm = "rebase main";
       rbms = "rebase master";
       rbupm = "rebase upstream/main";
       rbupms = "rebase upstream/master";
       raup = "remote add upstream";
+      s = "status";
       st = "status";
       prettylog =
         "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
@@ -196,6 +217,11 @@
       init.defaultBranch = "main";
       push.default = "current";
       rebase.autosquash = "true";
+      url = {
+        "ssh://git@github.com/karlskewes/" = {
+          insteadOf = "https://github.com/karlskewes/";
+        };
+      };
     };
   };
 

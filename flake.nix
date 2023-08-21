@@ -95,7 +95,35 @@
           extraModules = nixosModules;
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
-            home.packages = with pkgs; [ slack ];
+            home.packages = with pkgs; [
+              slack
+
+              envsubst
+              buf
+              protobuf # protoc
+              protoc-gen-go
+              protoc-gen-go-grpc
+              # protoc-gen-grpc-web
+              # grpc-gateway
+              protolint
+
+              go
+              golangci-lint
+              goose # https://github.com/pressly/goose
+              nats-server
+              # natscli
+              postgresql_15
+
+              nodejs
+              yarn
+
+              awscli2
+              aws-vault
+              packer
+              terraform
+
+              jq
+            ];
             # home.pointerCursor.size = 180; # 4k
             xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
           });
