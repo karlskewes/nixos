@@ -9,6 +9,11 @@ vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no
 vim.opt.relativenumber = false -- set relative numbered lines
 vim.opt.clipboard = "" -- don't default to system clipboard (<C-y|p>)
 vim.opt.colorcolumn = "80"
+-- vim.opt.foldlevelstart = 99 -- open files with all folds (99!) open
+vim.opt.foldmethod = "indent" -- folding, leaves declaration line open
+-- vim.opt.foldmethod = "expr" -- folding, set to "expr" for treesitter based folding
+-- vim.opt.foldminlines = 1 -- minimum number of lines for a fold to be displayed closed
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- treesitter based folding
 vim.opt.formatoptions = "qrn1" -- handle formatting nicely
 vim.opt.textwidth = 79 -- wrap at this character number on whitespace
 vim.opt.wrap = true -- don't display lines as one long line
@@ -33,6 +38,7 @@ vim.opt.title = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
+lvim.keys.normal_mode["zz"] = 'zA'
 lvim.keys.insert_mode["<C-p>"] = '<ESC>p' -- paste from unamed register - <C-V> for pasting from system clipboard
 lvim.keys.normal_mode["<C-y>"] = '"+y' -- 10<C-y><CR> - copy 10 lines to system clipboard
 lvim.keys.normal_mode["<C-p>"] = '"+p' -- paste from system clipboard
@@ -123,15 +129,14 @@ linters.setup {{command = "write-good"}}
 -- https://github.com/LunarVim/LunarVim/issues/4071#issuecomment-1519978799
 -- Persistent Cursor
 vim.api.nvim_create_autocmd("BufReadPost", {
-  callback = function()
-    local mark = vim.api.nvim_buf_get_mark(0, '"')
-    local lcount = vim.api.nvim_buf_line_count(0)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    callback = function()
+        local mark = vim.api.nvim_buf_get_mark(0, '"')
+        local lcount = vim.api.nvim_buf_line_count(0)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
     end
-  end,
 })
-
 
 -- Trim all trailing whitespace
 vim.api.nvim_create_autocmd("BufWritePre", {
