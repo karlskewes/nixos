@@ -101,6 +101,8 @@
     extraRemotes = [ "lvfs-testing" ];
   };
 
+  services.logind.lidSwitch = "ignore"; # default "suspend"
+
   services.openssh = {
     enable = true;
     settings = {
