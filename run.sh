@@ -116,7 +116,7 @@ lvim_deps() { ## Install lunarvim dependencies with Mason
 	echo "lvim -c 'MasonInstall ${apps}'"
 }
 
-tree-sitter() {
+tree-sitter() { ## Clear TreeSitter parsers
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, removing...'
 	rm ~/.local/share/lunarvim/site/pack/lazy/opt/nvim-treesitter/parser/*
 }
