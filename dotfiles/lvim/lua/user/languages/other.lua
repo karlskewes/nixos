@@ -4,11 +4,9 @@
 --
 lvim.builtin.dap.active = true
 lvim.builtin.treesitter.ensure_installed = {
-    "bash", "c", "dockerfile", "gitignore", "git_rebase", " go", "gomod",
-    "gosum", "gowork", "hcl", "html", "javascript", "json", "jsonnet", "ini",
-    "kotlin", "lua", "make", "markdown", "markdown_inline", "nix", "proto",
-    "python", "sql", "terraform", "typescript", "toml", "tsx", "css", "rust",
-    "java", "yaml"
+    "bash", "c", "dockerfile", "gitignore", "git_rebase", "hcl", "json",
+    "jsonnet", "ini", "kotlin", "lua", "make", "markdown", "markdown_inline",
+    "nix", "proto", "python", "sql", "terraform", "toml", "rust", "java", "yaml"
 }
 lvim.builtin.treesitter.ignore_install = {"haskell"}
 lvim.builtin.treesitter.highlight.enabled = true

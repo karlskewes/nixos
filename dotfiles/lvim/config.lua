@@ -48,6 +48,22 @@ lvim.keys.insert_mode["<F9>"] = "<ESC>:make<CR>==gi"
 lvim.keys.normal_mode["<F9>"] = ":make<CR>=="
 -- lvim.keys.normal_mode["<F8>"] = '<CMD>lua require("dapui").toggle()<CR>'
 
+lvim.keys.visual_mode["J"] = ":m '>+1<CR>gv=gv" -- move highlighted block down
+lvim.keys.visual_mode["K"] = ":m '<-2<CR>gv=gv" -- move highlighted block up
+
+lvim.keys.normal_mode["<C-d>"] = "<C-d>zz" -- navigate half/whole pages whilst keeping cursor in middle of buffer
+lvim.keys.normal_mode["<C-u>"] = "<C-u>zz"
+lvim.keys.normal_mode["<C-f>"] = "<C-f>zz"
+lvim.keys.normal_mode["<C-b>"] = "<C-b>zz"
+
+lvim.keys.normal_mode["n"] = "nzzzv" -- when searching, keep search term with cursor in the middle of buffer
+lvim.keys.normal_mode["N"] = "Nzzzv"
+
+lvim.keys.normal_mode["<C-k>"] = "<cmd>cnext<CR>zz" -- quickfix list navigation
+lvim.keys.normal_mode["<C-j>"] = "<cmd>cprev<CR>zz"
+lvim.keys.normal_mode["<leader>k"] = "<cmd>lnext<CR>zz"
+lvim.keys.normal_mode["<leader>j"] = "<cmd>lprev<CR>zz"
+
 -- User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.lualine.active = true

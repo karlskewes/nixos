@@ -54,7 +54,8 @@ gopher.setup {
         gomodifytags = "gomodifytags",
         gotests = "gotests",
         impl = "impl",
-        iferr = "iferr"
+        iferr = "iferr",
+        dlv = "dlv"
     }
 }
 
