@@ -10,7 +10,14 @@
   users.users.${currentUser} = {
     home = "/home/${currentUser}";
     isNormalUser = true;
-    extraGroups = [ "audio" "docker" "libvirtd" "wheel" ];
+    extraGroups = [
+      "audio"
+      "docker"
+      "libvirtd"
+      "wheel"
+      "scanner" # scanning
+      "lp" # scanning
+    ];
     # nix-shell -p mkpasswd
     # vim -> :read !mkpasswd -m sha-512
     # hashedPassword = "";
@@ -38,6 +45,7 @@
     gnumake
     home-manager
     nix-diff # nix-diff /run/current-system ./result
+    simple-scan # scanner
     xclip
     vim
     wget
@@ -118,6 +126,29 @@
     model = "everywhere";
   }];
   hardware.printers.ensureDefaultPrinter = "Brother";
+  hardware.sane = {
+    enable = true;
+    brscan4 = {
+      enable = true;
+      netDevices = {
+        home = {
+          model = "MFC-L2713DW";
+          ip = "192.168.1.104";
+          # nodename = "BRW1CBFC0F36D0B";
+        };
+      };
+    };
+    # brscan5 = { enable = true; };
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      userServices = true;
+    };
+  };
 
   services.zfs = {
     autoScrub.enable = true;
