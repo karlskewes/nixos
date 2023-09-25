@@ -100,6 +100,7 @@
 
               envsubst
               buf
+              mockgen # go generate mocks
               protobuf # protoc
               protoc-gen-go
               protoc-gen-go-grpc
