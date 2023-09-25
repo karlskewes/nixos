@@ -2,7 +2,17 @@
 -- :MasonInstall delve gopls golangci-lint-langserver goimports gofumpt gomodifytags gotests impl staticcheck
 --
 vim.list_extend(lvim.plugins, {
-    {"leoluz/nvim-dap-go"}, {"olexsmir/gopher.nvim"}, {"fatih/vim-go"}
+    {"leoluz/nvim-dap-go"}, {"olexsmir/gopher.nvim"}, {
+        "ray-x/go.nvim",
+        dependencies = { -- optional packages
+            "ray-x/guihua.lua", "neovim/nvim-lspconfig",
+            "nvim-treesitter/nvim-treesitter"
+        },
+        config = function() require("go").setup() end,
+        event = {"CmdlineEnter"},
+        ft = {"go", 'gomod'},
+        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+    }
 })
 
 lvim.builtin.treesitter.ensure_installed = {"go", "gomod", "gosum", "gowork"}

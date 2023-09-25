@@ -28,7 +28,7 @@ mouse_warping none
 set $mod Mod4
 
 # lock screen, wait then turn screen off
-bindsym Control+Mod1+l exec --no-startup-id i3lock-fancy & sleep 5 && xset dpms force off
+bindsym Control+Mod1+l exec --no-startup-id i3lock-fancy && sleep 5 && xset dpms force off
 
 # assign applications to static workspaces
 assign [class="^kitty$"] $ws1

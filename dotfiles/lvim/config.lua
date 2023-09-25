@@ -154,6 +154,12 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
 })
 
+-- Set gohtml files to HTML syntax highlighting
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = {"*.gohtml"},
+    command = "set filetype=gohtmltmpl"
+})
+
 -- Trim all trailing whitespace
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = {"*"},
