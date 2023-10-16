@@ -189,6 +189,7 @@
       c = "commit";
       ca = "commit --amend";
       caa = "commit --amend -a";
+      cf = "commit --fixup";
       cm = "commit -m";
       d = "diff";
       fup = "fetch upstream";

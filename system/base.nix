@@ -109,7 +109,15 @@
     extraRemotes = [ "lvfs-testing" ];
   };
 
-  services.logind.lidSwitch = "ignore"; # default "suspend"
+  services.logind = {
+    lidSwitch = "ignore"; # default "suspend"
+    lidSwitchDocked = "ignore";
+    lidSwitchExternalPower = "ignore";
+    extraConfig = ''
+      IdleAction=lock
+      IdleActionSec=3600
+    '';
+  };
 
   services.openssh = {
     enable = true;
