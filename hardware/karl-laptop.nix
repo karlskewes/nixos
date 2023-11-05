@@ -38,7 +38,8 @@
   };
 
   swapDevices = [{
-    device = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B-part2";
+    device =
+      "/dev/disk/by-id/ata-Samsung_SSD_850_EVO_500GB_S21GNXAGA03282Z-part2";
   }];
 
   hardware.cpu.intel.updateMicrocode =
