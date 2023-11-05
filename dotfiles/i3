@@ -31,6 +31,9 @@ set $mod Mod4
 bindsym Control+Mod1+l exec --no-startup-id i3lock-fancy && sleep 5 && xset dpms force off
 
 # assign applications to static workspaces
+# run `xprop` then click on window, look for:
+# WM_CLASS(STRING) = "emacs", "Emacs",
+# first is instance, second class.
 assign [class="^kitty$"] $ws1
 assign [class="^Google-chrome$"] $ws2
 assign [class="^firefox$"] $ws2

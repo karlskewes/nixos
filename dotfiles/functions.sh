@@ -68,6 +68,16 @@ flushgit() {
 		grep -v 'stashes\|master\|main' >/tmp/merged-branches &&
 		vi /tmp/merged-branches &&
 		xargs git branch -d </tmp/merged-branches
+
+	# handle squash & merge (no merge commits)
+	for branch in $(git branch | cut -d ' ' -f3 | grep -v '^main$'); do
+		git show "$branch"
+		read -r -p "git branch -D $branch - y/n?" confirm
+		echo "confirmation: $confirm"
+		if [[ "$confirm" == "y" ]]; then
+			git branch -D "$branch"
+		fi
+	done
 }
 
 # `flushdns` clears DNS cache kept by systemd-resolve

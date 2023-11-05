@@ -37,11 +37,13 @@
   };
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio = {
+  sound.enable = false; # Using pipewire below
+  security.rtkit.enable = true;
+  services.pipewire = {
     enable = true;
-    # Need full for bluetooth support
-    # package = pkgs.pulseaudioFull;
-    support32Bit = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
   };
 }

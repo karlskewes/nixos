@@ -16,8 +16,9 @@
     vaapiVdpau
     libvdpau-va-gl
   ];
+  # TODO: check now that pipewire enabled
   # Need full for bluetooth support
-  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+  # hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   # https://github.com/pi-hole/pi-hole
   virtualisation.oci-containers.containers.pihole = {
