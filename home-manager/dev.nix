@@ -15,6 +15,7 @@
     graphviz # go tool pprof -http localhost:8080 ./profile.out
 
     hugo
+    wails # wails.io
 
     go-jsonnet
     jsonnet-bundler
@@ -51,6 +52,7 @@
     aws-vault
     # google-cloud-sdk # gsutil, etc
     docker-compose
+    pulumi-bin
 
     # kubernetes
     kubectl
