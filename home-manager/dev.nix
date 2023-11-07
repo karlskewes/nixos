@@ -36,7 +36,7 @@
     rustc
 
     nodejs # neovim
-    nodePackages_latest.wrangler # Cloudflare
+    # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
     python310 # neovim # https://docs.python.org/3/
     python310Packages.flake8
