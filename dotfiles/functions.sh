@@ -64,6 +64,7 @@ gc() {
 # `flushgit` deletes any branches merged with a merge commit
 # squash merged branches aren't listed by git command
 flushgit() {
+	# handle merge commits
 	git branch --merged |
 		grep -v 'stashes\|master\|main' >/tmp/merged-branches &&
 		vi /tmp/merged-branches &&

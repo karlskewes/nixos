@@ -14,6 +14,11 @@ vim.opt.foldmethod = "indent" -- folding, leaves declaration line open
 -- vim.opt.foldmethod = "expr" -- folding, set to "expr" for treesitter based folding
 -- vim.opt.foldminlines = 1 -- minimum number of lines for a fold to be displayed closed
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()" -- treesitter based folding
+-- Disable folding in Telescope's result window.
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "TelescopeResults",
+    command = [[setlocal nofoldenable]]
+})
 vim.opt.formatoptions = "qrn1" -- handle formatting nicely
 vim.opt.textwidth = 79 -- wrap at this character number on whitespace
 vim.opt.wrap = true -- don't display lines as one long line

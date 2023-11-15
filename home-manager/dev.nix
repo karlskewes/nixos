@@ -15,7 +15,6 @@
     graphviz # go tool pprof -http localhost:8080 ./profile.out
 
     hugo
-    wails # wails.io
 
     go-jsonnet
     jsonnet-bundler
@@ -38,12 +37,12 @@
     nodejs # neovim
     # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
-    python310 # neovim # https://docs.python.org/3/
-    python310Packages.flake8
-    python310Packages.pip
-    python310Packages.pynvim # lunarvim
-    python310Packages.debugpy # lunarvim DAP
-    python310Packages.pytest # lunarvim DAP
+    python311 # neovim # https://docs.python.org/3/
+    python311Packages.flake8
+    python311Packages.pip
+    python311Packages.pynvim # lunarvim
+    python311Packages.debugpy # lunarvim DAP
+    python311Packages.pytest # lunarvim DAP
     pylint
     black
 
