@@ -17,5 +17,4 @@ home-manager.lib.homeManagerConfiguration rec {
     currentEmailAddress = emailAddress;
     currentStateVersion = stateVersion;
   };
-
 }

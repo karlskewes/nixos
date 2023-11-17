@@ -17,7 +17,75 @@ git clone git@github.com:karlskewes/nixos.git
 
 ## New machine
 
-### Prepare USB stick
+### Macbook M1
+
+#### Prepare UEFI boot loader & Install base NixOS
+
+Follow instructions at https://github.com/tpwrules/nixos-apple-silicon with the
+following variations.
+
+Setup partitions with ext4 because zfs support on new kernels is [spotty](https://github.com/tpwrules/nixos-apple-silicon/issues/111):
+```
+lsblk
+
+fdisk /dev/nvme0n1
+
+# confirm partition numbers before setting partition type
+- `n`, enter, `+8G` -> `t`, `6`, `swap`
+- `n`, enter, `+100G` -> `t`, `7`, `linux` - `/` root, nix store
+- `n`, enter, enter -> `t`, `8`, `linux` - `/home`
+- `p`
+- `w`
+```
+
+Mount partitions:
+```
+# root
+mount /dev/disk/by-id/.... /mnt/
+
+# home
+mkdir -p /mnt/home
+mount /dev/disk/by-id/.... /mnt/home
+
+# swap
+mkswap -L swap /dev/disk/by-id/....
+swapon -av
+```
+
+Generate config:
+```
+nixos-generate-config --root /mnt/
+```
+
+Add to `/etc/nixos/configuration.nix`:
+```
+nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+environment.systemPackages = with pkgs; [
+  vim # edit files
+  git # git clone this repo
+];
+
+# ensure iwd present for wifi
+
+# consider adding ssh with password authentication
+```
+
+Install:
+```
+nixos-install --root /mnt/
+```
+
+#### Flake installation
+
+- scp or git clone this repo
+- set nix-extra username to root, or mkdir /home/nixos
+- increase tmpfs storage for /run/user/0 to 10G (less ok?)
+
+
+### x86/arm64
+
+#### Prepare USB stick
 
 - [x86](https://nixos.org/download.html)
 
@@ -83,7 +151,7 @@ Then if ready do a run for real:
 # as above without `--dry-run` flag
 ```
 
-### Add machine to repository
+#### Add machine to repository
 
 Generate hardware:
 

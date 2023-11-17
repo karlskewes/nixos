@@ -30,12 +30,14 @@
 
   boot = {
     loader.systemd-boot.enable = true;
-    loader.systemd-boot.memtest86.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    kernelParams = [ "nohibernate" ]; # not supported by zfs
-    supportedFilesystems = [ "zfs" ];
-    zfs.devNodes = "/dev/disk/by-path";
-    zfs.requestEncryptionCredentials = true; # prompt for encryption password
+    loader.systemd-boot.memtest86.enable = {
+      "x86_64-linux" = true;
+      "aarch64-linux" = false;
+    }."${currentSystem}";
+    loader.efi.canTouchEfiVariables = {
+      "x86_64-linux" = true;
+      "aarch64-linux" = false;
+    }."${currentSystem}";
   };
 
   # List packages installed in system profile. To search, run:
@@ -135,7 +137,11 @@
   }];
   hardware.printers.ensureDefaultPrinter = "Brother";
   hardware.sane = {
-    enable = true;
+    enable = {
+      "x86_64-linux" = true;
+      "aarch64-linux" = false;
+    }."${currentSystem}";
+
     brscan4 = {
       enable = true;
       netDevices = {
@@ -158,20 +164,11 @@
     };
   };
 
-  services.zfs = {
-    autoScrub.enable = true;
-    autoSnapshot.enable = true;
-    trim.enable = true;
-  };
-
   # Let 'nixos-version --json' know about the Git revision
   # system.configurationRevision = currentRevision;
 
   # Docker seems to be more reliable for the containers running.
-  virtualisation.docker = {
-    enable = true;
-    storageDriver = "zfs";
-  };
+  virtualisation.docker = { enable = true; };
   virtualisation.oci-containers.backend = "docker";
 
   # virtualisation = {

@@ -10,6 +10,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    apple-silicon-support = {
+      url = "github:tpwrules/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
+    };
+
     # Nightly on 0.10.0 which is not supported by nvim-treesitter yet.
     # neovim-nightly-overlay = {
     # url = "github:nix-community/neovim-nightly-overlay";
@@ -22,7 +33,8 @@
     nix-extra.flake = false;
   };
 
-  outputs = { self, home-manager, nixpkgs, nix-extra, ... }@inputs:
+  outputs = { self, home-manager, nixpkgs, apple-silicon-support, nix-extra, ...
+    }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
       #   overlays = [ inputs.neovim-nightly-overlay.overlay ];
@@ -51,13 +63,16 @@
         ./system/xserver.nix
       ];
 
+      appleOverlays = [ apple-silicon-support.overlays.default ];
+
     in {
       nixosConfigurations = {
         karl-desktop = mkHost "karl-desktop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
             emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
-          extraModules = nixosModules ++ [ ./system/libvirtd.nix ];
+          extraModules = nixosModules
+            ++ [ ./system/libvirtd.nix ./system/zfs.nix ];
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];
@@ -69,7 +84,7 @@
           inherit nixpkgs home-manager nix-extra overlays configRev user
             emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
-          extraModules = nixosModules;
+          extraModules = nixosModules ++ [ ./system/zfs.nix ];
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
             home.packages = with pkgs; [ discord slack ];
@@ -77,11 +92,26 @@
           });
         };
 
+        karl-mba = mkHost "karl-mba" rec {
+          inherit nixpkgs home-manager nix-extra configRev user emailAddress
+            authorizedKeys;
+          system = "aarch64-linux";
+          overlays = [ apple-silicon-support.overlays.default ];
+          stateVersion = "23.11";
+          extraModules = nixosModules;
+          homeConfig = ({ config, pkgs, ... }: {
+            imports = hmModules;
+            # TODO, unsupported
+            # home.packages = with pkgs; [ discord slack ];
+            # xresources.properties = { "Xft.dpi" = "96"; };
+          });
+        };
+
         shub = mkHost "shub" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
             emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
-          extraModules = nixosModules;
+          extraModules = nixosModules ++ [ ./system/zfs.nix ];
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
             home.packages = with pkgs; [ tmux ];
@@ -92,7 +122,7 @@
           inherit nixpkgs home-manager nix-extra overlays configRev user
             emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
-          extraModules = nixosModules;
+          extraModules = nixosModules ++ [ ./system/zfs.nix ];
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
             home.packages = with pkgs; [
@@ -108,7 +138,6 @@
               # grpc-gateway
               protolint
 
-              go
               golangci-lint
               goose # https://github.com/pressly/goose
               nats-server
