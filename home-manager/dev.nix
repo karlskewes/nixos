@@ -33,6 +33,8 @@
 
     cargo
     rustc
+    rust-analyzer
+    rustfmt
 
     nodejs # neovim
     # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
