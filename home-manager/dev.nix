@@ -6,6 +6,7 @@
     shellcheck
     shfmt
 
+    air # hot reload Go apps
     buf
     delve
     golangci-lint
@@ -47,6 +48,13 @@
     python311Packages.pytest # lunarvim DAP
     pylint
     black
+
+    # DO: npm install -D tailwindcss postcss-cli @fullhuman/postcss-purgecss
+    # RUN: npx {tailwindcss, postcss, etc} --help
+    # WARNING: Below packages need to be in node_modules dir, not nix store.
+    # tailwindcss
+    # nodePackages.autoprefixer
+    # nodePackages.postcss-cli
 
     # clouds
     awscli2

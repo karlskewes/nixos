@@ -27,7 +27,10 @@ linters.setup {
     }
 }
 
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, {"tsserver"})
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, {
+    "cssls", -- handled by tailwindcss
+    "tsserver" -- ?
+})
 
 local capabilities = require("lvim.lsp").common_capabilities()
 
