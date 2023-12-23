@@ -96,6 +96,8 @@ lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
 -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 
+local harpoon -- enables access by which-key for keymaps.
+
 -- Additional Plugins
 lvim.plugins = {
     {"nvim-telescope/telescope-live-grep-args.nvim"}, --
@@ -126,6 +128,11 @@ lvim.plugins = {
         config = function()
             vim.cmd("let g:vim_markdown_folding_disabled = 1")
         end
+    }, {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = {"nvim-lua/plenary.nvim"},
+        config = function() harpoon = require("harpoon"):setup() end
     }
 }
 
@@ -219,4 +226,23 @@ lvim.builtin.which_key.mappings["n"] = {
     c = {"<cmd>lua require('neogen').generate({ type = 'class' })<CR>", "Class"},
     m = {"<cmd>lua require('neogen').generate({ type = 'func' })<CR>", "Method"},
     t = {"<cmd>lua require('neogen').generate({ type = 'type' })<CR>", "Type"}
+}
+
+-- Harpoon keymaps
+lvim.builtin.which_key.mappings['h'] = {} -- disable default no highlight search
+lvim.builtin.which_key.mappings["h"] = {
+    name = "Harpoon",
+    a = {function() harpoon:list():append() end, "Append"},
+    t = {
+        function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+        "Toggle Quick Menu"
+    },
+    -- Toggle previous & next buffers stored within Harpoon list
+    j = {function() harpoon:list():prev() end, "Previous"},
+    k = {function() harpoon:list():next() end, "Next"},
+
+    -- Quick jump to item in list
+    u = {function() harpoon:list():select(1) end, "Jump to 1"},
+    i = {function() harpoon:list():select(2) end, "Jump to 2"},
+    o = {function() harpoon:list():select(3) end, "Jump to 3"}
 }

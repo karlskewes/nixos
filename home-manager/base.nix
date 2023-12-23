@@ -17,6 +17,10 @@
     source = ../dotfiles/lvim;
     recursive = true;
   };
+  xdg.configFile."nvim" = {
+    source = ../dotfiles/nvim;
+    recursive = true;
+  };
   xdg.configFile."vale.ini" = { source = ../dotfiles/vale.ini; };
 
   #---------------------------------------------------------------------
@@ -37,7 +41,6 @@
     ffmpegthumbnailer # neovim telescope media_files video preview
     fd
     file
-    fzf
     gron # sed'able json
     htop
     iptraf-ng
@@ -83,7 +86,7 @@
     LANG = "en_US.UTF-8";
     LC_CTYPE = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    EDITOR = "lvim";
+    EDITOR = "nvim";
     PAGER = "less --ignore-case --hilite-unread --silent";
     MANPAGER = "less --ignore-case --hilite-unread --silent";
   };
@@ -118,8 +121,6 @@
 
       PATH=$PATH:~/.local/bin:~/go/bin/
 
-      ${builtins.readFile ../dotfiles/mage_completions.sh}
-
       ${builtins.readFile ../dotfiles/functions.sh}
       KUBECONFIG=~/.kube/config
 
@@ -138,10 +139,10 @@
       pbpaste = "xclip -selection clipboard -o";
 
       # Remove if switch away from lunarvim to home-manager managed neovim
-      v = "lvim";
-      vi = "lvim";
-      vim = "lvim";
-      vimdiff = "lvim -d";
+      v = "nvim";
+      vi = "nvim";
+      vim = "nvim";
+      vimdiff = "nvim -d";
 
       # Easier navigation: .., ..., ...., ....., ~ and -
       ".." = "cd ..";
@@ -171,9 +172,33 @@
     enable = true;
     config = {
       style = "plain";
-      theme = "Solarized (dark)";
+      theme = "catppuccin";
       pager = "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent";
     };
+    themes = {
+      catppuccin = {
+        src = pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "bat"; # Bat uses sublime syntax for its themes
+          rev = "ba4d16880d63e656acced2b7d4e034e4a93f74b1";
+          # nix-shell -p nix-prefetch
+          # nix-prefetch fetchFromGitHub --owner catppuccin --repo bat --rev ba4d16880d63e656acced2b7d4e034e4a93f74b1
+          sha256 = "sha256-6WVKQErGdaqb++oaXnY3i6/GuH2FhTgK0v4TN4Y0Wbw=";
+        };
+        file = "Catppuccin-macchiato.tmTheme";
+      };
+    };
+  };
+
+  programs.fzf = {
+    enable = true;
+    defaultOptions = [
+      "--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8"
+      "--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc"
+      "--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+    ];
+    fileWidgetOptions =
+      [ "--preview 'bat --color=always --style=numbers --line-range=:500 {}'" ];
   };
 
   programs.git = {
