@@ -80,14 +80,14 @@
           });
         };
 
-        karl-laptop = mkHost "karl-laptop" rec {
+        blake-laptop = mkHost "blake-laptop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
             emailAddress stateVersion authorizedKeys;
           system = "x86_64-linux";
           extraModules = nixosModules ++ [ ./system/zfs.nix ];
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules;
-            home.packages = with pkgs; [ discord slack ];
+            home.packages = with pkgs; [ ];
             xresources.properties = { "Xft.dpi" = "96"; };
           });
         };
