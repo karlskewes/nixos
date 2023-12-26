@@ -118,19 +118,6 @@ else
 	hostStyle="${cyan}"
 fi
 
-# kube-ps1
-# TODO: convert this to nixos fetchFromGitHub or similar
-# TODO: this requires kubectl to be installed
-kubeps1=${HOME}/src/github.com/jonmosco/kube-ps1/kube-ps1.sh
-if [[ -r "$kubeps1" ]] && [[ -f "$kubeps1" ]]; then
-	# shellcheck source=/dev/null
-	source "$kubeps1"
-else
-	kube_ps1() {
-		echo "kubeps1 not installed"
-	}
-fi
-
 # Set the terminal title to the current working directory.
 PS1="\\[\\033]0;\\w\\007\\]"
 PS1+="\\[${bold}\\]\\n"      # newline
@@ -140,8 +127,6 @@ PS1+="\\[${hostStyle}\\]${cloud}\\h" # host
 PS1+="\\[${white}\\] in "
 PS1+="\\[${green}\\]\\w"                        # working directory
 PS1+="\$(prompt_git \"${white} on ${violet}\")" # Git repository details
-PS1+="\\[${white}\\] kube: "
-PS1+="\$(kube_ps1)"
 PS1+="\\n"
 PS1+="\\[${white}\\]\$ \\[${reset}\\]" # `$` (and reset color)
 export PS1

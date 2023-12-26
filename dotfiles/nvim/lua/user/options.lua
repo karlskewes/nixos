@@ -69,6 +69,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     pattern = '*'
 })
 
+-- Set gohtml files to HTML syntax highlighting
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
+    pattern = {"*.gohtml"},
+    command = "set filetype=gohtmltmpl"
+})
+
+-- Trim all trailing whitespace
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = {"*"},
+    -- @ separater, double back slash for lua escape
+    command = ":%s@\\s\\+$@@e"
+})
+
 -- [[ Configure Harpoon ]]
 vim.keymap.set("n", "<C-a>", function() harpoon:list():append() end)
 vim.keymap.set("n", "<C-s>",
@@ -395,5 +408,6 @@ vim.keymap.set("n", "<leader>pl", "<cmd>Lazy<CR>", {desc = "Lazy"})
 vim.keymap.set("n", "<leader>pm", "<cmd>Mason<CR>", {desc = "Mason"})
 
 -- [[ Keybindings - mappings ]]
+vim.keymap.set("n", "<leader>c", "<cmd>:bd|bo<CR>", {desc = "Close Buffer"})
 vim.keymap.set("n", "<leader>w", "<cmd>w!<CR>", {desc = "Write/Save"})
 vim.keymap.set("n", "<leader>q", "<cmd>confirm q<CR>", {desc = "Quit"})

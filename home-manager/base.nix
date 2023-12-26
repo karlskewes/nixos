@@ -69,6 +69,7 @@
     # patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) path/to/broken/file
     patchelf
 
+    gnome.seahorse
     pinentry # gpg add ssh key
     # export GPG_TTY=$(tty)
     # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
@@ -256,10 +257,11 @@
     settings = { pinentry-mode = "loopback"; };
   };
 
+  services.gnome-keyring.enable = true;
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryFlavor = "tty";
+    pinentryFlavor = "gnome3";
 
     # cache the keys forever, rotate as require
     maxCacheTtl = 31536000;

@@ -10,8 +10,6 @@
   services.printing.enable = true;
 
   # setup windowing environment
-  services.gnome.gnome-keyring.enable = true;
-  programs.seahorse.enable = true;
   services.xserver = {
     enable = true;
     layout = "us";

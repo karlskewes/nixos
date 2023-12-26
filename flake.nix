@@ -33,7 +33,13 @@
     nix-extra.flake = false;
   };
 
-  outputs = { self, home-manager, nixpkgs, apple-silicon-support, nix-extra, ...
+  outputs =
+    { self
+    , home-manager
+    , nixpkgs
+    , apple-silicon-support
+    , nix-extra
+    , ...
     }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
@@ -65,7 +71,8 @@
 
       appleOverlays = [ apple-silicon-support.overlays.default ];
 
-    in {
+    in
+    {
       nixosConfigurations = {
         karl-desktop = mkHost "karl-desktop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
@@ -103,7 +110,7 @@
             imports = hmModules;
             # TODO, unsupported
             # home.packages = with pkgs; [ discord slack ];
-            # xresources.properties = { "Xft.dpi" = "96"; };
+            xresources.properties = { "Xft.dpi" = "109"; };
           });
         };
 
@@ -136,10 +143,11 @@
               protoc-gen-go-grpc
               # protoc-gen-grpc-web
               # grpc-gateway
-              protolint
+              # protolint # need 0.37 
 
               golangci-lint
               goose # https://github.com/pressly/goose
+              goteststum
               nats-server
               # natscli
               postgresql_15

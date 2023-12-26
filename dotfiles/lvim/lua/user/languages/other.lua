@@ -29,7 +29,7 @@ formatters.setup {
 vim.filetype.add {extension = {bats = "bats"}}
 
 local linters = require "lvim.lsp.null-ls.linters"
-linters.setup {{command = "protolint", filetypes = {"proto"}}}
+linters.setup({{command = "protolint", filetypes = {"proto"}}})
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 

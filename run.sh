@@ -106,18 +106,10 @@ goutils() { ## Install go utils
 	go install -v github.com/pressly/goose/v3/cmd/goose@latest # TODO here or elsewhere
 }
 
-lvim() { ## Install lunarvim
-	LV_BRANCH="release-1.3/neovim-0.9"
-	curl -s "https://raw.githubusercontent.com/lunarvim/lunarvim/${LV_BRANCH}/utils/installer/install.sh" -o /tmp/lvim_install.sh
-	less /tmp/lvim_install.sh
-	read -r -p "press any key to execute LunarVim script install.sh"
-	bash /tmp/lvim_install.sh
-}
-
-lvim_deps() { ## Install lunarvim dependencies with Mason
+nvim_deps() { ## Install neovim dependencies with Mason
 	# grep this repo for comment convention: 'MasonInstall: <app1> <app2>'
-	apps="$(grep ':MasonInstall' dotfiles/lvim/lua/user/languages/*.lua | cut -d ' ' -f 3- | xargs)"
-	echo "lvim -c 'MasonInstall ${apps}'"
+	apps="$(grep ':MasonInstall' dotfiles/nvim/lua/user/*.lua | cut -d ' ' -f 3- | xargs)"
+	echo "nvim -c 'MasonInstall ${apps}'"
 }
 
 tree-sitter() { ## Clear TreeSitter parsers

@@ -3,7 +3,6 @@
 -- general
 lvim.format_on_save.enabled = true
 lvim.log.level = "warn"
-lvim.colorscheme = "catppuccin" -- alt: "carbonfox" or "onedarker" -- onedark theme broken, missing highlighting
 vim.opt.diffopt = "internal,filler,closeoff,iwhite" -- disable vimdiff whitespace showing - can't += here
 vim.opt.undofile = false -- disable persistent undo, habitual git + ctrl-u to no-changes
 vim.opt.relativenumber = false -- set relative numbered lines
@@ -42,7 +41,6 @@ vim.opt.formatoptions = {
 vim.opt.title = false
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
-lvim.leader = "space"
 lvim.keys.normal_mode["zz"] = 'zA'
 lvim.keys.insert_mode["<C-p>"] = '<ESC>p' -- paste from unamed register - <C-V> for pasting from system clipboard
 lvim.keys.normal_mode["<C-y>"] = '"+y' -- 10<C-y><CR> - copy 10 lines to system clipboard
@@ -71,11 +69,6 @@ lvim.keys.normal_mode["<leader>j"] = "<cmd>lprev<CR>zz"
 
 -- User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.lualine.active = true
-lvim.builtin.lualine.style = "default"
-lvim.builtin.lualine.options.theme = "solarized_dark"
--- broken
--- lvim.builtin.lualine.options.theme = "auto"
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.dap.ui.config.layouts = {
@@ -88,22 +81,12 @@ lvim.builtin.dap.ui.config.layouts = {
         position = "bottom"
     }
 }
-lvim.builtin.terminal.active = true
-lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.setup.renderer.highlight_git = true
-lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
-
--- set additional linters
-local linters = require "lvim.lsp.null-ls.linters"
-
-local harpoon -- enables access by which-key for keymaps.
 
 -- Additional Plugins
 lvim.plugins = {
     {"nvim-telescope/telescope-live-grep-args.nvim"}, --
     {"nvim-telescope/telescope-media-files.nvim"}, --
-    {"catppuccin/nvim", name = "catppuccin"}, {"EdenEast/nightfox.nvim"},
-    {"lunarvim/Onedarker.nvim"}, {'kdheepak/lazygit.nvim'}, {
+{'kdheepak/lazygit.nvim'}, {
         "ray-x/lsp_signature.nvim",
         event = "BufRead",
         config = function()
@@ -128,12 +111,7 @@ lvim.plugins = {
         config = function()
             vim.cmd("let g:vim_markdown_folding_disabled = 1")
         end
-    }, {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        dependencies = {"nvim-lua/plenary.nvim"},
-        config = function() harpoon = require("harpoon"):setup() end
-    }
+    }, 
 }
 
 -- Telescope extensions
@@ -170,13 +148,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"}, {
     pattern = {"*.gohtml"},
     command = "set filetype=gohtmltmpl"
-})
-
--- Trim all trailing whitespace
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {"*"},
-    -- @ separater, double back slash for lua escape
-    command = ":%s@\\s\\+$@@e"
 })
 
 -- load dotfiles configuration with entry here: ~/.config/lvim/lua/user/init.lua
@@ -228,21 +199,4 @@ lvim.builtin.which_key.mappings["n"] = {
     t = {"<cmd>lua require('neogen').generate({ type = 'type' })<CR>", "Type"}
 }
 
--- Harpoon keymaps
-lvim.builtin.which_key.mappings['h'] = {} -- disable default no highlight search
-lvim.builtin.which_key.mappings["h"] = {
-    name = "Harpoon",
-    a = {function() harpoon:list():append() end, "Append"},
-    t = {
-        function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
-        "Toggle Quick Menu"
-    },
-    -- Toggle previous & next buffers stored within Harpoon list
-    j = {function() harpoon:list():prev() end, "Previous"},
-    k = {function() harpoon:list():next() end, "Next"},
 
-    -- Quick jump to item in list
-    u = {function() harpoon:list():select(1) end, "Jump to 1"},
-    i = {function() harpoon:list():select(2) end, "Jump to 2"},
-    o = {function() harpoon:list():select(3) end, "Jump to 3"}
-}

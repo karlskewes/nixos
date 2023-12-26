@@ -40,6 +40,16 @@ fdisk /dev/nvme0n1
 
 Mount partitions:
 ```
+# print partiion info
+lsblk -o name,mountpoint,label,size,uuid
+
+NAME        MOUNTP LABEL           SIZE UUID
+nvme0n1                          931.5G 
+├─nvme0n1p1 /boot                  512M C0B8-20DA
+├─nvme0n1p2 [SWAP] swap            7.5G b85bdf70-c212-4641-a96b-e2d0b9ad9f16
+├─nvme0n1p3        rpool-desktop 492.7G 14791146668368940249
+└─nvme0n1p7        data          329.4G 28385FE6385FB194
+```
 # root
 mount /dev/disk/by-id/.... /mnt/
 
