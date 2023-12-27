@@ -21,6 +21,16 @@ vim.o.formatoptions = "qrn1" -- handle formatting nicely
 vim.o.textwidth = 99 -- wrap at this character number on whitespace
 vim.o.wrap = true -- don't display lines as one long line
 
+vim.cmd [[
+  function! QuickFixToggle()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+      copen
+    else
+      cclose
+    endif
+  endfunction
+]]
+
 -- [[ Basic Keymaps ]]
 -- See `:help vim.keymap.set()`
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
@@ -71,8 +81,9 @@ vim.keymap.set("n", "N", "Nzzzv", {})
 -- Quickfix list navigation
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz", {})
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz", {})
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", {})
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", {})
+-- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", {})
+-- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", {})
+vim.keymap.set("n", "<C-q>", ":call QuickFixToggle()<CR>", {})
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

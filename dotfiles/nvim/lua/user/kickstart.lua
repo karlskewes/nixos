@@ -28,4 +28,10 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {}
 
-require('lazy').setup({{import = 'user.plugins'}}, {})
+-- For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
+require('lazy').setup({
+    {import = 'user.lsp'}, --
+    {import = 'user.plugins'}, --
+    {import = 'user.autoformat'}, --
+    {import = 'user.debug'} --
+}, {})

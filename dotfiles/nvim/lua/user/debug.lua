@@ -15,7 +15,7 @@ return {
         'williamboman/mason.nvim', 'jay-babu/mason-nvim-dap.nvim',
 
         -- Add your own debuggers here
-        'leoluz/nvim-dap-go'
+        'leoluz/nvim-dap-go', "mfussenegger/nvim-dap-python"
     },
     config = function()
         local dap = require 'dap'
@@ -112,5 +112,14 @@ return {
 
         -- Install golang specific config
         require('dap-go').setup()
+
+        -- Install python specific config
+        local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+        pcall(function()
+            require("dap-python").setup(mason_path ..
+                                            "packages/debugpy/venv/bin/python")
+        end)
+        -- Default of unittest can struggle to find modules but pytest seems reliable.
+        pcall(function() require("dap-python").test_runner = "pytest" end)
     end
 }

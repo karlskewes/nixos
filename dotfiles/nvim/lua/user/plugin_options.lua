@@ -1,4 +1,5 @@
 -- [[ Configure Harpoon ]]
+-- TODO: fixme, might need to define keys in plugin.lua
 vim.keymap.set("n", "<C-a>", function() harpoon:list():append() end)
 vim.keymap.set("n", "<C-s>",
                function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
@@ -196,7 +197,7 @@ local lsp_on_attach = function(_, bufnr)
 
     -- See `:help K` for why this keymap
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-    nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+    nmap('<leader>K', vim.lsp.buf.signature_help, 'Signature Documentation')
 
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(bufnr, 'Format',
@@ -228,28 +229,66 @@ require('which-key').register({
 require('mason').setup()
 require('mason-lspconfig').setup()
 
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
-local servers = {
-    -- clangd = {},
-    -- gopls = {},
-    -- pyright = {},
-    -- rust_analyzer = {},
-    -- tsserver = {},
-    -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+-- fix Lua with manual installation
+local lua_runtime_path = vim.split(package.path, ';')
+table.insert(lua_runtime_path, "lua/?.lua")
+table.insert(lua_runtime_path, "lua/?/init.lua")
 
+-- Enable the following language servers
+-- Any additional override configuration will be passed to the `settings` field of
+-- the server config.
+-- Override default filetypes by defining the property 'filetypes' on the map in question.
+local servers = {
+    bashls = {},
+    bufls = {},
+    dockerls = {},
+    eslint = {},
+    gopls = {
+        usePlaceholders = true,
+        codelenses = {
+            generate = false,
+            gc_details = true,
+            test = true,
+            tidy = true
+        },
+        gofumpt = true,
+        staticcheck = true
+    },
+    golangci_lint_ls = {},
+    html = {},
+    -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+    htmx = {},
+    pyright = {},
+    rnix = {},
+    rust_analyzer = {},
+    sqlls = {},
+    tailwindcss = {},
+    tsserver = {},
+    vuels = {},
+    yamlls = {},
     lua_ls = {
+        -- TODO: fix - https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#lua_l
+        cmd = {
+            -- TODO: support home-manager only lua-language server under /home/..
+            "/etc/profiles/per-user/karl/bin/lua-language-server", "-E",
+            "/etc/profiles/per-user/karl/share/lua-language-server/main.lua"
+        },
         Lua = {
             workspace = {checkThirdParty = false},
-            telemetry = {enable = false}
+            telemetry = {enable = false},
             -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
             -- diagnostics = { disable = { 'missing-fields' } },
+            runtime = {version = 'LuaJIT', path = lua_runtime_path},
+            diagnostics = {
+                globals = {'vim'}
+                -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                -- disable = { 'missing-fields' }
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true)
+            },
+            telemetry = {enable = false}
         }
     }
 }

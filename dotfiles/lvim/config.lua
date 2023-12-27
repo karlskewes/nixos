@@ -86,13 +86,6 @@ lvim.builtin.dap.ui.config.layouts = {
 lvim.plugins = {
     {"nvim-telescope/telescope-live-grep-args.nvim"}, --
     {"nvim-telescope/telescope-media-files.nvim"}, --
-{'kdheepak/lazygit.nvim'}, {
-        "ray-x/lsp_signature.nvim",
-        event = "BufRead",
-        config = function()
-            require"lsp_signature".on_attach({fix_pos = true})
-        end
-    }, --
     {
         "ethanholz/nvim-lastplace",
         event = "BufRead",

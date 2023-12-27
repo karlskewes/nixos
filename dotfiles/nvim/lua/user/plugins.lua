@@ -1,45 +1,18 @@
 -- See the kickstart.nvim README for more information
 -- [[ Configure plugins ]]
+-- TODO, fix, doesn't work for keymaps
 local harpoon -- enables access to harpoon for key mapping as it doesn't get loaded into global scope.
 
 return {
     -- Git related plugins
-    'tpope/vim-fugitive', 'tpope/vim-rhubarb',
-
-    -- Detect tabstop and shiftwidth automatically
-    'tpope/vim-sleuth',
-
-    -- NOTE: This is where your plugins related to LSP can be installed.
-    --  The configuration is done below. Search for lspconfig to find it below.
-    {
-        -- LSP Configuration & Plugins
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            -- Automatically install LSPs to stdpath for neovim
-            'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim',
-
-            -- Useful status updates for LSP
-            -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-            {'j-hui/fidget.nvim', opts = {}},
-
-            -- Additional lua configuration, makes nvim stuff amazing!
-            'folke/neodev.nvim'
-        }
+    'tpope/vim-fugitive', 'tpope/vim-rhubarb', {
+        -- Detect tabstop and shiftwidth automatically
+        'tpope/vim-sleuth'
     }, {
-        -- Autocompletion
-        'hrsh7th/nvim-cmp',
-        dependencies = {
-            -- Snippet Engine & its associated nvim-cmp source
-            'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
-
-            -- Adds LSP completion capabilities
-            'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-path',
-
-            -- Adds a number of user-friendly snippets
-            'rafamadriz/friendly-snippets'
-        }
-    }, -- Useful plugin to show you pending keybinds.
-    {'folke/which-key.nvim', opts = {}}, {
+        -- Useful plugin to show you pending keybinds.
+        'folke/which-key.nvim',
+        opts = {}
+    }, {
         -- Adds git related signs to the gutter, as well as utilities for managing changes
         'lewis6991/gitsigns.nvim',
         opts = {
@@ -267,10 +240,7 @@ return {
         'nvim-treesitter/nvim-treesitter',
         dependencies = {'nvim-treesitter/nvim-treesitter-textobjects'},
         build = ':TSUpdate'
-    }, -- kickstart.nvim additional plugins
-    require 'user.autoformat', require 'user.debug', --
-    -- For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-    {
+    }, {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
         dependencies = {"nvim-lua/plenary.nvim"},
@@ -280,6 +250,15 @@ return {
         "catppuccin/nvim",
         name = "catppuccin",
         config = function() vim.cmd.colorscheme 'catppuccin' end
+    }, {
+        "ray-x/go.nvim",
+        dependencies = { -- optional packages
+            "ray-x/guihua.lua", "neovim/nvim-lspconfig",
+            "nvim-treesitter/nvim-treesitter"
+        },
+        config = function() require("go").setup() end,
+        event = {"CmdlineEnter"},
+        ft = {"go", 'gomod'},
+        build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
     }
-
 }
