@@ -21,13 +21,12 @@
       inputs.rust-overlay.follows = "rust-overlay";
     };
 
-    # Nightly on 0.10.0 which is not supported by nvim-treesitter yet.
-    # neovim-nightly-overlay = {
-    # url = "github:nix-community/neovim-nightly-overlay";
-    # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
-    # inputs.nixpkgs.url =
-    # "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
-    # };
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
+      # inputs.nixpkgs.url =
+      # "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
+    };
 
     nix-extra.url = "path:/home/karl/src/nix-extra";
     nix-extra.flake = false;
@@ -43,8 +42,8 @@
     }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
-      #   overlays = [ inputs.neovim-nightly-overlay.overlay ];
-      overlays = [ ];
+      overlays = [ inputs.neovim-nightly-overlay.overlay ];
+      # overlays = [ ];
 
       # Function to render out our hosts
       mkHost = import ./lib/mkHost.nix;
@@ -143,11 +142,11 @@
               protoc-gen-go-grpc
               # protoc-gen-grpc-web
               # grpc-gateway
-              # protolint # need 0.37 
+              # protolint # need 0.37
 
               golangci-lint
               goose # https://github.com/pressly/goose
-              goteststum
+              gotestsum
               nats-server
               # natscli
               postgresql_15

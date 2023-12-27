@@ -249,7 +249,37 @@ return {
     }, {
         "catppuccin/nvim",
         name = "catppuccin",
-        config = function() vim.cmd.colorscheme 'catppuccin' end
+        config = function() vim.cmd.colorscheme 'catppuccin' end,
+        opts = {
+            integrations = {
+                alpha = true,
+                cmp = true,
+                dap = true,
+                dap_ui = true,
+                fidget = true,
+                gitsigns = true,
+                harpoon = true,
+                headlines = true,
+                illuminate = true,
+                indent_blankline = {enabled = true},
+                mason = true,
+                markdown = true,
+                mini = true,
+                native_lsp = {
+                    enabled = true,
+                    underlines = {
+                        errors = {"undercurl"},
+                        hints = {"undercurl"},
+                        warnings = {"undercurl"},
+                        information = {"undercurl"}
+                    }
+                },
+                telescope = true,
+                treesitter = true,
+                treesitter_context = true,
+                which_key = true
+            }
+        }
     }, {
         "ray-x/go.nvim",
         dependencies = { -- optional packages
