@@ -11,12 +11,6 @@
 
   # manage XDG directories
   xdg.enable = true;
-  # recursively symlink LunarVim configuration
-  # Note: lvim adds other files we don't need to persist into git
-  xdg.configFile."lvim" = {
-    source = ../dotfiles/lvim;
-    recursive = true;
-  };
   xdg.configFile."nvim" = {
     source = ../dotfiles/nvim;
     recursive = true;

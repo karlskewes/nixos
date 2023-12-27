@@ -1,5 +1,6 @@
 require("user.kickstart")
 require("user.plugins")
+require("user.plugin_options")
 require("user.lsp")
 require("user.debug")
 require("user.autoformat")

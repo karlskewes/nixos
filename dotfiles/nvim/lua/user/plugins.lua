@@ -199,10 +199,39 @@ return {
                                opts("CD"))
             end
 
-            require("nvim-tree").setup {on_attach = on_attach}
+            require("nvim-tree").setup {
+                on_attach = on_attach,
+                update_focused_file = {
+                    enable = true,
+                    debounce_delay = 15,
+                    update_root = true,
+                    ignore_list = {}
+                }
+            }
 
             vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>",
                            {desc = "Explorer"})
+
+            -- https://github.com/nvim-tree/nvim-tree.lua/wiki/Recipes#go-to-last-used-hidden-buffer-when-deleting-a-buffer
+            vim.api.nvim_create_autocmd("BufEnter", {
+                nested = true,
+                callback = function()
+                    local api = require('nvim-tree.api')
+
+                    -- Only 1 window with nvim-tree left: we probably closed a file buffer
+                    if #vim.api.nvim_list_wins() == 1 and api.tree.is_tree_buf() then
+                        -- Required to let the close event complete. An error is thrown without this.
+                        vim.defer_fn(function()
+                            -- close nvim-tree: will go to the last hidden buffer used before closing
+                            api.tree.toggle({find_file = true, focus = true})
+                            -- re-open nivm-tree
+                            api.tree.toggle({find_file = true, focus = true})
+                            -- nvim-tree is still the active window. Go to the previous window.
+                            vim.cmd("wincmd p")
+                        end, 0)
+                    end
+                end
+            })
         end
     }, {
         -- Add indentation guides even on blank lines
@@ -210,11 +239,11 @@ return {
         -- See `:help ibl`
         main = 'ibl',
         opts = {}
-    }, 
-    {
+    }, {
         -- "gc" to comment visual regions/lines
-        'numToStr/Comment.nvim', opts = {}}, 
-    {
+        'numToStr/Comment.nvim',
+        opts = {}
+    }, {
         -- Fuzzy Finder (files, lsp, etc)
         'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
@@ -238,8 +267,7 @@ return {
         'nvim-treesitter/nvim-treesitter',
         dependencies = {'nvim-treesitter/nvim-treesitter-textobjects'},
         build = ':TSUpdate'
-    }, 
-    -- kickstart.nvim additional plugins
+    }, -- kickstart.nvim additional plugins
     require 'user.autoformat', require 'user.debug', --
     -- For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
     {
