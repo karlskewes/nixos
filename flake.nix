@@ -109,7 +109,7 @@
             imports = hmModules;
             # TODO, unsupported
             # home.packages = with pkgs; [ discord slack ];
-            xresources.properties = { "Xft.dpi" = "109"; };
+            xresources.properties = { "Xft.dpi" = "220"; };
           });
         };
 
@@ -160,6 +160,7 @@
               terraform
 
               jq
+              zoom-us
             ];
             # home.pointerCursor.size = 180; # 4k
             xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k

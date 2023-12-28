@@ -13,6 +13,7 @@ nixpkgs.lib.nixosSystem rec {
     {
       config._module.args = {
         currentUser = user;
+        currentEmailAddress = emailAddress;
         currentSystem = system;
         currentSystemName = name;
         currentRevision = configRev;
@@ -22,10 +23,7 @@ nixpkgs.lib.nixosSystem rec {
 
     { nixpkgs.overlays = overlays; }
 
-    ({ config, ... }: {
-      # TODO: restrict this list?
-      nixpkgs.config = { allowUnfree = true; };
-    })
+    ({ config, lib, ... }: { nixpkgs.config.allowUnfree = lib.mkDefault true; })
 
     ../hardware/${name}.nix
     ../system/${name}.nix

@@ -1,4 +1,11 @@
-{ config, pkgs, currentUser, currentEmailAddress, currentStateVersion, ... }:
+{ config
+, lib
+, pkgs
+, currentUser
+, currentEmailAddress
+, currentStateVersion
+, ...
+}:
 
 {
   # Let Home Manager install and manage itself.

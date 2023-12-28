@@ -9,7 +9,7 @@ home-manager.lib.homeManagerConfiguration rec {
   modules = hmExtraModules ++ [{
     nixpkgs.overlays = overlays;
     nixpkgs.config.allowUnfreePredicate = pkg:
-      builtins.elem (nixpkgs.lib.getName pkg) [ "slack" ];
+      builtins.elem (nixpkgs.lib.getName pkg) nixpkgs.lib.mkDefault [ "slack" ];
   }];
 
   extraSpecialArgs = {
