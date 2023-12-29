@@ -1,5 +1,11 @@
-{ config, pkgs, currentRevision, currentUser, currentSystem, currentSystemName
-, currentAuthorizedKeys, ... }:
+{ config
+, pkgs
+, currentRevision
+, currentUser
+, currentSystem
+, currentSystemName
+, ...
+}:
 
 {
   # system user

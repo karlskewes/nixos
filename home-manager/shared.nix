@@ -1,9 +1,6 @@
 { config
 , lib
 , pkgs
-, currentUser
-, currentEmailAddress
-, currentStateVersion
 , ...
 }:
 
@@ -11,10 +8,6 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
-
-  home.username = "${currentUser}";
-  home.homeDirectory = "/home/${currentUser}";
-  home.stateVersion = "${currentStateVersion}";
 
   # manage XDG directories
   xdg.enable = true;
@@ -101,17 +94,6 @@
     enable = true;
 
     initExtra = ''
-      # https://github.com/nix-community/home-manager/issues/1011
-      # https://nix-community.github.io/home-manager/index.html#_why_are_the_session_variables_not_set
-      # source our session variables otherwise not used in x sessions
-      if [[ -f "/etc/profiles/per-user/${currentUser}/etc/profile.d/hm-session-vars.sh" ]]; then
-        source "/etc/profiles/per-user/${currentUser}/etc/profile.d/hm-session-vars.sh"
-      fi
-      if [[ -f "/home/${currentUser}/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
-        source "/home/${currentUser}/.nix-profile/etc/profile.d/hm-session-vars.sh"
-      fi
-
-
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
 
@@ -124,7 +106,6 @@
       PATH=$PATH:~/.local/bin:~/go/bin/
 
       ${builtins.readFile ../dotfiles/functions.sh}
-      KUBECONFIG=~/.kube/config
 
       ${builtins.readFile ../dotfiles/bash_prompt.sh}
     '';
@@ -205,8 +186,6 @@
 
   programs.git = {
     enable = true;
-    userName = "Karl Skewes";
-    userEmail = "${currentEmailAddress}";
 
     aliases = {
       co = "checkout";
@@ -245,11 +224,6 @@
       init.defaultBranch = "main";
       push.default = "current";
       rebase.autosquash = "true";
-      url = {
-        "ssh://git@github.com/karlskewes/" = {
-          insteadOf = "https://github.com/karlskewes/";
-        };
-      };
     };
   };
 

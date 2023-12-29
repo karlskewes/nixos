@@ -52,15 +52,13 @@
       configRev = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
 
       user = "karl";
-      emailAddress = "hello@karlskewes.com";
       stateVersion = "22.05";
-      authorizedKeys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-      ];
       hmModules = [
-        ./home-manager/base.nix
         ./home-manager/dev.nix
         ./home-manager/xwindows.nix
+      ];
+      hmShared = [
+        ./home-manager/shared.nix
       ];
       nixosModules = [
         "${nix-extra.outPath}/nixos.nix"
@@ -75,97 +73,118 @@
       nixosConfigurations = {
         karl-desktop = mkHost "karl-desktop" rec {
           inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress stateVersion authorizedKeys;
+            stateVersion;
           system = "x86_64-linux";
           extraModules = nixosModules
             ++ [ ./system/libvirtd.nix ./system/zfs.nix ];
           homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules;
+            imports = hmModules ++ [
+              ./home-manager/user-${user}.nix
+            ];
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
+          homeShared = hmShared;
         };
 
-        blake-laptop = mkHost "blake-laptop" rec {
-          inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress stateVersion authorizedKeys;
-          system = "x86_64-linux";
-          extraModules = nixosModules ++ [ ./system/zfs.nix ];
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules;
-            home.packages = with pkgs; [ ];
-            xresources.properties = { "Xft.dpi" = "96"; };
-          });
-        };
+        blake-laptop = mkHost
+          "blake-laptop"
+          rec {
+            inherit nixpkgs home-manager nix-extra overlays configRev user
+              stateVersion;
+            system = "x86_64-linux";
+            extraModules = nixosModules ++ [ ./system/zfs.nix ];
+            homeConfig = ({ config, pkgs, ... }: {
+              imports = hmModules;
+              home.packages = with pkgs; [ ];
+              xresources.properties = { "Xft.dpi" = "96"; };
+            });
+            homeShared = hmShared;
+          };
 
-        karl-mba = mkHost "karl-mba" rec {
-          inherit nixpkgs home-manager nix-extra configRev user emailAddress
-            authorizedKeys;
-          system = "aarch64-linux";
-          overlays = [ apple-silicon-support.overlays.default ];
-          stateVersion = "23.11";
-          extraModules = nixosModules;
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules;
-            # TODO, unsupported
-            # home.packages = with pkgs; [ discord slack ];
-            xresources.properties = { "Xft.dpi" = "220"; };
-          });
-        };
+        karl-mba = mkHost
+          "karl-mba"
+          rec {
+            inherit nixpkgs home-manager nix-extra configRev user
+              ;
+            system = "aarch64-linux";
+            overlays = [ apple-silicon-support.overlays.default ];
+            stateVersion = "23.11";
+            extraModules = nixosModules;
+            homeConfig = ({ config, pkgs, ... }: {
+              imports = hmModules ++ [
+                ./home-manager/user-${user}.nix
+              ];
+              # TODO, unsupported
+              # home.packages = with pkgs; [ discord slack ];
+              xresources.properties = { "Xft.dpi" = "220"; };
+            });
+            homeShared = hmShared;
+          };
 
-        shub = mkHost "shub" rec {
-          inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress stateVersion authorizedKeys;
-          system = "x86_64-linux";
-          extraModules = nixosModules ++ [ ./system/zfs.nix ];
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules;
-            home.packages = with pkgs; [ tmux ];
-          });
-        };
+        shub = mkHost
+          "shub"
+          rec {
+            inherit nixpkgs home-manager nix-extra overlays configRev user
+              stateVersion;
+            system = "x86_64-linux";
+            extraModules = nixosModules ++ [ ./system/zfs.nix ];
+            homeConfig = ({ config, pkgs, ... }: {
+              imports = hmModules ++ [
+                ./home-manager/user-${user}.nix
+              ];
+              home.packages = with pkgs; [ tmux ];
+            });
+            homeShared = hmShared;
+          };
 
-        tl = mkHost "tl" rec {
-          inherit nixpkgs home-manager nix-extra overlays configRev user
-            emailAddress stateVersion authorizedKeys;
-          system = "x86_64-linux";
-          extraModules = nixosModules ++ [ ./system/zfs.nix ];
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules;
-            home.packages = with pkgs; [
-              slack
+        tl = mkHost
+          "tl"
+          rec {
+            inherit nixpkgs home-manager nix-extra overlays configRev user
+              stateVersion;
+            system = "x86_64-linux";
+            extraModules = nixosModules ++ [ ./system/zfs.nix ];
+            homeConfig = ({ config, pkgs, ... }: {
+              imports = hmModules ++ [
+                ./home-manager/user-${user}.nix
+              ];
+              home.packages = with pkgs; [
+                slack
 
-              envsubst
-              buf
-              mockgen # go generate mocks
-              protobuf # protoc
-              protoc-gen-go
-              protoc-gen-go-grpc
-              # protoc-gen-grpc-web
-              # grpc-gateway
-              # protolint # need 0.37
+                envsubst
+                buf
+                mockgen # go generate mocks
+                protobuf # protoc
+                protoc-gen-go
+                protoc-gen-go-grpc
+                # protoc-gen-grpc-web
+                # grpc-gateway
+                # protolint # need 0.37
 
-              golangci-lint
-              goose # https://github.com/pressly/goose
-              gotestsum
-              nats-server
-              # natscli
-              postgresql_15
+                golangci-lint
+                goose # https://github.com/pressly/goose
+                gotestsum
+                nats-server
+                # natscli
+                postgresql_15
 
-              nodejs
-              yarn
+                nodejs
+                yarn
 
-              awscli2
-              aws-vault
-              packer
-              terraform
+                awscli2
+                aws-vault
+                packer
+                terraform
 
-              jq
-              zoom-us
-            ];
-            # home.pointerCursor.size = 180; # 4k
-            xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
-          });
-        };
+                jq
+                zoom-us
+              ];
+              # home.pointerCursor.size = 180; # 4k
+              xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
+            });
+            homeShared = hmShared;
+          };
 
       };
     };

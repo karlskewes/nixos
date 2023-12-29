@@ -2,8 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, currentRevision, currentUser, currentSystem, currentSystemName
-, currentAuthorizedKeys, ... }:
+{ config
+, pkgs
+, currentRevision
+, currentUser
+, currentSystem
+, currentSystemName
+, ...
+}:
 
 {
   # system user
@@ -21,7 +27,9 @@
     # nix-shell -p mkpasswd
     # vim -> :read !mkpasswd -m sha-512
     # hashedPassword = "";
-    openssh.authorizedKeys.keys = currentAuthorizedKeys;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+    ];
   };
   # Users password/etc are set from source
   users.mutableUsers = false;
