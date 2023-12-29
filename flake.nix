@@ -117,6 +117,7 @@
               ];
               # TODO, unsupported
               # home.packages = with pkgs; [ discord slack ];
+              home.pointerCursor.size = 180; # 4k
               xresources.properties = { "Xft.dpi" = "220"; };
             });
             homeShared = hmShared;
@@ -148,37 +149,6 @@
             homeConfig = ({ config, pkgs, ... }: {
               imports = hmModules ++ [
                 ./home-manager/user-${user}.nix
-              ];
-              home.packages = with pkgs; [
-                slack
-
-                envsubst
-                buf
-                mockgen # go generate mocks
-                protobuf # protoc
-                protoc-gen-go
-                protoc-gen-go-grpc
-                # protoc-gen-grpc-web
-                # grpc-gateway
-                # protolint # need 0.37
-
-                golangci-lint
-                goose # https://github.com/pressly/goose
-                gotestsum
-                nats-server
-                # natscli
-                postgresql_15
-
-                nodejs
-                yarn
-
-                awscli2
-                aws-vault
-                packer
-                terraform
-
-                jq
-                zoom-us
               ];
               # home.pointerCursor.size = 180; # 4k
               xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
