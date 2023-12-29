@@ -21,10 +21,11 @@ nixpkgs.lib.nixosSystem rec {
     # expose arguments for modules to use as parameters
     {
       config._module.args = {
-        currentUser = user;
+        currentRevision = configRev;
+        currentStateVersion = stateVersion;
         currentSystem = system;
         currentSystemName = name;
-        currentRevision = configRev;
+        currentUser = user;
       };
     }
 

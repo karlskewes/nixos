@@ -1,4 +1,12 @@
 { config, pkgs, ... }: {
+  imports = [
+    ./base.nix
+    ./xserver.nix
+    ./zfs.nix
+  ];
+
+  powerManagement.enable = true;
+
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "1014a839";

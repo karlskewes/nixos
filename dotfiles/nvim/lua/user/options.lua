@@ -1,7 +1,7 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 vim.o.hidden = true -- required to keep multiple buffers and open multiple buffers
-vim.o.hlsearch = false -- Set highlight on search
+vim.o.hlsearch = true -- Set highlight on search, easier to spot.
 vim.wo.number = true -- Make line numbers default
 vim.wo.signcolumn = 'yes' -- Keep signcolumn on by default
 vim.o.mouse = 'a' -- Enable mouse mode

@@ -1,4 +1,15 @@
 { config, pkgs, ... }: {
+
+  imports = [
+    ./base.nix
+    ./xserver.nix
+    ./zfs.nix
+  ];
+
+  powerManagement.enable = true;
+  services.thermald.enable = true;
+  services.auto-cpufreq.enable = true;
+
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "624e2a63";

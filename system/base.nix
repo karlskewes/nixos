@@ -3,11 +3,13 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config
+, lib
 , pkgs
 , currentRevision
-, currentUser
+, currentStateVersion
 , currentSystem
 , currentSystemName
+, currentUser
 , ...
 }:
 
@@ -120,7 +122,7 @@
   };
 
   services.logind = {
-    lidSwitch = "ignore"; # default "suspend"
+    lidSwitch = lib.mkDefault "ignore"; # default "suspend"
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "ignore";
     extraConfig = ''
@@ -193,5 +195,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "${currentStateVersion}"; # Did you read the comment?
 }

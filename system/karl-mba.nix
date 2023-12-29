@@ -1,4 +1,12 @@
 { config, pkgs, ... }: {
+
+  imports = [
+    ./base.nix
+    ./xserver.nix
+  ];
+
+  powerManagement.enable = true;
+
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "b4db4b8f";
@@ -16,6 +24,10 @@
   hardware.asahi.peripheralFirmwareDirectory = /etc/nixos/firmware;
   # Or disable extraction and management of them completely (no wifi though).
   # hardware.asahi.extractPeripheralFirmware = false;
+
+  # Build the Asahi Linux kernel with additional experimental "edge" configuration options.
+  # https://github.com/tpwrules/nixos-apple-silicon/blob/main/apple-silicon-support/modules/kernel/edge.nix
+  options.hardware.asahi.addEdgeKernelConfig = true;
 
   # TODO: Graphics, if anything?
   # nixpkgs.config.packageOverrides = pkgs: {

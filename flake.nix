@@ -43,7 +43,6 @@
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [ inputs.neovim-nightly-overlay.overlay ];
-      # overlays = [ ];
 
       # Function to render out our hosts
       mkHost = import ./lib/mkHost.nix;
@@ -52,109 +51,73 @@
       configRev = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
 
       user = "karl";
-      stateVersion = "22.05";
+      homeShared = [ ./home-manager/shared.nix ];
+      # TODO: consider per machine home-manager config as well. Potentially 1 file with nixos & hm modules.
       hmModules = [
         ./home-manager/dev.nix
         ./home-manager/xwindows.nix
       ];
-      hmShared = [
-        ./home-manager/shared.nix
-      ];
-      nixosModules = [
-        "${nix-extra.outPath}/nixos.nix"
-        ./system/base.nix
-        ./system/xserver.nix
-      ];
-
-      appleOverlays = [ apple-silicon-support.overlays.default ];
+      extraModules = [ "${nix-extra.outPath}/nixos.nix" ];
 
     in
     {
       nixosConfigurations = {
-        karl-desktop = mkHost "karl-desktop" rec {
-          inherit nixpkgs home-manager nix-extra overlays configRev user
-            stateVersion;
+        blake-laptop = mkHost "blake-laptop" rec {
+          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
           system = "x86_64-linux";
-          extraModules = nixosModules
-            ++ [ ./system/libvirtd.nix ./system/zfs.nix ];
+          stateVersion = "22.05";
           homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules ++ [
-              ./home-manager/user-${user}.nix
-            ];
+            imports = hmModules;
+            home.packages = with pkgs; [ ];
+            xresources.properties = { "Xft.dpi" = "96"; };
+          });
+        };
+
+        karl-desktop = mkHost "karl-desktop" rec {
+          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
+          system = "x86_64-linux";
+          stateVersion = "22.05";
+          homeConfig = ({ config, pkgs, ... }: {
+            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
-          homeShared = hmShared;
         };
 
-        blake-laptop = mkHost
-          "blake-laptop"
-          rec {
-            inherit nixpkgs home-manager nix-extra overlays configRev user
-              stateVersion;
-            system = "x86_64-linux";
-            extraModules = nixosModules ++ [ ./system/zfs.nix ];
-            homeConfig = ({ config, pkgs, ... }: {
-              imports = hmModules;
-              home.packages = with pkgs; [ ];
-              xresources.properties = { "Xft.dpi" = "96"; };
-            });
-            homeShared = hmShared;
-          };
+        karl-mba = mkHost "karl-mba" rec {
+          inherit nixpkgs home-manager nix-extra extraModules homeShared configRev user;
+          system = "aarch64-linux";
+          overlays = overlays ++ [ apple-silicon-support.overlays.default ];
+          stateVersion = "23.11";
+          homeConfig = ({ config, pkgs, ... }: {
+            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+            # TODO, unsupported
+            # home.packages = with pkgs; [ discord slack ];
+            # home.pointerCursor.size = 180; # 4k
+            home.pointerCursor.size = 128;
+            xresources.properties = { "Xft.dpi" = "220"; };
+          });
+        };
 
-        karl-mba = mkHost
-          "karl-mba"
-          rec {
-            inherit nixpkgs home-manager nix-extra configRev user
-              ;
-            system = "aarch64-linux";
-            overlays = [ apple-silicon-support.overlays.default ];
-            stateVersion = "23.11";
-            extraModules = nixosModules;
-            homeConfig = ({ config, pkgs, ... }: {
-              imports = hmModules ++ [
-                ./home-manager/user-${user}.nix
-              ];
-              # TODO, unsupported
-              # home.packages = with pkgs; [ discord slack ];
-              home.pointerCursor.size = 180; # 4k
-              xresources.properties = { "Xft.dpi" = "220"; };
-            });
-            homeShared = hmShared;
-          };
+        shub = mkHost "shub" rec {
+          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
+          system = "x86_64-linux";
+          stateVersion = "22.05";
+          homeConfig = ({ config, pkgs, ... }: {
+            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+            home.packages = with pkgs; [ tmux ];
+          });
+        };
 
-        shub = mkHost
-          "shub"
-          rec {
-            inherit nixpkgs home-manager nix-extra overlays configRev user
-              stateVersion;
-            system = "x86_64-linux";
-            extraModules = nixosModules ++ [ ./system/zfs.nix ];
-            homeConfig = ({ config, pkgs, ... }: {
-              imports = hmModules ++ [
-                ./home-manager/user-${user}.nix
-              ];
-              home.packages = with pkgs; [ tmux ];
-            });
-            homeShared = hmShared;
-          };
-
-        tl = mkHost
-          "tl"
-          rec {
-            inherit nixpkgs home-manager nix-extra overlays configRev user
-              stateVersion;
-            system = "x86_64-linux";
-            extraModules = nixosModules ++ [ ./system/zfs.nix ];
-            homeConfig = ({ config, pkgs, ... }: {
-              imports = hmModules ++ [
-                ./home-manager/user-${user}.nix
-              ];
-              # home.pointerCursor.size = 180; # 4k
-              xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
-            });
-            homeShared = hmShared;
-          };
+        tl = mkHost "tl" rec {
+          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
+          system = "x86_64-linux";
+          stateVersion = "22.05";
+          homeConfig = ({ config, pkgs, ... }: {
+            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+            xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
+          });
+        };
 
       };
     };

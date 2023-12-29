@@ -1,8 +1,11 @@
 { config, pkgs, lib, ... }:
-
-# hostNic = "enp0s31f6";
-
 {
+  imports = [
+    ./base.nix
+    ./xserver.nix
+    ./zfs.nix
+  ];
+
   # Define hostId for zfs pool machine 'binding'
   # :read !echo <hostname> | md5sum | cut -c1-8
   networking.hostId = "b38b36dc";

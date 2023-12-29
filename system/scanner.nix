@@ -1,9 +1,6 @@
 { config
 , pkgs
-, currentRevision
 , currentUser
-, currentSystem
-, currentSystemName
 , ...
 }:
 

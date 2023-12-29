@@ -63,80 +63,84 @@
     #   </target>
     # </pool>
 
-    systemd.services = lib.mapAttrs' (name: guest:
-      lib.nameValuePair "libvirtd-guest-${name}" {
-        after = [ "libvirtd.service" ];
-        requires = [ "libvirtd.service" ];
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = "yes";
-        };
-        script = let
-          domXML = pkgs.writeText "libvirt-guest-${name}.xml" ''
-            <domain type="kvm">
-              <name>${name}</name>
-              <uuid>UUID</uuid>
-              <os>
-                <type>hvm</type>
-              </os>
-              <memory unit="MiB">${guest.memory}</memory>
-              <devices>
-                <disk type="file" device="disk">
-                  <driver name="qemu" type="qcow2"/>
-                  <source file="/var/lib/libvirt/${guest.image}"/>
-                  <target dev="vda" bus="virtio"/>
-                </disk>
-                <disk type="file" device="disk">
-                  <driver name="qemu" type="raw"/>
-                  <source file="/var/lib/libvirt/images/${name}-cidata.iso"/>
-                  <target dev="hda" bus="ide"/>
-                </disk>
-                <graphics type="spice" autoport="yes"/>
-                <input type="keyboard" bus="usb"/>
-                <interface type="direct">
-                  <source dev="${hostNIC}" mode="bridge"/>
-                  <mac address="${guest.mac}"/>
-                  <model type="virtio"/>
-                </interface>
-              </devices>
-              <features>
-                <acpi/>
-              </features>
-            </domain>
-          '';
-          volXML = pkgs.writeText "libvirt-guest-${name}-vol.xml" ''
-            <volume>
-              <name>${name}-extra.qcow2</name>
-              <capacity unit="GiB">${guest.diskSize}</capacity>
-              <allocation>0</allocation>
-              <target>
-                <format type="qcow2"/>
-              </target>
-            </volume>
-          '';
+    systemd.services = lib.mapAttrs'
+      (name: guest:
+        lib.nameValuePair "libvirtd-guest-${name}" {
+          after = [ "libvirtd.service" ];
+          requires = [ "libvirtd.service" ];
+          wantedBy = [ "multi-user.target" ];
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = "yes";
+          };
+          script =
+            let
+              domXML = pkgs.writeText "libvirt-guest-${name}.xml" ''
+                <domain type="kvm">
+                  <name>${name}</name>
+                  <uuid>UUID</uuid>
+                  <os>
+                    <type>hvm</type>
+                  </os>
+                  <memory unit="MiB">${guest.memory}</memory>
+                  <devices>
+                    <disk type="file" device="disk">
+                      <driver name="qemu" type="qcow2"/>
+                      <source file="/var/lib/libvirt/${guest.image}"/>
+                      <target dev="vda" bus="virtio"/>
+                    </disk>
+                    <disk type="file" device="disk">
+                      <driver name="qemu" type="raw"/>
+                      <source file="/var/lib/libvirt/images/${name}-cidata.iso"/>
+                      <target dev="hda" bus="ide"/>
+                    </disk>
+                    <graphics type="spice" autoport="yes"/>
+                    <input type="keyboard" bus="usb"/>
+                    <interface type="direct">
+                      <source dev="${hostNIC}" mode="bridge"/>
+                      <mac address="${guest.mac}"/>
+                      <model type="virtio"/>
+                    </interface>
+                  </devices>
+                  <features>
+                    <acpi/>
+                  </features>
+                </domain>
+              '';
+              volXML = pkgs.writeText "libvirt-guest-${name}-vol.xml" ''
+                <volume>
+                  <name>${name}-extra.qcow2</name>
+                  <capacity unit="GiB">${guest.diskSize}</capacity>
+                  <allocation>0</allocation>
+                  <target>
+                    <format type="qcow2"/>
+                  </target>
+                </volume>
+              '';
 
-        in ''
-          # ${pkgs.libvirt}/bin/virsh vol-info --pool default --vol ${name}-extra.qcow2 >/dev/null 2>&1 || \
-          # ${pkgs.libvirt}/bin/virsh vol-create --pool default --file '${volXML}'
+            in
+            ''
+              # ${pkgs.libvirt}/bin/virsh vol-info --pool default --vol ${name}-extra.qcow2 >/dev/null 2>&1 || \
+              # ${pkgs.libvirt}/bin/virsh vol-create --pool default --file '${volXML}'
 
-          uuid="$(${pkgs.libvirt}/bin/virsh domuuid '${name}' || true)"
-          ${pkgs.libvirt}/bin/virsh define <(sed "s/UUID/$uuid/" '${domXML}')
-          ${pkgs.libvirt}/bin/virsh start '${name}'
-        '';
-        preStop = ''
-          ${pkgs.libvirt}/bin/virsh shutdown '${name}'
-          let "timeout = $(date +%s) + 10"
-          while [ "$(${pkgs.libvirt}/bin/virsh list --name | grep --count '^${name}$')" -gt 0 ]; do
-            if [ "$(date +%s)" -ge "$timeout" ]; then
-              # Meh, we warned it...
-              ${pkgs.libvirt}/bin/virsh destroy '${name}'
-            else
-              # The machine is still running, let's give it some time to shut down
-              sleep 0.5
-            fi
-          done
-        '';
-      }) guests;
+              uuid="$(${pkgs.libvirt}/bin/virsh domuuid '${name}' || true)"
+              ${pkgs.libvirt}/bin/virsh define <(sed "s/UUID/$uuid/" '${domXML}')
+              ${pkgs.libvirt}/bin/virsh start '${name}'
+            '';
+          preStop = ''
+            ${pkgs.libvirt}/bin/virsh shutdown '${name}'
+            let "timeout = $(date +%s) + 10"
+            while [ "$(${pkgs.libvirt}/bin/virsh list --name | grep --count '^${name}$')" -gt 0 ]; do
+              if [ "$(date +%s)" -ge "$timeout" ]; then
+                # Meh, we warned it...
+                ${pkgs.libvirt}/bin/virsh destroy '${name}'
+              else
+                # The machine is still running, let's give it some time to shut down
+                sleep 0.5
+              fi
+            done
+          '';
+        })
+      guests;
   };
 }
