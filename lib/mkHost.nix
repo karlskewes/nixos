@@ -3,7 +3,6 @@
 name:
 { nixpkgs
 , home-manager
-, nix-extra
 , overlays
 , configRev
 , system
@@ -11,7 +10,6 @@ name:
 , stateVersion
 , extraModules ? [ ]
 , homeConfig ? { }
-, homeShared ? [ ]
 }:
 
 nixpkgs.lib.nixosSystem rec {
@@ -45,7 +43,7 @@ nixpkgs.lib.nixosSystem rec {
       home-manager.extraSpecialArgs = {
         currentStateVersion = stateVersion;
       };
-      home-manager.sharedModules = homeShared;
+      home-manager.sharedModules = [ ../home-manager/shared.nix ];
     }
   ];
 }

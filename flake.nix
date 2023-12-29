@@ -51,7 +51,6 @@
       configRev = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
 
       user = "karl";
-      homeShared = [ ./home-manager/shared.nix ];
       # TODO: consider per machine home-manager config as well. Potentially 1 file with nixos & hm modules.
       hmModules = [
         ./home-manager/dev.nix
@@ -63,18 +62,19 @@
     {
       nixosConfigurations = {
         blake-laptop = mkHost "blake-laptop" rec {
-          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
+          inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
           homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules;
+            # TODO: multiple users
+            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
             home.packages = with pkgs; [ ];
             xresources.properties = { "Xft.dpi" = "96"; };
           });
         };
 
         karl-desktop = mkHost "karl-desktop" rec {
-          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
+          inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
           homeConfig = ({ config, pkgs, ... }: {
@@ -85,10 +85,10 @@
         };
 
         karl-mba = mkHost "karl-mba" rec {
-          inherit nixpkgs home-manager nix-extra extraModules homeShared configRev user;
+          inherit nixpkgs home-manager extraModules configRev user;
           system = "aarch64-linux";
-          overlays = overlays ++ [ apple-silicon-support.overlays.default ];
           stateVersion = "23.11";
+          overlays = overlays ++ [ apple-silicon-support.overlays.default ];
           homeConfig = ({ config, pkgs, ... }: {
             imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
             # TODO, unsupported
@@ -100,7 +100,7 @@
         };
 
         shub = mkHost "shub" rec {
-          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
+          inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
           homeConfig = ({ config, pkgs, ... }: {
@@ -110,7 +110,7 @@
         };
 
         tl = mkHost "tl" rec {
-          inherit nixpkgs home-manager nix-extra overlays extraModules homeShared configRev user;
+          inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
           homeConfig = ({ config, pkgs, ... }: {
