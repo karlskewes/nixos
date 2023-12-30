@@ -30,8 +30,25 @@
 #   };
 # };
 
-{ config, lib, pkgs, hostNIC, guests ? { }, ... }: {
+{ config, lib, pkgs, currentUsers, hostNIC, guests ? { }, ... }: {
   nixpkgs.config = {
+    # system user
+    # for each user in currentUsers, generate users.user.${user} config.
+    users.users = builtins.foldl'
+      (
+        acc: user:
+          acc // {
+            ${user} = {
+              extraGroups = [
+                "libvirtd"
+              ];
+            };
+          }
+      )
+      { }
+      (currentUsers);
+
+
     virtualisation.libvirtd.enable = true;
     programs.dconf.enable = true;
     environment.systemPackages = with pkgs; [ cdrkit virt-manager ];

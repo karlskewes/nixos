@@ -9,31 +9,40 @@
 , currentStateVersion
 , currentSystem
 , currentSystemName
-, currentUser
+, currentUsers
 , ...
 }:
 
 {
+
   # system user
-  users.users.${currentUser} = {
-    home = "/home/${currentUser}";
-    isNormalUser = true;
-    extraGroups = [
-      "audio"
-      "docker"
-      "libvirtd"
-      "wheel"
-      "scanner" # scanning
-      "lp" # scanning
-    ];
-    # nix-shell -p mkpasswd
-    # vim -> :read !mkpasswd -m sha-512
-    # hashedPassword = "";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-    ];
-  };
-  # Users password/etc are set from source
+  # for each user in currentUsers, generate users.user.${user} config.
+  users.users = builtins.foldl'
+    (
+      acc: user:
+        acc // {
+          ${user} = {
+            home = "/home/${user}";
+            isNormalUser = true;
+            extraGroups = [
+              "audio"
+              "docker"
+              "scanner" # scanning
+              "lp" # scanning
+              "wheel"
+            ];
+            # nix-shell -p mkpasswd
+            # vim -> :read !mkpasswd -m sha-512
+            # hashedPassword = "";
+            openssh.authorizedKeys.keys = [
+              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+            ];
+          };
+        }
+    )
+    { }
+    (currentUsers);
+
   users.mutableUsers = false;
 
   time.timeZone = "Pacific/Auckland";

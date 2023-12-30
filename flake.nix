@@ -51,11 +51,6 @@
       configRev = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
 
       user = "karl";
-      # TODO: consider per machine home-manager config as well. Potentially 1 file with nixos & hm modules.
-      hmModules = [
-        ./home-manager/dev.nix
-        ./home-manager/xwindows.nix
-      ];
       extraModules = [ "${nix-extra.outPath}/nixos.nix" ];
 
     in
@@ -65,9 +60,9 @@
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
-          homeConfig = ({ config, pkgs, ... }: {
+          homeModule = ({ config, pkgs, ... }: {
             # TODO: multiple users
-            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+            imports = [ ./home-manager/user-${user}.nix ];
             home.packages = with pkgs; [ ];
             xresources.properties = { "Xft.dpi" = "96"; };
           });
@@ -77,8 +72,8 @@
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+          homeModule = ({ config, pkgs, ... }: {
+            imports = [ ./home-manager/user-${user}.nix ];
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
@@ -89,8 +84,8 @@
           system = "aarch64-linux";
           stateVersion = "23.11";
           overlays = overlays ++ [ apple-silicon-support.overlays.default ];
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+          homeModule = ({ config, pkgs, ... }: {
+            imports = [ ./home-manager/user-${user}.nix ];
             # TODO, unsupported
             # home.packages = with pkgs; [ discord slack ];
             # home.pointerCursor.size = 180; # 4k
@@ -103,8 +98,8 @@
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+          homeModule = ({ config, pkgs, ... }: {
+            imports = [ ./home-manager/user-${user}.nix ];
             home.packages = with pkgs; [ tmux ];
           });
         };
@@ -113,8 +108,8 @@
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
-          homeConfig = ({ config, pkgs, ... }: {
-            imports = hmModules ++ [ ./home-manager/user-${user}.nix ];
+          homeModule = ({ config, pkgs, ... }: {
+            imports = [ ./home-manager/user-${user}.nix ];
             xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
           });
         };

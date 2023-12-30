@@ -9,7 +9,7 @@ name:
 , user
 , stateVersion
 , extraModules ? [ ]
-, homeConfig ? { }
+, homeModule ? { }
 }:
 
 nixpkgs.lib.nixosSystem rec {
@@ -23,7 +23,7 @@ nixpkgs.lib.nixosSystem rec {
         currentStateVersion = stateVersion;
         currentSystem = system;
         currentSystemName = name;
-        currentUser = user;
+        currentUsers = [ user ];
       };
     }
 
@@ -38,12 +38,13 @@ nixpkgs.lib.nixosSystem rec {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users.${user} = homeConfig;
+      # TODO, convert users to { "user": homeModule }, so can support multiple
+      home-manager.users.${user} = homeModule;
       # expose arguments for imports to use as parameters
       home-manager.extraSpecialArgs = {
         currentStateVersion = stateVersion;
       };
-      home-manager.sharedModules = [ ../home-manager/shared.nix ];
+      home-manager.sharedModules = [ ../home-manager/xwindows.nix ../home-manager/shared.nix ];
     }
   ];
 }
