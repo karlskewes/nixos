@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   imports = [
     ./base.nix
-    ./xserver.nix
+    ./i3.nix
     ./zfs.nix
   ];
 

@@ -2,7 +2,7 @@
 
   imports = [
     ./base.nix
-    ./xserver.nix
+    ./i3.nix
   ];
 
   powerManagement.enable = true;

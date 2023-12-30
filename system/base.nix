@@ -129,6 +129,19 @@
     enable = true;
     extraRemotes = [ "lvfs-testing" ];
   };
+  services.keyd = {
+    enable = true;
+    keyboards = {
+      default = {
+        ids = [ "*" ];
+        settings = {
+          main = {
+            capslock = "overload(meta, esc)";
+          };
+        };
+      };
+    };
+  };
 
   services.logind = {
     lidSwitch = lib.mkDefault "ignore"; # default "suspend"

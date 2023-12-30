@@ -9,7 +9,12 @@
   boot.initrd.availableKernelModules =
     [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [
+    "kvm-amd"
+    # below from `nix-shell -p lm_sensors` then `sensors-detect`.
+    "lm92"
+    "nct6775"
+  ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {

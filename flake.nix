@@ -73,7 +73,10 @@
           system = "x86_64-linux";
           stateVersion = "22.05";
           homeModule = ({ config, pkgs, ... }: {
-            imports = [ ./home-manager/user-${user}.nix ];
+            imports = [
+              ./home-manager/user-${user}.nix
+              # ./home-manager/hyprland.nix # FIXME, swaylock, keybindings, ALT+TAB
+            ];
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });

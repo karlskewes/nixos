@@ -2,7 +2,8 @@
 
   imports = [
     ./base.nix
-    ./xserver.nix
+    # ./hyprland.nix
+    ./i3.nix
     ./libvirtd.nix
     ./zfs.nix
   ];

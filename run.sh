@@ -63,7 +63,7 @@ switch() { ## Build latest and switch
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, consider:
   rm -rf ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*'
 
-	clean
+	# clean
 }
 
 install() { ## Install NixOS for the first time

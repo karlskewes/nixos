@@ -1,7 +1,5 @@
 # X Windows additional configuration dependent on home-manager
-{ config, pkgs, ... }:
-
-{
+{ config, lib, pkgs, ... }: {
   xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
   xdg.configFile."discord/settings.json".text = ''
     {
@@ -32,7 +30,7 @@
     # size = 64;
   };
 
-  programs.i3status.enable = true;
+  programs.i3status.enable = lib.mkDefault true;
 
   programs.kitty = {
     enable = true;
@@ -44,6 +42,7 @@
   };
 
   programs.rofi = {
+    package = lib.mkDefault pkgs.rofi;
     enable = true;
     font = "Hack Nerd Font 14";
     plugins = with pkgs; [ rofi-calc rofi-emoji rofi-power-menu ];
@@ -52,8 +51,6 @@
   services.dunst = { enable = true; };
 
   services.flameshot = { enable = true; };
-
-  # services.notify-osd.enable = true;
 
   services.redshift = {
     enable = true;
@@ -83,5 +80,5 @@
       export XIM_SERVERS=ibus
     '';
   };
-
 }
+
