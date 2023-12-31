@@ -1,15 +1,15 @@
 { config, pkgs, ... }:
 
 {
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+  imports = [
+    ./wayland.nix
+  ];
 
   # setup windowing environment
   services.xserver = {
     displayManager = {
-      defaultSession = "hyprland";
+      # defaultSession = "sway";
     };
+
   };
 }

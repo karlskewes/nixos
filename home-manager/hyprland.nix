@@ -1,17 +1,9 @@
 # X Windows additional configuration dependent on home-manager
 { config, lib, pkgs, ... }: {
+  imports = [
+    ./wayland.nix
+  ];
 
-  home.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-  };
-
-  programs.swaylock.enable = true;
-
-  programs.rofi = {
-    package = pkgs.rofi-wayland;
-  };
-
-  programs.i3status.enable = false;
   programs.waybar = {
     enable = true;
     settings = {
@@ -81,9 +73,6 @@
       };
     };
   };
-
-  services.swayidle.enable = true;
-  services.swayosd.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;

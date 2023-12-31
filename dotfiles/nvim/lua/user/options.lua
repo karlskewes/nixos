@@ -16,6 +16,7 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect' -- Set completeopt to have a better completion experience
 vim.o.termguicolors = true
 vim.o.colorcolumn = "100"
+vim.o.foldlevel = 99
 vim.o.foldmethod = "indent" -- folding, leaves declaration line open
 vim.o.formatoptions = "qrn1" -- handle formatting nicely
 vim.o.textwidth = 99 -- wrap at this character number on whitespace

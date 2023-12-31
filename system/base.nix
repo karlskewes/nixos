@@ -29,6 +29,7 @@
               "docker"
               "scanner" # scanning
               "lp" # scanning
+              "video"
               "wheel"
             ];
             # nix-shell -p mkpasswd
@@ -122,6 +123,8 @@
       options = "--delete-older-than 8d";
     };
   };
+
+  security.polkit.enable = true;
 
   security.sudo.wheelNeedsPassword = false;
 

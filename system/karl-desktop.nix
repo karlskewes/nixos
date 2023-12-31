@@ -3,6 +3,7 @@
   imports = [
     ./base.nix
     # ./hyprland.nix
+    # ./sway.nix
     ./i3.nix
     ./libvirtd.nix
     ./zfs.nix

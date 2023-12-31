@@ -77,6 +77,7 @@
             imports = [
               ./home-manager/user-${user}.nix
               # ./home-manager/hyprland.nix # FIXME, swaylock, keybindings, ALT+TAB
+              # ./home-manager/sway.nix # FIXME, swaylock, keybindings, ALT+TAB
             ];
             home.packages = with pkgs; [ discord kind restic slack zoom-us ];
             xresources.properties = { "Xft.dpi" = "109"; };
