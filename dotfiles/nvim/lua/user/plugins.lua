@@ -1,8 +1,5 @@
 -- See the kickstart.nvim README for more information
 -- [[ Configure plugins ]]
--- TODO, fix, doesn't work for keymaps
-local harpoon -- enables access to harpoon for key mapping as it doesn't get loaded into global scope.
-
 return {
     -- Git related plugins
     'tpope/vim-fugitive', 'tpope/vim-rhubarb', {
@@ -48,29 +45,29 @@ return {
 
                 -- Actions
                 -- visual mode
-                map('v', '<leader>hs', function()
+                map('v', '<leader>gs', function()
                     gs.stage_hunk {vim.fn.line '.', vim.fn.line 'v'}
                 end, {desc = 'stage git hunk'})
-                map('v', '<leader>hr', function()
+                map('v', '<leader>gr', function()
                     gs.reset_hunk {vim.fn.line '.', vim.fn.line 'v'}
                 end, {desc = 'reset git hunk'})
                 -- normal mode
-                map('n', '<leader>hs', gs.stage_hunk, {desc = 'git stage hunk'})
-                map('n', '<leader>hr', gs.reset_hunk, {desc = 'git reset hunk'})
-                map('n', '<leader>hS', gs.stage_buffer,
+                map('n', '<leader>gs', gs.stage_hunk, {desc = 'git stage hunk'})
+                map('n', '<leader>gr', gs.reset_hunk, {desc = 'git reset hunk'})
+                map('n', '<leader>gS', gs.stage_buffer,
                     {desc = 'git Stage buffer'})
-                map('n', '<leader>hu', gs.undo_stage_hunk,
+                map('n', '<leader>gu', gs.undo_stage_hunk,
                     {desc = 'undo stage hunk'})
-                map('n', '<leader>hR', gs.reset_buffer,
+                map('n', '<leader>gR', gs.reset_buffer,
                     {desc = 'git Reset buffer'})
-                map('n', '<leader>hp', gs.preview_hunk,
+                map('n', '<leader>gp', gs.preview_hunk,
                     {desc = 'preview git hunk'})
-                map('n', '<leader>hb',
+                map('n', '<leader>gb',
                     function() gs.blame_line {full = false} end,
                     {desc = 'git blame line'})
-                map('n', '<leader>hd', gs.diffthis,
+                map('n', '<leader>gd', gs.diffthis,
                     {desc = 'git diff against index'})
-                map('n', '<leader>hD', function() gs.diffthis '~' end,
+                map('n', '<leader>gD', function() gs.diffthis '~' end,
                     {desc = 'git diff against last commit'})
 
                 -- Toggles

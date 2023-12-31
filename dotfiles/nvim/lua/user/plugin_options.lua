@@ -1,13 +1,13 @@
 -- [[ Configure Harpoon ]]
--- TODO: fixme, might need to define keys in plugin.lua
+local harpoon = require("harpoon")
 vim.keymap.set("n", "<C-a>", function() harpoon:list():append() end)
-vim.keymap.set("n", "<C-s>",
+vim.keymap.set("n", "<C-l>",
                function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
--- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
--- vim.keymap.set("n", "<C-j>", function() harpoon:list():select(2) end)
--- vim.keymap.set("n", "<C-k>", function() harpoon:list():select(3) end)
--- vim.keymap.set("n", "<C-l>", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<C-n>", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<C-m>", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<C-,>", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<C-.>", function() harpoon:list():select(4) end)
 
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<C-S-J>", function() harpoon:list():prev() end)
@@ -82,8 +82,8 @@ vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files,
                {desc = '[S]earch [/] in Open Files'})
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin,
                {desc = '[S]earch [S]elect Telescope'})
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files,
-               {desc = 'Search [G]it [F]iles'})
+vim.keymap.set('n', '<leader>sF', require('telescope.builtin').git_files,
+               {desc = '[S]earch git [F]iles'})
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files,
                {desc = '[S]earch [F]iles'})
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags,
@@ -211,17 +211,17 @@ require('which-key').register {
     ['<leader>b'] = {name = '[B]uffer', _ = 'which_key_ignore'},
     ['<leader>d'] = {name = '[D]ebug', _ = 'which_key_ignore'},
     ['<leader>g'] = {name = '[G]it', _ = 'which_key_ignore'},
-    ['<leader>h'] = {name = 'Git [H]unk', _ = 'which_key_ignore'},
+    ['<leader>h'] = {name = '[H]arpoon', _ = 'which_key_ignore'}, -- though bindings not under <leader>h atm.
     ['<leader>l'] = {name = '[L]sp', _ = 'which_key_ignore'},
     ['<leader>p'] = {name = '[P]lugins', _ = 'which_key_ignore'},
     ['<leader>s'] = {name = '[S]earch', _ = 'which_key_ignore'},
     ['<leader>t'] = {name = '[T]oggle', _ = 'which_key_ignore'}
 }
 -- register which-key VISUAL mode
--- required for visual <leader>hs (hunk stage) to work
+-- required for visual <leader>gs (hunk stage) to work
 require('which-key').register({
     ['<leader>'] = {name = 'VISUAL <leader>'},
-    ['<leader>h'] = {'Git [H]unk'}
+    ['<leader>g'] = {'[G]it Hunk'}
 }, {mode = 'v'})
 
 -- mason-lspconfig requires that these setup functions are called in this order
