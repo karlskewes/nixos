@@ -52,6 +52,7 @@
 
       user = "karl";
       extraModules = [ "${nix-extra.outPath}/nixos.nix" ];
+      appleModules = extraModules ++ [ apple-silicon-support.nixosModules.default ];
 
     in
     {
@@ -83,17 +84,20 @@
         };
 
         karl-mba = mkHost "karl-mba" rec {
-          inherit nixpkgs home-manager extraModules configRev user;
+          inherit nixpkgs home-manager configRev user;
           system = "aarch64-linux";
           stateVersion = "23.11";
-          overlays = overlays ++ [ apple-silicon-support.overlays.default ];
+          extraModules = appleModules;
+          overlays = [
+            inputs.neovim-nightly-overlay.overlay
+          ];
           homeModule = ({ config, pkgs, ... }: {
             imports = [ ./home-manager/user-${user}.nix ];
             # TODO, unsupported
             # home.packages = with pkgs; [ discord slack ];
             # home.pointerCursor.size = 180; # 4k
             home.pointerCursor.size = 128;
-            xresources.properties = { "Xft.dpi" = "220"; };
+            xresources.properties = { "Xft.dpi" = "109"; };
           });
         };
 

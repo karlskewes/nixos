@@ -21,13 +21,15 @@
 
   # Specify path to peripheral firmware files copied during initial
   # installation.
-  hardware.asahi.peripheralFirmwareDirectory = /etc/nixos/firmware;
+  hardware.asahi = {
+    peripheralFirmwareDirectory = /etc/nixos/firmware;
+    withRust = true;
+    addEdgeKernelConfig = true;
+    useExperimentalGPUDriver = true;
+    experimentalGPUInstallMode = "replace";
+  };
   # Or disable extraction and management of them completely (no wifi though).
   # hardware.asahi.extractPeripheralFirmware = false;
-
-  # Build the Asahi Linux kernel with additional experimental "edge" configuration options.
-  # https://github.com/tpwrules/nixos-apple-silicon/blob/main/apple-silicon-support/modules/kernel/edge.nix
-  options.hardware.asahi.addEdgeKernelConfig = true;
 
   # TODO: Graphics, if anything?
   # nixpkgs.config.packageOverrides = pkgs: {

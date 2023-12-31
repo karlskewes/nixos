@@ -12,7 +12,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/80d2b410-d196-41f2-98ab-1a4d3721ba43";
+    device = "/dev/disk/by-uuid/aa4b0570-27fb-46af-8ab9-5c8651917824";
     fsType = "ext4";
   };
 
@@ -22,12 +22,12 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3FA5-1712";
+    device = "/dev/disk/by-uuid/4B2A-1C11";
     fsType = "vfat";
   };
 
   swapDevices = [{
-    device = "/dev/disk/by-id/nvme-APPLE_SSD_AP1024Q_0ba0106320e4fa15-part6";
+    device = "/dev/disk/by-uuid/a271a0d2-b662-4e74-85d8-935d49ab6111";
   }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
