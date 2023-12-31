@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -72,7 +72,7 @@
 
   programs.go = {
     enable = true;
-    package = pkgs.go_1_21;
+    package = lib.mkDefault pkgs.go_1_21;
     # export GOPRIVATE=github.com/karlskewes/*
     goPrivate = [ "github.com/karlskewes/*" ];
   };
