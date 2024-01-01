@@ -1,14 +1,49 @@
--- See the kickstart.nvim README for more information
 -- [[ Configure plugins ]]
 return {
-    -- Git related plugins
-    'tpope/vim-fugitive', 'tpope/vim-rhubarb', {
+    'tpope/vim-fugitive', {
         -- Detect tabstop and shiftwidth automatically
         'tpope/vim-sleuth'
     }, {
         -- Useful plugin to show you pending keybinds.
         'folke/which-key.nvim',
         opts = {}
+    }, {
+        "folke/trouble.nvim",
+        dependencies = {"nvim-tree/nvim-web-devicons"},
+        opts = {},
+        keys = {
+            {
+                "<leader>tt",
+                function() require("trouble").toggle() end,
+                desc = "[T]rouble Toggle"
+            }, {
+                "<leader>tw",
+                function()
+                    require("trouble").toggle("workspace_diagnostics")
+                end,
+                desc = "[T]rouble [W]orkspace Diagnostics"
+            }, {
+                "<leader>td",
+                function()
+                    require("trouble").toggle("document_diagnostics")
+                end,
+                desc = "[T]rouble [D]ocument Diagnostics"
+            }, {
+                "<leader>tq",
+                function() require("trouble").toggle("quickfix") end,
+                desc = "[T]rouble Quickfix"
+            }, {
+                "<leader>tl",
+                function() require("trouble").toggle("loclist") end,
+                desc = "[T]rouble Loclist"
+            }, {
+                "<leader>tr",
+                function()
+                    require("trouble").toggle("lsp_references")
+                end,
+                desc = "[T]rouble LSP References"
+            }
+        }
     }, {
         -- Adds git related signs to the gutter, as well as utilities for managing changes
         'lewis6991/gitsigns.nvim',
@@ -71,9 +106,9 @@ return {
                     {desc = 'git diff against last commit'})
 
                 -- Toggles
-                map('n', '<leader>tb', gs.toggle_current_line_blame,
+                map('n', '<leader>gy', gs.toggle_current_line_blame,
                     {desc = 'toggle git blame line'})
-                map('n', '<leader>td', gs.toggle_deleted,
+                map('n', '<leader>gz', gs.toggle_deleted,
                     {desc = 'toggle git show deleted'})
 
                 -- Text object

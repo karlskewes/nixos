@@ -119,8 +119,12 @@ vim.defer_fn(function()
     require('nvim-treesitter.configs').setup {
         -- Add languages to be installed here that you want installed for treesitter
         ensure_installed = {
-            'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript',
-            'typescript', 'vimdoc', 'vim', 'bash'
+            'bash', 'css', 'csv', 'diff', 'dockerfile', 'git_config',
+            'git_rebase', 'gitattributes', 'gitcommit', 'gitignore', 'go',
+            'gomod', 'gosum', 'gowork', 'html', 'javascript', 'json', 'lua',
+            'make', 'nix', 'proto', 'python', 'rust', 'sql', 'templ',
+            'terraform', 'tsx', 'typescript', 'vimdoc', 'vim', 'vue', 'yaml',
+            'zig'
         },
 
         -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -231,7 +235,7 @@ require('which-key').register {
     ['<leader>l'] = {name = '[L]sp', _ = 'which_key_ignore'},
     ['<leader>p'] = {name = '[P]lugins', _ = 'which_key_ignore'},
     ['<leader>s'] = {name = '[S]earch', _ = 'which_key_ignore'},
-    ['<leader>t'] = {name = '[T]oggle', _ = 'which_key_ignore'}
+    ['<leader>t'] = {name = '[T]rouble', _ = 'which_key_ignore'}
 }
 -- register which-key VISUAL mode
 -- required for visual <leader>gs (hunk stage) to work
@@ -371,7 +375,10 @@ cmp.setup {
             end
         end, {'i', 's'})
     },
-    sources = {{name = 'nvim_lsp'}, {name = 'luasnip'}, {name = 'path'}}
+    sources = {
+        {name = 'nvim_lsp'}, {name = 'luasnip'}, {name = 'buffer'},
+        {name = 'path'}
+    }
 }
 
 -- [[ Plugins ]]
