@@ -15,9 +15,7 @@ vim.keymap.set("n", "<C-S-K>", function() harpoon:list():next() end)
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('telescope').setup {
-    defaults = {mappings = {i = {['<C-u>'] = false, ['<C-d>'] = false}}}
-}
+require('telescope').setup {}
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -78,6 +76,7 @@ local function telescope_live_grep_open_files()
         prompt_title = 'Live Grep in Open Files'
     }
 end
+
 vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files,
                {desc = '[S]earch [/] in Open Files'})
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin,
@@ -88,6 +87,8 @@ vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files,
                {desc = '[S]earch [F]iles'})
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags,
                {desc = '[S]earch [H]elp'})
+vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps,
+               {desc = '[S]earch [K]eymaps'})
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string,
                {desc = '[S]earch current [W]ord'})
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep,
@@ -98,6 +99,18 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics,
                {desc = '[S]earch [D]iagnostics'})
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume,
                {desc = '[S]earch [R]esume'})
+vim.keymap.set('n', '<leader>sv', require('telescope.builtin').git_commits,
+               {desc = '[S]earch [v]cs'})
+vim.keymap.set('n', '<leader>sv<CR>', require('telescope.builtin').git_commits,
+               {desc = '[S]earch [v]cs commits'})
+vim.keymap.set('n', '<leader>svc', require('telescope.builtin').git_commits,
+               {desc = '[S]earch [v]cs [c]ommits'})
+vim.keymap.set('n', '<leader>svb', require('telescope.builtin').git_bcommits,
+               {desc = '[S]earch [v]cs [b]uffer'})
+vim.keymap.set('n', '<leader>svs', require('telescope.builtin').git_status,
+               {desc = '[S]earch [v]cs status'})
+vim.keymap.set('n', '<leader>svS', require('telescope.builtin').git_stash,
+               {desc = '[S]earch [v]cs [S]tash'})
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -178,11 +191,14 @@ local lsp_on_attach = function(_, bufnr)
     end
 
     nmap('<leader>la', vim.lsp.buf.code_action, 'Code [A]ction')
-    nmap('<leader>li', "<Cmd>LspInfo<CR>", 'Info')
+    nmap('<leader>ld', vim.diagnostic.setloclist, '[D]iagnostics list')
+    nmap('<leader>lf', vim.lsp.buf.format, "[F]ormat")
+    nmap('<leader>li', "<Cmd>LspInfo<CR>", '[I]nfo')
     nmap('<leader>lr', vim.lsp.buf.rename, '[R]ename')
     nmap('gd', require('telescope.builtin').lsp_definitions,
          '[G]oto [D]efinition')
     nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('gl', vim.diagnostic.open_float, '[G]oto [L]ine diagnostic')
     nmap('gr', require('telescope.builtin').lsp_references,
          '[G]oto [R]eferences')
     nmap('gI', require('telescope.builtin').lsp_implementations,
@@ -254,7 +270,7 @@ local servers = {
         gofumpt = true,
         staticcheck = true
     },
-    golangci_lint_ls = {},
+    -- golangci_lint_ls = {}, -- conflicts with gopls
     html = {},
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
     htmx = {},
