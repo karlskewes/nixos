@@ -2,47 +2,34 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config
-, lib
-, pkgs
-, currentRevision
-, currentStateVersion
-, currentSystem
-, currentSystemName
-, currentUsers
-, ...
-}:
+{ config, lib, pkgs, currentRevision, currentStateVersion, currentSystem
+, currentSystemName, currentUsers, ... }:
 
 {
 
   # system user
   # for each user in currentUsers, generate users.user.${user} config.
-  users.users = builtins.foldl'
-    (
-      acc: user:
-        acc // {
-          ${user} = {
-            home = "/home/${user}";
-            isNormalUser = true;
-            extraGroups = [
-              "audio"
-              "docker"
-              "scanner" # scanning
-              "lp" # scanning
-              "video"
-              "wheel"
-            ];
-            # nix-shell -p mkpasswd
-            # vim -> :read !mkpasswd -m sha-512
-            # hashedPassword = "";
-            openssh.authorizedKeys.keys = [
-              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-            ];
-          };
-        }
-    )
-    { }
-    (currentUsers);
+  users.users = builtins.foldl' (acc: user:
+    acc // {
+      ${user} = {
+        home = "/home/${user}";
+        isNormalUser = true;
+        extraGroups = [
+          "audio"
+          "docker"
+          "scanner" # scanning
+          "lp" # scanning
+          "video"
+          "wheel"
+        ];
+        # nix-shell -p mkpasswd
+        # vim -> :read !mkpasswd -m sha-512
+        # hashedPassword = "";
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+        ];
+      };
+    }) { } (currentUsers);
 
   users.mutableUsers = false;
 
@@ -137,11 +124,7 @@
     keyboards = {
       default = {
         ids = [ "*" ];
-        settings = {
-          main = {
-            capslock = "overload(meta, esc)";
-          };
-        };
+        settings = { main = { capslock = "overload(meta, esc)"; }; };
       };
     };
   };

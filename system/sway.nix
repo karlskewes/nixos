@@ -1,9 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./wayland.nix
-  ];
+  imports = [ ./wayland.nix ];
 
   # setup windowing environment
   services.xserver = {

@@ -1,17 +1,8 @@
-{ config
-, lib
-, pkgs
-, currentStateVersion
-, ...
-}:
+{ config, lib, pkgs, currentStateVersion, ... }:
 
-let
-  user = "karl";
-in
-{
-  imports = [
-    ./dev.nix
-  ];
+let user = "karl";
+in {
+  imports = [ ./dev.nix ];
 
   home.username = "${user}";
   home.homeDirectory = "/home/${user}";

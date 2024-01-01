@@ -1,8 +1,6 @@
 # X Windows additional configuration dependent on home-manager
 { config, lib, pkgs, ... }: {
-  imports = [
-    ./wayland.nix
-  ];
+  imports = [ ./wayland.nix ];
 
   programs.waybar = {
     enable = true;
@@ -11,25 +9,33 @@
         layer = "top";
         modules-left = [ "hyprland/workspaces" "hyprland/submap" ];
         modules-center = [ "hyprland/window" ];
-        modules-right = [ "pulseaudio" "network" "cpu" "memory" "temperature" "hyprland/language" "battery" "clock" "tray" ];
-        "hyprland/window" = {
-          max-length = 50;
-        };
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+          "temperature"
+          "hyprland/language"
+          "battery"
+          "clock"
+          "tray"
+        ];
+        "hyprland/window" = { max-length = 50; };
         battery = {
           format = "{capacity}% {icon}";
           format-icons = [ "" "" "" "" "" ];
         };
         clock = {
           format = "{:%a, %d. %b  %H:%M}";
-          "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          "tooltip-format" = ''
+            <big>{:%Y %B}</big>
+            <tt><small>{calendar}</small></tt>'';
         };
         "cpu" = {
           "format" = "{usage}% ";
           "tooltip" = false;
         };
-        "memory" = {
-          "format" = "{}% ";
-        };
+        "memory" = { "format" = "{}% "; };
         "temperature" = {
           "critical-threshold" = 80;
           "format" = "{temperatureC}°C {icon}";

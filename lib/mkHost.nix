@@ -1,16 +1,8 @@
 # based on: https://github.com/mitchellh/nixos-config/blob/main/lib/mkvm.nix
 # This function creates a NixOS system based for a particular architecture.
 name:
-{ nixpkgs
-, home-manager
-, overlays
-, configRev
-, system
-, user
-, stateVersion
-, extraModules ? [ ]
-, homeModule ? { }
-}:
+{ nixpkgs, home-manager, overlays, configRev, system, user, stateVersion
+, extraModules ? [ ], homeModule ? { } }:
 
 nixpkgs.lib.nixosSystem rec {
   inherit system;
@@ -41,10 +33,9 @@ nixpkgs.lib.nixosSystem rec {
       # TODO, convert users to { "user": homeModule }, so can support multiple
       home-manager.users.${user} = homeModule;
       # expose arguments for imports to use as parameters
-      home-manager.extraSpecialArgs = {
-        currentStateVersion = stateVersion;
-      };
-      home-manager.sharedModules = [ ../home-manager/xwindows.nix ../home-manager/shared.nix ];
+      home-manager.extraSpecialArgs = { currentStateVersion = stateVersion; };
+      home-manager.sharedModules =
+        [ ../home-manager/xwindows.nix ../home-manager/shared.nix ];
     }
   ];
 }

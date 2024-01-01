@@ -7,9 +7,5 @@
   };
 
   # setup windowing environment
-  services.xserver = {
-    displayManager = {
-      defaultSession = "hyprland";
-    };
-  };
+  services.xserver = { displayManager = { defaultSession = "hyprland"; }; };
 }

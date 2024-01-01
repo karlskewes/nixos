@@ -32,13 +32,7 @@
     nix-extra.flake = false;
   };
 
-  outputs =
-    { self
-    , home-manager
-    , nixpkgs
-    , apple-silicon-support
-    , nix-extra
-    , ...
+  outputs = { self, home-manager, nixpkgs, apple-silicon-support, nix-extra, ...
     }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
@@ -52,10 +46,10 @@
 
       user = "karl";
       extraModules = [ "${nix-extra.outPath}/nixos.nix" ];
-      appleModules = extraModules ++ [ apple-silicon-support.nixosModules.default ];
+      appleModules = extraModules
+        ++ [ apple-silicon-support.nixosModules.default ];
 
-    in
-    {
+    in {
       nixosConfigurations = {
         blake-laptop = mkHost "blake-laptop" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
@@ -89,9 +83,7 @@
           system = "aarch64-linux";
           stateVersion = "23.11";
           extraModules = appleModules;
-          overlays = [
-            inputs.neovim-nightly-overlay.overlay
-          ];
+          overlays = [ inputs.neovim-nightly-overlay.overlay ];
           homeModule = ({ config, pkgs, ... }: {
             imports = [ ./home-manager/user-${user}.nix ];
             # TODO, unsupported

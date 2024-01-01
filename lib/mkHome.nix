@@ -1,14 +1,8 @@
 # based on: https://github.com/mitchellh/nixos-config/blob/main/lib/mkvm.nix
 # This function creates a standalone Home Manager configuration.
 name:
-{ nixpkgs
-, home-manager
-, overlays
-, system
-, user
-, stateVersion
-, extraModules ? [ ]
-}:
+{ nixpkgs, home-manager, overlays, system, user, stateVersion
+, extraModules ? [ ] }:
 
 # TODO: consider nix-darwin support:
 # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nix-darwin-module

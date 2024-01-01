@@ -1,10 +1,5 @@
-{ config, lib, pkgs, ... }:
-{
-  imports = [
-    ./base.nix
-    ./i3.nix
-    ./zfs.nix
-  ];
+{ config, lib, pkgs, ... }: {
+  imports = [ ./base.nix ./i3.nix ./zfs.nix ];
 
   # Define hostId for zfs pool machine 'binding'
   # :read !echo <hostname> | md5sum | cut -c1-8

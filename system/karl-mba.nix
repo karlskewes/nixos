@@ -1,9 +1,6 @@
 { config, pkgs, ... }: {
 
-  imports = [
-    ./base.nix
-    ./i3.nix
-  ];
+  imports = [ ./base.nix ./i3.nix ];
 
   powerManagement.enable = true;
 

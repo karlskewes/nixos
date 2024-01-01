@@ -104,7 +104,7 @@ lvim.plugins = {
         config = function()
             vim.cmd("let g:vim_markdown_folding_disabled = 1")
         end
-    }, 
+    }
 }
 
 -- Telescope extensions
@@ -191,5 +191,4 @@ lvim.builtin.which_key.mappings["n"] = {
     m = {"<cmd>lua require('neogen').generate({ type = 'func' })<CR>", "Method"},
     t = {"<cmd>lua require('neogen').generate({ type = 'type' })<CR>", "Type"}
 }
-
 

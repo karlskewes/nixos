@@ -1,10 +1,6 @@
 { config, pkgs, ... }: {
 
-  imports = [
-    ./base.nix
-    ./i3.nix
-    ./zfs.nix
-  ];
+  imports = [ ./base.nix ./i3.nix ./zfs.nix ];
 
   powerManagement.enable = true;
   services.thermald.enable = true;

@@ -118,11 +118,11 @@ tree-sitter() { ## Clear TreeSitter parsers
 }
 
 fmt() { ## Format *.{lua,nix,sh}
-	find . -name '*.nix' -exec nixfmt {} \;
+	fd --extension nix | xargs nixfmt
 
-	find . -name '*.lua' -exec lua-format -i {} \;
+	fd --extension lua | xargs lua-format -i
 
-	find . -name '*.sh' -exec shfmt -w {} \;
+	fd --extension sh | xargs shfmt -w
 }
 
 mikrotik() { ## Backup Mikrotik router config
