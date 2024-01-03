@@ -1,18 +1,3 @@
--- [[ Configure Harpoon ]]
-local harpoon = require("harpoon")
-vim.keymap.set("n", "<C-a>", function() harpoon:list():append() end)
-vim.keymap.set("n", "<C-l>",
-               function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-
-vim.keymap.set("n", "<C-n>", function() harpoon:list():select(1) end)
-vim.keymap.set("n", "<C-m>", function() harpoon:list():select(2) end)
-vim.keymap.set("n", "<C-,>", function() harpoon:list():select(3) end)
-vim.keymap.set("n", "<C-.>", function() harpoon:list():select(4) end)
-
--- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<C-S-J>", function() harpoon:list():prev() end)
-vim.keymap.set("n", "<C-S-K>", function() harpoon:list():next() end)
-
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {}
@@ -89,8 +74,6 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags,
                {desc = '[S]earch [H]elp'})
 vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps,
                {desc = '[S]earch [K]eymaps'})
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string,
-               {desc = '[S]earch current [W]ord'})
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep,
                {desc = '[S]earch by [G]rep'})
 vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>',
@@ -111,6 +94,14 @@ vim.keymap.set('n', '<leader>svs', require('telescope.builtin').git_status,
                {desc = '[S]earch [v]cs status'})
 vim.keymap.set('n', '<leader>svS', require('telescope.builtin').git_stash,
                {desc = '[S]earch [v]cs [S]tash'})
+vim.keymap.set('n', '<leader>sw', function()
+    local word = vim.fn.expand("<cword>")
+    require('telescope.builtin').grep_string({search = word})
+end, {desc = '[S]earch current [w]ord'})
+vim.keymap.set('n', '<leader>sW', function()
+    local word = vim.fn.expand("<cWORD>")
+    require('telescope.builtin').grep_string({search = word})
+end, {desc = '[S]earch current [W]ORD'})
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`

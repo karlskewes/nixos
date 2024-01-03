@@ -11,39 +11,34 @@ return {
         "folke/trouble.nvim",
         dependencies = {"nvim-tree/nvim-web-devicons"},
         opts = {},
-        keys = {
-            {
-                "<leader>tt",
-                function() require("trouble").toggle() end,
-                desc = "[T]rouble Toggle"
-            }, {
-                "<leader>tw",
-                function()
-                    require("trouble").toggle("workspace_diagnostics")
-                end,
-                desc = "[T]rouble [W]orkspace Diagnostics"
-            }, {
-                "<leader>td",
-                function()
-                    require("trouble").toggle("document_diagnostics")
-                end,
-                desc = "[T]rouble [D]ocument Diagnostics"
-            }, {
-                "<leader>tq",
-                function() require("trouble").toggle("quickfix") end,
-                desc = "[T]rouble Quickfix"
-            }, {
-                "<leader>tl",
-                function() require("trouble").toggle("loclist") end,
-                desc = "[T]rouble Loclist"
-            }, {
-                "<leader>tr",
-                function()
-                    require("trouble").toggle("lsp_references")
-                end,
-                desc = "[T]rouble LSP References"
-            }
-        }
+        config = function()
+            require("trouble").setup(opts)
+            vim.keymap.set("n", "<leader>tt",
+                           function() require("trouble").toggle() end,
+                           {desc = "[T]rouble Toggle"})
+            vim.keymap.set("n", "<leader>tn", function()
+                require("trouble").next({skip_groups = true, jump = true})
+            end, {desc = "[T]rouble [n]ext"})
+            vim.keymap.set("n", "<leader>tp", function()
+                require("trouble").previous({skip_groups = true, jump = true})
+            end, {desc = "[T]rouble [p]revious"})
+            vim.keymap.set("n", "<leader>tw", function()
+                require("trouble").toggle("workspace_diagnostics")
+            end, {desc = "[T]rouble [W]orkspace Diagnostics"})
+            vim.keymap.set("n", "<leader>td", function()
+                require("trouble").toggle("document_diagnostics")
+            end, {desc = "[T]rouble [D]ocument Diagnostics"})
+            vim.keymap.set("n", "<leader>tq", function()
+                require("trouble").toggle("quickfix")
+            end, {desc = "[T]rouble Quickfix"})
+            vim.keymap.set("n", "<leader>tl",
+                           function()
+                require("trouble").toggle("loclist")
+            end, {desc = "[T]rouble Loclist"})
+            vim.keymap.set("n", "<leader>tr", function()
+                require("trouble").toggle("lsp_references")
+            end, {desc = "[T]rouble LSP References"})
+        end
     }, {
         -- Adds git related signs to the gutter, as well as utilities for managing changes
         'lewis6991/gitsigns.nvim',
@@ -122,44 +117,35 @@ return {
         version = "*",
         lazy = false, -- inexpensive and want bufferline to always show
         dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function() require("bufferline").setup {} end,
-        keys = {
-            {"<leader>bb", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous"},
-            {"<leader>bc", "<cmd>bd<cr>", desc = "Close"},
-            {"<leader>bC", "<cmd>bd!<cr>", desc = "Close (!)"},
-            {
-                "<leader>bf",
-                "<cmd>Telescope buffers previewer=false<cr>",
-                desc = "Find"
-            }, {"<leader>bj", "<cmd>BufferLinePick<cr>", desc = "Jump"},
-            {"<leader>bn", "<cmd>BufferLineCycleNext<cr>", desc = "Next"}, {
-                "<leader>bW",
-                "<cmd>noautocmd w<cr>",
-                desc = "Save without formatting (noautocmd)"
-            }, {
-                "<leader>be",
-                "<cmd>BufferLinePickClose<cr>",
-                desc = "Pick which buffer to close"
-            },
-            {
-                "<leader>bh",
-                "<cmd>BufferLineCloseLeft<cr>",
-                desc = "Close all to the left"
-            }, {
-                "<leader>bl",
-                "<cmd>BufferLineCloseRight<cr>",
-                desc = "Close all to the right"
-            }, {
-                "<leader>bD",
-                "<cmd>BufferLineSortByDirectory<cr>",
-                desc = "Sort by directory"
-            },
-            {
-                "<leader>bL",
-                "<cmd>BufferLineSortByExtension<cr>",
-                desc = "Sort by language"
-            }
-        }
+        config = function()
+            require("bufferline").setup({})
+            vim.keymap.set("n", "<leader>bb", "<cmd>BufferLineCyclePrev<cr>",
+                           {desc = "Previous"})
+            vim.keymap.set("n", "<leader>bc", "<cmd>bd<cr>", {desc = "Close"})
+            vim.keymap.set("n", "<leader>bC", "<cmd>bd!<cr>",
+                           {desc = "Close (!)"})
+            vim.keymap.set("n", "<leader>bf",
+                           "<cmd>Telescope buffers previewer=false<cr>",
+                           {desc = "Find"})
+            vim.keymap.set("n", "<leader>bj", "<cmd>BufferLinePick<cr>",
+                           {desc = "Jump"})
+            vim.keymap.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>",
+                           {desc = "Next"})
+            vim.keymap.set("n", "<leader>bW", "<cmd>noautocmd w<cr>",
+                           {desc = "Save without formatting (noautocmd)"})
+            vim.keymap.set("n", "<leader>be", "<cmd>BufferLinePickClose<cr>",
+                           {desc = "Pick which buffer to close"})
+            vim.keymap.set("n", "<leader>bh", "<cmd>BufferLineCloseLeft<cr>",
+                           {desc = "Close all to the left"})
+            vim.keymap.set("n", "<leader>bl", "<cmd>BufferLineCloseRight<cr>",
+                           {desc = "Close all to the right"})
+            vim.keymap.set("n", "<leader>bD",
+                           "<cmd>BufferLineSortByDirectory<cr>",
+                           {desc = "Sort by directory"})
+            vim.keymap.set("n", "<leader>bL",
+                           "<cmd>BufferLineSortByExtension<cr>",
+                           {desc = "Sort by language"})
+        end
     }, {
         -- Set lualine as statusline
         'nvim-lualine/lualine.nvim',
@@ -303,8 +289,44 @@ return {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
         dependencies = {"nvim-lua/plenary.nvim"},
-        -- note `harpoon` declared in init.lua so accessible for key mappings.
-        config = function() harpoon = require("harpoon"):setup() end
+        config = function()
+            local harpoon = require("harpoon")
+            harpoon:setup()
+
+            vim.keymap.set("n", "<leader>ha",
+                           function() harpoon:list():append() end,
+                           {desc = "[H]arpoon [a]dd"})
+            vim.keymap.set("n", "<leader>hl", function()
+                harpoon.ui:toggle_quick_menu(harpoon:list())
+            end, {desc = "[H]arpoon [l]ist"})
+
+            vim.keymap.set("n", "<leader>h1",
+                           function() harpoon:list():select(1) end,
+                           {desc = "[H]arpoon jump to [1]"})
+            vim.keymap.set("n", "<leader>h2",
+                           function() harpoon:list():select(3) end,
+                           {desc = "[H]arpoon jump to [2]"})
+            vim.keymap.set("n", "<leader>h3",
+                           function() harpoon:list():select(3) end,
+                           {desc = "[H]arpoon jump to [3]"})
+            vim.keymap.set("n", "<leader>h4",
+                           function() harpoon:list():select(4) end,
+                           {desc = "[H]arpoon jump to [4]"})
+
+            vim.keymap.set("n", "<C-,>", function()
+                harpoon:list():prev()
+            end, {desc = "[H]arpoon [p]revious"})
+            vim.keymap.set("n", "<leader>p",
+                           function() harpoon:list():prev() end,
+                           {desc = "[H]arpoon [p]revious '<C-,>'"})
+            vim.keymap.set("n", "<C-.>", function()
+                harpoon:list():next()
+            end, {desc = "[H]arpoon [n]ext"})
+            vim.keymap.set("n", "<leader>n",
+                           function() harpoon:list():next() end,
+                           {desc = "[H]arpoon [n]ext '<C-.>'"})
+
+        end
     }, {
         "catppuccin/nvim",
         name = "catppuccin",
