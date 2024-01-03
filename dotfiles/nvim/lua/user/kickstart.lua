@@ -32,6 +32,9 @@ local plugins = {}
 require('lazy').setup({
     {import = 'user.lsp'}, --
     {import = 'user.plugins'}, --
+    {import = 'user.telescope'}, --
     {import = 'user.autoformat'}, --
     {import = 'user.debug'} --
 }, {})
+
+vim.keymap.set("n", "<leader>pl", "<cmd>Lazy<CR>", {desc = "Lazy"})
