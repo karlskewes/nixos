@@ -11,7 +11,9 @@
     source = ../dotfiles/nvim;
     recursive = true;
   };
-  xdg.configFile."vale.ini" = { source = ../dotfiles/vale.ini; };
+  # run `vale sync` after fresh install to create `~/styles` directory.
+  # https://github.com/errata-ai/vale/issues/211
+  home.file.".vale.ini" = { source = ../dotfiles/vale.ini; };
 
   #---------------------------------------------------------------------
   # Packages
