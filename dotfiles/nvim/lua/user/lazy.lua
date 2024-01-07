@@ -29,12 +29,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {}
 
 -- For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-require('lazy').setup({
-    {import = 'user.lsp'}, --
-    {import = 'user.plugins'}, --
-    {import = 'user.telescope'}, --
-    {import = 'user.autoformat'}, --
-    {import = 'user.debug'} --
-}, {})
+require('lazy').setup("user.plugins")
 
 vim.keymap.set("n", "<leader>pl", "<cmd>Lazy<CR>", {desc = "Lazy"})

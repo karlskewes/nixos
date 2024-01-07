@@ -43,6 +43,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'",
                {expr = true, silent = true})
 
 -- Diagnostic keymaps
+-- consider swapping these for folke/trouble.nvim
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,
                {desc = 'Go to previous diagnostic message'})
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next,
