@@ -19,9 +19,4 @@
     vaapiVdpau
     libvdpau-va-gl
   ];
-
-  # TODO: check now that pipewire enabled
-  # Need full for bluetooth support
-  # hardware.bluetooth.enable = true;
-  # hardware.pulseaudio.package = pkgs.pulseaudioFull;
 }

@@ -47,7 +47,7 @@
       user = "karl";
       extraModules = [ "${nix-extra.outPath}/nixos.nix" ];
       appleModules = extraModules
-        ++ [ apple-silicon-support.nixosModules.default ];
+        ++ [ apple-silicon-support.nixosModules.apple-silicon-support ];
 
     in {
       nixosConfigurations = {
@@ -83,7 +83,10 @@
           system = "aarch64-linux";
           stateVersion = "23.11";
           extraModules = appleModules;
-          overlays = [ inputs.neovim-nightly-overlay.overlay ];
+          overlays = [
+            apple-silicon-support.overlays.apple-silicon-overlay
+            inputs.neovim-nightly-overlay.overlay
+          ];
           homeModule = ({ config, pkgs, ... }: {
             imports = [ ./home-manager/user-${user}.nix ];
             # TODO, unsupported

@@ -17,9 +17,11 @@
     i3lock-fancy
     ungoogled-chromium
     gwenview # image viewer & editor (crop, resize)
+    helvum # pipewire patch bay gui
+    iwgtk # iwd gui
     libnotify # required by dunst
-    pavucontrol
-    qalculate-gtk
+    pavucontrol # pulseaudio gui
+    qalculate-gtk # calculator
     rofi-power-menu # doesn't work as extra package
   ];
 

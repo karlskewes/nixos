@@ -106,10 +106,6 @@
     };
   };
 
-  # TODO: check now that pipewire enabled
-  # Need full for bluetooth support
-  # hardware.pulseaudio.package = pkgs.pulseaudioFull;
-
   # required to use dvd/cdrom in some applications
   programs.dconf.enable = true;
 }

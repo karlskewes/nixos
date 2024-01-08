@@ -1,13 +1,7 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-  # doesn't exist?
-  # hardware.opengl.driSupport32bit = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  imports = [ ./windowing.nix ];
 
   # setup windowing environment
   services.xserver = {
@@ -32,16 +26,5 @@
     };
 
     windowManager = { i3.enable = true; };
-  };
-
-  # Enable sound.
-  sound.enable = false; # Using pipewire below
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
   };
 }

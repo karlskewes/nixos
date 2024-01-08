@@ -44,7 +44,7 @@ build() { ## Build latest NixOS & home-manager configuration
 	# update nix-extra reference if first time after install
 	nix flake lock --update-input nix-extra
 	# rebuild configuration per --flake .#${hostname}
-	nixos-rebuild build --flake .#
+	nixos-rebuild build --impure --flake .#
 }
 
 diff() { ## Build and diff
@@ -56,12 +56,12 @@ switch() { ## Build latest and switch
 	build
 	# Workaround CVE mitigation issue: https://github.com/NixOS/nixpkgs/pull/173170
 	sudo git config --global --add safe.directory "${PWD}"
-	sudo nixos-rebuild switch --flake .#
+	sudo nixos-rebuild switch --impure --flake .#
 	sudo ./result/activate
 	sudo /run/current-system/bin/switch-to-configuration boot
 
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, consider:
-  rm -rf ~/.local/share/lunarvim/site/pack/packer/start/nvim-treesitter/parser/*'
+	rm -rf ~/.local/share/nvim/lazy/nvim-treesitter/parser/*'
 
 	# clean
 }
@@ -114,7 +114,7 @@ nvim_deps() { ## Install neovim dependencies with Mason
 
 tree-sitter() { ## Clear TreeSitter parsers
 	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, removing...'
-	rm ~/.local/share/lunarvim/site/pack/lazy/opt/nvim-treesitter/parser/*
+	rm -rf ~/.local/share/nvim/lazy/nvim-treesitter/parser/*
 }
 
 fmt() { ## Format *.{lua,nix,sh}

@@ -54,19 +54,12 @@
     gnumake
     home-manager
     nix-diff # nix-diff /run/current-system ./result
-    simple-scan # scanner
     xclip
     vim
     wget
   ];
 
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-    inputMethod = {
-      enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [ mozc ];
-    };
-  };
+  i18n = { defaultLocale = "en_US.UTF-8"; };
 
   # Still problematic in 2021
   networking.enableIPv6 = false;
@@ -82,7 +75,7 @@
   # networking.interfaces.ens33.useDHCP = true;
 
   # FIXME: Firewall interferes with Kubernetes Kind inter-pod traffic.
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
   # networking.firewall.allowedTCPPorts (https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts) = [ 22 ];
   # networking.firewall.allowedTCPPortRanges (https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPortRanges) = [
   #  { from = 4000; to = 4007; }
@@ -119,6 +112,7 @@
     enable = true;
     extraRemotes = [ "lvfs-testing" ];
   };
+
   services.keyd = {
     enable = true;
     keyboards = {
@@ -144,41 +138,6 @@
     settings = {
       PasswordAuthentication = false;
       PermitRootLogin = "no";
-    };
-  };
-
-  services.printing.enable = true;
-  hardware.printers.ensurePrinters = [{
-    name = "Brother";
-    deviceUri = "ipp://BRW1CBFC0F36D0B/ipp";
-    model = "everywhere";
-  }];
-  hardware.printers.ensureDefaultPrinter = "Brother";
-  hardware.sane = {
-    enable = {
-      "x86_64-linux" = true;
-      "aarch64-linux" = false;
-    }."${currentSystem}";
-
-    brscan4 = {
-      enable = true;
-      netDevices = {
-        home = {
-          model = "MFC-L2713DW";
-          ip = "192.168.1.104";
-          # nodename = "BRW1CBFC0F36D0B";
-        };
-      };
-    };
-    # brscan5 = { enable = true; };
-  };
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    publish = {
-      enable = true;
-      addresses = true;
-      userServices = true;
     };
   };
 
