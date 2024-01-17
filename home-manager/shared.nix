@@ -38,7 +38,7 @@
     fd
     file
     gron # sed'able json
-    htop
+    zenith # htop replacement
     iptraf-ng
     jq
     libqalculate # qalc - CLI calculator

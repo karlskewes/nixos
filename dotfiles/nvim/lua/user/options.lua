@@ -3,25 +3,27 @@
 vim.o.hidden = true -- required to keep multiple buffers and open multiple buffers
 vim.o.hlsearch = true -- Set highlight on search, easier to spot.
 vim.o.statuscolumn = "%s %l %r" -- sign, line, relative numbers
-vim.wo.number = true -- Make line numbers default
-vim.wo.relativenumber = true -- Make line numbers default
+vim.wo.number = true -- Show line numbers
+vim.wo.relativenumber = true -- Show relative line numbers
 vim.wo.signcolumn = 'yes' -- Keep signcolumn on by default
-vim.o.mouse = 'a' -- Enable mouse mode
 vim.o.clipboard = "" -- don't default to system clipboard (<C-y|p>)
-vim.o.breakindent = true -- Enable break indent
-vim.o.undofile = true -- Save undo history
+vim.o.breakindent = true
+vim.o.expandtab = true
+vim.o.mouse = 'a' -- Enable mouse mode
 vim.o.ignorecase = true -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.smartcase = true
 -- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.o.updatetime = 50
+vim.o.timeoutlen = 200
 vim.o.completeopt = 'menuone,noselect' -- Set completeopt to have a better completion experience
-vim.o.termguicolors = true
-vim.o.colorcolumn = "100"
 vim.o.foldlevel = 99
 vim.o.foldmethod = "indent" -- folding, leaves declaration line open
 vim.o.formatoptions = "qrn1" -- handle formatting nicely
+vim.o.scrolloff = 8
+vim.o.colorcolumn = "100"
+vim.o.termguicolors = true
 vim.o.textwidth = 99 -- wrap at this character number on whitespace
+vim.o.undofile = true
 vim.o.wrap = true -- don't display lines as one long line
 
 vim.cmd [[
