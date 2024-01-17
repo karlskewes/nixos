@@ -60,7 +60,8 @@ vim.keymap.set('n', '<leader>n', vim.diagnostic.setloclist,
 -- Buffer keymaps
 vim.keymap.set("n", "<leader>c", "<cmd>:bd|bo<CR>", {desc = "Close Buffer"})
 vim.keymap.set("n", "<leader>w", "<cmd>w!<CR>", {desc = "Write/Save"})
-vim.keymap.set("n", "<leader>W", "<cmd>noautocmd w<CR>", {desc = "Write/Save (no actions)"})
+vim.keymap.set("n", "<leader>W", "<cmd>noautocmd w<CR>",
+               {desc = "Write/Save (no actions)"})
 vim.keymap.set("n", "<leader>q", "<cmd>confirm q<CR>", {desc = "Quit"})
 vim.keymap.set("n", "zz", 'zA', {desc = "Toggle folds"})
 

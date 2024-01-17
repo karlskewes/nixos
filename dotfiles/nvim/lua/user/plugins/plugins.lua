@@ -211,7 +211,7 @@ return {
                            function() harpoon:list():select(1) end,
                            {desc = "[H]arpoon jump to [1]"})
             vim.keymap.set("n", "<leader>h2",
-                           function() harpoon:list():select(3) end,
+                           function() harpoon:list():select(2) end,
                            {desc = "[H]arpoon jump to [2]"})
             vim.keymap.set("n", "<leader>h3",
                            function() harpoon:list():select(3) end,
@@ -223,13 +223,13 @@ return {
             vim.keymap.set("n", "<C-,>", function()
                 harpoon:list():prev()
             end, {desc = "[H]arpoon [p]revious"})
-            vim.keymap.set("n", "<leader>p",
+            vim.keymap.set("n", "<leader>hp",
                            function() harpoon:list():prev() end,
                            {desc = "[H]arpoon [p]revious '<C-,>'"})
             vim.keymap.set("n", "<C-.>", function()
                 harpoon:list():next()
             end, {desc = "[H]arpoon [n]ext"})
-            vim.keymap.set("n", "<leader>n",
+            vim.keymap.set("n", "<leader>hn",
                            function() harpoon:list():next() end,
                            {desc = "[H]arpoon [n]ext '<C-.>'"})
         end
