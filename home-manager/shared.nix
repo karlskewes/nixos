@@ -234,6 +234,9 @@
     settings = { pinentry-mode = "loopback"; };
   };
 
+
+  services.blueman-applet.enable = true; # bluetooth
+
   services.gnome-keyring.enable = true;
   services.gpg-agent = {
     enable = true;

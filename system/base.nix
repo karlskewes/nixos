@@ -74,8 +74,7 @@
   # :read !ip link | grep ': en'
   # networking.interfaces.ens33.useDHCP = true;
 
-  # FIXME: Firewall interferes with Kubernetes Kind inter-pod traffic.
-  networking.firewall.enable = true;
+  networking.firewall.enable = true; # disable for Kubernetes Kind, breaks inter-pod traffic.
   # networking.firewall.allowedTCPPorts (https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts) = [ 22 ];
   # networking.firewall.allowedTCPPortRanges (https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPortRanges) = [
   #  { from = 4000; to = 4007; }

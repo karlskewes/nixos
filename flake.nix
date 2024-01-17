@@ -93,7 +93,7 @@
             # home.packages = with pkgs; [ discord slack ];
             # home.pointerCursor.size = 180; # 4k
             home.pointerCursor.size = 128;
-            xresources.properties = { "Xft.dpi" = "109"; };
+            xresources.properties = { "Xft.dpi" = "122"; };
           });
         };
 

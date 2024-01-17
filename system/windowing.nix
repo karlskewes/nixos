@@ -14,6 +14,7 @@
     enable = true;
     package = pkgs.bluez5-experimental;
   };
+  services.blueman.enable = true; # bluetooth
 
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;

@@ -2,7 +2,9 @@
 -- See `:help vim.o`
 vim.o.hidden = true -- required to keep multiple buffers and open multiple buffers
 vim.o.hlsearch = true -- Set highlight on search, easier to spot.
+vim.o.statuscolumn = "%s %l %r" -- sign, line, relative numbers
 vim.wo.number = true -- Make line numbers default
+vim.wo.relativenumber = true -- Make line numbers default
 vim.wo.signcolumn = 'yes' -- Keep signcolumn on by default
 vim.o.mouse = 'a' -- Enable mouse mode
 vim.o.clipboard = "" -- don't default to system clipboard (<C-y|p>)
@@ -56,6 +58,7 @@ vim.keymap.set('n', '<leader>n', vim.diagnostic.setloclist,
 -- Buffer keymaps
 vim.keymap.set("n", "<leader>c", "<cmd>:bd|bo<CR>", {desc = "Close Buffer"})
 vim.keymap.set("n", "<leader>w", "<cmd>w!<CR>", {desc = "Write/Save"})
+vim.keymap.set("n", "<leader>W", "<cmd>noautocmd w<CR>", {desc = "Write/Save (no actions)"})
 vim.keymap.set("n", "<leader>q", "<cmd>confirm q<CR>", {desc = "Quit"})
 vim.keymap.set("n", "zz", 'zA', {desc = "Toggle folds"})
 
