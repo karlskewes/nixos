@@ -172,6 +172,19 @@ return {
                            {desc = "Sort by language"})
         end
     }, {
+        -- remember last place in file
+        "ethanholz/nvim-lastplace",
+        event = "BufRead",
+        config = function()
+            require("nvim-lastplace").setup({
+                lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
+                lastplace_ignore_filetype = {
+                    "gitcommit", "gitrebase"
+                },
+                lastplace_open_folds = true
+            })
+        end
+    }, {
         -- Set lualine as statusline
         'nvim-lualine/lualine.nvim',
         -- See `:help lualine.txt`
