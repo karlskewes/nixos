@@ -18,6 +18,7 @@
 
   # Specify path to peripheral firmware files copied during initial
   # installation.
+  sound.enable = true;
   hardware.asahi = {
     peripheralFirmwareDirectory = /etc/nixos/firmware;
     withRust = true;
