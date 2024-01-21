@@ -73,7 +73,13 @@
               # ./home-manager/hyprland.nix # FIXME, swaylock, keybindings, ALT+TAB
               # ./home-manager/sway.nix # FIXME, swaylock, keybindings, ALT+TAB
             ];
-            home.packages = with pkgs; [ discord kind restic slack zoom-us ];
+            home.packages = with pkgs; [
+              discord
+              kind
+              backblaze-b2
+              slack
+              zoom-us
+            ];
             xresources.properties = { "Xft.dpi" = "109"; };
           });
         };
