@@ -3,7 +3,6 @@
 ## TODO
 
 1. NixOS custom ISO for install per - https://bmcgee.ie/posts/2022/12/setting-up-my-new-laptop-nix-style/
-1. LunarVim install derivation?
 1. Linting/etc - https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#available-sources
 
 ## Update
@@ -44,7 +43,7 @@ Mount partitions:
 lsblk -o name,mountpoint,label,size,uuid
 
 NAME        MOUNTP LABEL           SIZE UUID
-nvme0n1                          931.5G 
+nvme0n1                          931.5G
 ├─nvme0n1p1 /boot                  512M C0B8-20DA
 ├─nvme0n1p2 [SWAP] swap            7.5G b85bdf70-c212-4641-a96b-e2d0b9ad9f16
 ├─nvme0n1p3        rpool-desktop 492.7G 14791146668368940249

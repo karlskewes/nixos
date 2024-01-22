@@ -113,6 +113,8 @@
     extraRemotes = [ "lvfs-testing" ];
   };
 
+  services.gnome.gnome-keyring.enable = true;
+
   services.keyd = {
     enable = true;
     keyboards = {

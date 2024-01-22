@@ -44,9 +44,9 @@
     python311 # neovim # https://docs.python.org/3/
     python311Packages.flake8
     python311Packages.pip
-    python311Packages.pynvim # lunarvim
-    python311Packages.debugpy # lunarvim DAP
-    python311Packages.pytest # lunarvim DAP
+    python311Packages.pynvim
+    python311Packages.debugpy
+    python311Packages.pytest
     pylint
     black
 

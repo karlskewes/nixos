@@ -123,11 +123,8 @@
       pbcopy = "xclip -selection clipboard";
       pbpaste = "xclip -selection clipboard -o";
 
-      # Remove if switch away from lunarvim to home-manager managed neovim
+      # One less char.
       v = "nvim";
-      vi = "nvim";
-      vim = "nvim";
-      vimdiff = "nvim -d";
 
       # Easier navigation: .., ..., ...., ....., ~ and -
       ".." = "cd ..";
@@ -236,7 +233,6 @@
 
   services.blueman-applet.enable = true; # bluetooth
 
-  services.gnome-keyring.enable = true;
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
@@ -262,7 +258,9 @@
     withPython3 = true;
     # package = pkgs.neovim-nightly;
     package = pkgs.neovim-unwrapped;
-    # vimAlias = true; # bash alias to LunarVim lvim instead
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
   };
 
   programs.readline = {
