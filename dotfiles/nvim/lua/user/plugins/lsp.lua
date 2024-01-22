@@ -245,15 +245,23 @@ return {
             }
         }
     }, {
+        -- Autocompletion replacement for hrsh7th/cmp-nvim-lsp-signature-help
+        "ray-x/lsp_signature.nvim",
+        event = "VeryLazy",
+        opts = {},
+        config = function(_, opts) require'lsp_signature'.setup(opts) end
+    }, {
         -- Autocompletion
         'hrsh7th/nvim-cmp',
+        event = {"InsertEnter", "CmdlineEnter"},
         dependencies = {
             -- Snippet Engine & its associated nvim-cmp source
             'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip',
 
             -- Adds LSP completion capabilities
             'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lsp-signature-help',
+            -- broken, triggers after ",": https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/issues/41
+            -- 'hrsh7th/cmp-nvim-lsp-signature-help',
 
             -- Adds a number of user-friendly snippets
             'rafamadriz/friendly-snippets'
@@ -277,7 +285,7 @@ return {
                     ['<C-p>'] = cmp.mapping.select_prev_item(),
                     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete {},
+                    ['<C-Space>'] = cmp.mapping.complete(),
                     ['<CR>'] = cmp.mapping.confirm {
                         behavior = cmp.ConfirmBehavior.Replace,
                         select = true
@@ -302,7 +310,7 @@ return {
                     end, {'i', 's'})
                 },
                 sources = {
-                    {name = 'nvim_lsp'}, {name = 'nvim_lsp_signature_help'},
+                    -- {name = 'nvim_lsp'}, {name = 'nvim_lsp_signature_help'},
                     {name = 'luasnip'}, {name = 'buffer'}, {name = 'path'}
                 }
             }
