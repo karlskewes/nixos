@@ -40,7 +40,6 @@
             position = "0x0";
             rate = "60.00";
             dpi = 180;
-            crtc = 0;
           };
           DVI-I-1-1 = {
             enable = true;
@@ -89,7 +88,6 @@
             primary = true;
             rate = "60.00";
             dpi = 180;
-            crtc = 0;
           };
         };
         fingerprint = {

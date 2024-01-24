@@ -119,7 +119,9 @@
           stateVersion = "22.05";
           homeModule = ({ config, pkgs, ... }: {
             imports = [ ./home-manager/user-${user}.nix ];
-            xresources.properties = { "Xft.dpi" = "109"; }; # 180 on 4k
+            xresources.properties = {
+              "Xft.dpi" = inputs.nixpkgs.lib.mkDefault "109";
+            }; # 180 on 4k
           });
         };
 
