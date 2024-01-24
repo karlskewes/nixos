@@ -4,7 +4,6 @@
   # Define hostId for zfs pool machine 'binding'
   # :read !echo <hostname> | md5sum | cut -c1-8
   networking.hostId = "b38b36dc";
-  networking.networkmanager.enable = true;
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
