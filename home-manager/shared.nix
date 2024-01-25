@@ -220,6 +220,7 @@
     };
 
     extraConfig = {
+      fetch.prune = "true";
       init.defaultBranch = "main";
       push.default = "current";
       rebase.autosquash = "true";
