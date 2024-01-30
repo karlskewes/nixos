@@ -136,9 +136,7 @@ return {
                     {desc = 'select git hunk'})
             end
         }
-    }, --[[
-    -- experiment single window focus, harpoon switch files which may or may not be open in buffer.
-    {
+    }, {
         -- show and navigate open buffers
         'akinsho/bufferline.nvim',
         version = "*",
@@ -173,9 +171,7 @@ return {
                            "<cmd>BufferLineSortByExtension<cr>",
                            {desc = "Sort by language"})
         end
-    },
-    ]] --
-    {
+    }, {
         -- remember last place in file
         "ethanholz/nvim-lastplace",
         event = "BufRead",
