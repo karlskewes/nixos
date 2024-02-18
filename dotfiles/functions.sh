@@ -86,6 +86,13 @@ flushdns() {
 	sudo systemd-resolve --flush-caches
 }
 
+# kill_port sends SIGTERM to process listening on provided port
+kill_port() {
+	if [[ -n "$1" ]]; then
+		kill "$(lsof -ti :"$1")"
+	fi
+}
+
 # `kubeconfigs` looks for KUBECONFIG .yml files and exports KUBECONFIG
 kubeconfigs() {
 

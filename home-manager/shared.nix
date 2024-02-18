@@ -45,6 +45,7 @@
     lsof
     nixfmt
     rename
+    renameutils # qmv - vim like bulk rename
     ripgrep
     rpl
     sshfs # android phone SimpleSSHD
