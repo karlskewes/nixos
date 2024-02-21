@@ -49,7 +49,10 @@ build() { ## Build latest NixOS & home-manager configuration
 
 diff() { ## Build and diff
 	build
-	nix-diff /run/current-system ./result
+	nvd diff /nix/var/nix/profiles/system/ result/
+
+	echo "see also: 'nvd list | grep asahi'"
+	echo "see also: 'nix-diff /run/current-system ./result'"
 }
 
 switch() { ## Build latest and switch

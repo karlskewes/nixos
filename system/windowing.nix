@@ -3,16 +3,17 @@
 {
   environment.systemPackages = with pkgs; [ simple-scan ];
 
-  i18n = {
-    inputMethod = {
-      enabled = "ibus";
-      ibus.engines = with pkgs.ibus-engines; [ mozc ];
-    };
-  };
+  # i18n  {
+  #   inputMethod = {
+  #     enabled = "ibus";
+  #     ibus.engines = with pkgs.ibus-engines; [ mozc ];
+  #   };
+  # };
 
   hardware.bluetooth = {
     enable = true;
     package = pkgs.bluez5-experimental;
+    # [NEW] Device 94:DB:56:E0:AE:54 WH-1000XM4
   };
   services.blueman.enable = true; # bluetooth
 
@@ -70,5 +71,4 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
 }

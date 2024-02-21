@@ -32,7 +32,13 @@
     nix-extra.flake = false;
   };
 
-  outputs = { self, home-manager, nixpkgs, apple-silicon-support, nix-extra, ...
+  outputs =
+    { self
+    , home-manager
+    , nixpkgs
+    , apple-silicon-support
+    , nix-extra
+    , ...
     }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
@@ -49,7 +55,8 @@
       appleModules = extraModules
         ++ [ apple-silicon-support.nixosModules.apple-silicon-support ];
 
-    in {
+    in
+    {
       nixosConfigurations = {
         blake-laptop = mkHost "blake-laptop" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
@@ -96,7 +103,7 @@
           homeModule = ({ config, pkgs, ... }: {
             imports = [ ./home-manager/user-${user}.nix ];
             # TODO, unsupported
-            # home.packages = with pkgs; [ discord slack ];
+            home.packages = with pkgs; [ ];
             # home.pointerCursor.size = 180; # 4k
             home.pointerCursor.size = 128;
             xresources.properties = { "Xft.dpi" = "122"; };
