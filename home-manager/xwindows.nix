@@ -71,8 +71,13 @@
   };
 
   xsession = {
+    enable = true;
     numlock.enable = true;
     initExtra = ''
+      # enable gnome-keyring for ssh
+      eval $(/run/wrappers/bin/gnome-keyring-daemon --start --daemonize)
+      export SSH_AUTH_SOCK
+
       # https://www.reddit.com/r/swaywm/comments/i6qlos/how_do_i_use_an_ime_with_sway/g1lk4xh?utm_source=share&utm_medium=web2x&context=3
       export GLFW_IM_MODULE=ibus
       export INPUT_METHOD=ibus
