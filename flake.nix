@@ -70,27 +70,6 @@
           });
         };
 
-        karl-desktop = mkHost "karl-desktop" rec {
-          inherit nixpkgs home-manager overlays extraModules configRev user;
-          system = "x86_64-linux";
-          stateVersion = "22.05";
-          homeModule = ({ config, pkgs, ... }: {
-            imports = [
-              ./home-manager/user-${user}.nix
-              # ./home-manager/hyprland.nix # FIXME, swaylock, keybindings, ALT+TAB
-              # ./home-manager/sway.nix # FIXME, swaylock, keybindings, ALT+TAB
-            ];
-            home.packages = with pkgs; [
-              discord
-              kind
-              backblaze-b2
-              slack
-              zoom-us
-            ];
-            xresources.properties = { "Xft.dpi" = "109"; };
-          });
-        };
-
         karl-mba = mkHost "karl-mba" rec {
           inherit nixpkgs home-manager configRev user;
           system = "aarch64-linux";

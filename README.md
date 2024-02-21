@@ -126,7 +126,7 @@ Upstream: https://github.com/nix-community/disko
 
 ```
 machine=new_machine
-cp ./hardware/karl-desktop-disko.nix ./hardware/"${machine}"-disko.nix
+cp ./hardware/tl-disko.nix ./hardware/"${machine}"-disko.nix
 
 vim ./hardware/"${machine}"-disko.nix
 ```
