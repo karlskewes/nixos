@@ -136,42 +136,43 @@ return {
                     {desc = 'select git hunk'})
             end
         }
-    }, {
-        -- show and navigate open buffers
-        'akinsho/bufferline.nvim',
-        version = "*",
-        lazy = false, -- inexpensive and want bufferline to always show
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            require("bufferline").setup({})
-            vim.keymap.set("n", "<leader>bb", "<cmd>BufferLineCyclePrev<cr>",
-                           {desc = "Previous"})
-            vim.keymap.set("n", "<leader>bc", "<cmd>bd<cr>", {desc = "Close"})
-            vim.keymap.set("n", "<leader>bC", "<cmd>bd!<cr>",
-                           {desc = "Close (!)"})
-            vim.keymap.set("n", "<leader>bf",
-                           "<cmd>Telescope buffers previewer=false<cr>",
-                           {desc = "Find"})
-            vim.keymap.set("n", "<leader>bj", "<cmd>BufferLinePick<cr>",
-                           {desc = "Jump"})
-            vim.keymap.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>",
-                           {desc = "Next"})
-            vim.keymap.set("n", "<leader>bW", "<cmd>noautocmd w<cr>",
-                           {desc = "Save without formatting (noautocmd)"})
-            vim.keymap.set("n", "<leader>be", "<cmd>BufferLinePickClose<cr>",
-                           {desc = "Pick which buffer to close"})
-            vim.keymap.set("n", "<leader>bh", "<cmd>BufferLineCloseLeft<cr>",
-                           {desc = "Close all to the left"})
-            vim.keymap.set("n", "<leader>bl", "<cmd>BufferLineCloseRight<cr>",
-                           {desc = "Close all to the right"})
-            vim.keymap.set("n", "<leader>bD",
-                           "<cmd>BufferLineSortByDirectory<cr>",
-                           {desc = "Sort by directory"})
-            vim.keymap.set("n", "<leader>bL",
-                           "<cmd>BufferLineSortByExtension<cr>",
-                           {desc = "Sort by language"})
-        end
-    }, {
+    }, -- {
+    --     -- show and navigate open buffers
+    --     'akinsho/bufferline.nvim',
+    --     version = "*",
+    --     lazy = false, -- inexpensive and want bufferline to always show
+    --     dependencies = 'nvim-tree/nvim-web-devicons',
+    --     config = function()
+    --         require("bufferline").setup({})
+    --         vim.keymap.set("n", "<leader>bb", "<cmd>BufferLineCyclePrev<cr>",
+    --                        {desc = "Previous"})
+    --         vim.keymap.set("n", "<leader>bc", "<cmd>bd<cr>", {desc = "Close"})
+    --         vim.keymap.set("n", "<leader>bC", "<cmd>bd!<cr>",
+    --                        {desc = "Close (!)"})
+    --         vim.keymap.set("n", "<leader>bf",
+    --                        "<cmd>Telescope buffers previewer=false<cr>",
+    --                        {desc = "Find"})
+    --         vim.keymap.set("n", "<leader>bj", "<cmd>BufferLinePick<cr>",
+    --                        {desc = "Jump"})
+    --         vim.keymap.set("n", "<leader>bn", "<cmd>BufferLineCycleNext<cr>",
+    --                        {desc = "Next"})
+    --         vim.keymap.set("n", "<leader>bW", "<cmd>noautocmd w<cr>",
+    --                        {desc = "Save without formatting (noautocmd)"})
+    --         vim.keymap.set("n", "<leader>be", "<cmd>BufferLinePickClose<cr>",
+    --                        {desc = "Pick which buffer to close"})
+    --         vim.keymap.set("n", "<leader>bh", "<cmd>BufferLineCloseLeft<cr>",
+    --                        {desc = "Close all to the left"})
+    --         vim.keymap.set("n", "<leader>bl", "<cmd>BufferLineCloseRight<cr>",
+    --                        {desc = "Close all to the right"})
+    --         vim.keymap.set("n", "<leader>bD",
+    --                        "<cmd>BufferLineSortByDirectory<cr>",
+    --                        {desc = "Sort by directory"})
+    --         vim.keymap.set("n", "<leader>bL",
+    --                        "<cmd>BufferLineSortByExtension<cr>",
+    --                        {desc = "Sort by language"})
+    --     end
+    -- },
+    {
         -- remember last place in file
         "ethanholz/nvim-lastplace",
         event = "BufRead",
