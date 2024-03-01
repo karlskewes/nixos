@@ -6,10 +6,10 @@
   # setup windowing environment
   services.xserver = {
     enable = true;
-    layout = "us";
     # enable touchpad on laptops
     libinput.enable = true;
-    xkbOptions =
+    xkb.layout = "us";
+    xkb.options =
       "caps:escape"; # make caps lock function as escape for easier vim
 
     desktopManager = {

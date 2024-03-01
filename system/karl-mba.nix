@@ -14,7 +14,6 @@
   hardware.asahi = {
     peripheralFirmwareDirectory = /etc/nixos/firmware;
     withRust = true;
-    addEdgeKernelConfig = true;
     useExperimentalGPUDriver = true;
     experimentalGPUInstallMode = "replace";
     setupAsahiSound = true;
