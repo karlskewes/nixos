@@ -72,7 +72,7 @@
 
   programs.go = {
     enable = true;
-    package = lib.mkDefault pkgs.go_1_21;
+    package = lib.mkDefault pkgs.go_1_22;
     # export GOPRIVATE=github.com/karlskewes/*
     goPrivate = [ "github.com/karlskewes/*" ];
   };
