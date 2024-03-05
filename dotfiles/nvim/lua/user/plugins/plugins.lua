@@ -287,35 +287,7 @@ return {
             "ray-x/guihua.lua", "neovim/nvim-lspconfig",
             "nvim-treesitter/nvim-treesitter"
         },
-        config = function()
-            require("go").setup()
-
-            -- Run gofmt + goimport on save
-            local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                pattern = "*.go",
-                callback = function()
-                    require('go.format').goimport()
-                end,
-                group = format_sync_grp
-            })
-
-            vim.keymap.set("n", "<leader>Ga", "<cmd>GoTestAdd<Cr>",
-                           {desc = "[G]o [A]dd Test"})
-            vim.keymap.set("n", "<leader>GA", "<cmd>GoTestsAll<Cr>",
-                           {desc = "[G]o Add [A]ll Tests"})
-            vim.keymap.set("n", "<leader>Ge", "<cmd>GoTestsExp<Cr>",
-                           {desc = "[G]o Add [E]xported Tests"})
-            vim.keymap.set("n", "<leader>Gi", "<cmd>GoInstallDeps<Cr>",
-                           {desc = "[G]o [i]nstall Dependencies"})
-            vim.keymap.set("n", "<leader>Gf", "<cmd>GoFillStruct<Cr>",
-                           {desc = "[G]o [F]ill Struct"})
-            vim.keymap.set("n", "<leader>Gg", "<cmd>GoGenerate<Cr>",
-                           {desc = "[G]o [G]enerate"})
-            vim.keymap.set("n", "<leader>Gm", "<cmd>GoMod tidy<cr>",
-                           {desc = "[G]o [M]od Tidy"})
-
-        end,
+        config = function() require("go").setup() end,
         event = {"CmdlineEnter"},
         ft = {"go", 'gomod'},
         build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
