@@ -211,7 +211,19 @@ return {
         config = function()
             local harpoon = require("harpoon")
             harpoon:setup({
-                settings = {save_on_toggle = true, sync_on_ui_close = true}
+                settings = {
+                    -- get_root_dir = function()
+                    --     local cwd = vim.loop.cwd()
+                    --     local root = vim.fn.system(
+                    --                      "git rev-parse --show-toplevel")
+                    --     if vim.v.shell_error == 0 and root ~= nil then
+                    --         return string.gsub(root, "\n", "")
+                    --     end
+                    --     return cwd
+                    -- end,
+                    save_on_toggle = true,
+                    sync_on_ui_close = true
+                }
             })
 
             vim.keymap.set("n", "<leader>ha",

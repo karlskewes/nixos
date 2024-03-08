@@ -86,8 +86,9 @@ return {
 
         vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files,
                        {desc = '[S]earch [/] in Open Files'})
-        vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin,
-                       {desc = '[S]earch [S]elect Telescope'})
+        vim.keymap.set('n', '<leader>sd',
+                       require('telescope.builtin').diagnostics,
+                       {desc = '[S]earch [D]iagnostics'})
         vim.keymap.set('n', '<leader>sF',
                        require('telescope.builtin').git_files,
                        {desc = '[S]earch git [F]iles'})
@@ -104,11 +105,13 @@ return {
                        {desc = '[S]earch by [G]rep'})
         vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>',
                        {desc = '[S]earch by [G]rep on Git Root'})
-        vim.keymap.set('n', '<leader>sd',
-                       require('telescope.builtin').diagnostics,
-                       {desc = '[S]earch [D]iagnostics'})
+        vim.keymap.set('n', '<leader>sn', function()
+            builtin.find_files {cwd = vim.fn.stdpath 'config'}
+        end, {desc = '[S]earch [N]eovim files'})
         vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume,
                        {desc = '[S]earch [R]esume'})
+        vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin,
+                       {desc = '[S]earch [S]elect Telescope'})
         vim.keymap.set('n', '<leader>sv',
                        require('telescope.builtin').git_commits,
                        {desc = '[S]earch [v]cs'})
