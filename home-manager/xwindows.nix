@@ -14,6 +14,7 @@
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
 
     firefox
+    vlc
     i3lock-fancy
     ungoogled-chromium
     gwenview # image viewer & editor (crop, resize)

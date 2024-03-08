@@ -32,13 +32,7 @@
     nix-extra.flake = false;
   };
 
-  outputs =
-    { self
-    , home-manager
-    , nixpkgs
-    , apple-silicon-support
-    , nix-extra
-    , ...
+  outputs = { self, home-manager, nixpkgs, apple-silicon-support, nix-extra, ...
     }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
@@ -55,8 +49,7 @@
       appleModules = extraModules
         ++ [ apple-silicon-support.nixosModules.apple-silicon-support ];
 
-    in
-    {
+    in {
       nixosConfigurations = {
         blake-laptop = mkHost "blake-laptop" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
