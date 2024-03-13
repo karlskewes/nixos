@@ -58,6 +58,7 @@
     xclip
     vim
     wget
+    wireguard-tools
   ];
 
   i18n = { defaultLocale = "en_US.UTF-8"; };
