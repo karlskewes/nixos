@@ -8,30 +8,31 @@
 {
 
   # system user
-  # for each user in currentUsers, generate users.user.${user} config.
-  users.users = builtins.foldl' (acc: user:
-    acc // {
-      ${user} = {
-        home = "/home/${user}";
-        isNormalUser = true;
-        extraGroups = [
-          "audio"
-          "docker"
-          "scanner" # scanning
-          "lp" # scanning
-          "video"
-          "wheel"
-        ];
-        # nix-shell -p mkpasswd
-        # vim -> :read !mkpasswd -m sha-512
-        # hashedPassword = "";
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-        ];
-      };
-    }) { } (currentUsers);
-
-  users.mutableUsers = false;
+  users = {
+    mutableUsers = false;
+    # for each user in currentUsers, generate users.user.${user} config.
+    users = builtins.foldl' (acc: user:
+      acc // {
+        ${user} = {
+          home = "/home/${user}";
+          isNormalUser = true;
+          extraGroups = [
+            "audio"
+            "docker"
+            "scanner" # scanning
+            "lp" # scanning
+            "video"
+            "wheel"
+          ];
+          # nix-shell -p mkpasswd
+          # vim -> :read !mkpasswd -m sha-512
+          # hashedPassword = "";
+          openssh.authorizedKeys.keys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+          ];
+        };
+      }) { } (currentUsers);
+  };
 
   time.timeZone = "Pacific/Auckland";
 
@@ -60,6 +61,8 @@
     wget
     wireguard-tools
   ];
+
+  hardware.enableAllFirmware = true;
 
   i18n = { defaultLocale = "en_US.UTF-8"; };
 
