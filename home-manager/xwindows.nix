@@ -13,7 +13,6 @@
   home.packages = with pkgs; [
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
 
-    firefox
     vlc
     i3lock-fancy
     ungoogled-chromium
@@ -31,6 +30,26 @@
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
     # size = 64;
+  };
+
+  programs.firefox = {
+    enable = true;
+    policies = {
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableTelemetry = true;
+    };
+    # TODO: might not be required as login with Mozilla Account.
+    # profiles = {
+    #   default = {
+    #     id = 0;
+    #     name = "default";
+    #     isDefault = true;
+    #     settings = lib.mkMerge [{
+    #       # "extensions.pocket.enabled" = false; # Still required if policies set?
+    #     }];
+    #   };
+    # };
   };
 
   programs.i3status.enable = lib.mkDefault true;
