@@ -31,8 +31,6 @@
 
     openssl
 
-    rnix-lsp
-
     cargo
     rustc
     rust-analyzer

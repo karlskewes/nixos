@@ -43,7 +43,7 @@
     jq
     libqalculate # qalc - CLI calculator
     lsof
-    nixfmt
+    nixfmt-classic
     rename
     renameutils # qmv - vim like bulk rename
     ripgrep
@@ -238,7 +238,6 @@
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
-    pinentryFlavor = "gnome3";
 
     # cache the keys forever, rotate as require
     maxCacheTtl = 31536000;

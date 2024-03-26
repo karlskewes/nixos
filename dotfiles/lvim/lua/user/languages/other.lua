@@ -1,5 +1,5 @@
 -- :MasonInstall bash-debug-adapter bash-language-server dockerfile-language-server
--- :MasonInstall htmx-lsp json-lsp jsonlint lua-language-server protolint rnix-lsp
+-- :MasonInstall htmx-lsp json-lsp jsonlint lua-language-server protolint
 -- :MasonInstall shellcheck shfmt yaml-language-server
 --
 lvim.builtin.dap.active = true

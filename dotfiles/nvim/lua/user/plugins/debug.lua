@@ -1,11 +1,8 @@
 return {
-    'mfussenegger/nvim-dap',
+    "rcarriga/nvim-dap-ui",
     dependencies = {
-        -- Creates a beautiful debugger UI
-        'rcarriga/nvim-dap-ui', -- Installs the debug adapters for you
+        "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio",
         'williamboman/mason.nvim', 'jay-babu/mason-nvim-dap.nvim',
-
-        -- Add your own debuggers here
         'leoluz/nvim-dap-go', "mfussenegger/nvim-dap-python"
     },
     config = function()
