@@ -20,6 +20,8 @@
     go-jsonnet
     jsonnet-bundler
 
+    kazam # screencasting
+
     lua
     luaformatter
     luarocks
