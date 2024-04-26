@@ -1,5 +1,10 @@
 { config, lib, pkgs, ... }:
 
+let
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
+
+in
 {
   home.packages = with pkgs; [
     bats
@@ -11,7 +16,6 @@
     delve
     golangci-lint
     gopls
-    glibc
     gotools
     graphviz # go tool pprof -http localhost:8080 ./profile.out
 
@@ -19,8 +23,6 @@
 
     go-jsonnet
     jsonnet-bundler
-
-    kazam # screencasting
 
     lua
     luaformatter
@@ -68,7 +70,10 @@
     kubectl
     kubectx
     kubeval
-  ];
+  ] ++ (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+    glibc # golangci-lint ?
+    kazam # screencasting
+  ]);
 
   programs.go = {
     enable = true;

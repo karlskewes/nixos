@@ -1,5 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, currentSystem, ... }:
 
+let
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
+
+in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -19,59 +24,63 @@
   # Packages
   #---------------------------------------------------------------------
 
-  home.packages = with pkgs; [
-    pciutils
-    psmisc
-    usbutils
-    dnsutils
+  home.packages = with pkgs;
+    [
+      pciutils
+      dnsutils
 
-    brightnessctl
+      # abcde # abcde -a cddb,read,encode,tag,move,playlist,clean,getalbumart -d /dev/cdrom -o mp3:-b320
+      # easytag # requires configuration.nix 'programs.dconf.enable = true;'
+      fatsort # fat32 file on disk sorter
 
-    alsa-utils
+      chafa # neovim telescope media_files image preview
+      ffmpegthumbnailer # neovim telescope media_files video preview
+      fd
+      file
+      gron # sed'able json
+      zenith # htop replacement
+      jq
+      libqalculate # qalc - CLI calculator
+      lsof
+      nixfmt-classic
+      nix-diff # nix-diff /run/current-system ./result
+      nvd # nix diff tool
+      rename
+      renameutils # qmv - vim like bulk rename
+      ripgrep
+      rpl
+      sshfs # android phone SimpleSSHD
+      tree
+      unzip
+      xclip
+      zip
 
-    # abcde # abcde -a cddb,read,encode,tag,move,playlist,clean,getalbumart -d /dev/cdrom -o mp3:-b320
-    # easytag # requires configuration.nix 'programs.dconf.enable = true;'
-    fatsort # fat32 file on disk sorter
+      gcc # treesitter
+      tree-sitter
+      vale
 
-    chafa # neovim telescope media_files image preview
-    ffmpegthumbnailer # neovim telescope media_files video preview
-    fd
-    file
-    gron # sed'able json
-    zenith # htop replacement
-    iptraf-ng
-    jq
-    libqalculate # qalc - CLI calculator
-    lsof
-    nixfmt-classic
-    rename
-    renameutils # qmv - vim like bulk rename
-    ripgrep
-    rpl
-    sshfs # android phone SimpleSSHD
-    tree
-    unzip
-    xclip
-    zip
+      # https://nixos.wiki/wiki/Packaging/Binaries
+      # file path/to/broken/file
+      # ldd path/to/broken/file
+      # Can patch interpreter for downloaded binary to the same interpeter used
+      # by NixOS built package (which has correct interpreter set).
+      # patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) path/to/broken/file
+      patchelf
 
-    gcc # treesitter
-    tree-sitter
-    vale
+    ] ++ (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+      psmisc
+      usbutils
+      brightnessctl
+      alsa-utils
 
-    # https://nixos.wiki/wiki/Packaging/Binaries
-    # file path/to/broken/file
-    # ldd path/to/broken/file
-    # Can patch interpreter for downloaded binary to the same interpeter used
-    # by NixOS built package (which has correct interpreter set).
-    # patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) path/to/broken/file
-    patchelf
+      gnome.seahorse
+      pinentry # gpg add ssh key
+      # export GPG_TTY=$(tty)
+      # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      # gpg ssh-add -c -t 31536000 path/to/id_rsa
 
-    gnome.seahorse
-    pinentry # gpg add ssh key
-    # export GPG_TTY=$(tty)
-    # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-    # gpg ssh-add -c -t 31536000 path/to/id_rsa
-  ];
+      iptraf-ng
+    ]);
 
   # tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/";
   # home.file.${tree_sitter_bin}.source = "${pkgs.tree-sitter}/bin/tree-sitter";
@@ -208,6 +217,9 @@
       mupm = "merge upstream/main";
       mupms = "merge upstream/master";
       pr = "pull --rebase";
+      pf = "push --force-with-lease";
+      rba = "rebase --abort";
+      rbc = "rebase --continue";
       rbi = "rebase --interactive";
       rbm = "rebase main";
       rbms = "rebase master";
@@ -233,11 +245,17 @@
     settings = { pinentry-mode = "loopback"; };
   };
 
-  services.blueman-applet.enable = true; # bluetooth
+  services.blueman-applet.enable = {
+    "x86_64-linux" = true;
+    "aarch64-linux" = false;
+    "aarch64-darwin" = false;
+  }."${currentSystem}"; # bluetooth
 
   services.gpg-agent = {
-    enable = true;
+    enable = isLinux;
     enableSshSupport = true;
+    pinentryPackage =
+      if isDarwin then pkgs.pinentry_mac else pkgs.pinentry-gnome3;
 
     # cache the keys forever, rotate as require
     maxCacheTtl = 31536000;

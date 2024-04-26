@@ -40,11 +40,31 @@ nix-displaylink() { ## Setup DisplayLink driver in nix store
 		file://"$HOME"/Downloads/displaylink-580.zip
 }
 
-build() { ## Build latest NixOS & home-manager configuration
+# TODO: only needed during initial install
+# --extra-experimental-features nix-command \
+# --extra-experimental-features flakes \
+
+build_darwin() {
+	# Hack to supply real hostname, as friendly hostname "ABC-Macbook-Air" not found.
+	nix run nix-darwin \
+		-- build --impure --flake .#"${HOSTNAME%%.*}"
+}
+
+build_nixos() {
 	# update nix-extra reference if first time after install
 	nix flake lock --update-input nix-extra
 	# rebuild configuration per --flake .#${hostname}
-	nixos-rebuild build --impure --flake .#
+	nixos-rebuild build --impure --flake .# --show-trace
+}
+
+build() { ## Build latest NixOS & home-manager configuration
+	if [ "$(uname)" == "Darwin" ]; then
+		echo "darwin detected, building..."
+		build_darwin
+	else
+		echo "nixos detected, building..."
+		build_nixos
+	fi
 }
 
 diff() { ## Build and diff
@@ -55,8 +75,12 @@ diff() { ## Build and diff
 	echo "see also: 'nix-diff /run/current-system ./result'"
 }
 
-switch() { ## Build latest and switch
-	build
+switch_darwin() {
+	nix run nix-darwin \
+		-- switch --impure --flake .#"${HOSTNAME%%.*}"
+}
+
+switch_linux() {
 	# Workaround CVE mitigation issue: https://github.com/NixOS/nixpkgs/pull/173170
 	sudo git config --global --add safe.directory "${PWD}"
 	sudo nixos-rebuild switch --impure --flake .#
@@ -67,6 +91,18 @@ switch() { ## Build latest and switch
 	rm -rf ~/.local/share/nvim/lazy/nvim-treesitter/parser/*'
 
 	# clean
+
+}
+switch() { ## Build latest and switch
+	build
+
+	if [ $(uname) == "Darwin" ]; then
+		echo "darwin detected, switching..."
+		switch_darwin
+	else
+		echo "nixos detected, switching..."
+		switch_linux
+	fi
 }
 
 install() { ## Install NixOS for the first time

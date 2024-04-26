@@ -8,7 +8,14 @@ name:
 # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nix-darwin-module
 # https://github.com/mitchellh/nixos-config/blob/75fe7a47f88fff0c01891d90c2153e8a14935a3e/lib/mksystem.nix#L24
 
-home-manager.lib.homeManagerConfiguration rec {
+let
+
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
+  hm =
+    if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
+
+in hm.lib.homeManagerConfiguration rec {
   pkgs = nixpkgs.legacyPackages.${system};
   modules = extraModules ++ [{
     nixpkgs.overlays = overlays;

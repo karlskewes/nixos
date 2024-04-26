@@ -1,10 +1,33 @@
-# based on: https://github.com/mitchellh/nixos-config/blob/main/lib/mkvm.nix
-# This function creates a NixOS system based for a particular architecture.
+# Based on: https://github.com/mitchellh/nixos-config/blob/74ede9378860d4807780eac80c5d685e334d59e9/lib/mksystem.nix
 name:
-{ nixpkgs, home-manager, overlays, configRev, system, user, stateVersion
-, extraModules ? [ ], homeModule ? { } }:
+{ nixpkgs
+, nix-darwin ? { }
+, home-manager
+, overlays
+, configRev
+, system
+, isDarwin ? false
+, user
+, stateVersion
+, extraModules ? [ ]
+}:
 
-nixpkgs.lib.nixosSystem rec {
+let
+  isLinux = !isDarwin;
+  hm =
+    if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
+
+  homeModule = ../home-manager/${name}.nix;
+
+  systemFunc =
+    if isDarwin then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
+
+  hardwareConfig = if isDarwin then { } else ../hardware/${name}.nix;
+  systemConfig =
+    if isDarwin then ../system/darwin.nix else ../system/${name}.nix;
+
+in
+systemFunc rec {
   inherit system;
 
   modules = extraModules ++ [
@@ -23,19 +46,22 @@ nixpkgs.lib.nixosSystem rec {
 
     ({ config, lib, ... }: { nixpkgs.config.allowUnfree = lib.mkDefault true; })
 
-    ../hardware/${name}.nix
-    ../system/${name}.nix
+    hardwareConfig
 
-    home-manager.nixosModules.home-manager
+    systemConfig
+
+    hm.home-manager
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       # TODO, convert users to { "user": homeModule }, so can support multiple
       home-manager.users.${user} = homeModule;
       # expose arguments for imports to use as parameters
-      home-manager.extraSpecialArgs = { currentStateVersion = stateVersion; };
-      home-manager.sharedModules =
-        [ ../home-manager/xwindows.nix ../home-manager/shared.nix ];
+      home-manager.extraSpecialArgs = {
+        currentStateVersion = stateVersion;
+        currentSystem = system;
+      };
+      home-manager.sharedModules = [ ../home-manager/shared.nix ];
     }
   ];
 }

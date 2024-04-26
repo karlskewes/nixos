@@ -8,6 +8,5 @@
     xwayland.enable = true;
   };
 
-  # setup windowing environment
-  services.xserver = { displayManager = { defaultSession = "hyprland"; }; };
+  services.displayManager.defaultSession = "hyprland";
 }

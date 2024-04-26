@@ -5,7 +5,8 @@
 
   services.dbus.enable = true;
 
-  # setup windowing environment
+  # services.displayManager.defaultSession = "sway"; # or as required.
+
   services.xserver = {
     enable = true;
     layout = "us";
@@ -20,7 +21,6 @@
     };
 
     displayManager = {
-      # defaultSession = "sway";
       sddm.enable = true;
       sddm.enableHidpi = true;
       sddm.wayland.enable = true;

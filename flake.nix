@@ -10,6 +10,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +37,14 @@
     nix-extra.flake = false;
   };
 
-  outputs = { self, home-manager, nixpkgs, apple-silicon-support, nix-extra, ...
+  outputs =
+    { self
+    , home-manager
+    , nixpkgs
+    , nix-darwin
+    , apple-silicon-support
+    , nix-extra
+    , ...
     }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
@@ -49,18 +61,22 @@
       appleModules = extraModules
         ++ [ apple-silicon-support.nixosModules.apple-silicon-support ];
 
-    in {
+    in
+    {
+      darwinConfigurations = {
+        karl-mba = mkHost "karl-mba" rec {
+          inherit nixpkgs nix-darwin home-manager overlays configRev;
+          isDarwin = true;
+          user = "karlskewes";
+          system = "aarch64-darwin";
+          stateVersion = "23.11";
+        };
+      };
       nixosConfigurations = {
         blake-laptop = mkHost "blake-laptop" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
-          homeModule = ({ config, pkgs, ... }: {
-            # TODO: multiple users
-            imports = [ ./home-manager/user-${user}.nix ];
-            home.packages = with pkgs; [ ];
-            xresources.properties = { "Xft.dpi" = "96"; };
-          });
         };
 
         karl-mba = mkHost "karl-mba" rec {
@@ -72,36 +88,18 @@
             apple-silicon-support.overlays.apple-silicon-overlay
             inputs.neovim-nightly-overlay.overlay
           ];
-          homeModule = ({ config, pkgs, ... }: {
-            imports = [ ./home-manager/user-${user}.nix ];
-            # TODO, unsupported
-            home.packages = with pkgs; [ ];
-            # home.pointerCursor.size = 180; # 4k
-            home.pointerCursor.size = 128;
-            xresources.properties = { "Xft.dpi" = "122"; };
-          });
         };
 
         shub = mkHost "shub" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
-          homeModule = ({ config, pkgs, ... }: {
-            imports = [ ./home-manager/user-${user}.nix ];
-            home.packages = with pkgs; [ tmux ];
-          });
         };
 
         tl = mkHost "tl" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
-          homeModule = ({ config, pkgs, ... }: {
-            imports = [ ./home-manager/user-${user}.nix ];
-            xresources.properties = {
-              "Xft.dpi" = inputs.nixpkgs.lib.mkDefault "109";
-            }; # 180 on 4k
-          });
         };
 
       };

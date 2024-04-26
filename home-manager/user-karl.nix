@@ -1,11 +1,15 @@
 { config, lib, pkgs, currentStateVersion, ... }:
 
-let user = "karl";
+let
+  isDarwin = pkgs.stdenv.isDarwin;
+  isLinux = pkgs.stdenv.isLinux;
+  user = if isLinux then "karl" else "karlskewes";
+  homeDir = if isLinux then "/home/${user}" else "/Users/${user}";
 in {
   imports = [ ./dev.nix ];
 
   home.username = "${user}";
-  home.homeDirectory = "/home/${user}";
+  home.homeDirectory = homeDir;
   home.stateVersion = "${currentStateVersion}";
 
   programs.bash = {
@@ -18,8 +22,8 @@ in {
       if [[ -f "/etc/profiles/per-user/${user}/etc/profile.d/hm-session-vars.sh" ]]; then
         source "/etc/profiles/per-user/${user}/etc/profile.d/hm-session-vars.sh"
       fi
-      if [[ -f "/home/${user}/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
-        source "/home/${user}/.nix-profile/etc/profile.d/hm-session-vars.sh"
+      if [[ -f "${homeDir}/.nix-profile/etc/profile.d/hm-session-vars.sh" ]]; then
+        source "${homeDir}/.nix-profile/etc/profile.d/hm-session-vars.sh"
       fi
     '';
   };
