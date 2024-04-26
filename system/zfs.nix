@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   boot = {
@@ -14,5 +14,5 @@
     trim.enable = true;
   };
 
-  virtualisation.docker = { storageDriver = "zfs"; };
+  virtualisation.docker = { storageDriver = lib.mkDefault "zfs"; };
 }

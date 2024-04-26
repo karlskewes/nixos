@@ -1,6 +1,9 @@
 { config, pkgs, ... }: {
 
-  imports = [ ./base.nix ./i3.nix ];
+  imports = [ ./base.nix ./i3.nix ./zfs.nix ];
+
+  boot.zfs.removeLinuxDRM = true;
+  virtualisation.docker = { storageDriver = "overlay"; }; # TODO, change after migrate to ZFS
 
   powerManagement.enable = true;
 
