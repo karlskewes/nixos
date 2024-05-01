@@ -3,14 +3,13 @@
     isDarwin = pkgs.stdenv.isDarwin;
     isLinux = pkgs.stdenv.isLinux;
 
-  in
-  {
+  in {
     # imports = [ ./user-karl.nix ] ++
     # (lib.optionals isLinux [ ./xwindows.nix ]);
     imports = [ ./user-karl.nix ./xwindows.nix ];
 
-    home.packages = with pkgs; [ ] ++
-      (lib.optionals isLinux [
+    home.packages = with pkgs;
+      [ ] ++ (lib.optionals isLinux [
         asahi-bless
         asahi-btsync
         asahi-nvram

@@ -1,16 +1,7 @@
 # Based on: https://github.com/mitchellh/nixos-config/blob/74ede9378860d4807780eac80c5d685e334d59e9/lib/mksystem.nix
 name:
-{ nixpkgs
-, nix-darwin ? { }
-, home-manager
-, overlays
-, configRev
-, system
-, isDarwin ? false
-, user
-, stateVersion
-, extraModules ? [ ]
-}:
+{ nixpkgs, nix-darwin ? { }, home-manager, overlays, configRev, system
+, isDarwin ? false, user, stateVersion, extraModules ? [ ] }:
 
 let
   isLinux = !isDarwin;
@@ -26,8 +17,7 @@ let
   systemConfig =
     if isDarwin then ../system/darwin.nix else ../system/${name}.nix;
 
-in
-systemFunc rec {
+in systemFunc rec {
   inherit system;
 
   modules = extraModules ++ [

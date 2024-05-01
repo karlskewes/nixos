@@ -4,8 +4,7 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
 
-in
-{
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
@@ -25,7 +24,20 @@ in
   #---------------------------------------------------------------------
 
   home.packages = with pkgs;
-    [
+    (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+      psmisc
+      usbutils
+      brightnessctl
+      alsa-utils
+
+      gnome.seahorse
+      pinentry # gpg add ssh key
+      # export GPG_TTY=$(tty)
+      # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      # gpg ssh-add -c -t 31536000 path/to/id_rsa
+
+      iptraf-ng
+    ]) ++ [
       pciutils
       dnsutils
 
@@ -66,21 +78,7 @@ in
       # by NixOS built package (which has correct interpreter set).
       # patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) path/to/broken/file
       patchelf
-
-    ] ++ (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
-      psmisc
-      usbutils
-      brightnessctl
-      alsa-utils
-
-      gnome.seahorse
-      pinentry # gpg add ssh key
-      # export GPG_TTY=$(tty)
-      # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-      # gpg ssh-add -c -t 31536000 path/to/id_rsa
-
-      iptraf-ng
-    ]);
+    ];
 
   # tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/";
   # home.file.${tree_sitter_bin}.source = "${pkgs.tree-sitter}/bin/tree-sitter";
