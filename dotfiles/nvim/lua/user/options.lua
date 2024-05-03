@@ -47,13 +47,6 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'",
                {expr = true, silent = true})
 
 -- Diagnostic keymaps
--- consider swapping these for folke/trouble.nvim
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev,
-               {desc = 'Go to previous diagnostic message'})
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next,
-               {desc = 'Go to next diagnostic message'})
-vim.keymap.set('n', '<leader>m', vim.diagnostic.open_float,
-               {desc = 'Open floating diagnostic message'})
 vim.keymap.set('n', '<leader>n', vim.diagnostic.setloclist,
                {desc = 'Open diagnostics list'})
 
@@ -115,4 +108,3 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     -- @ separater, double back slash for lua escape
     command = ":%s@\\s\\+$@@e"
 })
-

@@ -94,12 +94,13 @@ return {
                         end
 
                         nmap('<leader>la', vim.lsp.buf.code_action,
-                             'Code [A]ction')
+                             'Code [A]ction - Default: [crr]')
                         nmap('<leader>ld', vim.diagnostic.setloclist,
                              '[D]iagnostics list')
                         nmap('<leader>lf', vim.lsp.buf.format, "[F]ormat")
                         nmap('<leader>li', "<Cmd>LspInfo<CR>", '[I]nfo')
-                        nmap('<leader>lr', vim.lsp.buf.rename, '[R]ename')
+                        nmap('<leader>lr', vim.lsp.buf.rename,
+                             '[R]ename - Default: [crn]')
                         nmap('gd', require('telescope.builtin').lsp_definitions,
                              '[G]oto [D]efinition')
                         nmap('gD', vim.lsp.buf.declaration,

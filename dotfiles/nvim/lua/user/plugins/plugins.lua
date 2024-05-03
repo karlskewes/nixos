@@ -201,10 +201,6 @@ return {
         main = 'ibl',
         opts = {}
     }, {
-        -- "gc" to comment visual regions/lines
-        'numToStr/Comment.nvim',
-        opts = {}
-    }, {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
         dependencies = {"nvim-lua/plenary.nvim"},
