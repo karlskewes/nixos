@@ -1,6 +1,7 @@
 # X Windows additional configuration dependent on home-manager
 { config, lib, pkgs, ... }: {
   xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
+  xdg.configFile."i3status/config".text = builtins.readFile ../dotfiles/i3status_config;
   xdg.configFile."discord/settings.json".text = ''
     {
       "BACKGROUND_COLOR": "#202225",
@@ -15,6 +16,7 @@
 
     vlc
     i3lock-fancy
+    i3status # programs.i3status.enable = true # does not support custom M1 battery config.
     ungoogled-chromium
     gwenview # image viewer & editor (crop, resize)
     helvum # pipewire patch bay gui
@@ -51,8 +53,6 @@
     #   };
     # };
   };
-
-  programs.i3status.enable = lib.mkDefault true;
 
   programs.kitty = {
     enable = true;
