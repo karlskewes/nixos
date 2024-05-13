@@ -195,6 +195,7 @@ in {
     enable = true;
 
     aliases = {
+      bd = "curbr=$(git rev-parse --abbrev-ref HEAD) && git checkout main && git branch -D $curbr";
       co = "checkout";
       cob = "checkout -b";
       com = "checkout main";
