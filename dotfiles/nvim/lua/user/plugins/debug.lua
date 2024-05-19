@@ -3,12 +3,14 @@ return {
     dependencies = {
         "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio",
         'williamboman/mason.nvim', 'jay-babu/mason-nvim-dap.nvim',
-        'leoluz/nvim-dap-go', "mfussenegger/nvim-dap-python"
+        'leoluz/nvim-dap-go', "mfussenegger/nvim-dap-python",
+        "theHamsta/nvim-dap-virtual-text"
     },
     config = function()
         local dap = require 'dap'
         local dapui = require 'dapui'
 
+        require("nvim-dap-virtual-text").setup()
         require('mason-nvim-dap').setup({
             -- Makes a best effort to setup the various debuggers with
             -- reasonable debug configurations
@@ -33,6 +35,9 @@ return {
         vim.keymap.set('n', '<leader>dC', dap.run_to_cursor,
                        {desc = "Run To Cursor"})
         vim.keymap.set('n', '<leader>dd', dap.disconnect, {desc = "Disconnect"})
+        vim.keymap.set("n", "<leader>de", function()
+            require("dapui").eval(nil, {enter = true})
+        end, {desc = "Eval var"})
         vim.keymap.set('n', '<leader>dg', dap.session, {desc = "Get Session"})
         vim.keymap.set('n', '<leader>di', dap.step_into, {desc = "Step Into"})
         vim.keymap.set('n', '<leader>do', dap.step_over, {desc = "Step Over"})
@@ -42,6 +47,7 @@ return {
                        {desc = "Toggle Repl"})
         vim.keymap.set('n', '<leader>ds', dap.continue, {desc = "Start"})
         vim.keymap.set('n', '<leader>dq', dap.close, {desc = "Quit"})
+        vim.keymap.set('n', '<leader>dz', dapui.toggle, {desc = "Toggle UI"})
 
         -- Dap UI setup
         -- For more information, see |:help nvim-dap-ui|
@@ -76,12 +82,6 @@ return {
                 }
             }
         }
-
-        -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-        vim.keymap.set('n', '<F7>', dapui.toggle, {desc = 'Toggle UI'})
-        -- errors, unsure why. FIXME
-        -- vim.keymap.set('n', '<leader>dU', dapui.toggle({reset = true}),
-        --                {desc = "Toggle UI"})
 
         dap.listeners.after.event_initialized['dapui_config'] = dapui.open
         dap.listeners.before.event_terminated['dapui_config'] = dapui.close
