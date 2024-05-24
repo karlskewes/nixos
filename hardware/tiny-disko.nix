@@ -4,8 +4,7 @@ let
   # Find base disk ID `read !ls /dev/disk/by-id/*`
   disk = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B";
   disk_friendly = "sata-ssd";
-in
-{
+in {
   disko.devices = {
     disk = {
       "${disk_friendly}" = {
