@@ -13,27 +13,27 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "opti/snap/root";
+    device = "tiny/snap/root";
     fsType = "zfs";
   };
 
   fileSystems."/nix" = {
-    device = "opti/nosnap/nix";
+    device = "tiny/nosnap/nix";
     fsType = "zfs";
   };
 
   fileSystems."/var/lib/containers" = {
-    device = "opti/nosnap/containers";
+    device = "tiny/nosnap/containers";
     fsType = "zfs";
   };
 
   fileSystems."/var/lib/docker" = {
-    device = "opti/nosnap/docker";
+    device = "tiny/nosnap/docker";
     fsType = "zfs";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/218B-8E3A";
+    device = "/dev/disk/by-uuid/DCEC-FB92";
     fsType = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
   };

@@ -1,10 +1,11 @@
 # TODO: reformat params and make this a lib or similar.
 let
-  machine = "opti";
+  machine = "tiny";
   # Find base disk ID `read !ls /dev/disk/by-id/*`
   disk = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B";
-  disk_friendly = "m2-ssd";
-in {
+  disk_friendly = "sata-ssd";
+in
+{
   disko.devices = {
     disk = {
       "${disk_friendly}" = {
