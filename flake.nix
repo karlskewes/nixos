@@ -82,7 +82,7 @@
           ];
         };
 
-        shub = mkHost "shub" rec {
+        opti = mkHost "opti" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";

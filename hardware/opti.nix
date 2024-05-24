@@ -13,33 +13,33 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "rpool-shub/snap/root";
+    device = "opti/snap/root";
     fsType = "zfs";
   };
 
   fileSystems."/nix" = {
-    device = "rpool-shub/nosnap/nix";
+    device = "opti/nosnap/nix";
     fsType = "zfs";
   };
 
   fileSystems."/var/lib/containers" = {
-    device = "rpool-shub/nosnap/containers";
+    device = "opti/nosnap/containers";
     fsType = "zfs";
   };
 
   fileSystems."/var/lib/docker" = {
-    device = "rpool-shub/nosnap/docker";
+    device = "opti/nosnap/docker";
     fsType = "zfs";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/357A-2890";
+    device = "/dev/disk/by-uuid/218B-8E3A";
     fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
   };
 
   swapDevices = [{
-    device =
-      "/dev/disk/by-id/nvme-SAMSUNG_MZVLW128HEGR-000L1_S341NA0K117809-part2";
+    device = "/dev/disk/by-id/ata-Samsung_SSD_840_Series_S19MNSAD635007B-part2";
   }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -48,6 +48,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode =
