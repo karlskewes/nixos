@@ -8,7 +8,6 @@
   services.xserver = {
     enable = true;
     # enable touchpad on laptops
-    libinput.enable = true;
     xkb.layout = "us";
     xkb.options =
       "caps:escape"; # make caps lock function as escape for easier vim

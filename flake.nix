@@ -41,7 +41,7 @@
     , nix-extra, ... }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
-      overlays = [ inputs.neovim-nightly-overlay.overlay ];
+      overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
 
       # Function to render out our hosts
       mkHost = import ./lib/mkHost.nix;
@@ -78,7 +78,7 @@
           extraModules = appleModules;
           overlays = [
             apple-silicon-support.overlays.apple-silicon-overlay
-            inputs.neovim-nightly-overlay.overlay
+            inputs.neovim-nightly-overlay.overlays.default
           ];
         };
 
