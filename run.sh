@@ -159,7 +159,7 @@ tree-sitter() { ## Clear TreeSitter parsers
 fmt() { ## Format *.{lua,nix,sh}
 	fd --extension nix | xargs nixfmt
 
-	fd --extension lua | xargs lua-format -i
+	fd --extension lua | xargs stylua -g ./**/*.lua
 
 	fd --extension sh | xargs shfmt -w
 }

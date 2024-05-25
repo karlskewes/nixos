@@ -28,7 +28,6 @@ in {
       jsonnet-bundler
 
       lua
-      luaformatter
       luarocks
       stylua
       sumneko-lua-language-server
