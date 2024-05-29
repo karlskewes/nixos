@@ -14,8 +14,18 @@ return {
       vim.keymap.set('n', '<leader>gD', '<CMD>Git diff<CR>', { desc = '[G]it [D]iff all files' })
       -- show evaluation of line or selection, on commit hash to inspect full hash,
       -- on deleted line in git log to show file as was before commit.
-      vim.keymap.set('n', '<leader>gg', '<CMD>lua MiniGit.show_at_cursor()<CR>', { desc = '[G]it show at cursor' })
-      vim.keymap.set('n', '<leader>gl', '<CMD>Git log --oneline<CR>', { desc = '[G]it [l]og --oneline' })
+      vim.keymap.set(
+        'n',
+        '<leader>gg',
+        '<CMD>lua MiniGit.show_at_cursor()<CR>',
+        { desc = '[G]it show at cursor' }
+      )
+      vim.keymap.set(
+        'n',
+        '<leader>gl',
+        '<CMD>Git log --oneline<CR>',
+        { desc = '[G]it [l]og --oneline' }
+      )
       vim.keymap.set('n', '<leader>gr', '<CMD>Git reset %<CR>', { desc = '[G]it [r]eset buffer' })
       vim.keymap.set('n', '<leader>gs', '<CMD>Git status<CR>', { desc = '[G]it [s]tatus' })
     end,
