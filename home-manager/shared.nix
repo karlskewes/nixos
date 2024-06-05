@@ -4,7 +4,8 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
 
-in {
+in
+{
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
@@ -274,8 +275,8 @@ in {
     enable = true;
     withNodeJs = true;
     withPython3 = true;
-    # package = pkgs.neovim-nightly;
-    package = pkgs.neovim-unwrapped;
+    # package = pkgs.neovim-unwrapped; # unstable
+    package = pkgs.neovim; # nightly via overlay
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;

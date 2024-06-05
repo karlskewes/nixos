@@ -141,7 +141,8 @@ return {
       { desc = '[S]earch by [G]rep on Git Root' }
     )
     vim.keymap.set('n', '<leader>sn', function()
-      builtin.find_files({ cwd = vim.fn.stdpath('config') })
+      local working_dir = vim.fn.stdpath('config')
+      require('telescope.builtin').find_files({ cwd = working_dir })
     end, { desc = '[S]earch [N]eovim files' })
     vim.keymap.set(
       'n',

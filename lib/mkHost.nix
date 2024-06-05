@@ -44,8 +44,8 @@ in systemFunc rec {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      # TODO, convert users to { "user": homeModule }, so can support multiple
-      home-manager.users.${user} = homeModule;
+      home-manager.users = { ${user} = homeModule; };
+
       # expose arguments for imports to use as parameters
       home-manager.extraSpecialArgs = {
         currentStateVersion = stateVersion;

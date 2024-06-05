@@ -1,6 +1,50 @@
 -- [[ Configure plugins ]]
 return {
   {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    config = function()
+      vim.cmd.colorscheme('catppuccin')
+    end,
+    opts = {
+      default_integrations = false,
+      integrations = {
+        cmp = true,
+        dap = true,
+        dap_ui = true,
+        fidget = true,
+        mason = true,
+        markdown = true,
+        mini = true,
+        native_lsp = {
+          enabled = true,
+          underlines = {
+            errors = { 'undercurl' },
+            hints = { 'undercurl' },
+            warnings = { 'undercurl' },
+            information = { 'undercurl' },
+          },
+        },
+        telescope = true,
+        treesitter = true,
+        treesitter_context = true,
+        which_key = true,
+      },
+    },
+  },
+  {
+    'echasnovski/mini.diff',
+    version = false,
+    config = function()
+      require('mini.diff').setup({
+        view = {
+          style = 'sign',
+          signs = { add = '+', change = '~', delete = '-' },
+        },
+      })
+    end,
+  },
+  {
     -- :Git commands.
     'echasnovski/mini-git',
     version = false,
@@ -31,46 +75,79 @@ return {
     end,
   },
   {
-    'echasnovski/mini.diff',
+    'echasnovski/mini.splitjoin',
     version = false,
     config = function()
-      require('mini.diff').setup({
-        view = {
-          style = 'sign',
-          signs = { add = '+', change = '~', delete = '-' },
-        },
-      })
+      require('mini.splitjoin').setup({})
     end,
   },
   {
-    -- Detect tabstop and shiftwidth automatically.
-    'tpope/vim-sleuth',
+    'echasnovski/mini.visits',
+    version = false,
+    config = function()
+      require('mini.visits').setup({
+        track = { event = '' },
+      })
+      vim.keymap.set(
+        'n',
+        '<leader>va',
+        '<CMD>lua MiniVisits.register_visit()<CR>',
+        { desc = '[V]isits [a]dd' }
+      )
+      vim.keymap.set(
+        'n',
+        '<leader>vl',
+        '<CMD>lua MiniVisits.list_paths()<CR>',
+        { desc = '[V]isits [l]ist paths' }
+      )
+      vim.keymap.set(
+        'n',
+        '<leader>vn',
+        '<CMD>lua MiniVisits.iterate_paths("forward", nil, { wrap = true })<CR>',
+        { desc = '[V]isits [n]ext [<C-.>]' }
+      )
+      vim.keymap.set(
+        'n',
+        '<C-.>',
+        '<CMD>lua MiniVisits.iterate_paths("forward", nil, { wrap = true })<CR>',
+        { desc = '[V]isits [n]ext' }
+      )
+      vim.keymap.set(
+        'n',
+        '<leader>vp',
+        '<CMD>lua MiniVisits.iterate_paths("backward", nil, { wrap = true })<CR>',
+        { desc = '[V]isits [p]revious [<C-,>]' }
+      )
+      vim.keymap.set(
+        'n',
+        '<C-,>',
+        '<CMD>lua MiniVisits.iterate_paths("backward", nil, { wrap = true })<CR>',
+        { desc = '[V]isits [p]revious' }
+      )
+      vim.keymap.set(
+        'n',
+        '<leader>vr',
+        '<CMD>lua MiniVisits.remove_path()<CR>',
+        { desc = '[V]isits [r]emove path' }
+      )
+      vim.keymap.set(
+        'n',
+        '<leader>vs',
+        '<CMD>lua MiniVisits.select_path()<CR>',
+        { desc = '[V]isits [s]elect path' }
+      )
+    end,
   },
   {
-    -- Display popup with possible key bindings.
-    'folke/which-key.nvim',
-    opts = {},
+    -- remember last place in file
+    'ethanholz/nvim-lastplace',
+    event = 'BufRead',
     config = function()
-      require('which-key').setup({})
-
-      -- document existing key chains
-      require('which-key').register({
-        ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ebug', _ = 'which_key_ignore' },
-        ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' }, -- though bindings not under <leader>h atm.
-        ['<leader>l'] = { name = '[L]sp', _ = 'which_key_ignore' },
-        ['<leader>p'] = { name = '[P]lugins', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]rouble', _ = 'which_key_ignore' },
+      require('nvim-lastplace').setup({
+        lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
+        lastplace_ignore_filetype = { 'gitcommit', 'gitrebase' },
+        lastplace_open_folds = true,
       })
-
-      -- register which-key VISUAL mode
-      -- required for visual <leader>gs (hunk stage) to work
-      require('which-key').register({
-        ['<leader>'] = { name = 'VISUAL <leader>' },
-        ['<leader>g'] = { '[G]it Hunk' },
-      }, { mode = 'v' })
     end,
   },
   {
@@ -106,16 +183,39 @@ return {
     end,
   },
   {
-    -- remember last place in file
-    'ethanholz/nvim-lastplace',
-    event = 'BufRead',
+    -- Display popup with possible key bindings.
+    'folke/which-key.nvim',
+    opts = {},
     config = function()
-      require('nvim-lastplace').setup({
-        lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
-        lastplace_ignore_filetype = { 'gitcommit', 'gitrebase' },
-        lastplace_open_folds = true,
+      require('which-key').setup({})
+
+      -- document existing key chains
+      require('which-key').register({
+        ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
+        ['<leader>d'] = { name = '[D]ebug', _ = 'which_key_ignore' },
+        ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
+        ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' }, -- though bindings not under <leader>h atm.
+        ['<leader>l'] = { name = '[L]sp', _ = 'which_key_ignore' },
+        ['<leader>p'] = { name = '[P]lugins', _ = 'which_key_ignore' },
+        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+        ['<leader>t'] = { name = '[T]rouble', _ = 'which_key_ignore' },
+        ['<leader>v'] = { name = '[V]isits', _ = 'which_key_ignore' },
       })
+
+      -- register which-key VISUAL mode
+      -- required for visual <leader>gs (hunk stage) to work
+      require('which-key').register({
+        ['<leader>'] = { name = 'VISUAL <leader>' },
+        ['<leader>g'] = { '[G]it Hunk' },
+      }, { mode = 'v' })
     end,
+  },
+  {
+    -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    -- See `:help ibl`
+    main = 'ibl',
+    opts = {},
   },
   {
     -- Set lualine as statusline
@@ -130,11 +230,18 @@ return {
     },
   },
   {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- See `:help ibl`
-    main = 'ibl',
-    opts = {},
+    'ray-x/go.nvim',
+    dependencies = { -- optional packages
+      'ray-x/guihua.lua',
+      'neovim/nvim-lspconfig',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('go').setup()
+    end,
+    event = { 'CmdlineEnter' },
+    ft = { 'go', 'gomod' },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
   {
     -- File explorer, edit like a Neovim buffer
@@ -155,110 +262,7 @@ return {
     end,
   },
   {
-    'ThePrimeagen/harpoon',
-    branch = 'harpoon2',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      local harpoon = require('harpoon')
-      harpoon:setup({
-        settings = {
-          -- get_root_dir = function()
-          --     local cwd = vim.loop.cwd()
-          --     local root = vim.fn.system(
-          --                      "git rev-parse --show-toplevel")
-          --     if vim.v.shell_error == 0 and root ~= nil then
-          --         return string.gsub(root, "\n", "")
-          --     end
-          --     return cwd
-          -- end,
-          save_on_toggle = true,
-          sync_on_ui_close = true,
-        },
-      })
-
-      vim.keymap.set('n', '<leader>ha', function()
-        harpoon:list():add()
-      end, { desc = '[H]arpoon [a]dd' })
-      vim.keymap.set('n', '<leader>hl', function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
-      end, { desc = '[H]arpoon [l]ist' })
-
-      vim.keymap.set('n', '<leader>h1', function()
-        harpoon:list():select(1)
-      end, { desc = '[H]arpoon jump to [1]' })
-      vim.keymap.set('n', '<leader>h2', function()
-        harpoon:list():select(2)
-      end, { desc = '[H]arpoon jump to [2]' })
-      vim.keymap.set('n', '<leader>h3', function()
-        harpoon:list():select(3)
-      end, { desc = '[H]arpoon jump to [3]' })
-      vim.keymap.set('n', '<leader>h4', function()
-        harpoon:list():select(4)
-      end, { desc = '[H]arpoon jump to [4]' })
-
-      vim.keymap.set('n', '<C-,>', function()
-        harpoon:list():prev()
-      end, { desc = '[H]arpoon [p]revious' })
-      vim.keymap.set('n', '<leader>hp', function()
-        harpoon:list():prev()
-      end, { desc = "[H]arpoon [p]revious '<C-,>'" })
-      vim.keymap.set('n', '<C-.>', function()
-        harpoon:list():next()
-      end, { desc = '[H]arpoon [n]ext' })
-      vim.keymap.set('n', '<leader>hn', function()
-        harpoon:list():next()
-      end, { desc = "[H]arpoon [n]ext '<C-.>'" })
-    end,
-  },
-  {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    config = function()
-      vim.cmd.colorscheme('catppuccin')
-    end,
-    opts = {
-      integrations = {
-        alpha = true,
-        cmp = true,
-        dap = true,
-        dap_ui = true,
-        fidget = true,
-        gitsigns = true,
-        harpoon = true,
-        headlines = true,
-        illuminate = true,
-        indent_blankline = { enabled = true },
-        mason = true,
-        markdown = true,
-        mini = true,
-        native_lsp = {
-          enabled = true,
-          underlines = {
-            errors = { 'undercurl' },
-            hints = { 'undercurl' },
-            warnings = { 'undercurl' },
-            information = { 'undercurl' },
-          },
-        },
-        telescope = true,
-        treesitter = true,
-        treesitter_context = true,
-        which_key = true,
-      },
-    },
-  },
-  {
-    'ray-x/go.nvim',
-    dependencies = { -- optional packages
-      'ray-x/guihua.lua',
-      'neovim/nvim-lspconfig',
-      'nvim-treesitter/nvim-treesitter',
-    },
-    config = function()
-      require('go').setup()
-    end,
-    event = { 'CmdlineEnter' },
-    ft = { 'go', 'gomod' },
-    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+    -- Detect tabstop and shiftwidth automatically.
+    'tpope/vim-sleuth',
   },
 }

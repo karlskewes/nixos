@@ -2,8 +2,8 @@
 
 ## TODO
 
-1. NixOS custom ISO for install per - https://bmcgee.ie/posts/2022/12/setting-up-my-new-laptop-nix-style/
-1. Linting/etc - https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#available-sources
+1. NixOS custom ISO for install per - [https://bmcgee.ie/posts/2022/12/setting-up-my-new-laptop-nix-style/]
+1. Linting/etc - [https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#available-sources]
 
 ## Update
 
@@ -20,11 +20,11 @@ git clone git@github.com:karlskewes/nixos.git
 
 #### Prepare UEFI boot loader & Install base NixOS
 
-Follow instructions at https://github.com/tpwrules/nixos-apple-silicon with the
+Follow instructions at [https://github.com/tpwrules/nixos-apple-silicon] with the
 following variations.
 
 Setup partitions with ext4 because zfs support on new kernels is [spotty](https://github.com/tpwrules/nixos-apple-silicon/issues/111):
-```
+```sh
 lsblk
 
 fdisk /dev/nvme0n1
@@ -38,7 +38,7 @@ fdisk /dev/nvme0n1
 ```
 
 Mount partitions:
-```
+```sh
 # print partiion info
 lsblk -o name,mountpoint,label,size,uuid
 
@@ -62,7 +62,7 @@ swapon -av
 ```
 
 Generate config:
-```
+```sh
 nixos-generate-config --root /mnt/
 ```
 
@@ -81,7 +81,7 @@ environment.systemPackages = with pkgs; [
 ```
 
 Install:
-```
+```sh
 nixos-install --root /mnt/
 ```
 
@@ -98,13 +98,13 @@ nixos-install --root /mnt/
 
 - [x86](https://nixos.org/download.html)
 
-```
+```sh
 nix-shell -p zstd --run "unzstd <img-name>.img.zst"
 ```
 
 Burn to USB
 
-```
+```sh
 lsblk
 
 # dd bs=4M status=progress if=~/Downloads/nixos-minimal-22.05.538.d9794b04bff-x86_64-linux.iso of=
@@ -114,7 +114,7 @@ Boot machine with nixos minimal image.
 
 Create a password so we can SCP and SSH:
 
-```
+```sh
 passwd
 ```
 
@@ -124,7 +124,7 @@ Upstream: https://github.com/nix-community/disko
 
 ** CAUTION: This wipes away existing partitions **
 
-```
+```sh
 machine=new_machine
 cp ./hardware/tl-disko.nix ./hardware/"${machine}"-disko.nix
 
@@ -133,7 +133,7 @@ vim ./hardware/"${machine}"-disko.nix
 
 Copy `disko` file to new machine:
 
-```
+```sh
 host=
 scp ./hardware/"${machine}"-disko.nix "${host}":.
 
@@ -141,7 +141,7 @@ scp ./hardware/"${machine}"-disko.nix "${host}":.
 
 ssh to host and configure partitions:
 
-```
+```sh
 ssh nixos@"${host}"
 
 machine=
@@ -156,7 +156,7 @@ nix \
 
 Then if ready do a run for real:
 
-```
+```sh
 # as above without `--dry-run` flag
 ```
 
@@ -164,19 +164,19 @@ Then if ready do a run for real:
 
 Generate hardware:
 
-```
+```sh
 nixos-generate-config --show-hardware-config
 ```
 
 Copy into git repository:
 
-```
+```sh
 vim ./hardware/${machine}.nix
 ```
 
 Add machine to this repository:
 
-```
+```sh
 scp nixos@<new_machine>:/mnt/etc/nixos/hardware-configuration.nix machines/<name>.nix
 vim flake.nix
 git add .
@@ -185,7 +185,7 @@ git add .
 
 Login and clone this repository on new machine:
 
-```
+```sh
 nix-shell -p git
 
 git clone https://github.com/karlskewes/nixos.git
@@ -209,7 +209,7 @@ reboot
 
 Login and install `home-manager`:
 
-```
+```sh
 mkdir -p ~/src/github.com/karlskewes
 cd ~/src/github.com/karlskewes
 
@@ -225,7 +225,7 @@ git clone https://github.com/karlskewes/nixos.git
 
 ## Recovery
 
-```
+```sh
 # find zfs pools
 zpool import
 
