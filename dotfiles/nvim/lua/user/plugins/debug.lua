@@ -69,9 +69,9 @@ return {
         -- bottom
         {
           elements = {
-            { id = 'scopes',      size = 0.40 },
+            { id = 'scopes', size = 0.40 },
             { id = 'breakpoints', size = 0.20 },
-            { id = 'stacks',      size = 0.40 },
+            { id = 'stacks', size = 0.40 },
             -- {id = "watches", size = 0.25}
           },
           size = 15,

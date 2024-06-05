@@ -4,8 +4,7 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
 
-in
-{
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
@@ -196,7 +195,8 @@ in
     enable = true;
 
     aliases = {
-      bd = "curbr=$(git rev-parse --abbrev-ref HEAD) && git checkout main && git branch -D $curbr";
+      bd =
+        "curbr=$(git rev-parse --abbrev-ref HEAD) && git checkout main && git branch -D $curbr";
       co = "checkout";
       cob = "checkout -b";
       com = "checkout main";
