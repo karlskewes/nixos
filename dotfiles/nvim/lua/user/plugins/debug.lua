@@ -65,15 +65,20 @@ return {
       },
       layouts = {
         -- top because stacking two on bottom produces unexpected results.
-        { elements = { 'console' }, size = 10, position = 'top' }, --
+        -- { elements = { 'console' }, size = 10, position = 'top' }, --
         -- bottom
+        -- {
+        --   elements = {
+        --     { id = 'scopes', size = 0.40 },
+        --     { id = 'breakpoints', size = 0.20 },
+        --     { id = 'stacks', size = 0.40 },
+        --     -- { id = "watches", size = 0.25 }
+        --   },
+        --   size = 15,
+        --   position = 'bottom',
+        -- },
         {
-          elements = {
-            { id = 'scopes', size = 0.40 },
-            { id = 'breakpoints', size = 0.20 },
-            { id = 'stacks', size = 0.40 },
-            -- {id = "watches", size = 0.25}
-          },
+          elements = { 'stacks' },
           size = 15,
           position = 'bottom',
         },
