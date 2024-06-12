@@ -196,24 +196,38 @@ in
     enable = true;
 
     aliases = {
-      bd = "!f(){ curbr=$(git rev-parse --abbrev-ref HEAD) && git checkout main && git branch -D $curbr; }; f";
+      bd = ''
+        !f() {
+          curbr=$(git rev-parse --abbrev-ref HEAD);
+          if [ "$curbr" == "main" ] || [ "$curbr" == "master" ]; then
+            echo "WARNING: won't delete '$curbr' branch";
+          else
+            git checkout main && git branch -D $curbr;
+          fi;
+        }; f
+      '';
       co = "checkout";
       cob = "checkout -b";
       com = "checkout main";
       coms = "checkout master";
       c = "commit";
       ca = "commit --amend";
-      caa = "commit --amend -a";
+      caa = "commit --amend --all";
       cf = "commit --fixup";
-      cm = "commit -m";
+      cm = "commit --message";
       d = "diff";
       fup = "fetch upstream";
       fuppr =
-        "!f(){ git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
+        "!f() { git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
       fopr =
-        "!f(){ git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; };f";
-      lg =
-        "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        "!f() { git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
+      lg = ''
+        log \
+        --color \
+        --graph \
+        --abbrev-commit \
+        --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+      '';
       mupm = "merge upstream/main";
       mupms = "merge upstream/master";
       pr = "pull --rebase";
@@ -221,6 +235,8 @@ in
       rba = "rebase --abort";
       rbc = "rebase --continue";
       rbi = "rebase --interactive";
+      rbim = "rebase --interactive main";
+      rbims = "rebase --interactive master";
       rbm = "rebase main";
       rbms = "rebase master";
       rbupm = "rebase upstream/main";
@@ -228,8 +244,6 @@ in
       raup = "remote add upstream";
       s = "status";
       st = "status";
-      prettylog =
-        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
     };
 
     extraConfig = {
