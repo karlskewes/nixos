@@ -4,8 +4,7 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
 
-in
-{
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";

@@ -154,33 +154,56 @@ return {
     -- List diagnostics, references, quickfix, etc to solve trouble your code is causing.
     'folke/trouble.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-    config = function()
-      require('trouble').setup({})
-      vim.keymap.set('n', '<leader>tt', function()
-        require('trouble').toggle()
-      end, { desc = '[T]rouble Toggle' })
-      vim.keymap.set('n', '<leader>tn', function()
-        require('trouble').next({ skip_groups = true, jump = true })
-      end, { desc = '[T]rouble [n]ext' })
-      vim.keymap.set('n', '<leader>tp', function()
-        require('trouble').previous({ skip_groups = true, jump = true })
-      end, { desc = '[T]rouble [p]revious' })
-      vim.keymap.set('n', '<leader>tw', function()
-        require('trouble').toggle('workspace_diagnostics')
-      end, { desc = '[T]rouble [W]orkspace Diagnostics' })
-      vim.keymap.set('n', '<leader>td', function()
-        require('trouble').toggle('document_diagnostics')
-      end, { desc = '[T]rouble [D]ocument Diagnostics' })
-      vim.keymap.set('n', '<leader>tq', function()
-        require('trouble').toggle('quickfix')
-      end, { desc = '[T]rouble Quickfix' })
-      vim.keymap.set('n', '<leader>tl', function()
-        require('trouble').toggle('loclist')
-      end, { desc = '[T]rouble Loclist' })
-      vim.keymap.set('n', '<leader>tr', function()
-        require('trouble').toggle('lsp_references')
-      end, { desc = '[T]rouble LSP References' })
-    end,
+    opts = {},
+    cmd = 'Trouble',
+    keys = {
+      { '<leader>tt', '<cmd>Trouble diagnostics toggle<cr>', desc = '[T]rouble Toggle' },
+      {
+        '<leader>tb',
+        '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
+        desc = '[T]rouble [B]uffer Diagnostics',
+      },
+      {
+        '<leader>ts',
+        '<cmd>Trouble symbols toggle focus=false<cr>',
+        desc = '[Trouble] [S]ymbols',
+      },
+      {
+        '<leader>tr',
+        '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
+        desc = '[T]rouble LSP [R]eferences',
+      },
+      { '<leader>tl', '<cmd>Trouble loclist toggle<cr>', desc = '[T]rouble [L]oclist' },
+      { '<leader>tq', '<cmd>Trouble qflist toggle<cr>', desc = '[T]rouble [Q]uickfix' },
+      {
+        '<leader>tn',
+        function()
+          if require('trouble').is_open() then
+            require('trouble').next({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cnext)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = '[T]rouble [n]ext',
+      },
+      {
+        '<leader>tp',
+        function()
+          if require('trouble').is_open() then
+            require('trouble').prev({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cprev)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = '[T]rouble [p]revious',
+      },
+    },
   },
   {
     -- Display popup with possible key bindings.
@@ -194,7 +217,6 @@ return {
         ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = '[D]ebug', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-        ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' }, -- though bindings not under <leader>h atm.
         ['<leader>l'] = { name = '[L]sp', _ = 'which_key_ignore' },
         ['<leader>p'] = { name = '[P]lugins', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
@@ -220,18 +242,47 @@ return {
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- See `:help lualine.txt`
-    opts = {
-      options = {
-        theme = 'catppuccin',
-        component_separators = '|',
-        section_separators = '',
-      },
-    },
+    opts = function()
+      local opts = {
+        options = {
+          theme = 'catppuccin',
+          component_separators = '|',
+          section_separators = '',
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename' },
+          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location' },
+        },
+      }
+
+      local trouble = require('trouble')
+      local symbols = trouble.statusline({
+        mode = 'lsp_document_symbols',
+        groups = {},
+        title = false,
+        filter = { range = true },
+        format = '{kind_icon}{symbol.name:Normal}',
+        -- The following line is needed to fix the background color
+        -- Set it to the lualine section you want to use
+        hl_group = 'lualine_c_normal',
+      })
+      table.insert(opts.sections.lualine_c, {
+        symbols.get,
+        cond = symbols.has,
+      })
+
+      return opts
+    end,
   },
   {
     'ray-x/go.nvim',
-    dependencies = { -- optional packages
+    dependencies = {
       'ray-x/guihua.lua',
       'neovim/nvim-lspconfig',
       'nvim-treesitter/nvim-treesitter',
