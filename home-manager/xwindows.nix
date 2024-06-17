@@ -18,7 +18,6 @@
     vlc
     i3lock-fancy
     i3status # programs.i3status.enable = true # does not support custom M1 battery config.
-    ungoogled-chromium
     gwenview # image viewer & editor (crop, resize)
     helvum # pipewire patch bay gui
     iwgtk # iwd gui
