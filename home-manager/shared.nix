@@ -221,11 +221,13 @@ in {
       fopr =
         "!f() { git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
       lg = ''
-        log \
-        --color \
-        --graph \
-        --abbrev-commit \
-        --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+        !f() {
+          git log \
+          --color \
+          --graph \
+          --abbrev-commit \
+          --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset';
+        }; f
       '';
       mupm = "merge upstream/main";
       mupms = "merge upstream/master";

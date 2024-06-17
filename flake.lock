@@ -11,11 +11,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1716699938,
-        "narHash": "sha256-AzTYm22tTDJy0tSqMDf95rmCxxoGTPClu0paGPeh5a0=",
+        "lastModified": 1718588737,
+        "narHash": "sha256-06acqoMEYtc+/w5gWiIIuUFfdtdOBKlp1qrC/InRiBY=",
         "owner": "tpwrules",
         "repo": "nixos-apple-silicon",
-        "rev": "842306255856d7f5677c113e699101eb253e2e3f",
+        "rev": "b0a2376f6c164a0af963d47386c064cc6fdcd5ea",
         "type": "github"
       },
       "original": {
@@ -285,8 +285,8 @@
     "nix-extra": {
       "flake": false,
       "locked": {
-        "lastModified": 1703628585,
-        "narHash": "sha256-8WS+RXgjK3WwINqJQ5jEcplCkD/gRsaWnOTLv2DSTww=",
+        "lastModified": 1714250463,
+        "narHash": "sha256-Ia5PGTlFU24I/odNFmHt6pzWqOPiHo9N0MHqdFbr100=",
         "path": "/home/karl/src/nix-extra",
         "type": "path"
       },

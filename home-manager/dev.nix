@@ -45,12 +45,12 @@ in {
       nodejs # neovim
       # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
-      python311 # neovim # https://docs.python.org/3/
-      python311Packages.flake8
-      python311Packages.pip
-      python311Packages.pynvim
-      python311Packages.debugpy
-      python311Packages.pytest
+      python312 # neovim # https://docs.python.org/3/
+      python312Packages.flake8
+      python312Packages.pip
+      python312Packages.pynvim
+      python312Packages.debugpy
+      python312Packages.pytest
       pylint
       black
 
