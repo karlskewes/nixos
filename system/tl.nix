@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [ ./base.nix ./i3.nix ./zfs.nix ];
 
   powerManagement.enable = true;
@@ -22,12 +22,12 @@
 
   # defined here so LightDM is started after autorandr and thus login screen
   # shows on correct monitor.
-  services.xserver.displayManager.setupCommands = ''
+  services.xserver.displayManager.setupCommands = lib.mkDefault ''
     ${pkgs.autorandr}/bin/autorandr external
   '';
   services.autorandr = {
     enable = true;
-    defaultTarget = "external"; # laptop lid normally shut
+    defaultTarget = lib.mkDefault "external"; # laptop lid normally shut
     profiles = {
       # list profiles with `autorandr`, switch `autorandr both`
       both = {
