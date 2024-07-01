@@ -94,6 +94,11 @@ return {
         '<CMD>lua MiniVisits.register_visit()<CR>',
         { desc = '[V]isits [a]dd' }
       )
+      vim.keymap.set('n', '<leader>vd', function()
+        vim.ui.select(MiniVisits.list_paths(), {}, function(choice)
+          MiniVisits.remove_path(choice)
+        end)
+      end, { desc = '[V]isits [d]elete paths' })
       vim.keymap.set(
         'n',
         '<leader>vl',
