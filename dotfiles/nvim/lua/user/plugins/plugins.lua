@@ -75,6 +75,14 @@ return {
     end,
   },
   {
+    'echasnovski/mini.pick',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    version = false,
+    config = function()
+      require('mini.pick').setup({})
+    end,
+  },
+  {
     'echasnovski/mini.splitjoin',
     version = false,
     config = function()
@@ -83,6 +91,7 @@ return {
   },
   {
     'echasnovski/mini.visits',
+    dependencies = { 'echasnovski/mini.pick' },
     version = false,
     config = function()
       require('mini.visits').setup({
@@ -94,16 +103,35 @@ return {
         '<CMD>lua MiniVisits.register_visit()<CR>',
         { desc = '[V]isits [a]dd' }
       )
-      vim.keymap.set('n', '<leader>vd', function()
-        vim.ui.select(MiniVisits.list_paths(), {}, function(choice)
-          MiniVisits.remove_path(choice)
-        end)
-      end, { desc = '[V]isits [d]elete paths' })
       vim.keymap.set(
         'n',
-        '<leader>vl',
-        '<CMD>lua MiniVisits.list_paths()<CR>',
-        { desc = '[V]isits [l]ist paths' }
+        '<leader>vd',
+        function()
+          local picker = require('mini.pick')
+          local visits = require('mini.visits')
+
+          local remove_paths = function(items)
+            for _, v in ipairs(items) do
+              visits.remove_path(v)
+            end
+
+            picker.set_picker_items(visits.list_paths())
+            return true
+          end
+
+          picker.setup({
+            source = {
+              items = visits.list_paths(),
+              choose = function(item)
+                return remove_paths({ item })
+              end,
+              choose_marked = remove_paths,
+            },
+          })
+
+          picker.start()
+        end, --
+        { desc = '[V]isits [d]elete paths' }
       )
       vim.keymap.set(
         'n',
@@ -138,7 +166,7 @@ return {
       vim.keymap.set(
         'n',
         '<leader>vs',
-        '<CMD>lua MiniVisits.select_path()<CR>',
+        '<CMD>lua MiniPick.start({ source = { items = MiniVisits.list_paths()}})<CR>',
         { desc = '[V]isits [s]elect path' }
       )
     end,

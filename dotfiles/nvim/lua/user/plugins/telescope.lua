@@ -4,7 +4,6 @@ return {
   branch = '0.1.x',
   dependencies = {
     'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope-ui-select.nvim',
     {
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
       -- Only load if `make` is available.
@@ -21,7 +20,6 @@ return {
 
     -- Enable telescope extensions, if installed
     pcall(require('telescope').load_extension('fzf'))
-    pcall(require('telescope').load_extension('ui-select'))
 
     -- Telescope live_grep in git root
     -- Function to find the git root directory based on the current buffer's path
