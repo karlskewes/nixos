@@ -94,9 +94,19 @@ return {
     dependencies = { 'echasnovski/mini.pick' },
     version = false,
     config = function()
+      local alphabetical_sort = function(path_data_arr)
+        local sorted_paths = vim.deepcopy(path_data_arr)
+        table.sort(sorted_paths, function(a, b)
+          return a.path < b.path
+        end)
+        return sorted_paths
+      end
+
       require('mini.visits').setup({
-        track = { event = '' },
+        list = { sort = alphabetical_sort },
+        track = { event = '' }, -- disable automatic path registration
       })
+
       vim.keymap.set(
         'n',
         '<leader>va',
@@ -166,7 +176,23 @@ return {
       vim.keymap.set(
         'n',
         '<leader>vs',
-        '<CMD>lua MiniPick.start({ source = { items = MiniVisits.list_paths()}})<CR>',
+        function()
+          local picker = require('mini.pick')
+          local visits = require('mini.visits')
+
+          picker.setup({
+            source = {
+              items = visits.list_paths(),
+              choose = picker.default_choose,
+              choose_marked = picker.default_choose_marked,
+            },
+          })
+
+          picker.start()
+        end, --
+        -- <leader>vd keymap overrides choose functions, so vd -> vs will continue to delete
+        -- marked. For now, just set picker back to defaults so selected will be edited.
+        -- '<CMD>lua MiniPick.start({ source = { items = MiniVisits.list_paths()}})<CR>',
         { desc = '[V]isits [s]elect path' }
       )
     end,
