@@ -130,7 +130,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users = { "karl" = ./home-manager/atom.nix; };
+              home-manager.users = { "karl" = ./home/atom.nix; };
 
               # expose arguments for imports to use as parameters
               home-manager.extraSpecialArgs = {

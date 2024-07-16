@@ -17,7 +17,7 @@ let
   hm =
     if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
 
-  homeModule = ../home-manager/${name}.nix;
+  homeModule = ../home/${name}.nix;
 
   systemFunc =
     if isDarwin then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
