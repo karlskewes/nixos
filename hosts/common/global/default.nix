@@ -75,6 +75,7 @@
   ];
 
   hardware.enableAllFirmware = true;
+  nixpkgs.config.allowUnfree = lib.mkDefault true;
 
   i18n = { defaultLocale = "en_US.UTF-8"; };
 
@@ -164,7 +165,7 @@
     enable = true;
     settings = {
       PasswordAuthentication = false;
-      PermitRootLogin = "no";
+      PermitRootLogin = lib.mkDefault "no";
     };
   };
 

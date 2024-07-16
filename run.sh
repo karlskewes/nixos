@@ -49,6 +49,12 @@ nix-displaylink() { ## Setup DisplayLink driver in nix store
 # --extra-experimental-features nix-command \
 # --extra-experimental-features flakes \
 
+build_atom() {
+	NIXPKGS_ALLOW_UNFREE=1 nix build \
+		--system x86_64-linux --impure \
+		.#atom
+}
+
 build_darwin() {
 	# Hack to supply real hostname, as friendly hostname "ABC-Macbook-Air" not found.
 	nix run nix-darwin \
