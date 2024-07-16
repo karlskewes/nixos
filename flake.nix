@@ -15,6 +15,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,8 +42,16 @@
     nix-extra.flake = false;
   };
 
-  outputs = { self, home-manager, nixpkgs, nix-darwin, apple-silicon-support
-    , nix-extra, ... }@inputs:
+  outputs =
+    { self
+    , home-manager
+    , nixpkgs
+    , nix-darwin
+    , nixos-generators
+    , apple-silicon-support
+    , nix-extra
+    , ...
+    }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
@@ -54,7 +67,8 @@
       appleModules = extraModules
         ++ [ apple-silicon-support.nixosModules.apple-silicon-support ];
 
-    in {
+    in
+    {
       darwinConfigurations = {
         karl-mba = mkHost "karl-mba" rec {
           inherit nixpkgs nix-darwin home-manager overlays configRev;
@@ -65,6 +79,12 @@
         };
       };
       nixosConfigurations = {
+        atom = mkHost "atom" rec {
+          inherit nixpkgs home-manager overlays extraModules configRev user;
+          system = "x86_64-linux";
+          stateVersion = "23.11";
+        };
+
         blake-laptop = mkHost "blake-laptop" rec {
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
@@ -94,6 +114,50 @@
           stateVersion = "22.05";
         };
 
+      };
+
+      packages.x86_64-linux = {
+        atom = nixos-generators.nixosGenerate {
+          system = "x86_64-linux";
+          modules = [
+            {
+              config._module.args = {
+                currentRevision = configRev;
+                currentStateVersion = "23.11";
+                currentSystem = "x86_64-linux";
+                currentSystemName = "atom";
+                currentUsers = [ "karl" ];
+              };
+            }
+
+            { nixpkgs.overlays = overlays; }
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users = { "karl" = ./home-manager/atom.nix; };
+
+              # expose arguments for imports to use as parameters
+              home-manager.extraSpecialArgs = {
+                currentStateVersion = "23.11";
+                currentSystem = "x86_64-linux";
+              };
+              home-manager.sharedModules = [ ];
+            }
+
+            ./hosts/atom
+          ];
+
+          format = "install-iso";
+
+          # optional arguments:
+          # explicit nixpkgs and lib:
+          # pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          # lib = nixpkgs.legacyPackages.x86_64-linux.lib;
+          # additional arguments to pass to modules:
+          # specialArgs = { myExtraArg = "foobar"; };
+        };
       };
     };
 }
