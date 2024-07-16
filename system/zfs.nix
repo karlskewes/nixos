@@ -14,5 +14,7 @@
     trim.enable = true;
   };
 
+  nixpkgs.config.allowBroken = true; # Package ‘zfs-kernel-2.2.4-6.9.9-asahi’
+
   virtualisation.docker = { storageDriver = lib.mkDefault "zfs"; };
 }

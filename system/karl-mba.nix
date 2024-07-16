@@ -26,10 +26,11 @@
   # Or disable extraction and management of them completely (no wifi though).
   # hardware.asahi.extractPeripheralFirmware = false;
 
-  services.clamav = {
-    daemon.enable = true;
-    updater.enable = true;
-  };
+  # broken 2024-07-15
+  # services.clamav = {
+  #   daemon.enable = true;
+  #   updater.enable = true;
+  # };
 
   # dock "displaylink" driver must be manually installed, see run.sh
   # TODO: convert to nix

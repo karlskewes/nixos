@@ -17,8 +17,7 @@
   };
   services.blueman.enable = true; # bluetooth
 
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
+  hardware.graphics.enable = true;
 
   hardware.printers.ensureDefaultPrinter = "Brother";
   hardware.printers.ensurePrinters = [{

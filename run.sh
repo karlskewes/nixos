@@ -29,28 +29,28 @@ EOF
 nix-displaylink() { ## Setup DisplayLink driver in nix store
 	# https://nixos.wiki/wiki/Displaylink
 	# 6.0 - https://github.com/NixOS/nixpkgs/pull/317292
-	# curl -Lo "$HOME"/Downloads/displaylink-600.zip \
-	# 	https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
-	#
-	# # TODO: confirm `--name` helps, or need to use `$PWD` in path like "Wiki".
-	# nix-prefetch-url \
-	# 	file://"$HOME"/Downloads/displaylink-600.zip
-	#
-	# nix-prefetch-url \
-	# 	--name displaylink.zip \
-	# 	file://"$HOME"/Downloads/displaylink-600.zip
-
-	# 5.8.0
-	curl -Lo "$HOME"/Downloads/displaylink-580.zip \
-		https://www.synaptics.com/sites/default/files/exe_files/2023-08/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.8-EXE.zip
+	curl -Lo "$HOME"/Downloads/displaylink-600.zip \
+		https://www.synaptics.com/sites/default/files/exe_files/2024-05/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu6.0-EXE.zip
 
 	# TODO: confirm `--name` helps, or need to use `$PWD` in path like "Wiki".
 	nix-prefetch-url \
-		file://"$HOME"/Downloads/displaylink-580.zip
+		file://"$HOME"/Downloads/displaylink-600.zip
 
 	nix-prefetch-url \
 		--name displaylink.zip \
-		file://"$HOME"/Downloads/displaylink-580.zip
+		file://"$HOME"/Downloads/displaylink-600.zip
+
+	# 5.8.0
+	# curl -Lo "$HOME"/Downloads/displaylink-580.zip \
+	# 	https://www.synaptics.com/sites/default/files/exe_files/2023-08/DisplayLink%20USB%20Graphics%20Software%20for%20Ubuntu5.8-EXE.zip
+	#
+	# # TODO: confirm `--name` helps, or need to use `$PWD` in path like "Wiki".
+	# nix-prefetch-url \
+	# 	file://"$HOME"/Downloads/displaylink-580.zip
+	#
+	# nix-prefetch-url \
+	# 	--name displaylink.zip \
+	# 	file://"$HOME"/Downloads/displaylink-580.zip
 }
 
 # TODO: only needed during initial install
