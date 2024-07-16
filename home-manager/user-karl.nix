@@ -6,7 +6,7 @@ let
   user = if isLinux then "karl" else "karlskewes";
   homeDir = if isLinux then "/home/${user}" else "/Users/${user}";
 in {
-  imports = [ ./dev.nix ];
+  imports = [ ];
 
   home.username = "${user}";
   home.homeDirectory = homeDir;
@@ -27,13 +27,14 @@ in {
       fi
     '';
   };
+
   programs.git = {
     enable = true;
     userName = "Karl Skewes";
     userEmail = lib.mkDefault "hello@karlskewes.com";
     signing.key = lib.mkDefault "8A391F56B7EE82DA";
     signing.signByDefault = lib.mkDefault true;
-    extraConfig = {
+    extraConfig = lib.mkDefault {
       url = {
         "ssh://git@github.com/karlskewes/" = {
           insteadOf = "https://github.com/karlskewes/";

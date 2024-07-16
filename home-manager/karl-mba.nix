@@ -6,7 +6,7 @@
   in {
     # imports = [ ./user-karl.nix ] ++
     # (lib.optionals isLinux [ ./xwindows.nix ]);
-    imports = [ ./user-karl.nix ./xwindows.nix ];
+    imports = [ ./user-karl.nix ./dev.nix ./gpg.nix ./xwindows.nix ];
 
     home.packages = with pkgs;
       [ ] ++ (lib.optionals isLinux [

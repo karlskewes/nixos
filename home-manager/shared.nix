@@ -4,7 +4,8 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
 
-in {
+in
+{
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
@@ -62,6 +63,7 @@ in {
       ripgrep
       rpl
       sshfs # android phone SimpleSSHD
+      tcpdump
       tree
       unzip
       xclip
@@ -255,37 +257,6 @@ in {
       rebase.autosquash = "true";
     };
   };
-
-  programs.gpg = {
-    enable = true;
-    settings = { pinentry-mode = "loopback"; };
-  };
-
-  services.blueman-applet.enable = {
-    "x86_64-linux" = true;
-    "aarch64-linux" = false;
-    "aarch64-darwin" = false;
-  }."${currentSystem}"; # bluetooth
-
-  services.gpg-agent = {
-    enable = isLinux;
-    enableSshSupport = true;
-    pinentryPackage =
-      if isDarwin then pkgs.pinentry_mac else pkgs.pinentry-gnome3;
-
-    # cache the keys forever, rotate as require
-    maxCacheTtl = 31536000;
-    maxCacheTtlSsh = 31536000;
-    # cache the keys forever so we don't get asked for a password
-    defaultCacheTtl = 31536000;
-    defaultCacheTtlSsh = 31536000;
-
-    extraConfig = ''
-      allow-loopback-pinentry
-    '';
-  };
-
-  programs.lazygit = { enable = true; };
 
   programs.neovim = {
     enable = true;

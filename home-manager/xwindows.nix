@@ -1,5 +1,5 @@
 # X Windows additional configuration dependent on home-manager
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, currentSystem, ... }: {
   xdg.configFile."i3/config".text = builtins.readFile ../dotfiles/i3;
   xdg.configFile."i3status/config".text =
     builtins.readFile ../dotfiles/i3status_config;
@@ -69,6 +69,12 @@
     font = "Hack Nerd Font 14";
     plugins = with pkgs; [ rofi-calc rofi-emoji rofi-power-menu ];
   };
+
+  services.blueman-applet.enable = {
+    "x86_64-linux" = true;
+    "aarch64-linux" = false;
+    "aarch64-darwin" = false;
+  }."${currentSystem}"; # bluetooth
 
   services.dunst = { enable = true; };
 
