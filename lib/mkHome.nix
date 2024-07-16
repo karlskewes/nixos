@@ -1,8 +1,14 @@
 # based on: https://github.com/mitchellh/nixos-config/blob/main/lib/mkvm.nix
 # This function creates a standalone Home Manager configuration.
 name:
-{ nixpkgs, home-manager, overlays, system, user, stateVersion
-, extraModules ? [ ] }:
+{ nixpkgs
+, home-manager
+, overlays
+, system
+, user
+, stateVersion
+, extraModules ? [ ]
+}:
 
 # TODO: consider nix-darwin support:
 # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nix-darwin-module
@@ -15,14 +21,15 @@ let
   hm =
     if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
 
-in hm.lib.homeManagerConfiguration rec {
+in
+hm.lib.homeManagerConfiguration rec {
   pkgs = nixpkgs.legacyPackages.${system};
   modules = extraModules ++ [{
     nixpkgs.overlays = overlays;
     nixpkgs.config.allowUnfreePredicate = pkg:
       builtins.elem (nixpkgs.lib.getName pkg) nixpkgs.lib.mkDefault [ "slack" ];
   }];
-  sharedModules = [ ../home-manager/shared.nix ];
+  sharedModules = [ ];
 
   extraSpecialArgs = {
     currentUser = user;

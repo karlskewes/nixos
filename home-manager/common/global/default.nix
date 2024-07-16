@@ -13,12 +13,12 @@ in
   # manage XDG directories
   xdg.enable = true;
   xdg.configFile."nvim" = {
-    source = ../dotfiles/nvim;
+    source = ../../../dotfiles/nvim;
     recursive = true;
   };
   # run `vale sync` after fresh install to create `~/styles` directory.
   # https://github.com/errata-ai/vale/issues/211
-  home.file.".vale.ini" = { source = ../dotfiles/vale.ini; };
+  home.file.".vale.ini" = { source = ../../../dotfiles/vale.ini; };
 
   #---------------------------------------------------------------------
   # Packages
@@ -117,9 +117,9 @@ in
 
       PATH=$PATH:~/.local/bin:~/go/bin/
 
-      ${builtins.readFile ../dotfiles/functions.sh}
+      ${builtins.readFile ../../../dotfiles/functions.sh}
 
-      ${builtins.readFile ../dotfiles/bash_prompt.sh}
+      ${builtins.readFile ../../../dotfiles/bash_prompt.sh}
     '';
 
     shellAliases = {

@@ -1,5 +1,13 @@
 { config, lib, pkgs, ... }: {
-  imports = [ ./base.nix ./i3.nix ./zfs.nix ];
+  imports = [
+    ./hardware-configuration.nix
+
+    ../common/global
+
+    ../common/optional/i3.nix
+    ../common/optional/zfs.nix
+  ];
+
 
   powerManagement.enable = true;
 

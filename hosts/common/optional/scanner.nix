@@ -3,15 +3,18 @@
 {
   # system user
   # for each user in currentUsers, generate users.user.${user} config.
-  users.users = builtins.foldl' (acc: user:
-    acc // {
-      ${user} = {
-        extraGroups = [
-          "scanner" # scanning
-          "lp" # scanning
-        ];
-      };
-    }) { } (currentUsers);
+  users.users = builtins.foldl'
+    (acc: user:
+      acc // {
+        ${user} = {
+          extraGroups = [
+            "scanner" # scanning
+            "lp" # scanning
+          ];
+        };
+      })
+    { }
+    (currentUsers);
 
   environment.systemPackages = with pkgs; [ simple-scan ];
 
