@@ -62,6 +62,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    disko
     git # can't build without it
     gnumake
     home-manager
