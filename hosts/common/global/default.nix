@@ -99,7 +99,8 @@
   # :read !ip link | grep ': en'
   # networking.interfaces.ens33.useDHCP = true;
 
-  networking.firewall.enable = true; # disable for Kubernetes Kind, breaks inter-pod traffic.
+  networking.firewall.enable =
+    true; # disable for Kubernetes Kind, breaks inter-pod traffic.
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts
   # networking.firewall.allowedTCPPorts = [ 22 ];
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPortRanges
@@ -164,7 +165,7 @@
   services.openssh = {
     enable = true;
     settings = {
-      PasswordAuthentication = false;
+      PasswordAuthentication = lib.mkDefault false;
       PermitRootLogin = lib.mkDefault "no";
     };
   };
@@ -173,7 +174,7 @@
   # system.configurationRevision = currentRevision;
 
   # Docker seems to be more reliable for the containers running.
-  virtualisation.docker = { enable = true; };
+  virtualisation.docker = { enable = lib.mkDefault true; };
   virtualisation.oci-containers.backend = "docker";
 
   # virtualisation = {

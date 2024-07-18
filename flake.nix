@@ -42,16 +42,8 @@
     nix-extra.flake = false;
   };
 
-  outputs =
-    { self
-    , home-manager
-    , nixpkgs
-    , nix-darwin
-    , nixos-generators
-    , apple-silicon-support
-    , nix-extra
-    , ...
-    }@inputs:
+  outputs = { self, home-manager, nixpkgs, nix-darwin, nixos-generators
+    , apple-silicon-support, nix-extra, ... }@inputs:
     let
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
@@ -67,8 +59,7 @@
       appleModules = extraModules
         ++ [ apple-silicon-support.nixosModules.apple-silicon-support ];
 
-    in
-    {
+    in {
       darwinConfigurations = {
         karl-mba = mkHost "karl-mba" rec {
           inherit nixpkgs nix-darwin home-manager overlays configRev;
@@ -127,6 +118,19 @@
                 currentSystem = "x86_64-linux";
                 currentSystemName = "atom";
                 currentUsers = [ "karl" ];
+              };
+            }
+            {
+              users.extraUsers.root.openssh.authorizedKeys.keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+              ];
+
+              services.openssh = {
+                enable = true;
+                settings = {
+                  PasswordAuthentication = true;
+                  PermitRootLogin = "yes";
+                };
               };
             }
 

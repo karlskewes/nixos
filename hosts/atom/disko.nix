@@ -100,21 +100,6 @@ in {
             mountpoint = "/nix";
             options.mountpoint = "legacy";
           };
-          "nosnap/containers" = {
-            type = "zfs_fs";
-            mountpoint = "/var/lib/containers";
-            options.mountpoint = "legacy";
-          };
-          "nosnap/docker" = {
-            type = "zfs_fs";
-            mountpoint = "/var/lib/docker";
-            options.mountpoint = "legacy";
-          };
-          "nosnap/libvirt" = {
-            type = "zfs_fs";
-            mountpoint = "/var/lib/libvirt";
-            options.mountpoint = "legacy";
-          };
         };
       };
     };
