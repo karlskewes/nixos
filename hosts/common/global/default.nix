@@ -98,7 +98,7 @@
   # :read !ip link | grep ': en'
   # networking.interfaces.ens33.useDHCP = true;
 
-  networking.firewall.enable = true; # disable for Kubernetes Kind, breaks inter-pod traffic.
+  networking.firewall.enable = lib.mkDefault true; # disable for Kubernetes Kind, breaks inter-pod traffic.
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts
   # networking.firewall.allowedTCPPorts = [ 22 ];
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPortRanges

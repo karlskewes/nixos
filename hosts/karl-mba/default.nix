@@ -9,7 +9,6 @@
     ../common/optional/zfs.nix
   ];
 
-
   boot.zfs.removeLinuxDRM = true;
   virtualisation.docker = {
     storageDriver = "overlay";
@@ -21,10 +20,9 @@
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "b4db4b8f";
 
-  # Specify path to peripheral firmware files copied during initial
-  # installation.
-  sound.enable = true;
   hardware.asahi = {
+    enable = true;
+    # Specify path to peripheral firmware files copied during initial installation.
     peripheralFirmwareDirectory = /etc/nixos/firmware;
     withRust = true;
     useExperimentalGPUDriver = true;
