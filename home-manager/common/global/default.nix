@@ -4,8 +4,7 @@ let
   isDarwin = pkgs.stdenv.isDarwin;
   isLinux = pkgs.stdenv.isLinux;
 
-in
-{
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
@@ -39,8 +38,9 @@ in
 
       iptraf-ng
     ]) ++ [
-      pciutils
       dnsutils
+      lshw
+      pciutils
 
       # abcde # abcde -a cddb,read,encode,tag,move,playlist,clean,getalbumart -d /dev/cdrom -o mp3:-b320
       # easytag # requires configuration.nix 'programs.dconf.enable = true;'

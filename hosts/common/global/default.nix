@@ -2,16 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config
-, lib
-, pkgs
-, currentRevision
-, currentStateVersion
-, currentSystem
-, currentSystemName
-, currentUsers
-, ...
-}:
+{ config, lib, pkgs, currentRevision, currentStateVersion, currentSystem
+, currentSystemName, currentUsers, ... }:
 
 {
 
@@ -19,30 +11,27 @@
   users = {
     mutableUsers = false;
     # for each user in currentUsers, generate users.user.${user} config.
-    users = builtins.foldl'
-      (acc: user:
-        acc // {
-          ${user} = {
-            home = "/home/${user}";
-            isNormalUser = true;
-            extraGroups = [
-              "audio"
-              "docker"
-              "scanner" # scanning
-              "lp" # scanning
-              "video"
-              "wheel"
-            ];
-            # nix-shell -p mkpasswd
-            # vim -> :read !mkpasswd -m sha-512
-            # hashedPassword = "";
-            openssh.authorizedKeys.keys = [
-              "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-            ];
-          };
-        })
-      { }
-      (currentUsers);
+    users = builtins.foldl' (acc: user:
+      acc // {
+        ${user} = {
+          home = "/home/${user}";
+          isNormalUser = true;
+          extraGroups = [
+            "audio"
+            "docker"
+            "scanner" # scanning
+            "lp" # scanning
+            "video"
+            "wheel"
+          ];
+          # nix-shell -p mkpasswd
+          # vim -> :read !mkpasswd -m sha-512
+          # hashedPassword = "";
+          openssh.authorizedKeys.keys = [
+            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+          ];
+        };
+      }) { } (currentUsers);
   };
 
   time.timeZone = "Pacific/Auckland";
@@ -98,7 +87,8 @@
   # :read !ip link | grep ': en'
   # networking.interfaces.ens33.useDHCP = true;
 
-  networking.firewall.enable = lib.mkDefault true; # disable for Kubernetes Kind, breaks inter-pod traffic.
+  networking.firewall.enable =
+    lib.mkDefault true; # disable for Kubernetes Kind, breaks inter-pod traffic.
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts
   # networking.firewall.allowedTCPPorts = [ 22 ];
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPortRanges

@@ -8,7 +8,6 @@
     ../common/optional/zfs.nix
   ];
 
-
   powerManagement.enable = true;
 
   # Define hostId for zfs pool machine 'binding'
