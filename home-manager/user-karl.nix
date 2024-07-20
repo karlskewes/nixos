@@ -34,11 +34,9 @@ in {
     userEmail = lib.mkDefault "hello@karlskewes.com";
     signing.key = lib.mkDefault "8A391F56B7EE82DA";
     signing.signByDefault = lib.mkDefault true;
-    extraConfig = lib.mkDefault {
-      url = {
-        "ssh://git@github.com/karlskewes/" = {
-          insteadOf = "https://github.com/karlskewes/";
-        };
+    extraConfig.url = lib.mkDefault {
+      "ssh://git@github.com/karlskewes/" = {
+        insteadOf = "https://github.com/karlskewes/";
       };
     };
   };
