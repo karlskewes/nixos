@@ -8,6 +8,17 @@
     ../common/optional/zfs.nix
   ];
 
+  zfsBootUnlock = {
+    enable = true;
+    authorizedKeys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+    ];
+    interfaces = [
+      "r8169" # onboard
+      "cdc_ether" # displaylink
+    ];
+  };
+
   powerManagement.enable = true;
 
   # Define hostId for zfs pool machine 'binding'
