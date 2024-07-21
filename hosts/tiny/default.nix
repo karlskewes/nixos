@@ -8,6 +8,14 @@
     ../common/optional/zfs.nix
   ];
 
+  zfsBootUnlock = {
+    enable = true;
+    authorizedKeys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+    ];
+    interfaces = [ "e1000e" ];
+  };
+
   # Define hostId for zfs pool machine 'binding'
   # :read !echo <hostname> | md5sum | cut -c1-8
   networking.hostId = "b38b36dc";

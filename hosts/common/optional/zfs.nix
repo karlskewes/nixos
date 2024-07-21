@@ -34,15 +34,20 @@
     ];
 
     boot = {
-      kernelParams = [ "nohibernate" ]; # not supported by zfs
       supportedFilesystems = [ "zfs" ];
       zfs.devNodes = "/dev/disk/by-path";
       zfs.requestEncryptionCredentials = true; # prompt for encryption password
 
+      kernelParams = [
+        "nohibernate" # not supported by zfs
+      ] ++ lib.optionals config.zfsBootUnlock.enable [
+        "ip=dhcp" # ssh remote unlock, works but will show warning "can't find device ip=dhcp"
+      ];
+
       # https://nixos.wiki/wiki/ZFS#Remote_unlock
       initrd = lib.mkIf config.zfsBootUnlock.enable {
-        # :read !sudo lshw -C network | grep --only-matching "driver=\S*"
         availableKernelModules = config.zfsBootUnlock.interfaces;
+        # :read !sudo lshw -C network | grep --only-matching "driver=\S*"
         network = {
           # This will use udhcp to get an ip address.
           enable = true;
