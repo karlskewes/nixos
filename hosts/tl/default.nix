@@ -115,12 +115,13 @@
       };
     };
   };
-  # services = {
-  #   clamav = {
-  #     daemon.enable = true;
-  #     updater.enable = true;
-  #   };
-  # };
+
+  services = {
+    clamav = {
+      daemon.enable = true;
+      updater.enable = true;
+    };
+  };
 
   # required to use dvd/cdrom in some applications
   programs.dconf.enable = true;
