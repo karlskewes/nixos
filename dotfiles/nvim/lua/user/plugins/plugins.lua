@@ -271,24 +271,26 @@ return {
     config = function()
       require('which-key').setup({})
 
-      -- document existing key chains
-      require('which-key').register({
-        ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ebug', _ = 'which_key_ignore' },
-        ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-        ['<leader>l'] = { name = '[L]sp', _ = 'which_key_ignore' },
-        ['<leader>p'] = { name = '[P]lugins', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>t'] = { name = '[T]rouble', _ = 'which_key_ignore' },
-        ['<leader>v'] = { name = '[V]isits', _ = 'which_key_ignore' },
+      local wk = require('which-key')
+      wk.add({
+        -- document existing key chains
+        { '<leader>b', group = '[B]uffer' },
+        { '<leader>b_', hidden = true },
+        { '<leader>d', group = '[D]ebug' },
+        { '<leader>d_', hidden = true },
+        { '<leader>g', group = '[G]it' },
+        { '<leader>g_', hidden = true },
+        { '<leader>l', group = '[L]sp' },
+        { '<leader>l_', hidden = true },
+        { '<leader>p', group = '[P]lugins' },
+        { '<leader>p_', hidden = true },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>s_', hidden = true },
+        { '<leader>t', group = '[T]rouble' },
+        { '<leader>t_', hidden = true },
+        { '<leader>v', group = '[V]isits' },
+        { '<leader>v_', hidden = true },
       })
-
-      -- register which-key VISUAL mode
-      -- required for visual <leader>gs (hunk stage) to work
-      require('which-key').register({
-        ['<leader>'] = { name = 'VISUAL <leader>' },
-        ['<leader>g'] = { '[G]it Hunk' },
-      }, { mode = 'v' })
     end,
   },
   {

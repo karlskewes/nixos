@@ -137,23 +137,25 @@ return {
           table.insert(lua_runtime_path, 'lua/?.lua')
           table.insert(lua_runtime_path, 'lua/?/init.lua')
 
+          local get_current_gomod = function()
+            if vim.fn.executable('go') ~= 1 then
+              return
+            end
+
+            local module = vim.fn.trim(vim.fn.system('go list -m'))
+            if vim.v.shell_error ~= 0 then
+              return
+            end
+            module = module:gsub('\n', ',')
+          end
+
           -- Enable the following language servers, config passed to server config `settings` field.
           local servers = {
             bashls = {},
             bufls = {},
             dockerls = {},
             eslint = {},
-            gopls = {
-              usePlaceholders = true,
-              codelenses = {
-                generate = false,
-                gc_details = true,
-                test = true,
-                tidy = true,
-              },
-              gofumpt = true,
-              staticcheck = true,
-            },
+            -- gopls = {}, -- Managed by ray-x/go.nvim
             golangci_lint_ls = {},
             html = {},
             -- html = { filetypes = { 'html', 'twig', 'hbs'} },
