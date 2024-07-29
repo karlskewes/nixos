@@ -14,7 +14,9 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
     ];
     interfaces = [
-      "r8169" # onboard
+      # whatever devices declared here must have a network connection otherwise boot hangs before
+      # `starting device mapper and LVM...`.
+      # "r8169" # onboard
       # "cdc_ether" # displaylink # might not be supported at boot.
     ];
   };
