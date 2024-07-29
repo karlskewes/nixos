@@ -9,7 +9,7 @@
   ];
 
   zfsBootUnlock = {
-    enable = true;
+    enable = false;
     authorizedKeys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
     ];
