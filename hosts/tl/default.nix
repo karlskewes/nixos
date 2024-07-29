@@ -15,7 +15,7 @@
     ];
     interfaces = [
       "r8169" # onboard
-      "cdc_ether" # displaylink
+      # "cdc_ether" # displaylink # might not be supported at boot.
     ];
   };
 
