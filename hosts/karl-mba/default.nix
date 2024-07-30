@@ -22,8 +22,6 @@
     storageDriver = "overlay";
   }; # TODO, change after migrate to ZFS
 
-  powerManagement.enable = true;
-
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "b4db4b8f";
@@ -40,17 +38,19 @@
   # Or disable extraction and management of them completely (no wifi though).
   # hardware.asahi.extractPeripheralFirmware = false;
 
+  powerManagement.enable = true;
+
   services.clamav = {
     daemon.enable = true;
     updater.enable = true;
   };
 
+  services.logind.lidSwitch = "suspend";
+
   # dock "displaylink" driver must be manually installed, see run.sh
   # TODO: convert to nix
   # modesetting required I think for actual display output to dock
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
-
-  services.logind.lidSwitch = "suspend";
 
   # defined here so LightDM is started after autorandr and thus login screen
   # shows on correct monitor.
@@ -124,5 +124,4 @@
       };
     };
   };
-
 }

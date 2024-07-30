@@ -25,4 +25,12 @@
     vaapiVdpau
     libvdpau-va-gl
   ];
+
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+  };
+
+  services.logind.lidSwitch = "suspend";
+
 }

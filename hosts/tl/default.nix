@@ -21,8 +21,6 @@
     ];
   };
 
-  powerManagement.enable = true;
-
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "1014a839";
@@ -32,6 +30,18 @@
     rocm-opencl-icd
     rocm-opencl-runtime
   ];
+
+  powerManagement.enable = true;
+
+  # required to use dvd/cdrom in some applications
+  programs.dconf.enable = true;
+
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+  };
+
+  services.logind.lidSwitch = "suspend";
 
   # dock "displaylink" driver must be manually installed, see run.sh
   # TODO: convert to nix
@@ -43,7 +53,7 @@
   # defined here so LightDM is started after autorandr and thus login screen
   # shows on correct monitor.
   services.xserver.displayManager.setupCommands = lib.mkDefault ''
-    ${pkgs.autorandr}/bin/autorandr external
+    ${pkgs.autorandr}/bin/autorandr primary
   '';
   services.autorandr = {
     enable = true;
@@ -117,14 +127,4 @@
       };
     };
   };
-
-  services = {
-    clamav = {
-      daemon.enable = true;
-      updater.enable = true;
-    };
-  };
-
-  # required to use dvd/cdrom in some applications
-  programs.dconf.enable = true;
 }
