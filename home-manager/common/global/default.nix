@@ -199,6 +199,7 @@ in {
     aliases = {
       bd = ''
         !f() {
+          local curbr;
           curbr=$(git rev-parse --abbrev-ref HEAD);
           if [ "$curbr" == "main" ] || [ "$curbr" == "master" ]; then
             echo "WARNING: won't delete '$curbr' branch";
@@ -209,6 +210,15 @@ in {
       '';
       co = "checkout";
       cob = "checkout -b";
+      # https://github.com/junegunn/fzf/wiki/examples#git
+      cof = ''
+        !f() {
+          local branches branch;
+          branches=$(git --no-pager branch -vv);
+          branch=$(echo "$branches" | fzf +m);
+          git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //");
+        }; f
+      '';
       com = "checkout main";
       coms = "checkout master";
       c = "commit";

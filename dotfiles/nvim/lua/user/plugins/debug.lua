@@ -15,10 +15,7 @@ return {
 
     require('nvim-dap-virtual-text').setup({})
     require('mason-nvim-dap').setup({
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
       automatic_setup = true,
-      -- see mason-nvim-dap README for more information
       handlers = {},
       ensure_installed = { 'delve' },
     })

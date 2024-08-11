@@ -35,7 +35,7 @@
     extraOptions = [ "--hostname=pihole" ];
     ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" "443:443/tcp" ];
     environment = {
-      TZ = "Pacific/Auckland";
+      TZ = "Australia/Brisbane";
       FTLCONF_REPLY_ADDR4 = "192.168.1.5"; # host machine IP
       WEB_PORT = "80";
       # VIRTUAL_HOST = "192.168.1.114";

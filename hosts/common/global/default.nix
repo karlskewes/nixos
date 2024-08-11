@@ -34,7 +34,7 @@
       }) { } (currentUsers);
   };
 
-  time.timeZone = "Pacific/Auckland";
+  time.timeZone = "Australia/Brisbane";
 
   boot = {
     loader.systemd-boot.enable = true;
