@@ -216,24 +216,24 @@ return {
     opts = {},
     cmd = 'Trouble',
     keys = {
-      { '<leader>tt', '<cmd>Trouble diagnostics toggle<cr>', desc = '[T]rouble Toggle' },
+      { '<leader>tt', '<cmd>Trouble diagnostics toggle<cr>', { desc = '[T]rouble Toggle' } },
       {
         '<leader>tb',
         '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
-        desc = '[T]rouble [B]uffer Diagnostics',
+        { desc = '[T]rouble [B]uffer Diagnostics' },
       },
       {
         '<leader>ts',
         '<cmd>Trouble symbols toggle focus=false<cr>',
-        desc = '[Trouble] [S]ymbols',
+        { desc = '[Trouble] [S]ymbols' },
       },
       {
         '<leader>tr',
         '<cmd>Trouble lsp toggle focus=false win.position=right<cr>',
-        desc = '[T]rouble LSP [R]eferences',
+        { desc = '[T]rouble LSP [R]eferences' },
       },
-      { '<leader>tl', '<cmd>Trouble loclist toggle<cr>', desc = '[T]rouble [L]oclist' },
-      { '<leader>tq', '<cmd>Trouble qflist toggle<cr>', desc = '[T]rouble [Q]uickfix' },
+      { '<leader>tl', '<cmd>Trouble loclist toggle<cr>', { desc = '[T]rouble [L]oclist' } },
+      { '<leader>tq', '<cmd>Trouble qflist toggle<cr>', { desc = '[T]rouble [Q]uickfix' } },
       {
         '<leader>tn',
         function()
@@ -246,7 +246,7 @@ return {
             end
           end
         end,
-        desc = '[T]rouble [n]ext',
+        { desc = '[T]rouble [n]ext' },
       },
       {
         '<leader>tp',
@@ -260,7 +260,7 @@ return {
             end
           end
         end,
-        desc = '[T]rouble [p]revious',
+        { desc = '[T]rouble [p]revious' },
       },
     },
   },
@@ -362,6 +362,44 @@ return {
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },
     build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+  },
+
+  {
+    -- Autoformat
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_fallback = true }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
+    opts = {
+      notify_on_error = false,
+      format_on_save = function(bufnr)
+        -- Disable "format_on_save lsp_fallback" for languages that don't
+        -- have a well standardized coding style. You can add additional
+        -- languages here or re-enable it for the disabled ones.
+        local disable_filetypes = { c = true, cpp = true }
+        return {
+          timeout_ms = 500,
+          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+        }
+      end,
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+    },
   },
   {
     -- File explorer, edit like a Neovim buffer
