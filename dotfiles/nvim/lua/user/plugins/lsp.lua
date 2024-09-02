@@ -28,6 +28,13 @@ return {
               vim.diagnostic.setloclist,
               { buffer = bufnr, desc = '[L]SP [D]iagnostics list' }
             )
+            vim.keymap.set('n', '<leader>lh', function()
+              local enabled = vim.lsp.inlay_hint.is_enabled()
+              vim.lsp.inlay_hint.enable(not enabled)
+            end, {
+              buffer = bufnr,
+              desc = '[L]SP Inlay [H]ints Toggle',
+            })
             vim.keymap.set(
               'n',
               '<leader>lf',
@@ -139,7 +146,11 @@ return {
             htmx = {},
             pyright = {},
             rnix = {},
-            rust_analyzer = {},
+            rust_analyzer = {
+              cmd = {
+                '/etc/profiles/per-user/karl/bin/rust-analyzer',
+              },
+            },
             sqlls = {},
             tailwindcss = {},
             tsserver = {},
@@ -186,28 +197,38 @@ return {
 
           mason_lspconfig.setup({
             ensure_installed = {},
-            automatic_installation = { exclude = { 'lua_ls' } },
+            automatic_installation = { exclude = { 'lua_ls', 'rust_analyzer' } },
           })
 
           mason_lspconfig.setup_handlers({
             function(server_name)
-              -- below sets up automatically installed servers.
-              require('lspconfig')[server_name].setup({
-                capabilities = capabilities,
-                on_attach = lsp_on_attach,
-                settings = servers[server_name],
-                filetypes = (servers[server_name] or {}).filetypes,
-              })
-
-              -- setup lua_language_server installed via OS, because mason version
-              -- doesn't work.
-              require('lspconfig')['lua_ls'].setup({
-                capabilities = capabilities,
-                cmd = servers['lua_ls'].cmd,
-                on_attach = lsp_on_attach,
-                settings = servers['lua_ls'],
-                filetypes = (servers['lua_ls'] or {}).filetypes,
-              })
+              -- some language servers depend on system libraries so we must use
+              -- NixOS installed versions.
+              if server_name == 'lua_ls' then
+                require('lspconfig')['lua_ls'].setup({
+                  capabilities = capabilities,
+                  cmd = servers['lua_ls'].cmd,
+                  on_attach = lsp_on_attach,
+                  settings = servers['lua_ls'],
+                  filetypes = (servers['lua_ls'] or {}).filetypes,
+                })
+              elseif server_name == 'rust_analyzer' then
+                require('lspconfig')['rust_analyzer'].setup({
+                  capabilities = capabilities,
+                  cmd = servers['rust_analyzer'].cmd,
+                  on_attach = lsp_on_attach,
+                  settings = servers['rust_analyzer'],
+                  filetypes = (servers['rust_analyzer'] or {}).filetypes,
+                })
+              else
+                -- below sets up automatically installed servers.
+                require('lspconfig')[server_name].setup({
+                  capabilities = capabilities,
+                  on_attach = lsp_on_attach,
+                  settings = servers[server_name],
+                  filetypes = (servers[server_name] or {}).filetypes,
+                })
+              end
             end,
           })
 

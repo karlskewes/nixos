@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -19,7 +19,7 @@
 
   boot.zfs.removeLinuxDRM = true;
   virtualisation.docker = {
-    storageDriver = "overlay";
+    storageDriver = lib.mkForce "overlay";
   }; # TODO, change after migrate to ZFS
 
   # Define hostId for zfs pool machine 'binding'

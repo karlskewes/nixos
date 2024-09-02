@@ -22,6 +22,8 @@
         asahi-btsync
         asahi-nvram
         asahi-wifisync
+
+        calibre
       ]);
 
     # home.pointerCursor.size = 180; # 4k

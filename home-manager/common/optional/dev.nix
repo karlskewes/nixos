@@ -38,6 +38,11 @@ in {
       openssl
 
       cargo
+      cargo-audit
+      cargo-watch
+      clippy
+      pkg-config
+      openssl
       rustc
       rust-analyzer
       rustfmt
