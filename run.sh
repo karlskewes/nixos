@@ -173,6 +173,11 @@ mikrotik() { ## Backup Mikrotik router config
 	ssh 192.168.1.1 export terse >../mikrotik_r1_backup_"$(date -Iseconds)".rsc
 }
 
+tiny() { ## Tiny ZFS Unlock
+	local host="tiny"
+	ssh -v -p 2222 root@"${host}" "zpool import -a; zfs load-key -a && killall zfs"
+}
+
 guestdisk() { ## Create a guest qcow2 file from base qcow2 file <input.img> <output.qcow2>
 	if [ $# -ne 2 ]; then
 		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <arg> <arg>"
