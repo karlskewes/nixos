@@ -10,12 +10,12 @@ name:
 
 let
 
-  isDarwin = pkgs.stdenv.isDarwin;
-  isLinux = pkgs.stdenv.isLinux;
+  isDarwin = nixpkgs.stdenv.isDarwin;
+  # isLinux = nixpkgs.stdenv.isLinux;
   hm =
     if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
 
-in hm.lib.homeManagerConfiguration rec {
+in hm.lib.homeManagerConfiguration {
   pkgs = nixpkgs.legacyPackages.${system};
   modules = extraModules ++ [{
     nixpkgs.overlays = overlays;

@@ -144,8 +144,8 @@ return {
             html = {},
             -- html = { filetypes = { 'html', 'twig', 'hbs'} },
             htmx = {},
+            nil_ls = {},
             pyright = {},
-            rnix = {},
             rust_analyzer = {
               cmd = {
                 '/etc/profiles/per-user/karl/bin/rust-analyzer',
