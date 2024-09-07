@@ -28,6 +28,7 @@
 
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
       # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
       # inputs.nixpkgs.url =
       # "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
