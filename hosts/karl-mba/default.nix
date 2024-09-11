@@ -17,6 +17,7 @@
     interfaces = [ "cdc-ncm" ];
   };
 
+  boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ]; # Enables libinput settings to take effect.
   boot.zfs.removeLinuxDRM = true;
   virtualisation.docker = {
     storageDriver = lib.mkForce "overlay";

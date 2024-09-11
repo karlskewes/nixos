@@ -1,7 +1,7 @@
 { config, lib, pkgs, currentSystem, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ simple-scan ];
+  environment.systemPackages = with pkgs; [ libinput simple-scan ];
 
   # i18n  {
   #   inputMethod = {
@@ -19,12 +19,12 @@
 
   hardware.graphics.enable = true;
 
-  hardware.printers.ensureDefaultPrinter = "Brother";
-  hardware.printers.ensurePrinters = [{
-    name = "Brother";
-    deviceUri = "ipp://BRW1CBFC0F36D0B/ipp";
-    model = "everywhere";
-  }];
+  # hardware.printers.ensureDefaultPrinter = "Brother";
+  # hardware.printers.ensurePrinters = [{
+  #   name = "Brother";
+  #   deviceUri = "ipp://BRW1CBFC0F36D0B/ipp";
+  #   model = "everywhere";
+  # }];
 
   hardware.sane = {
     enable = {
@@ -57,6 +57,9 @@
   };
 
   services.libinput.enable = true;
+  # Confirm below with `xinput list-props <id>`
+  services.libinput.touchpad.disableWhileTyping = true; # ineffective.
+  services.libinput.touchpad.tapping = false; # disabling due to undesired focus changes.
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
