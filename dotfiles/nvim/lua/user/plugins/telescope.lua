@@ -31,6 +31,7 @@ return {
 
     -- Telescope live_grep in git root
     -- Function to find the git root directory based on the current buffer's path
+    ---@return string
     local function find_git_root()
       -- Use the current buffer's path as the starting point for the git search
       local current_file = vim.api.nvim_buf_get_name(0)
@@ -52,6 +53,7 @@ return {
         print('Not a git repository. Searching on current working directory')
         return cwd
       end
+
       return git_root
     end
 
@@ -59,7 +61,7 @@ return {
     -- a function conforming to path_display that strips the git root
     -- off the incoming path. This is useful for live_grep.
     ---@param git_root string
-    ---@return function
+    ---@return function<table, string>: path_display(opts, path)
     local strip_git_root_path = function(git_root)
       local escaped_git_root = git_root:gsub('%-', '%%-') -- escape hyphen (non-greedy match char)
       return function(_, path)
