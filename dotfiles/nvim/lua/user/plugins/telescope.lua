@@ -16,7 +16,15 @@ return {
   },
   config = function()
     -- See `:help telescope` and `:help telescope.setup()`
-    require('telescope').setup({})
+    require('telescope').setup({
+      defaults = {
+        layout_strategy = 'vertical',
+        layout_config = {
+          height = 0.95,
+          preview_height = 0.70,
+        },
+      },
+    })
 
     -- Enable telescope extensions, if installed
     pcall(require('telescope').load_extension('fzf'))
@@ -47,12 +55,27 @@ return {
       return git_root
     end
 
+    -- strip_git_root_path takes a git root directory and returns
+    -- a function conforming to path_display that strips the git root
+    -- off the incoming path. This is useful for live_grep.
+    ---@param git_root string
+    ---@return function
+    local strip_git_root_path = function(git_root)
+      local escaped_git_root = git_root:gsub('%-', '%%-') -- escape hyphen (non-greedy match char)
+      return function(_, path)
+        local trimmed_path, _ = path:gsub(escaped_git_root, '')
+        return trimmed_path:gsub('^/', '') -- trim leading '/' if any.
+      end
+    end
+
     -- Custom live_grep function to search in git root
     local function live_grep_git_root()
       local git_root = find_git_root()
+      local pd = strip_git_root_path(git_root)
       if git_root then
         require('telescope.builtin').live_grep({
           search_dirs = { git_root },
+          path_display = pd,
         })
       end
     end
@@ -129,7 +152,7 @@ return {
       'n',
       '<leader>sg',
       require('telescope.builtin').live_grep,
-      { desc = '[S]earch by [G]rep' }
+      { desc = '[S]earch by [g]rep' }
     )
     vim.keymap.set(
       'n',
