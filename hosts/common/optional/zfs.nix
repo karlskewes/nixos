@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   options.zfsBootUnlock = {
@@ -34,6 +34,8 @@
     ];
 
     boot = {
+      # use latest supported zfs kernel - https://github.com/openzfs/zfs/releases
+      kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_6_10;
       supportedFilesystems = [ "zfs" ];
       zfs.devNodes = "/dev/disk/by-path";
       zfs.requestEncryptionCredentials = true; # prompt for encryption password
@@ -66,8 +68,6 @@
         };
       };
     };
-
-    nixpkgs.config.allowBroken = true; # Package ‘zfs-kernel-2.2.4-6.9.9-asahi’
 
     services.zfs = {
       autoScrub.enable = true;
