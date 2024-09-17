@@ -2,7 +2,7 @@
 -- See `:help vim.o`
 vim.o.hidden = true -- required to keep multiple buffers and open multiple buffers
 vim.o.hlsearch = true -- Set highlight on search, easier to spot.
-vim.o.statuscolumn = '%s %l %r' -- sign, line, relative numbers
+-- vim.o.statuscolumn = '%s %l' -- sign, line
 vim.wo.number = true -- Show line numbers
 vim.wo.relativenumber = false -- Show relative line numbers
 vim.wo.signcolumn = 'yes' -- Keep signcolumn on by default
@@ -22,9 +22,11 @@ vim.o.formatoptions = 'qrn1' -- handle formatting nicely
 vim.o.scrolloff = 8
 vim.o.colorcolumn = '100'
 vim.o.termguicolors = true
-vim.o.textwidth = 99 -- wrap at this character number on whitespace
+-- vim.o.textwidth = 99 -- wrap at this character number on whitespace, set per filetype.
 vim.o.undofile = true
 vim.o.wrap = true -- don't display lines as one long line
+vim.o.spelllang = 'en_us'
+vim.o.spell = true
 
 vim.cmd([[
   function! QuickFixToggle()
