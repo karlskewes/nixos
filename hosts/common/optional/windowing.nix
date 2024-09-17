@@ -59,7 +59,8 @@
   services.libinput.enable = true;
   # Confirm below with `xinput list-props <id>`
   services.libinput.touchpad.disableWhileTyping = true; # ineffective.
-  services.libinput.touchpad.tapping = false; # disabling due to undesired focus changes.
+  services.libinput.touchpad.tapping =
+    false; # disabling due to undesired focus changes. Right click = Shift+F10(+fn)
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

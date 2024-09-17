@@ -31,6 +31,7 @@ fdisk /dev/nvme0n1
 
 # confirm partition numbers before setting partition type
 - `n`, enter, `+8G` -> `t`, `6`, `swap`
+# TODO: change to BTRFS + LUKS + subvolumes for root, home, nix
 - `n`, enter, `+100G` -> `t`, `7`, `linux` - `/` root, nix store
 - `n`, enter, enter -> `t`, `8`, `linux` - `/home`
 - `p`
@@ -39,7 +40,7 @@ fdisk /dev/nvme0n1
 
 Mount partitions:
 ```sh
-# print partiion info
+# print partition info
 lsblk -o name,mountpoint,label,size,uuid
 
 NAME        MOUNTP LABEL           SIZE UUID
@@ -110,7 +111,7 @@ lsblk
 # dd bs=4M status=progress if=~/Downloads/nixos-minimal-22.05.538.d9794b04bff-x86_64-linux.iso of=
 ```
 
-Boot machine with nixos minimal image.
+Boot machine with NixOS minimal image.
 
 Create a password so we can SCP and SSH:
 
