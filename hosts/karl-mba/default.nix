@@ -22,7 +22,7 @@
   ]; # Enables libinput settings to take effect.
   boot.zfs.removeLinuxDRM = true;
   virtualisation.docker = {
-    storageDriver = lib.mkForce "overlay";
+    storageDriver = lib.mkForce "overlay2";
   }; # TODO, change after migrate to ZFS
 
   # Define hostId for zfs pool machine 'binding'
