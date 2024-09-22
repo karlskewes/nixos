@@ -8,7 +8,7 @@ in {
   home.packages = with pkgs;
     (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
       glibc # golangci-lint ?
-      kazam # screencasting
+      vokoscreen-ng # screencasting
     ]) ++ [
       bats
       shellcheck
