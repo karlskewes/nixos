@@ -28,16 +28,6 @@ vim.o.wrap = true -- don't display lines as one long line
 vim.o.spelllang = 'en_us'
 vim.o.spell = true
 
-vim.cmd([[
-  function! QuickFixToggle()
-    if empty(filter(getwininfo(), 'v:val.quickfix'))
-      copen
-    else
-      cclose
-    endif
-  endfunction
-]])
-
 -- [[ Basic Keymaps ]]
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -75,10 +65,19 @@ vim.keymap.set('n', 'n', 'nzzzv', {})
 vim.keymap.set('n', 'N', 'Nzzzv', {})
 
 -- Quickfix list navigation
-vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz', {})
-vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', {})
--- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", {})
--- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", {})
+vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', {}) -- [q but without zz centering
+vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz', {}) -- ]q but without zz centering
+-- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", {}) -- ]l
+-- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", {}) -- [l
+vim.cmd([[
+  function! QuickFixToggle()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+      copen
+    else
+      cclose
+    endif
+  endfunction
+]])
 vim.keymap.set('n', '<C-q>', ':call QuickFixToggle()<CR>', {})
 
 -- [[ Highlight on yank ]]
