@@ -28,4 +28,6 @@
   environment.shells = [ pkgs.bashInteractive pkgs.zsh ];
   programs.bash.enable = true;
   programs.zsh.enable = true;
+
+  system.stateVersion = 5;
 }

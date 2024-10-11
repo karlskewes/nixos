@@ -25,6 +25,7 @@ in {
 
   home.packages = with pkgs;
     (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+      lshw
       psmisc
       usbutils
       brightnessctl
@@ -39,7 +40,6 @@ in {
       iptraf-ng
     ]) ++ [
       dnsutils
-      lshw
       pciutils
 
       # abcde # abcde -a cddb,read,encode,tag,move,playlist,clean,getalbumart -d /dev/cdrom -o mp3:-b320
