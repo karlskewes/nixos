@@ -57,7 +57,7 @@ build_darwin() {
 
 build_nixos() {
 	# update nix-extra reference if first time after install
-	nix flake lock --update-input nix-extra
+	nix flake update nix-extra
 	# rebuild configuration per --flake .#${hostname}
 	nixos-rebuild build --impure --flake .# --show-trace
 }
@@ -113,7 +113,7 @@ switch() { ## Build latest and switch
 install() { ## Install NixOS for the first time
 	nix-extra
 	sed -i 's@home/karl/src/nix-extra@home/nixos/src/nix-extra@' flake.nix
-	nix --extra-experimental-features "nix-command flakes" flake lock --update-input nix-extra
+	nix --extra-experimental-features "nix-command flakes" flake update nix-extra
 	sudo hostname "$(read -rp 'hostname: ' temp && echo "$temp")"
 	nixos-rebuild build --flake .#"$(hostname)"
 	sudo nixos-install --impure --root /mnt/ --flake .#"$(hostname)"
