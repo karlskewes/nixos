@@ -265,6 +265,7 @@ in {
       pull.rebase = "true";
       push.default = "current";
       rebase.autosquash = "true";
+      rebase.updateRefs = "true"; # https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
     };
   };
 
