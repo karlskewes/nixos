@@ -1,35 +1,25 @@
-({ config, lib, pkgs, ... }:
-  let
-    isDarwin = pkgs.stdenv.isDarwin;
-    isLinux = pkgs.stdenv.isLinux;
+({ config, lib, pkgs, isDarwin, isLinux, ... }: {
+  imports = [
+    ./user-karl.nix
 
-  in {
-    imports = [
-        ./user-karl.nix
+    ./common/global
 
-        ./common/global
+    ./common/optional/dev.nix
+    ./common/optional/gpg.nix
+  ] ++ (lib.optionals isDarwin [ ])
+    ++ (lib.optionals isLinux [ ./common/optional/xwindows.nix ]);
 
-        ./common/optional/dev.nix
-        ./common/optional/gpg.nix
-      ];
-    # ++ (lib.optionals isDarwin [ ])
-    # ++ (lib.optionals isLinux [ ./common/optional/xwindows.nix ]);
+  home.packages = with pkgs;
+    [ ] ++ (lib.optionals isLinux [
+      asahi-bless
+      asahi-btsync
+      asahi-nvram
+      asahi-wifisync
 
-    home.packages = with pkgs;
-      [ ] ++ (lib.optionals isLinux [
-        asahi-bless
-        asahi-btsync
-        asahi-nvram
-        asahi-wifisync
+      calibre
+    ]);
 
-        calibre
-      ]);
-
-    home.pointerCursor = lib.mkIf isLinux {
-      sor.size = 180; # 4k
-      size = 128;
-      name = "Vanilla-DMZ";
-    };
-    xresources.properties = lib.mkIf isLinux { "Xft.dpi" = "122"; };
-  })
+  home.pointerCursor.size = lib.mkIf isLinux 128; # 180; # 4k
+  xresources.properties = lib.mkIf isLinux { "Xft.dpi" = "122"; };
+})
 

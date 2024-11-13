@@ -11,7 +11,7 @@ name:
 let
 
   isDarwin = nixpkgs.stdenv.isDarwin;
-  # isLinux = nixpkgs.stdenv.isLinux;
+  isLinux = nixpkgs.stdenv.isLinux;
   hm =
     if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
 
@@ -27,5 +27,8 @@ in hm.lib.homeManagerConfiguration {
   extraSpecialArgs = {
     currentUser = user;
     currentStateVersion = stateVersion;
+    # avoid infinite recursion with pkgs.lib.stdenv from within a module.
+    isDarwin = isDarwin;
+    isLinux = isLinux;
   };
 }

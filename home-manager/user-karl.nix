@@ -1,10 +1,8 @@
-{ config, lib, pkgs, currentStateVersion, ... }:
+{ config, lib, pkgs, currentStateVersion, isDarwin, isLinux, ... }:
 
 let
-  isDarwin = pkgs.stdenv.isDarwin;
-  isLinux = pkgs.stdenv.isLinux;
-  user = if isLinux then "karl" else "karlskewes";
-  homeDir = if isLinux then "/home/${user}" else "/Users/${user}";
+  user = if isDarwin then "karlskewes" else "karl";
+  homeDir = if isDarwin then "/Users/${user}" else "/home/${user}";
 in {
   imports = [ ];
 

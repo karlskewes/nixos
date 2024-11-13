@@ -1,10 +1,6 @@
-{ config, lib, pkgs, currentSystem, ... }:
+{ config, lib, pkgs, currentSystem, isDarwin, isLinux, ... }:
 
-let
-  isDarwin = pkgs.stdenv.isDarwin;
-  isLinux = pkgs.stdenv.isLinux;
-
-in {
+{
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   news.display = "silent";
@@ -265,7 +261,8 @@ in {
       pull.rebase = "true";
       push.default = "current";
       rebase.autosquash = "true";
-      rebase.updateRefs = "true"; # https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
+      rebase.updateRefs =
+        "true"; # https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
     };
   };
 

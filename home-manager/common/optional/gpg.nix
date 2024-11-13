@@ -1,10 +1,6 @@
-{ config, pkgs, ... }:
+{ config, pkgs, isDarwin, isLinux, ... }:
 
-let
-  isDarwin = pkgs.stdenv.isDarwin;
-  isLinux = pkgs.stdenv.isLinux;
-
-in {
+{
   programs.gpg = {
     enable = true;
     settings = { pinentry-mode = "loopback"; };

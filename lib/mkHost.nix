@@ -47,6 +47,9 @@ in systemFunc rec {
       home-manager.extraSpecialArgs = {
         currentStateVersion = stateVersion;
         currentSystem = system;
+        # avoid infinite recursion with pkgs.lib.stdenv from within a module.
+        isDarwin = isDarwin;
+        isLinux = isLinux;
       };
       home-manager.sharedModules = [ ];
     }

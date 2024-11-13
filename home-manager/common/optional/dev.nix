@@ -1,10 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, isDarwin, isLinux, ... }:
 
-let
-  isDarwin = pkgs.stdenv.isDarwin;
-  isLinux = pkgs.stdenv.isLinux;
-
-in {
+{
   home.packages = with pkgs;
     (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
       glibc # golangci-lint ?
