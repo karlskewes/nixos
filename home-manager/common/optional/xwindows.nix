@@ -15,6 +15,8 @@
   home.packages = with pkgs; [
     (pkgs.nerdfonts.override { fonts = [ "Hack" ]; })
 
+    ente-auth
+
     vlc
     i3lock-fancy
     i3status # programs.i3status.enable = true # does not support custom M1 battery config.

@@ -1,6 +1,15 @@
 { config, pkgs, isDarwin, isLinux, ... }:
 
 {
+  home.packages = with pkgs;
+    [ ] ++ (lib.optionals isLinux [
+      seahorse
+      pinentry # gpg add ssh key
+      # export GPG_TTY=$(tty)
+      # export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+      # gpg ssh-add -c -t 31536000 path/to/id_rsa
+    ]);
+
   programs.gpg = {
     enable = true;
     settings = { pinentry-mode = "loopback"; };
