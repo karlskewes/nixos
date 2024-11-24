@@ -48,6 +48,11 @@
     updater.enable = true;
   };
 
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "both";
+  };
+
   services.logind.lidSwitch = "suspend";
 
   # dock "displaylink" driver must be manually installed, see run.sh

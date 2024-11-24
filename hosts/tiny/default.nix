@@ -29,6 +29,11 @@
     libvdpau-va-gl
   ];
 
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "server";
+  };
+
   # https://github.com/pi-hole/pi-hole
   virtualisation.oci-containers.containers.pihole = {
     image = "pihole/pihole:2023.05.2";
