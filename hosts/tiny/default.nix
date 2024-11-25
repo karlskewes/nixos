@@ -42,7 +42,7 @@
     ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" "443:443/tcp" ];
     environment = {
       TZ = "Australia/Brisbane";
-      FTLCONF_REPLY_ADDR4 = "192.168.1.5"; # host machine IP
+      FTLCONF_LOCAL_IPV4 = "192.168.1.5"; # host machine IP
       WEB_PORT = "80";
       # VIRTUAL_HOST = "192.168.1.114";
       PIHOLE_DNS_ = "1.1.1.3;1.0.0.3";
