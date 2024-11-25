@@ -174,7 +174,7 @@ mikrotik() { ## Backup Mikrotik router config
 }
 
 tiny() { ## Tiny ZFS Unlock
-	local host="tiny"
+	local host="192.168.1.5"
 	ssh -v -p 2222 root@"${host}" "zpool import -a; zfs load-key -a && killall zfs"
 }
 
