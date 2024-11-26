@@ -33,6 +33,14 @@ return {
     },
   },
   {
+    -- useful for CSV's and tables, visual select -> ga, -> :set nowrap
+    'echasnovski/mini.align',
+    version = false,
+    config = function()
+      require('mini.align').setup()
+    end,
+  },
+  {
     'echasnovski/mini.diff',
     version = false,
     config = function()
