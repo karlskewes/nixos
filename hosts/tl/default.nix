@@ -27,8 +27,7 @@
   networking.interfaces.enp1s0f0.useDHCP = true; # onboard
   networking.interfaces.enp5s0f4u1u3c2.useDHCP = true; # dock
   hardware.graphics.extraPackages = with pkgs; [
-    rocm-opencl-icd
-    rocm-opencl-runtime
+    rocmPackages.clr
   ];
 
   powerManagement.enable = true;

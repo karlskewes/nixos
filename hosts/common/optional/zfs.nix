@@ -35,7 +35,7 @@
 
     boot = {
       # use latest supported zfs kernel - https://github.com/openzfs/zfs/releases
-      kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_6_10;
+      kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_6_6;
       supportedFilesystems = [ "zfs" ];
       zfs.devNodes = "/dev/disk/by-path";
       zfs.requestEncryptionCredentials = true; # prompt for encryption password
