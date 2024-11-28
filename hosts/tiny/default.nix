@@ -34,6 +34,10 @@
     useRoutingFeatures = "server";
     extraUpFlags = [ "--advertise-exit-node" ];
   };
+  # https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
+  networking.localCommands = ''
+    ${pkgs.ethtool}/bin/ethtool -K enp0s31f6 rx off tx off
+  '';
 
   # https://github.com/pi-hole/pi-hole
   virtualisation.oci-containers.containers.pihole = {
@@ -81,5 +85,5 @@
 
   virtualisation.libvirtd.enable = false;
   programs.dconf.enable = true;
-  environment.systemPackages = with pkgs; [ cdrkit virt-manager ];
+  environment.systemPackages = with pkgs; [ cdrkit ethtool virt-manager ];
 }
