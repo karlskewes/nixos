@@ -94,6 +94,11 @@
     enable = true;
 
     initExtra = ''
+      # start daemon to connect to existing logged in session. Normally done by window manager.
+      # /run/wrappers/bin/gnome-keyring-daemon --start --daemonize
+      # tell ssh to use gnome keyring instead of gpg agent.
+      export SSH_AUTH_SOCK=/run/user/"$UID"/keyring/ssh
+
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
 
@@ -114,9 +119,6 @@
       # Enable aliases to be run with sudo
       sudo = "sudo ";
 
-      # Always enable colored `grep` output
-      grep = "grep --color=auto ";
-
       # One less char.
       v = "nvim";
 
@@ -129,7 +131,6 @@
 
       # Kitty Terminal inline image viewer kitten (plugin) icat
       icat = "kitty +kitten icat";
-      kdiff = "kitty +kitten diff $@";
 
       # IP addresses
       pubip = "dig +short myip.opendns.com @resolver1.opendns.com";
@@ -137,10 +138,6 @@
         "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
       ips =
         "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
-
-      # Patchelf Binaries that use incorrect interpreter
-      pelf =
-        "patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) $1";
     };
   };
 

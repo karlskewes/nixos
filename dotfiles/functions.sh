@@ -86,6 +86,10 @@ flushdns() {
 	sudo systemd-resolve --flush-caches
 }
 
+kdiff() {
+	kitty +kitten diff "$@"
+}
+
 # kill_port sends SIGTERM to process listening on provided port
 kill_port() {
 	if [[ -n "$1" ]]; then
@@ -131,6 +135,11 @@ kla() {
 # I can never remember this and `nix search <package>` doesn't work on flakes.
 nix_search() {
 	nix-env -qaP "$@"
+}
+
+# Patchelf Binaries that use incorrect interpreter
+pelf() {
+	patchelf --set-interpreter "$(patchelf --print-interpreter "$(which cp)") $1"
 }
 
 r() {

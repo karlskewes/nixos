@@ -156,10 +156,11 @@
     extraConfig = builtins.readFile ../../../dotfiles/hyprland.conf;
     settings = {
       exec-once = [
+        # start gnome-keyring for ssh to replace gpg agent
+        ''/run/wrappers/bin/gnome-keyring-daemon --start --daemonize''
         "waybar"
         "[workspace 2 silent] firefox"
         "kitty" # workspace 1
-        "eval $(/run/wrappers/bin/gnome-keyring-daemon --start --daemonize)"
       ];
     };
   };
