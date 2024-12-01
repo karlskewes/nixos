@@ -57,7 +57,6 @@
     home-manager
     nix-diff # nix-diff /run/current-system ./result
     nvd # nix diff tool
-    xclip
     vim
     wget
     wireguard-tools

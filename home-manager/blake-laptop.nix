@@ -5,7 +5,7 @@
 
     ./common/global
 
-    ./common/optional/xwindows.nix
+    ./common/optional/i3.nix
   ];
 
   home.packages = with pkgs; [ ];

@@ -2,6 +2,10 @@
 { config, lib, pkgs, ... }: {
   imports = [ ./wayland.nix ];
 
+  programs.swaylock.enable = true;
+
+  services.swayidle.enable = true;
+
   wayland.windowManager.sway = {
     enable = true;
     config = rec {

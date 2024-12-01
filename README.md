@@ -199,7 +199,7 @@ sudo mount -o remount,size=10G /nix/.rw-store
 sudo swapon /dev/disk/by-id/<disk>-part2
 
 # if still run out of memory, reduce imports, for example
-# comment: xwindows, dev, xserver
+# comment: desktop, dev, xserver
 vim flake.nix
 
 # build and install flake

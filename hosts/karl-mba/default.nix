@@ -5,7 +5,9 @@
 
     ../common/global
 
-    ../common/optional/i3.nix
+    # ../common/optional/i3.nix
+    ../common/optional/hyprland.nix
+    # ../common/optional/sway.nix
     ../common/optional/zfs.nix
   ];
 
@@ -58,10 +60,12 @@
   # dock "displaylink" driver must be manually installed, see run.sh
   # TODO: convert to nix
   # modesetting required I think for actual display output to dock
+  # TODO: disable for hyprland
   services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
 
   # defined here so LightDM is started after autorandr and thus login screen
   # shows on correct monitor.
+  # TODO: disable for hyprland
   services.xserver.displayManager.setupCommands = ''
     ${pkgs.autorandr}/bin/autorandr primary
   '';

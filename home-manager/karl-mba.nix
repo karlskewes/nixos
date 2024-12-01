@@ -6,8 +6,11 @@
 
     ./common/optional/dev.nix
     ./common/optional/gpg.nix
+    ./common/optional/hyprland.nix
+    # ./common/optional/i3.nix
+    # ./common/optional/sway.nix
   ] ++ (lib.optionals isDarwin [ ])
-    ++ (lib.optionals isLinux [ ./common/optional/xwindows.nix ]);
+    ++ (lib.optionals isLinux [ ./common/optional/desktop.nix ]);
 
   home.packages = with pkgs;
     [ ] ++ (lib.optionals isLinux [
@@ -19,7 +22,8 @@
       calibre
     ]);
 
-  home.pointerCursor.size = lib.mkIf isLinux 128; # 180; # 4k
-  xresources.properties = lib.mkIf isLinux { "Xft.dpi" = "122"; };
+  # TODO: only if i3
+  # home.pointerCursor = lib.mkIf isLinux { size = 128; }; # 180; # 4k
+  # xresources.properties = lib.mkIf isLinux { "Xft.dpi" = "122"; };
 })
 

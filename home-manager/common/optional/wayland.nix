@@ -3,25 +3,22 @@
 
   home.sessionVariables = { NIXOS_OZONE_WL = "1"; };
 
-  programs.swaylock.enable = true;
+  home.packages = with pkgs; [ wl-clipboard ];
 
-  programs.rofi = { package = pkgs.rofi-wayland; };
-
-  programs.i3status.enable = false;
-
-  programs.waybar = { enable = true; };
-
-  services.swayidle.enable = true;
-  services.swayosd.enable = true;
-
-  wayland.windowManager.sway = {
-    enable = true;
-    config = rec {
-      modifier = "Mod4";
-      # Use kitty as default terminal
-      terminal = "kitty";
-      startup = [ { command = "kitty"; } { command = "firefox"; } ];
-    };
+  programs.bash.shellAliases = {
+    # Copy Paste to clipboard.
+    pbcopy = "wl-copy";
+    pbpaste = "wl-paste";
   };
 
+  programs.rofi = { package = pkgs.rofi-wayland; };
+  programs.waybar = { enable = true; };
+
+  services.playerctld.enable = true;
+  services.swayosd.enable = true;
+  services.wlsunset = {
+    enable = true;
+    sunrise = "06:00";
+    sunset = "19:00";
+  };
 }

@@ -3,11 +3,10 @@
 {
   imports = [ ./wayland.nix ];
 
-  # setup windowing environment
-  services.xserver = {
-    displayManager = {
-      # defaultSession = "sway";
-    };
-
+  programs.sway = {
+    enable = true;
+    xwayland.enable = true;
   };
+
+  services.displayManager.defaultSession = "sway";
 }

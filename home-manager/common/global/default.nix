@@ -55,7 +55,6 @@
       tcpdump
       tree
       unzip
-      xclip
       zip
 
       gcc # treesitter
@@ -117,10 +116,6 @@
 
       # Always enable colored `grep` output
       grep = "grep --color=auto ";
-
-      # Copy Paste between apps and in/out vm's
-      pbcopy = "xclip -selection clipboard";
-      pbpaste = "xclip -selection clipboard -o";
 
       # One less char.
       v = "nvim";

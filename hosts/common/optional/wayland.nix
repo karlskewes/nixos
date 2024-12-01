@@ -9,21 +9,20 @@
 
   services.xserver = {
     enable = true;
-    layout = "us";
+    xkb.layout = "us";
     # enable touchpad on laptops
-    xkbOptions =
+    xkb.options =
       "caps:escape"; # make caps lock function as escape for easier vim
 
     desktopManager = {
       xterm.enable = false;
       wallpaper.mode = "scale";
     };
+  };
 
-    displayManager = {
-      sddm.enable = true;
-      sddm.enableHidpi = true;
-      sddm.wayland.enable = true;
-    };
-
+  services.displayManager = {
+    sddm.enable = true;
+    sddm.enableHidpi = true;
+    sddm.wayland.enable = true;
   };
 }
