@@ -1,6 +1,6 @@
 # Sway window manager configuration.
 { config, lib, pkgs, ... }: {
-  imports = [ ./wayland.nix ];
+  imports = [ ./desktop.nix ./wayland.nix ];
 
   programs.swaylock.enable = true;
 

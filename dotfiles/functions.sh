@@ -20,7 +20,9 @@ _awsprof_completions() {
 	)" "${COMP_WORDS[1]}"))
 }
 
-complete -F _awsprof_completions awsprof
+if [[ -e "$HOME/.aws/credentials" ]]; then
+	complete -F _awsprof_completions awsprof
+fi
 
 # Base64 conversion helpers
 b64() {

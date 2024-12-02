@@ -1,6 +1,6 @@
 # X Windows additional configuration dependent on home-manager
 { config, lib, pkgs, ... }: {
-  imports = [ ./wayland.nix ];
+  imports = [ ./desktop.nix ./wayland.nix ];
 
   programs.swaylock.enable = true;
   # TODO: figure out how to get it to work.
@@ -157,7 +157,7 @@
     settings = {
       exec-once = [
         # start gnome-keyring for ssh to replace gpg agent
-        ''/run/wrappers/bin/gnome-keyring-daemon --start --daemonize''
+        "/run/wrappers/bin/gnome-keyring-daemon --start --daemonize"
         "waybar"
         "[workspace 2 silent] firefox"
         "kitty" # workspace 1

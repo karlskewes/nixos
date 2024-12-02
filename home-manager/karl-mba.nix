@@ -6,11 +6,11 @@
 
     ./common/optional/dev.nix
     ./common/optional/gpg.nix
-    ./common/optional/hyprland.nix
+  ] ++ (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
     # ./common/optional/i3.nix
     # ./common/optional/sway.nix
-  ] ++ (lib.optionals isDarwin [ ])
-    ++ (lib.optionals isLinux [ ./common/optional/desktop.nix ]);
+    ./common/optional/hyprland.nix
+  ]);
 
   home.packages = with pkgs;
     [ ] ++ (lib.optionals isLinux [
