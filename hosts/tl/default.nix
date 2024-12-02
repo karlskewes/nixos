@@ -25,7 +25,7 @@
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "1014a839";
   networking.interfaces.enp1s0f0.useDHCP = true; # onboard
-  networking.interfaces.enp5s0f4u1u3c2.useDHCP = true; # dock
+  # networking.interfaces.enp5s0f4u1u3c2.useDHCP = true; # dock # unused currently
   hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr ];
 
   powerManagement.enable = true;
