@@ -1,6 +1,20 @@
 -- [[ Configure plugins ]]
 return {
   {
+    'neanias/everforest-nvim',
+    version = false,
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      require('everforest').setup({
+        -- background = 'hard',
+        transparent_background_level = 0,
+      })
+      -- vim.cmd.colorscheme('everforest')
+      -- vim.cmd('highlight Normal guibg=black')
+    end,
+  },
+  {
     'catppuccin/nvim',
     name = 'catppuccin',
     config = function()
@@ -324,7 +338,7 @@ return {
           lualine_a = { 'mode' },
           lualine_b = { 'branch', 'diff', 'diagnostics' },
           lualine_c = { 'filename' },
-          lualine_x = { 'encoding', 'fileformat', 'filetype' },
+          lualine_x = { 'encoding' },
           lualine_y = { 'progress' },
           lualine_z = { 'location' },
         },
@@ -358,14 +372,6 @@ return {
     },
     config = function()
       require('go').setup()
-      local format_sync_grp = vim.api.nvim_create_augroup('GoFormat', {})
-      vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = '*.go',
-        callback = function()
-          require('go.format').goimports()
-        end,
-        group = format_sync_grp,
-      })
     end,
     event = { 'CmdlineEnter' },
     ft = { 'go', 'gomod' },
@@ -375,45 +381,51 @@ return {
   {
     -- Autoformat
     'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
-    keys = {
-      {
-        '<leader>f',
-        function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
+    config = function()
+      local opts = {
+        notify_on_error = false,
+        format_on_save = function(bufnr)
+          -- Disable "format_on_save lsp_fallback" for languages that don't
+          -- have a well standardized coding style. You can add additional
+          -- languages here or re-enable it for the disabled ones.
+          local disable_filetypes = { c = true, cpp = true, go = true }
+          local lsp_format_opt
+          if disable_filetypes[vim.bo[bufnr].filetype] then
+            lsp_format_opt = 'never'
+          else
+            lsp_format_opt = 'fallback'
+          end
+          return {
+            timeout_ms = 500,
+            lsp_fallback = lsp_format_opt,
+          }
         end,
-        mode = '',
-        desc = '[F]ormat buffer',
-      },
-    },
-    opts = {
-      notify_on_error = false,
-      format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, go = true }
-        local lsp_format_opt
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
-        else
-          lsp_format_opt = 'fallback'
-        end
-        return {
-          timeout_ms = 500,
-          lsp_fallback = lsp_format_opt,
-        }
-      end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      },
-    },
+        formatters_by_ft = {
+          go = { 'goimports', 'gofmt', 'gofumpt' }, -- TODO: drop gofmt
+          hcl = { 'terraform_fmt' },
+          javascript = { 'prettierd', 'prettier', stop_after_first = true },
+          jsonnet = { 'jsonnetfmt' },
+          lua = { 'stylua' },
+          markdown = { 'prettierd', 'prettier', stop_after_first = true },
+          nix = { 'nixfmt' },
+          proto = { 'buf' },
+          python = { 'isort', 'black' },
+          rust = { 'rustfmt' },
+          sh = { 'shfmt' },
+          sql = { 'sql_formatter' },
+          templ = { 'templ' },
+          terraform = { 'terraform_fmt' },
+          yaml = { 'prettierd', 'prettier', stop_after_first = true },
+          zig = { 'zigfmt' },
+        },
+      }
+
+      require('conform').setup(opts)
+
+      vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
+        require('conform').format { async = true, lsp_format = 'fallback' }
+      end, { desc = '[F]ormat buffer' })
+    end,
   },
   {
     -- File explorer, edit like a Neovim buffer
