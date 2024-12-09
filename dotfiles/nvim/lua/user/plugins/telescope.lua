@@ -37,7 +37,8 @@ return {
     pcall(require('telescope').load_extension('live_grep_args'))
 
     -- Telescope live_grep in git root
-    -- Function to find the git root directory based on the current buffer's path
+    -- find_git_root finds the git root directory starting with the provided file and
+    -- falling back to the current working directory.
     ---@return string
     local function find_git_root()
       -- Use the current buffer's path as the starting point for the git search
@@ -75,7 +76,8 @@ return {
       end
     end
 
-    -- Custom live_grep_args function to search in git root
+    -- live_grep_args_git_root calls the `live_grep_args` extension anchored in the
+    -- current git root directory.
     ---@param text string
     local function live_grep_args_git_root(text)
       local git_root = find_git_root()
