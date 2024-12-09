@@ -115,6 +115,7 @@
       ${builtins.readFile ../../../dotfiles/bash_prompt.sh}
     '';
 
+    # TODO: enable merging this dict from display manager.
     shellAliases = {
       # Enable aliases to be run with sudo
       sudo = "sudo ";

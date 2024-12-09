@@ -2,7 +2,10 @@
 { config, lib, pkgs, ... }: {
   imports = [ ./desktop.nix ./wayland.nix ];
 
-  programs.swaylock.enable = true;
+  programs.swaylock = {
+    enable = true;
+    settings = { color = "404040"; };
+  };
 
   services.swayidle.enable = true;
 

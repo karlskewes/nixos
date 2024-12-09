@@ -10,11 +10,12 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    glxinfo
+    vulkan-tools # vulkan-info
+
     nerd-fonts.hack
 
     ente-auth
-
-    vlc
     gwenview # image viewer & editor (crop, resize)
     helvum # pipewire patch bay gui
     iwgtk # iwd gui
@@ -22,6 +23,7 @@
     pavucontrol # pulseaudio gui
     qalculate-gtk # calculator
     rofi-power-menu # doesn't work as extra package
+    vlc
   ];
 
   programs.firefox = {

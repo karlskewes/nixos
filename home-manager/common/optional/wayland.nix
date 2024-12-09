@@ -3,7 +3,12 @@
 
   home.sessionVariables = { NIXOS_OZONE_WL = "1"; };
 
-  home.packages = with pkgs; [ wl-clipboard ];
+  home.packages = with pkgs; [
+    wl-clipboard
+
+    grimblast # screenshot combo grim, slurp, etc
+    swappy # screenshot annotation
+  ];
 
   programs.bash.shellAliases = {
     # Copy Paste to clipboard.
