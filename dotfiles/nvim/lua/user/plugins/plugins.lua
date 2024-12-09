@@ -97,23 +97,34 @@ return {
     end,
   },
   {
-    'echasnovski/mini.pick',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    'echasnovski/mini.icons',
     version = false,
     config = function()
-      require('mini.pick').setup({})
+      require('mini.icons').setup()
+    end,
+  },
+  {
+    'echasnovski/mini.pick',
+    dependencies = {
+      'echasnovski/mini.icons',
+    },
+    version = false,
+    config = function()
+      require('mini.pick').setup()
     end,
   },
   {
     'echasnovski/mini.splitjoin',
     version = false,
     config = function()
-      require('mini.splitjoin').setup({})
+      require('mini.splitjoin').setup()
     end,
   },
   {
     'echasnovski/mini.visits',
-    dependencies = { 'echasnovski/mini.pick' },
+    dependencies = {
+      'echasnovski/mini.pick',
+    },
     version = false,
     config = function()
       local alphabetical_sort = function(path_data_arr)

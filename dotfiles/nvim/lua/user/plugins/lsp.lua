@@ -136,7 +136,7 @@ return {
           -- Enable the following language servers, config passed to server config `settings` field.
           local servers = {
             bashls = {},
-            bufls = {},
+            buf_ls = {},
             dockerls = {},
             eslint = {},
             -- gopls = {}, -- Managed by ray-x/go.nvim
