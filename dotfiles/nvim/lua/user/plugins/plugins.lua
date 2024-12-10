@@ -489,7 +489,7 @@ return {
           lua = { 'stylua' },
           markdown = { 'prettierd', 'prettier', stop_after_first = true },
           nix = { 'nixfmt' },
-          proto = { 'buf' },
+          -- proto = { 'buf' }, -- TODO: toggle disable.
           python = { 'isort', 'black' },
           rust = { 'rustfmt' },
           sh = { 'shfmt' },
