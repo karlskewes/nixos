@@ -42,10 +42,92 @@
   };
 
   programs.waybar = {
-    # style = '' ''; # Default is fine. #workspaces button.active.color = green; be nice.
+    style = ''
+            * {
+          border: none;
+          border-radius: 0;
+          font-family: Roboto, Helvetica, Arial, sans-serif;
+          font-size: 13px;
+          min-height: 0;
+      }
+
+      window#waybar {
+          background: rgba(30, 33, 42, 1);
+          color: white;
+      }
+
+      tooltip {
+        background: rgba(30, 33, 42, 0.8);
+        border: 1px solid rgba(100, 114, 125, 0.5);
+      }
+      tooltip label {
+        color: white;
+      }
+
+      #workspaces button {
+          padding: 0 5px;
+          background: transparent;
+          color: white;
+          border-bottom: 3px solid transparent;
+      }
+
+      #workspaces button.active {
+        color: green;
+      }
+
+      #workspaces button.focused {
+          background: #64727D;
+          border-bottom: 3px solid white;
+      }
+
+      #mode,
+      #tray,
+      #clock,
+      #battery,
+      #temperature,
+      #disk,
+      #memory,
+      #cpu,
+      #network,
+      #pulseaudio {
+          padding: 0 10px;
+      }
+
+      #mode {
+      }
+
+      #clock {
+      }
+
+      #battery {
+      }
+
+      #battery.charging {
+          color: white;
+          background-color: #26A65B;
+      }
+
+      @keyframes blink {
+          to {
+              background-color: #ffffff;
+              color: black;
+          }
+      }
+
+      #battery.warning:not(.charging) {
+          background: #f53c3c;
+          color: white;
+          animation-name: blink;
+          animation-duration: 0.5s;
+          animation-timing-function: steps(12);
+          animation-iteration-count: infinite;
+          animation-direction: alternate;
+      }
+    '';
     settings = {
       mainBar = {
         layer = "top";
+        position = "bottom";
         modules-left = [ "hyprland/workspaces" "hyprland/submap" ];
         modules-center = [ "hyprland/window" ];
         modules-right = [
@@ -53,8 +135,9 @@
           "network"
           "cpu"
           "memory"
+          "disk"
           "temperature"
-          "hyprland/language"
+          # "hyprland/language" # enable if/when JP input
           "battery"
           "clock"
           "tray"
@@ -74,23 +157,32 @@
           };
         };
         battery = {
-          format = "{capacity}% {icon}";
+          format = "{icon}  {capacity}%";
           format-icons = [ "" "" "" "" "" ];
         };
         clock = {
-          format = "{:%a, %d. %b  %H:%M}";
+          interval = 5;
+          format = "{:%a, %d. %b  %H:%M:%S}";
           "tooltip-format" = ''
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
         };
         "cpu" = {
-          "format" = "{usage}% ";
-          "tooltip" = false;
+          "format" = " {usage}%";
+          "tooltip-format" = "L: {load}";
         };
-        "memory" = { "format" = "{}% "; };
+        "disk" = {
+          "format" = "󰋊 {percentage_used}%";
+          "tooltip-format" = "D: {used} / {total}";
+        };
+        "memory" = {
+          "format" = " {}%";
+          "tooltip-format" =
+            "{used:0.1f} G of {total:0.1f} G. Swap: {swapPercentage}%";
+        };
         "temperature" = {
           "critical-threshold" = 80;
-          "format" = "{temperatureC}°C {icon}";
+          "format" = "{icon} {temperatureC}°C";
           "format-icons" = [ "" "" "" ];
         };
         "idle_inhibitor" = {
@@ -102,20 +194,20 @@
         };
         "network" = {
           # // "interface" = "wlp2*"; // (Optional) To force the use of this interface
-          "format-wifi" = "{essid} ({signalStrength}%) ";
-          "format-ethernet" = "{ipaddr}/{cidr} ";
-          "tooltip-format" = "{ifname} via {gwaddr} ";
-          "format-linked" = "{ifname} (No IP) ";
-          "format-disconnected" = "Disconnected ⚠";
+          "format-wifi" = "  {essid} ({signalStrength}%)";
+          "format-ethernet" = "󰈀 {ipaddr}/{cidr}";
+          "tooltip-format" = "{ifname} via {gwaddr}";
+          "format-linked" = "{ifname} (No IP)";
+          "format-disconnected" = "⚠ Disconnected";
           "format-alt" = "{ifname}: {ipaddr}/{cidr}";
         };
         "pulseaudio" = {
           # // "scroll-step" = 1; // %, can be a float
-          "format" = "{volume}% {icon}  {format_source}";
-          "format-bluetooth" = "{volume}% {icon}  {format_source}";
-          "format-bluetooth-muted" = " {icon}  {format_source}";
+          "format" = "{icon} {volume}%  {format_source}";
+          "format-bluetooth" = "{icon} {volume}%  {format_source}";
+          "format-bluetooth-muted" = "{icon}   {format_source}";
           "format-muted" = " {format_source}";
-          "format-source" = "{volume}% ";
+          "format-source" = " {volume}%";
           "format-source-muted" = "";
           "format-icons" = {
             "headphone" = "";
