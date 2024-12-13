@@ -43,7 +43,7 @@
 
   programs.waybar = {
     style = ''
-            * {
+      * {
           border: none;
           border-radius: 0;
           font-family: Roboto, Helvetica, Arial, sans-serif;
@@ -57,11 +57,15 @@
       }
 
       tooltip {
-        background: rgba(30, 33, 42, 0.8);
-        border: 1px solid rgba(100, 114, 125, 0.5);
+          background: rgba(30, 33, 42, 0.8);
+          border: 1px solid rgba(100, 114, 125, 0.5);
       }
       tooltip label {
-        color: white;
+          color: white;
+      }
+
+      #window {
+          padding: 0 40px;
       }
 
       #workspaces button {
@@ -72,12 +76,16 @@
       }
 
       #workspaces button.active {
-        color: green;
+          color: green;
       }
 
       #workspaces button.focused {
           background: #64727D;
           border-bottom: 3px solid white;
+      }
+
+      #modules-right, #modules-center {
+          padding: 0 20px;
       }
 
       #mode,
@@ -88,61 +96,53 @@
       #disk,
       #memory,
       #cpu,
+      #load,
       #network,
       #pulseaudio {
-          padding: 0 10px;
+          border-left: 1px solid white;
       }
 
       #mode {
       }
 
-      #clock {
+      #memory.critical {
+          color: red;
       }
 
-      #battery {
+      #battery.warning:not(.charging) {
+          color: orange;
+      }
+
+      #battery.critical:not(.charging) {
+          color: red;
       }
 
       #battery.charging {
           color: white;
           background-color: #26A65B;
       }
-
-      @keyframes blink {
-          to {
-              background-color: #ffffff;
-              color: black;
-          }
-      }
-
-      #battery.warning:not(.charging) {
-          background: #f53c3c;
-          color: white;
-          animation-name: blink;
-          animation-duration: 0.5s;
-          animation-timing-function: steps(12);
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
-      }
     '';
     settings = {
       mainBar = {
         layer = "top";
         position = "bottom";
-        modules-left = [ "hyprland/workspaces" "hyprland/submap" ];
-        modules-center = [ "hyprland/window" ];
+        modules-left =
+          [ "hyprland/workspaces" "hyprland/submap" "hyprland/window" ];
+        modules-center = [ ];
         modules-right = [
           "pulseaudio"
           "network"
-          "cpu"
+          "load"
+          # "cpu"
           "memory"
           "disk"
-          "temperature"
+          # "temperature"
           # "hyprland/language" # enable if/when JP input
           "battery"
           "clock"
           "tray"
         ];
-        "hyprland/window" = { max-length = 50; };
+        "hyprland/window" = { max-length = 75; };
         "hyprland/workspaces" = {
           active-only = false;
           format = "{icon}: {windows}";
@@ -157,32 +157,36 @@
           };
         };
         battery = {
-          format = "{icon}  {capacity}%";
+          format = "B: {capacity}%";
+          # format = "{icon}  {capacity}%";
           format-icons = [ "" "" "" "" "" ];
+          states = {
+            warning = 30;
+            critical = 15;
+          };
         };
         clock = {
           interval = 5;
-          format = "{:%a, %d. %b  %H:%M:%S}";
+          format = "T: {:%a, %d. %b  %H:%M:%S}";
           "tooltip-format" = ''
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
         };
-        "cpu" = {
-          "format" = " {usage}%";
-          "tooltip-format" = "L: {load}";
-        };
+        "cpu" = { format = " {usage}%"; };
+        "load" = { format = "L: {load1}"; };
         "disk" = {
-          "format" = "󰋊 {percentage_used}%";
-          "tooltip-format" = "D: {used} / {total}";
+          format = "D: {used} / {total}";
+          # format = "󰋊 {percentage_used}%";
         };
         "memory" = {
-          "format" = " {}%";
-          "tooltip-format" =
-            "{used:0.1f} G of {total:0.1f} G. Swap: {swapPercentage}%";
+          format = "M: {used:0.1f} / {total:0.1f}";
+          # format = " {}%";
+          states = { "critical" = 80; };
+          "tooltip-format" = "Swap: {swapUsed:0.1f} / {swapAvail:0.1f}";
         };
         "temperature" = {
-          "critical-threshold" = 80;
-          "format" = "{icon} {temperatureC}°C";
+          "critical-threshold" = 60;
+          format = "{icon} {temperatureC}°C";
           "format-icons" = [ "" "" "" ];
         };
         "idle_inhibitor" = {
@@ -194,8 +198,8 @@
         };
         "network" = {
           # // "interface" = "wlp2*"; // (Optional) To force the use of this interface
-          "format-wifi" = "  {essid} ({signalStrength}%)";
-          "format-ethernet" = "󰈀 {ipaddr}/{cidr}";
+          "format-wifi" = "W: {essid} ({signalStrength}%)";
+          "format-ethernet" = "E: {ipaddr}/{cidr}";
           "tooltip-format" = "{ifname} via {gwaddr}";
           "format-linked" = "{ifname} (No IP)";
           "format-disconnected" = "⚠ Disconnected";
