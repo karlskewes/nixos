@@ -2,6 +2,8 @@
 { config, lib, pkgs, ... }: {
   imports = [ ./desktop.nix ./wayland.nix ];
 
+  home.pointerCursor.hyprcursor.enable = true;
+
   programs.swaylock = {
     enable = true;
     settings = { color = "404040"; };
@@ -57,7 +59,7 @@
       }
 
       tooltip {
-          background: rgba(30, 33, 42, 0.8);
+          background: rgba(30, 33, 42, 0.9);
           border: 1px solid rgba(100, 114, 125, 0.5);
       }
       tooltip label {
@@ -65,7 +67,7 @@
       }
 
       #window {
-          padding: 0 40px;
+          padding: 0 80px;
       }
 
       #workspaces button {
@@ -84,7 +86,7 @@
           border-bottom: 3px solid white;
       }
 
-      #modules-right, #modules-center {
+      #modules-left, #modules-right, #modules-center {
           padding: 0 20px;
       }
 
@@ -100,9 +102,7 @@
       #network,
       #pulseaudio {
           border-left: 1px solid white;
-      }
-
-      #mode {
+          padding: 0 10px;
       }
 
       #memory.critical {
@@ -118,8 +118,7 @@
       }
 
       #battery.charging {
-          color: white;
-          background-color: #26A65B;
+          color: green;
       }
     '';
     settings = {
@@ -142,7 +141,7 @@
           "clock"
           "tray"
         ];
-        "hyprland/window" = { max-length = 75; };
+        "hyprland/window" = { max-length = 50; };
         "hyprland/workspaces" = {
           active-only = false;
           format = "{icon}: {windows}";
@@ -157,6 +156,7 @@
           };
         };
         battery = {
+          interval = 5;
           format = "B: {capacity}%";
           # format = "{icon}  {capacity}%";
           format-icons = [ "" "" "" "" "" ];
@@ -168,59 +168,55 @@
         clock = {
           interval = 5;
           format = "T: {:%a, %d. %b  %H:%M:%S}";
-          "tooltip-format" = ''
+          tooltip-format = ''
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
         };
-        "cpu" = { format = " {usage}%"; };
-        "load" = { format = "L: {load1}"; };
-        "disk" = {
-          format = "D: {used} / {total}";
-          # format = "󰋊 {percentage_used}%";
-        };
-        "memory" = {
+        cpu = { format = " {usage}%"; };
+        load = { format = "L: {load1}"; };
+        disk = { format = "D: {used} / {total}"; };
+        memory = {
           format = "M: {used:0.1f} / {total:0.1f}";
-          # format = " {}%";
           states = { "critical" = 80; };
-          "tooltip-format" = "Swap: {swapUsed:0.1f} / {swapAvail:0.1f}";
+          tooltip-format = "Swap: {swapUsed:0.1f} / {swapAvail:0.1f}";
         };
-        "temperature" = {
-          "critical-threshold" = 60;
+        temperature = {
+          critical-threshold = 60;
           format = "{icon} {temperatureC}°C";
-          "format-icons" = [ "" "" "" ];
+          format-icons = [ "" "" "" ];
         };
-        "idle_inhibitor" = {
-          "format" = "{icon}";
-          "format-icons" = {
+        idle_inhibitor = {
+          format = "{icon}";
+          format-icons = {
             "activated" = "";
             "deactivated" = "";
           };
         };
-        "network" = {
+        network = {
           # // "interface" = "wlp2*"; // (Optional) To force the use of this interface
-          "format-wifi" = "W: {essid} ({signalStrength}%)";
-          "format-ethernet" = "E: {ipaddr}/{cidr}";
-          "tooltip-format" = "{ifname} via {gwaddr}";
-          "format-linked" = "{ifname} (No IP)";
-          "format-disconnected" = "⚠ Disconnected";
-          "format-alt" = "{ifname}: {ipaddr}/{cidr}";
+          format-wifi = "W: {essid} ({signalStrength}%)";
+          format-ethernet = "E: {ipaddr}/{cidr}";
+          tooltip-format = "{ifname} via {gwaddr}";
+          format-linked = "{ifname} (No IP)";
+          format-disconnected = "⚠ Disconnected";
+          format-alt = "{ifname}: {ipaddr}/{cidr}";
         };
-        "pulseaudio" = {
-          # // "scroll-step" = 1; // %, can be a float
-          "format" = "{icon} {volume}%  {format_source}";
-          "format-bluetooth" = "{icon} {volume}%  {format_source}";
-          "format-bluetooth-muted" = "{icon}   {format_source}";
-          "format-muted" = " {format_source}";
-          "format-source" = " {volume}%";
-          "format-source-muted" = "";
-          "format-icons" = {
+        pulseaudio = {
+          # // scroll-step = 1; // %, can be a float
+          format = "{icon}  {volume}%  {format_source}";
+          format-bluetooth = "{icon}  {volume}%  {format_source}";
+          format-bluetooth-muted = "{icon}   {format_source}";
+          format-muted = " {format_source}";
+          format-source = " {volume}%";
+          format-source-muted = "";
+          format-icons = {
             "headphone" = "";
             "phone" = "";
             "portable" = "";
             "car" = "";
             "default" = [ "" "" "" ];
           };
-          "on-click" = "pavucontrol";
+          on-click = "pavucontrol";
         };
       };
     };

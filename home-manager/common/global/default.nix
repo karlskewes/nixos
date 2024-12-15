@@ -85,6 +85,10 @@
     PAGER = "less --ignore-case --hilite-unread --silent";
     MANPAGER = "less --ignore-case --hilite-unread --silent";
   };
+  home.sessionPath = [
+    "~/.local/bin" # tools
+    "~/go/bin" # golang
+  ];
 
   #---------------------------------------------------------------------
   # Programs
@@ -107,8 +111,6 @@
 
       # Autocorrect typos in path names when using `cd`
       shopt -s cdspell
-
-      PATH=$PATH:~/.local/bin:~/go/bin/
 
       ${builtins.readFile ../../../dotfiles/functions.sh}
 

@@ -22,8 +22,9 @@
       calibre
     ]);
 
+  # TODO: only if linux
+  # home.pointerCursor.size = 128; # 180; # 4k
   # TODO: only if i3
-  # home.pointerCursor = lib.mkIf isLinux { size = 128; }; # 180; # 4k
   # xresources.properties = lib.mkIf isLinux { "Xft.dpi" = "122"; };
 })
 

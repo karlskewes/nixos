@@ -1,14 +1,23 @@
 # Sway window manager configuration.
 { config, lib, pkgs, ... }: {
-
   home.sessionVariables = { NIXOS_OZONE_WL = "1"; };
 
   home.packages = with pkgs; [
     wl-clipboard
 
+    grim
+    slurp
     grimblast # screenshot combo grim, slurp, etc
     swappy # screenshot annotation
+    satty # screenshot annotation
   ];
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Vanilla-DMZ";
+    package = pkgs.vanilla-dmz;
+    size = lib.mkDefault 64;
+  };
 
   programs.bash.shellAliases = {
     # Copy Paste to clipboard.

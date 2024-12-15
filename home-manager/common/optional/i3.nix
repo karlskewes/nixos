@@ -15,9 +15,10 @@
 
   home.pointerCursor = {
     x11.enable = true;
+    gtk.enable = true;
     name = "Vanilla-DMZ";
     package = pkgs.vanilla-dmz;
-    # size = 64;
+    size = lib.mkDefault 64;
   };
 
   programs.bash.shellAliases = {

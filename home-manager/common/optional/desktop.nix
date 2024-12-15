@@ -14,6 +14,7 @@
     vulkan-tools # vulkan-info
 
     nerd-fonts.hack
+    font-awesome
 
     ente-auth
     gwenview # image viewer & editor (crop, resize)
@@ -70,4 +71,3 @@
 
   services.dunst = { enable = true; };
 }
-

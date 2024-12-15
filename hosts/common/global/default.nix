@@ -62,6 +62,9 @@
     wireguard-tools
   ];
 
+  fonts.fontconfig.useEmbeddedBitmaps = true;
+  fonts.packages = with pkgs; [ nerd-fonts.hack font-awesome ];
+
   hardware.enableAllFirmware = true;
 
   i18n = { defaultLocale = "en_US.UTF-8"; };

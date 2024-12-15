@@ -484,7 +484,8 @@ return {
         formatters_by_ft = {
           go = { 'goimports', 'gofmt', 'gofumpt' }, -- TODO: drop gofmt
           hcl = { 'terraform_fmt' },
-          javascript = { 'prettierd', 'prettier', stop_after_first = true },
+          javascript = { 'eslint_d', 'prettierd', 'prettier', stop_after_first = true },
+          json = { 'prettierd', 'prettier', stop_after_first = true },
           jsonnet = { 'jsonnetfmt' },
           lua = { 'stylua' },
           markdown = { 'prettierd', 'prettier', stop_after_first = true },
