@@ -6,18 +6,36 @@
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    withUWSM = true;
+    withUWSM = true; # https://wiki.hyprland.org/Useful-Utilities/Systemd-start/
   };
 
   # security.pam.services.hyprlock = { };
   security.pam.services.hyprland.enableGnomeKeyring = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
+
   services.dbus.enable = true;
-  services.displayManager = {
-    sddm.enable = true;
-    sddm.enableHidpi = true;
-    sddm.wayland.enable = true;
+
+  environment.systemPackages = with pkgs; [ greetd.tuigreet ];
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command =
+          "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd 'uwsm start hyprland-uwsm.desktop'";
+        user = "greeter";
+      };
+    };
   };
 
-  services.displayManager.defaultSession = "hyprland-uwsm";
+  # https://www.reddit.com/r/NixOS/comments/u0cdpi/tuigreet_with_xmonad_how/
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
 }
