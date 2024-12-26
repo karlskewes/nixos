@@ -10,6 +10,9 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
+    adwaita-qt
+    adwaita-icon-theme
+
     glxinfo
     vulkan-tools # vulkan-info
 
@@ -19,7 +22,7 @@
     ente-auth
     gwenview # image viewer & editor (crop, resize)
     helvum # pipewire patch bay gui
-    iwgtk # iwd gui
+    iwgtk # iwd gui, but issues on Wayland, consider swap for https://github.com/e-tho/iwmenu
     libnotify # required by dunst
     pavucontrol # pulseaudio gui
     qalculate-gtk # calculator

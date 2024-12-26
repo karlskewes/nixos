@@ -466,6 +466,9 @@ return {
       local opts = {
         notify_on_error = false,
         format_on_save = function(bufnr)
+          if vim.g.format_on_save_enabled then
+            return
+          end
           -- Disable "format_on_save lsp_fallback" for languages that don't
           -- have a well standardized coding style. You can add additional
           -- languages here or re-enable it for the disabled ones.
@@ -505,8 +508,10 @@ return {
       require('conform').setup(opts)
 
       vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
-      end, { desc = '[F]ormat buffer' })
+        local enabled = vim.g.format_on_save_enabled
+        vim.g.format_on_save_enabled = not enabled
+        print('Format on save enabled:', not vim.g.format_on_save_enabled)
+      end, { desc = '[F]ormat On Save Toggle' })
     end,
   },
   {

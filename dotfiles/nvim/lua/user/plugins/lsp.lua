@@ -18,6 +18,30 @@ return {
           local lsp_on_attach = function(_, bufnr)
             vim.keymap.set(
               'n',
+              'gd',
+              require('telescope.builtin').lsp_definitions,
+              { buffer = bufnr, desc = '[G]oto [D]efinition' }
+            )
+            vim.keymap.set(
+              'n',
+              'gD',
+              vim.lsp.buf.declaration,
+              { buffer = bufnr, desc = '[G]oto [D]eclaration' }
+            )
+            vim.keymap.set(
+              'n',
+              'gI',
+              require('telescope.builtin').lsp_implementations,
+              { buffer = bufnr, desc = '[G]oto [I]mplementation' }
+            )
+            vim.keymap.set(
+              'n',
+              'gl',
+              vim.diagnostic.open_float,
+              { buffer = bufnr, desc = '[G]oto [L]ine diagnostic' }
+            )
+            vim.keymap.set(
+              'n',
               '<leader>la',
               vim.lsp.buf.code_action,
               { buffer = bufnr, desc = '[L]SP Code [A]ction - Default: [gra]' }
@@ -27,6 +51,12 @@ return {
               '<leader>ld',
               vim.diagnostic.setloclist,
               { buffer = bufnr, desc = '[L]SP [D]iagnostics list' }
+            )
+            vim.keymap.set(
+              'n',
+              '<leader>lD',
+              require('telescope.builtin').lsp_type_definitions,
+              { buffer = bufnr, desc = '[L]SP Type [D]efinition' }
             )
             vim.keymap.set('n', '<leader>lh', function()
               local enabled = vim.lsp.inlay_hint.is_enabled()
@@ -49,45 +79,21 @@ return {
             )
             vim.keymap.set(
               'n',
+              '<leader>ll',
+              vim.diagnostic.open_float,
+              { buffer = bufnr, desc = '[L]SP [L]ine Diagnostics' }
+            )
+            vim.keymap.set(
+              'n',
               '<leader>lr',
               vim.lsp.buf.rename,
               { buffer = bufnr, desc = '[L]SP [R]ename - Default: [grn]' }
             )
             vim.keymap.set(
               'n',
-              'gd',
-              require('telescope.builtin').lsp_definitions,
-              { buffer = bufnr, desc = '[G]oto [D]efinition' }
-            )
-            vim.keymap.set(
-              'n',
-              'gD',
-              vim.lsp.buf.declaration,
-              { buffer = bufnr, desc = '[G]oto [D]eclaration' }
-            )
-            vim.keymap.set(
-              'n',
-              'gl',
-              vim.diagnostic.open_float,
-              { buffer = bufnr, desc = '[G]oto [L]ine diagnostic' }
-            )
-            vim.keymap.set(
-              'n',
               '<leader>lR',
               require('telescope.builtin').lsp_references,
               { buffer = bufnr, desc = '[L]SP [R]eferences - Default: [grr]' }
-            )
-            vim.keymap.set(
-              'n',
-              'gI',
-              require('telescope.builtin').lsp_implementations,
-              { buffer = bufnr, desc = '[G]oto [I]mplementation' }
-            )
-            vim.keymap.set(
-              'n',
-              '<leader>lD',
-              require('telescope.builtin').lsp_type_definitions,
-              { buffer = bufnr, desc = '[L]SP Type [D]efinition' }
             )
             vim.keymap.set(
               'n',
