@@ -13,9 +13,10 @@
       air # hot reload Go apps
       buf
       delve
+      gofumpt
       golangci-lint
-      gopls
       gotools
+      templ
       graphviz # go tool pprof -http localhost:8080 ./profile.out
 
       hugo
@@ -26,10 +27,10 @@
       lua
       luarocks
       stylua
-      sumneko-lua-language-server
 
-      nodePackages.prettier
       nodePackages.write-good
+      nodejs # neovim
+      # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
       openssl
 
@@ -40,20 +41,19 @@
       pkg-config
       openssl
       rustc
-      rust-analyzer
       rustfmt
 
-      nodejs # neovim
-      # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
+      sql-formatter
 
       python312 # neovim # https://docs.python.org/3/
+      python312Packages.black
       python312Packages.flake8
+      python312Packages.isort
+      python312Packages.pylint
       python312Packages.pip
       python312Packages.pynvim
       python312Packages.debugpy
       python312Packages.pytest
-      pylint
-      black
 
       # DO: npm install -D tailwindcss postcss-cli @fullhuman/postcss-purgecss
       # RUN: npx {tailwindcss, postcss, etc} --help
@@ -68,6 +68,7 @@
       # google-cloud-sdk # gsutil, etc
       docker-compose
       pulumi-bin
+      terraform
 
       # kubernetes
       kubectl

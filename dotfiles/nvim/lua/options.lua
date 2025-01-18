@@ -30,6 +30,9 @@ vim.o.spell = true
 
 -- [[ Basic Keymaps ]]
 -- See `:help vim.keymap.set()`
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
@@ -102,4 +105,11 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = { '*' },
   -- @ separater, double back slash for lua escape
   command = ':%s@\\s\\+$@@e',
+})
+
+-- Jump to last place in files when opened
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+  desc = 'jump to last visited position in file',
+  pattern = { '*' },
+  command = 'silent! normal! g`"zz',
 })

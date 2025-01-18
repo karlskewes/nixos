@@ -24,6 +24,7 @@ Follow instructions at [https://github.com/tpwrules/nixos-apple-silicon] with th
 following variations.
 
 Setup partitions with ext4 because zfs support on new kernels is [spotty](https://github.com/tpwrules/nixos-apple-silicon/issues/111):
+
 ```sh
 lsblk
 
@@ -39,6 +40,7 @@ fdisk /dev/nvme0n1
 ```
 
 Mount partitions:
+
 ```sh
 # print partition info
 lsblk -o name,mountpoint,label,size,uuid
@@ -49,7 +51,7 @@ nvme0n1                          931.5G
 ├─nvme0n1p2 [SWAP] swap            7.5G b85bdf70-c212-4641-a96b-e2d0b9ad9f16
 ├─nvme0n1p3        rpool-desktop 492.7G 14791146668368940249
 └─nvme0n1p7        data          329.4G 28385FE6385FB194
-```
+
 # root
 mount /dev/disk/by-id/.... /mnt/
 
@@ -63,11 +65,13 @@ swapon -av
 ```
 
 Generate config:
+
 ```sh
 nixos-generate-config --root /mnt/
 ```
 
 Add to `/etc/nixos/configuration.nix`:
+
 ```
 nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -82,6 +86,7 @@ environment.systemPackages = with pkgs; [
 ```
 
 Install:
+
 ```sh
 nixos-install --root /mnt/
 ```
@@ -91,7 +96,6 @@ nixos-install --root /mnt/
 - scp or git clone this repo
 - set nix-extra username to root, or mkdir /home/nixos
 - increase tmpfs storage for /run/user/0 to 10G (less ok?)
-
 
 ### x86/arm64
 

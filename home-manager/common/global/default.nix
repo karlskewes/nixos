@@ -7,13 +7,6 @@
 
   # manage XDG directories
   xdg.enable = true;
-  xdg.configFile."nvim" = {
-    source = ../../../dotfiles/nvim;
-    recursive = true;
-  };
-  # run `vale sync` after fresh install to create `~/styles` directory.
-  # https://github.com/errata-ai/vale/issues/211
-  home.file.".vale.ini" = { source = ../../../dotfiles/vale.ini; };
 
   #---------------------------------------------------------------------
   # Packages
@@ -35,8 +28,6 @@
       # easytag # requires configuration.nix 'programs.dconf.enable = true;'
       fatsort # fat32 file on disk sorter
 
-      chafa # neovim telescope media_files image preview
-      ffmpegthumbnailer # neovim telescope media_files video preview
       fd
       file
       gron # sed'able json
@@ -57,10 +48,6 @@
       unzip
       zip
 
-      gcc # treesitter
-      tree-sitter
-      vale
-
       # https://nixos.wiki/wiki/Packaging/Binaries
       # file path/to/broken/file
       # ldd path/to/broken/file
@@ -69,9 +56,6 @@
       # patchelf --set-interpreter $(patchelf --print-interpreter $(which cp)) path/to/broken/file
       patchelf
     ];
-
-  # tree_sitter_bin = "<global_node_modules_path>/lib/node_modules/tree-sitter-cli/";
-  # home.file.${tree_sitter_bin}.source = "${pkgs.tree-sitter}/bin/tree-sitter";
 
   #---------------------------------------------------------------------
   # Env vars and dotfiles
@@ -93,6 +77,8 @@
   #---------------------------------------------------------------------
   # Programs
   #---------------------------------------------------------------------
+
+  imports = [ ./neovim.nix ];
 
   programs.bash = {
     enable = true;
@@ -240,7 +226,6 @@
       rbupms = "rebase upstream/master";
       raup = "remote add upstream";
       s = "status";
-      st = "status";
     };
 
     extraConfig = {
@@ -252,17 +237,6 @@
       rebase.updateRefs =
         "true"; # https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
     };
-  };
-
-  programs.neovim = {
-    enable = true;
-    withNodeJs = true;
-    withPython3 = true;
-    # package = pkgs.neovim-unwrapped; # unstable
-    package = pkgs.neovim; # nightly via overlay
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
   };
 
   programs.readline = {
