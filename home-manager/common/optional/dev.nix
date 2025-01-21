@@ -42,6 +42,7 @@
       openssl
       rustc
       rustfmt
+      gcc
 
       sql-formatter
 
