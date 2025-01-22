@@ -66,8 +66,8 @@
   services.printing.enable = true;
 
   # Enable sound.
-  hardware.pulseaudio.enable = false; # using pipewire
   security.rtkit.enable = true;
+  services.pulseaudio.enable = false; # using pipewire
   services.pipewire = {
     enable = true;
     alsa.enable = true;
