@@ -70,8 +70,8 @@
     MANPAGER = "less --ignore-case --hilite-unread --silent";
   };
   home.sessionPath = [
-    "~/.local/bin" # tools
-    "~/go/bin" # golang
+    "$HOME/.local/bin" # tools
+    "$HOME/go/bin" # golang
   ];
 
   #---------------------------------------------------------------------

@@ -146,6 +146,8 @@ in {
         sqls
         sumneko-lua-language-server
         tailwindcss-language-server
+        vscode-langservers-extracted # vscode-eslint-language-server
+        vue-language-server
         yaml-language-server
       ];
   };

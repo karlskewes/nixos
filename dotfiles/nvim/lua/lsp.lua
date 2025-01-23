@@ -120,16 +120,18 @@ local servers = {
   dockerls = {},
   eslint = {},
   gopls = {
-    -- local = get_current_gomod,
-    usePlaceholders = true,
-    codelenses = {
-      generate = false,
-      gc_details = true,
-      test = true,
-      tidy = true,
+    settings = {
+      -- local = get_current_gomod,
+      usePlaceholders = true,
+      codelenses = {
+        generate = false,
+        gc_details = true,
+        test = true,
+        tidy = true,
+      },
+      gofumpt = true,
+      staticcheck = true,
     },
-    gofumpt = true,
-    staticcheck = true,
   },
   golangci_lint_ls = {},
   html = {},
@@ -141,24 +143,29 @@ local servers = {
   sqlls = {},
   -- tailwindcss = {}, -- TODO
   ts_ls = {},
-  vuels = {},
+  vuels = {
+    cmd = { 'vue-language-server', '--stdio' },
+    -- filetypes = {},
+  },
   yamlls = {},
   lua_ls = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' },
-        disable = { 'missing-fields' },
-      },
-      format = { enable = true },
-      runtime = {
-        version = 'luajit',
-        path = lua_runtime_path,
-      },
-      telemetry = { enable = false },
-      workspace = {
-        checkthirdparty = false,
-        -- make the server aware of neovim runtime files
-        library = vim.api.nvim_get_runtime_file('', true),
+    settings = {
+      Lua = {
+        diagnostics = {
+          globals = { 'vim' },
+          disable = { 'missing-fields' },
+        },
+        format = { enable = true },
+        runtime = {
+          version = 'luajit',
+          path = lua_runtime_path,
+        },
+        telemetry = { enable = false },
+        workspace = {
+          checkthirdparty = false,
+          -- make the server aware of neovim runtime files
+          library = vim.api.nvim_get_runtime_file('', true),
+        },
       },
     },
   },
@@ -166,12 +173,11 @@ local servers = {
 
 local setup_handlers = function()
   for k, v in pairs(servers) do
-    lspconfig[k].setup({
-      capabilities = capabilities,
-      on_attach = lsp_on_attach,
-      settings = v,
-      -- filetypes = (servers[k] or {}).filetypes,
-    })
+    -- override/extend any server with custom capabilities.
+    v.capabilities = vim.tbl_deep_extend('force', {}, capabilities, v.capabilities or {})
+    v.on_attach = lsp_on_attach
+
+    lspconfig[k].setup(v)
   end
 end
 setup_handlers()
