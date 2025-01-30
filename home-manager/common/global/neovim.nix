@@ -26,9 +26,9 @@ in {
       nvim-web-devicons
 
       # themes
-      # TODO: https://github.com/NixOS/nixpkgs/blob/5df43628fdf08d642be8ba5b3625a6c70731c19c/pkgs/applications/editors/vim/plugins/generated.nix#L3960
-      # everforest-nvim -- not yet built for nix.
       catppuccin-nvim
+      everforest-nvim
+      lackluster-nvim
 
       # mini
       mini-align
@@ -146,6 +146,8 @@ in {
         sqls
         sumneko-lua-language-server
         tailwindcss-language-server
+        typescript
+        typescript-language-server
         vscode-langservers-extracted # vscode-eslint-language-server
         vue-language-server
         yaml-language-server

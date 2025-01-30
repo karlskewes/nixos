@@ -46,6 +46,34 @@ require('catppuccin').setup({
     treesitter_context = true,
     which_key = true,
   },
+  color_overrides = {
+    mocha = {},
+  },
+})
+
+require('lackluster').setup({
+  tweak_pallet = {
+    -- ('default' is default) ('#ffaaff' is a custom colorcode)
+    lack = 'default',
+    luster = 'default',
+    orange = 'default',
+    yellow = 'default',
+    green = 'default',
+    blue = 'default',
+    red = 'default',
+    black = 'default',
+    gray1 = 'default',
+    gray2 = 'default',
+    gray3 = 'default',
+    gray4 = 'default',
+    gray5 = 'default',
+    gray6 = 'default',
+    gray7 = 'default',
+    gray8 = 'default',
+    gray9 = 'default',
+  },
 })
 
 vim.cmd.colorscheme('catppuccin')
+-- vim.cmd.colorscheme('everforest') -- :hi Normal guibg=#1a1a1a
+-- vim.cmd.colorscheme('lackluster-mint')

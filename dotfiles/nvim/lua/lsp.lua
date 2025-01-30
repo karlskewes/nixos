@@ -90,6 +90,15 @@ local lsp_on_attach = function(_, bufnr)
 end
 
 local lspconfig = require('lspconfig')
+-- tangentially related.
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  update_in_insert = true,
+  underline = true,
+  severity_sort = false,
+  float = true,
+})
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -124,7 +133,7 @@ local servers = {
       -- local = get_current_gomod,
       usePlaceholders = true,
       codelenses = {
-        generate = false,
+        generate = true,
         gc_details = true,
         test = true,
         tidy = true,
@@ -142,10 +151,29 @@ local servers = {
   rust_analyzer = {},
   sqlls = {},
   -- tailwindcss = {}, -- TODO
-  ts_ls = {},
-  vuels = {
-    cmd = { 'vue-language-server', '--stdio' },
-    -- filetypes = {},
+  ts_ls = {
+    init_options = {
+      plugins = {
+        {
+          name = '@vue/typescript-plugin',
+          location = 'vue-language-server',
+          languages = { 'vue' },
+        },
+      },
+    },
+    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+  },
+  -- vuels = {
+  --   cmd = { 'vue-language-server', '--stdio' },
+  --   -- filetypes = {},
+  -- },
+  volar = {
+    -- filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    -- init_options = {
+    --   vue = {
+    --     hybridMode = false,
+    --   },
+    -- },
   },
   yamlls = {},
   lua_ls = {
@@ -191,8 +219,19 @@ require('neodev').setup()
 -- autocompletion replacement for hrsh7th/cmp-nvim-lsp-signature-help
 -- broken, triggers after ",": https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/issues/41
 -- 'hrsh7th/cmp-nvim-lsp-signature-help',
--- event = 'verylazy',
-require('lsp_signature').setup({})
+-- require('lsp_signature').setup({})
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if vim.tbl_contains({ 'null-ls' }, client.name) then -- blacklist lsp
+      return
+    end
+    require('lsp_signature').on_attach({
+      -- ... setup options here ...
+    }, bufnr)
+  end,
+})
 
 -- autocompletion
 -- todo: is this event based triggering even needed? seems fast enough?

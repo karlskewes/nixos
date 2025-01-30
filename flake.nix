@@ -4,6 +4,17 @@
   inputs = {
     # use unstable by default for freshest packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    everforest-nvim = {
+      url = "github:neanias/everforest-nvim";
+      flake = false;
+    };
+
+    lackluster-nvim = {
+      url = "github:slugbyte/lackluster.nvim";
+      flake = false;
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/master";
       # tell home-manager to use same packages as nixpkgs
@@ -41,8 +52,25 @@
   outputs = { self, home-manager, nixpkgs, nix-darwin, apple-silicon-support
     , nix-extra, ... }@inputs:
     let
+      extraNeovimPlugins = (self: super:
+        let
+          everforest-nvim = super.vimUtils.buildVimPlugin {
+            name = "everforest-nvim";
+            src = inputs.everforest-nvim;
+          };
+          lackluster-nvim = super.vimUtils.buildVimPlugin {
+            name = "lackluster-nvim";
+            src = inputs.lackluster-nvim;
+          };
+        in {
+          vimPlugins = super.vimPlugins // {
+            inherit everforest-nvim lackluster-nvim;
+          };
+        });
+
       # Overlays is the list of overlays we want to apply from flake inputs.
-      overlays = [ inputs.neovim-nightly-overlay.overlays.default ];
+      overlays =
+        [ inputs.neovim-nightly-overlay.overlays.default extraNeovimPlugins ];
 
       # Function to render out our hosts
       mkHost = import ./lib/mkHost.nix;
@@ -80,6 +108,7 @@
           overlays = [
             apple-silicon-support.overlays.apple-silicon-overlay
             inputs.neovim-nightly-overlay.overlays.default
+            extraNeovimPlugins
           ];
         };
 
