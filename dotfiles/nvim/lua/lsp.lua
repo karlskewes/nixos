@@ -1,4 +1,13 @@
 -- LSP Configuration & Plugins
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  update_in_insert = false, -- too noisy, signature help and completion enough.
+  underline = true,
+  severity_sort = true,
+  float = true,
+})
+
 --  This function gets run when an LSP connects to a particular buffer.
 local lsp_on_attach = function(_, bufnr)
   local tsb = require('telescope.builtin')
@@ -90,21 +99,11 @@ local lsp_on_attach = function(_, bufnr)
 end
 
 local lspconfig = require('lspconfig')
--- tangentially related.
-vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  update_in_insert = true,
-  underline = true,
-  severity_sort = false,
-  float = true,
-})
 
--- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+-- blink-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities =
-  vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
+  vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities())
 local lua_runtime_path = vim.split(package.path, ';')
 table.insert(lua_runtime_path, 'lua/?.lua')
 table.insert(lua_runtime_path, 'lua/?/init.lua')
@@ -216,81 +215,15 @@ require('fidget').setup({})
 -- neovim setup for init.lua and plugin development, completion for nvim lua api.
 require('neodev').setup()
 
--- autocompletion replacement for hrsh7th/cmp-nvim-lsp-signature-help
--- broken, triggers after ",": https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/issues/41
--- 'hrsh7th/cmp-nvim-lsp-signature-help',
--- require('lsp_signature').setup({})
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local bufnr = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    if vim.tbl_contains({ 'null-ls' }, client.name) then -- blacklist lsp
-      return
-    end
-    require('lsp_signature').on_attach({
-      -- ... setup options here ...
-    }, bufnr)
-  end,
-})
+-- completion
+require('blink.cmp').setup({
+  completion = {
+    -- Show documentation when selecting a completion item
+    documentation = { auto_show = true, auto_show_delay_ms = 500 },
 
--- autocompletion
--- todo: is this event based triggering even needed? seems fast enough?
--- event = { 'insertenter', 'cmdlineenter' },
--- dependencies = {
---   -- snippet engine & its associated nvim-cmp source
---   'l3mon4d3/luasnip',
---   'saadparwaiz1/cmp_luasnip',
---
---
--- see `:help cmp`
-local cmp = require('cmp')
--- todo: consider snippet source, these or write own? mini.snippets?
--- local luasnip = require('luasnip')
--- require('luasnip.loaders.from_vscode').lazy_load()
--- luasnip.config.setup({})
-
-cmp.setup({
-  -- snippet = {
-  --   expand = function(args)
-  --     luasnip.lsp_expand(args.body)
-  --   end,
-  -- },
-  completion = { completeopt = 'menu,menuone,noinsert' },
-  mapping = cmp.mapping.preset.insert({
-    ['<c-n>'] = cmp.mapping.select_next_item(),
-    ['<c-p>'] = cmp.mapping.select_prev_item(),
-    ['<c-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<c-f>'] = cmp.mapping.scroll_docs(4),
-    ['<c-space>'] = cmp.mapping.complete(),
-    ['<c-y>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.replace,
-      select = true,
-    }),
-    ['<c-k>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      -- elseif luasnip.expand_or_locally_jumpable() then
-      --   luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<c-j>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      -- elseif luasnip.locally_jumpable(-1) then
-      --   luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  }),
-  sources = {
-    { name = 'nvim_lsp' },
-    -- { name = 'luasnip' },
-    { name = 'buffer' },
-    { name = 'path' },
-    -- FIXME: Broken, use ray-x/lsp_signature for now
-    -- {name = 'nvim_lsp_signature_help'},
+    -- Display a preview of the selected item on the current line
+    ghost_text = { enabled = true },
   },
+  -- Experimental signature help support
+  signature = { enabled = true },
 })

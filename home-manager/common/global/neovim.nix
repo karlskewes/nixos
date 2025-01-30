@@ -43,11 +43,7 @@ in {
       nvim-lspconfig
       fidget-nvim
       neodev-nvim
-      lsp_signature-nvim
-      nvim-cmp
-      cmp-nvim-lsp
-      cmp-buffer
-      cmp-path
+      blink-cmp
 
       # treesitter
       nvim-treesitter

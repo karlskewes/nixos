@@ -9,7 +9,7 @@
 require('catppuccin').setup({
   default_integrations = false,
   integrations = {
-    cmp = true,
+    blink_cmp = true,
     dap = true,
     dap_ui = true,
     fidget = true,
