@@ -9,6 +9,8 @@
 
   services.swayidle.enable = true;
 
+  services.swayosd = { enable = true; };
+
   wayland.windowManager.sway = {
     enable = true;
     config = rec {
