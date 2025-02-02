@@ -5,6 +5,11 @@
     # use unstable by default for freshest packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    vague-nvim = {
+      url = "github:vague2k/vague.nvim/1.3";
+      flake = false;
+    };
+
     everforest-nvim = {
       url = "github:neanias/everforest-nvim";
       flake = false;
@@ -62,9 +67,13 @@
             name = "lackluster-nvim";
             src = inputs.lackluster-nvim;
           };
+          vague-nvim = super.vimUtils.buildVimPlugin {
+            name = "vague-nvim";
+            src = inputs.vague-nvim;
+          };
         in {
           vimPlugins = super.vimPlugins // {
-            inherit everforest-nvim lackluster-nvim;
+            inherit everforest-nvim lackluster-nvim vague-nvim;
           };
         });
 

@@ -1,7 +1,6 @@
 { config, lib, pkgs, isDarwin, isLinux, ... }:
 
-let user = "karl";
-in {
+{
   xdg.configFile."nvim" = {
     source = ../../../dotfiles/nvim;
     recursive = true;
@@ -29,6 +28,7 @@ in {
       catppuccin-nvim
       everforest-nvim
       lackluster-nvim
+      vague-nvim
 
       # mini
       mini-align

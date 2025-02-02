@@ -74,6 +74,8 @@ require('lackluster').setup({
   },
 })
 
+require('vague').setup({})
+
 vim.cmd.colorscheme('catppuccin')
 -- vim.cmd.colorscheme('everforest') -- :hi Normal guibg=#1a1a1a
 -- vim.cmd.colorscheme('lackluster-mint')
