@@ -46,6 +46,8 @@
 
       sql-formatter
 
+      zig
+
       python312 # neovim # https://docs.python.org/3/
       python312Packages.black
       python312Packages.flake8
