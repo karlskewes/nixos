@@ -150,29 +150,13 @@ local servers = {
   rust_analyzer = {},
   sqlls = {},
   -- tailwindcss = {}, -- TODO
-  ts_ls = {
-    init_options = {
-      plugins = {
-        {
-          name = '@vue/typescript-plugin',
-          location = 'vue-language-server',
-          languages = { 'vue' },
-        },
-      },
-    },
-    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-  },
-  -- vuels = {
-  --   cmd = { 'vue-language-server', '--stdio' },
-  --   -- filetypes = {},
+  -- ts_ls = {
+  --   -- HACK: config defined in neovim.nix for javascript library nix store path.
+  --   --       see ~/.config/nvim/lua/ts_ls.lua for rendered file.
+  --   -- https://github.com/vuejs/language-tools
   -- },
   volar = {
-    -- filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-    -- init_options = {
-    --   vue = {
-    --     hybridMode = false,
-    --   },
-    -- },
+    -- vue-language-server, see ts_ls comment above.
   },
   yamlls = {},
   lua_ls = {

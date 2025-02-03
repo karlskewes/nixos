@@ -382,16 +382,15 @@
     "vague-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1738415457,
-        "narHash": "sha256-twLN6MEUiHlusJQnrh7a+n+xQGB0SejLjySMXpNJSj4=",
+        "lastModified": 1738519637,
+        "narHash": "sha256-hMZ7duvgCa3VKlPfDi5J9ZsyBZNsn6mR9G9pPBtVrFo=",
         "owner": "vague2k",
         "repo": "vague.nvim",
-        "rev": "ee51f05350431ca8a49a8d58f12074e07e12e174",
+        "rev": "8a33468ca4fc73adc1b111b19f89b7663fdfd137",
         "type": "github"
       },
       "original": {
         "owner": "vague2k",
-        "ref": "1.3",
         "repo": "vague.nvim",
         "type": "github"
       }

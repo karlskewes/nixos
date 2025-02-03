@@ -6,7 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     vague-nvim = {
-      url = "github:vague2k/vague.nvim/1.3";
+      url = "github:vague2k/vague.nvim";
       flake = false;
     };
 

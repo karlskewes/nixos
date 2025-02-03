@@ -12,6 +12,7 @@
 
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
     withNodeJs = true;
     withPython3 = true;
     # package = pkgs.neovim-unwrapped; # unstable
@@ -148,5 +149,29 @@
         vue-language-server
         yaml-language-server
       ];
+  };
+
+  # This file needs to be imported by `~/.config/nvim/init.lua`.
+  xdg.configFile."nvim/lua/ts_ls.lua" = {
+    # HACK: We need to provide nix store path to libraries which is only accessible
+    # from .nix files, unless there's a way with lua using `$(which vue-language-server)` or
+    # similar.
+    # Solves for error: `Can't find typescript.js or tsserverlibrary.js in \"\"`
+    text = # lua
+      ''
+        require('lspconfig').ts_ls.setup({
+          init_options = {
+            plugins = {
+              {
+                name = '@vue/typescript-plugin',
+                -- location = 'vue-language-server',
+                location = '${pkgs.vue-language-server}/lib/node_modules/@vue/language-server',
+                languages = { 'vue' },
+              },
+            },
+          },
+          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+        })
+      '';
   };
 }
