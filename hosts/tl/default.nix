@@ -4,7 +4,8 @@
 
     ../common/global
 
-    ../common/optional/i3.nix
+    ../common/optional/hyprland.nix
+    # ../common/optional/i3.nix
     ../common/optional/zfs.nix
   ];
 
