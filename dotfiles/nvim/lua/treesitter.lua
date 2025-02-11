@@ -1,4 +1,10 @@
 -- Highlight, edit, and navigate code
+require('treesitter-context').setup({
+  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+  max_lines = 5, -- How many lines the window should span. Values <= 0 mean no limit.
+  multiline_threshold = 2, -- Maximum number of lines to show for a single context
+})
+
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
