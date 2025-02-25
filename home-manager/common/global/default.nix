@@ -229,13 +229,23 @@
     };
 
     extraConfig = {
+      branch.sort = "committerdate";
+      commit.verbose = "true";
+      diff.algorithm = "histogram";
+      diff.colorMoved = "plain";
+      diff.mnemonicPrefix = "true";
+      diff.renames = "true";
       fetch.prune = "true";
       init.defaultBranch = "main";
+      merge.conflictstyle = "zdiff3";
       pull.rebase = "true";
       push.default = "current";
+      push.autoSetupRemote = "true";
       rebase.autosquash = "true";
-      rebase.updateRefs =
+      rebase.autostash = "true";
+      rebase.updateRefs = # sometimes not helpful but at least you can delete from commit list.
         "true"; # https://andrewlock.net/working-with-stacked-branches-in-git-is-easier-with-update-refs/
+      tag.sort = "version:refname";
     };
   };
 

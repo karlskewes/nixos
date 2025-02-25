@@ -4,6 +4,11 @@
 
   home.pointerCursor.hyprcursor.enable = true;
 
+  home.packages = with pkgs;
+    [
+      hyprshot # terminal based screenshot application, use with satty --filename X.png --output-filename Y.png
+    ];
+
   programs.swaylock = {
     enable = true;
     settings = { color = "404040"; };
