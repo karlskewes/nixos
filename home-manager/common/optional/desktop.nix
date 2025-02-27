@@ -20,7 +20,7 @@
     font-awesome
 
     ente-auth
-    gwenview # image viewer & editor (crop, resize)
+    kdePackages.gwenview # image viewer & editor (crop, resize)
     helvum # pipewire patch bay gui
     iwgtk # iwd gui, but issues on Wayland, consider swap for https://github.com/e-tho/iwmenu
     libnotify # required by dunst

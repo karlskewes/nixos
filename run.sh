@@ -27,9 +27,9 @@ EOF
 }
 
 nix-displaylink() { ## Setup DisplayLink driver in nix store
-	local yyyymm="2024-05"
-	local displaylink_version=600
-	local ubuntu_version="6.0"
+	local yyyymm="2024-10"
+	local displaylink_version=610
+	local ubuntu_version="6.1"
 
 	# https://nixos.wiki/wiki/Displaylink
 	# 6.0 - https://github.com/NixOS/nixpkgs/pull/317292
@@ -41,7 +41,7 @@ nix-displaylink() { ## Setup DisplayLink driver in nix store
 		file://"$HOME"/Downloads/displaylink-"${displaylink_version}".zip
 
 	nix-prefetch-url \
-		--name displaylink.zip \
+		--name displaylink-"${displaylink_version}".zip \
 		file://"$HOME"/Downloads/displaylink-"${displaylink_version}".zip
 }
 
