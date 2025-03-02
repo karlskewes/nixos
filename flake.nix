@@ -5,6 +5,21 @@
     # use unstable by default for freshest packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    namu-nvim = {
+      url = "github:bassamsdata/namu.nvim";
+      flake = false;
+    };
+
+    shadow-nvim = {
+      url = "github:/rjshkhr/shadow.nvim";
+      flake = false;
+    };
+
+    telescope-hierarchy-nvim = {
+      url = "github:jmacadie/telescope-hierarchy.nvim";
+      flake = false;
+    };
+
     vague-nvim = {
       url = "github:vague2k/vague.nvim";
       flake = false;
@@ -59,23 +74,33 @@
     let
       extraNeovimPlugins = (self: super:
         let
-          everforest-nvim = super.vimUtils.buildVimPlugin {
-            name = "everforest-nvim";
-            src = inputs.everforest-nvim;
+          customPlugins = {
+            everforest-nvim = super.vimUtils.buildVimPlugin {
+              name = "everforest-nvim";
+              src = inputs.everforest-nvim;
+            };
+            lackluster-nvim = super.vimUtils.buildVimPlugin {
+              name = "lackluster-nvim";
+              src = inputs.lackluster-nvim;
+            };
+            vague-nvim = super.vimUtils.buildVimPlugin {
+              name = "vague-nvim";
+              src = inputs.vague-nvim;
+            };
+            shadow-nvim = super.vimUtils.buildVimPlugin {
+              name = "shadow-nvim";
+              src = inputs.shadow-nvim;
+            };
+            namu-nvim = super.vimUtils.buildVimPlugin {
+              name = "namu-nvim";
+              src = inputs.namu-nvim;
+            };
+            telescope-hierarchy-nvim = super.vimUtils.buildVimPlugin {
+              name = "telescope-hierarchy-nvim";
+              src = inputs.telescope-hierarchy-nvim;
+            };
           };
-          lackluster-nvim = super.vimUtils.buildVimPlugin {
-            name = "lackluster-nvim";
-            src = inputs.lackluster-nvim;
-          };
-          vague-nvim = super.vimUtils.buildVimPlugin {
-            name = "vague-nvim";
-            src = inputs.vague-nvim;
-          };
-        in {
-          vimPlugins = super.vimPlugins // {
-            inherit everforest-nvim lackluster-nvim vague-nvim;
-          };
-        });
+        in { vimPlugins = super.vimPlugins // customPlugins; });
 
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays =

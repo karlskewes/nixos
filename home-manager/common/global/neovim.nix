@@ -29,6 +29,7 @@
       catppuccin-nvim
       everforest-nvim
       lackluster-nvim
+      shadow-nvim
       vague-nvim
 
       # mini
@@ -95,9 +96,22 @@
       telescope-nvim
       telescope-live-grep-args-nvim
       telescope-fzf-native-nvim
+      # telescope-hierarchy-nvim
       plenary-nvim
 
+      (telescope-hierarchy-nvim.overrideAttrs (_final: prev: {
+        nvimSkipModule = [
+          "telescope-hierarchy.ui"
+          "telescope-hierarchy"
+          "telescope-hierarchy.actions"
+          "telescope-hierarchy.log"
+          "telescope-hierarchy.defaults"
+        ];
+        # doCheck = false;
+      }))
+
       # lang specific & debug
+      namu-nvim
       nvim-nio
       nvim-dap
       nvim-dap-ui

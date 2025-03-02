@@ -233,6 +233,22 @@
         "type": "github"
       }
     },
+    "namu-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740687950,
+        "narHash": "sha256-/Gtup/riAVkwCSpKQT2ew9znK4nZVEA5vF01bzgvdVc=",
+        "owner": "bassamsdata",
+        "repo": "namu.nvim",
+        "rev": "24a3c3405bd8e8d756eae81b7bcc7b20b2fcd9d5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bassamsdata",
+        "repo": "namu.nvim",
+        "type": "github"
+      }
+    },
     "neovim-nightly-overlay": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -330,11 +346,14 @@
         "everforest-nvim": "everforest-nvim",
         "home-manager": "home-manager",
         "lackluster-nvim": "lackluster-nvim",
+        "namu-nvim": "namu-nvim",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",
         "nix-extra": "nix-extra",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
+        "shadow-nvim": "shadow-nvim",
+        "telescope-hierarchy-nvim": "telescope-hierarchy-nvim",
         "vague-nvim": "vague-nvim"
       }
     },
@@ -355,6 +374,38 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "shadow-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739819989,
+        "narHash": "sha256-30wnY2hX+upFZ0APaF4iDb/Rgs8UdV5/q/1Okhbn4Eo=",
+        "owner": "rjshkhr",
+        "repo": "shadow.nvim",
+        "rev": "9743edaa2f088a3dcf10ea706e1da61605f437bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rjshkhr",
+        "repo": "shadow.nvim",
+        "type": "github"
+      }
+    },
+    "telescope-hierarchy-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739868026,
+        "narHash": "sha256-TJqDS1AuVtBgvWHlARWI1HQO5dHv7ysv9Lh1rm8jtOU=",
+        "owner": "jmacadie",
+        "repo": "telescope-hierarchy.nvim",
+        "rev": "b73b973803e2f3b6baef717fb7ba7e5d5711fe12",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jmacadie",
+        "repo": "telescope-hierarchy.nvim",
         "type": "github"
       }
     },
