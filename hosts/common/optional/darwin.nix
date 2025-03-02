@@ -2,8 +2,7 @@
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   nixpkgs.hostPlatform = currentSystem;
   nix.settings.experimental-features = "nix-command flakes";
-  security.pam.enableSudoTouchIdAuth = true;
-  services.nix-daemon.enable = true;
+  ids.gids.nixbld = 30000; # 350 # Default in newer installations.
   system.defaults = {
     dock.autohide = true;
     dock.mru-spaces = false;
