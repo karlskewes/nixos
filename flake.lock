@@ -24,22 +24,6 @@
         "type": "github"
       }
     },
-    "everforest-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740495424,
-        "narHash": "sha256-4GW0i3jQo+j6djOigEgAiasSzob0YktRxHGzs94VGH8=",
-        "owner": "neanias",
-        "repo": "everforest-nvim",
-        "rev": "99e161dd0aceaef42dc66ef6bb6cec1164a43442",
-        "type": "github"
-      },
-      "original": {
-        "owner": "neanias",
-        "repo": "everforest-nvim",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "locked": {
         "lastModified": 1688025799,
@@ -217,22 +201,6 @@
         "type": "github"
       }
     },
-    "lackluster-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1735469289,
-        "narHash": "sha256-oZca/MfsYBW0Fa/yBUGXFZKxJ05DfDNeWj5XaOoU4Mo=",
-        "owner": "slugbyte",
-        "repo": "lackluster.nvim",
-        "rev": "662fba7e6719b7afc155076385c00d79290bc347",
-        "type": "github"
-      },
-      "original": {
-        "owner": "slugbyte",
-        "repo": "lackluster.nvim",
-        "type": "github"
-      }
-    },
     "namu-nvim": {
       "flake": false,
       "locked": {
@@ -314,8 +282,8 @@
     "nix-extra": {
       "flake": false,
       "locked": {
-        "lastModified": 1714250463,
-        "narHash": "sha256-Ia5PGTlFU24I/odNFmHt6pzWqOPiHo9N0MHqdFbr100=",
+        "lastModified": 1740953574,
+        "narHash": "sha256-Y7WvofkfNI+G44OTVyBHeZBsYwZUpFblpRttGDmTQGc=",
         "path": "/home/karl/src/nix-extra",
         "type": "path"
       },
@@ -343,18 +311,14 @@
     "root": {
       "inputs": {
         "apple-silicon-support": "apple-silicon-support",
-        "everforest-nvim": "everforest-nvim",
         "home-manager": "home-manager",
-        "lackluster-nvim": "lackluster-nvim",
         "namu-nvim": "namu-nvim",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",
         "nix-extra": "nix-extra",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
-        "shadow-nvim": "shadow-nvim",
-        "telescope-hierarchy-nvim": "telescope-hierarchy-nvim",
-        "vague-nvim": "vague-nvim"
+        "telescope-hierarchy-nvim": "telescope-hierarchy-nvim"
       }
     },
     "rust-overlay": {
@@ -374,22 +338,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "shadow-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739819989,
-        "narHash": "sha256-30wnY2hX+upFZ0APaF4iDb/Rgs8UdV5/q/1Okhbn4Eo=",
-        "owner": "rjshkhr",
-        "repo": "shadow.nvim",
-        "rev": "9743edaa2f088a3dcf10ea706e1da61605f437bc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rjshkhr",
-        "repo": "shadow.nvim",
         "type": "github"
       }
     },
@@ -427,22 +375,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "vague-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1740504174,
-        "narHash": "sha256-dDtYkRNK4BtWbYtoVDjsvDBmWCVhJ/+qoDt+mJmEKIQ=",
-        "owner": "vague2k",
-        "repo": "vague.nvim",
-        "rev": "5a36db645d02ea4c9ffe43093aafce6b6addc72f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vague2k",
-        "repo": "vague.nvim",
         "type": "github"
       }
     }

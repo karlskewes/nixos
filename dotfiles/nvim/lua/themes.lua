@@ -1,11 +1,3 @@
--- TODO: Build for nix
--- require('everforest').setup({
---   -- background = 'hard',
---   transparent_background_level = 0,
--- })
--- vim.cmd.colorscheme('everforest')
--- vim.cmd('highlight Normal guibg=black')
-
 require('catppuccin').setup({
   default_integrations = false,
   integrations = {
@@ -74,31 +66,4 @@ vim.fn.sign_define(
   { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' }
 )
 
-require('lackluster').setup({
-  tweak_pallet = {
-    -- ('default' is default) ('#ffaaff' is a custom colorcode)
-    lack = 'default',
-    luster = 'default',
-    orange = 'default',
-    yellow = 'default',
-    green = 'default',
-    blue = 'default',
-    red = 'default',
-    black = 'default',
-    gray1 = 'default',
-    gray2 = 'default',
-    gray3 = 'default',
-    gray4 = 'default',
-    gray5 = 'default',
-    gray6 = 'default',
-    gray7 = 'default',
-    gray8 = 'default',
-    gray9 = 'default',
-  },
-})
-
-require('vague').setup({})
-
 vim.cmd.colorscheme('catppuccin')
--- vim.cmd.colorscheme('everforest') -- :hi Normal guibg=#1a1a1a
--- vim.cmd.colorscheme('lackluster-mint')

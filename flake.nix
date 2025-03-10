@@ -10,28 +10,8 @@
       flake = false;
     };
 
-    shadow-nvim = {
-      url = "github:/rjshkhr/shadow.nvim";
-      flake = false;
-    };
-
     telescope-hierarchy-nvim = {
       url = "github:jmacadie/telescope-hierarchy.nvim";
-      flake = false;
-    };
-
-    vague-nvim = {
-      url = "github:vague2k/vague.nvim";
-      flake = false;
-    };
-
-    everforest-nvim = {
-      url = "github:neanias/everforest-nvim";
-      flake = false;
-    };
-
-    lackluster-nvim = {
-      url = "github:slugbyte/lackluster.nvim";
       flake = false;
     };
 
@@ -75,22 +55,6 @@
       extraNeovimPlugins = (self: super:
         let
           customPlugins = {
-            everforest-nvim = super.vimUtils.buildVimPlugin {
-              name = "everforest-nvim";
-              src = inputs.everforest-nvim;
-            };
-            lackluster-nvim = super.vimUtils.buildVimPlugin {
-              name = "lackluster-nvim";
-              src = inputs.lackluster-nvim;
-            };
-            vague-nvim = super.vimUtils.buildVimPlugin {
-              name = "vague-nvim";
-              src = inputs.vague-nvim;
-            };
-            shadow-nvim = super.vimUtils.buildVimPlugin {
-              name = "shadow-nvim";
-              src = inputs.shadow-nvim;
-            };
             namu-nvim = super.vimUtils.buildVimPlugin {
               name = "namu-nvim";
               src = inputs.namu-nvim;

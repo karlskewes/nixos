@@ -3,13 +3,17 @@
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup({
   defaults = {
-    layout_strategy = 'vertical',
+    layout_strategy = 'vertical', -- better for vertical split screen with terminal
     layout_config = {
       height = 0.95,
-      preview_height = 0.70,
     },
+    preview_height = 0.70,
   },
   extensions = {
+    hierarchy = {
+      layout_strategy = 'vertical', -- better for vertical split screen with terminal
+      multi_depth = 2, -- Default = 5 - How many layers deep should a multi-expand(E) go?
+    },
     live_grep_args = {
       auto_quoting = false, -- enable/disable auto-quoting
     },
@@ -19,6 +23,7 @@ require('telescope').setup({
 -- Enable telescope extensions, if installed
 pcall(require('telescope').load_extension('fzf'))
 pcall(require('telescope').load_extension('live_grep_args'))
+pcall(require('telescope').load_extension('hierarchy'))
 
 -- Telescope live_grep in git root
 -- find_git_root finds the git root directory starting with the provided file and
@@ -170,7 +175,20 @@ vim.keymap.set('n', '<leader>svc', tsb.git_commits, { desc = '[S]earch [v]cs [c]
 vim.keymap.set('n', '<leader>svm', git_modified, { desc = '[S]earch [v]cs [m]odified' })
 vim.keymap.set('n', '<leader>svs', tsb.git_status, { desc = '[S]earch [v]cs status' })
 vim.keymap.set('n', '<leader>svS', tsb.git_stash, { desc = '[S]earch [v]cs [S]tash' })
-
+-- telescope-hierarchy.nvim
+vim.keymap.set(
+  'n',
+  '<leader>si',
+  '<cmd>Telescope hierarchy incoming_calls<cr>',
+  { desc = 'LSP: [S]earch [I]ncoming Calls' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>so',
+  '<cmd>Telescope hierarchy outgoing_calls<cr>',
+  { desc = 'LSP: [S]earch [O]utgoing Calls' }
+)
+-- live_grep
 vim.keymap.set('n', '<leader>sw', function()
   local word = vim.fn.expand('<cword>')
   live_grep_args_git_root(word)

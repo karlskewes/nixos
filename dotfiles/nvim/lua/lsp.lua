@@ -75,12 +75,10 @@ local lsp_on_attach = function(_, bufnr)
     tsb.lsp_references,
     { buffer = bufnr, desc = '[L]SP [R]eferences - Default: [grr]' }
   )
-  vim.keymap.set(
-    'n',
-    '<leader>ls',
-    tsb.lsp_document_symbols,
-    { buffer = bufnr, desc = '[L]SP Document [S]ymbols - Default: [g0]' }
-  )
+  vim.keymap.set('n', '<leader>ls', function()
+    -- methods in Go can get truncated, width based on vertical split in terminal.
+    tsb.lsp_document_symbols({ symbol_width = 60 })
+  end, { buffer = bufnr, desc = '[L]SP Document [S]ymbols - Default: [g0]' })
   vim.keymap.set(
     'n',
     '<leader>lS',

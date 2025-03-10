@@ -27,10 +27,6 @@
 
       # themes
       catppuccin-nvim
-      everforest-nvim
-      lackluster-nvim
-      shadow-nvim
-      vague-nvim
 
       # mini
       mini-align
