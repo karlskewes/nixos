@@ -28,5 +28,10 @@
   programs.bash.enable = true;
   programs.zsh.enable = true;
 
+  environment.systemPackages = with pkgs;
+    [
+      (pkgs.hiPrio uutils-coreutils-noprefix) # rust versions
+    ];
+
   system.stateVersion = 5;
 }
