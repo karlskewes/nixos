@@ -145,7 +145,34 @@ local servers = {
   -- htmx = {}, -- TODO
   nil_ls = {},
   pyright = {},
-  rust_analyzer = {},
+  rust_analyzer = {
+    settings = {
+      ['rust-analyzer'] = {
+        -- $ rust-analyzer --print-config-schema
+        cargo = {
+          features = 'all',
+        },
+        check = {
+          features = 'all',
+          command = 'clippy',
+          extraArgs = {
+            '--',
+            '--no-deps',
+            -- https://doc.rust-lang.org/stable/clippy/index.html
+            '-Dclippy::complexity',
+            '-Dclippy::correctness',
+            '-Wclippy::all',
+            '-Wclippy::cargo',
+            '-Wclippy::pedantic',
+            '-Wclippy::nursery',
+          },
+        },
+        procMacro = {
+          enable = true,
+        },
+      },
+    },
+  },
   sqlls = {},
   -- tailwindcss = {}, -- TODO
   -- ts_ls = {
