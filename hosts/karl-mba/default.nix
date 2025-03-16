@@ -8,16 +8,16 @@
     # ../common/optional/i3.nix
     ../common/optional/hyprland.nix
     # ../common/optional/sway.nix
-    ../common/optional/zfs.nix
+    # ../common/optional/zfs.nix
   ];
 
-  zfsBootUnlock = {
-    enable = false;
-    authorizedKeys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-    ];
-    interfaces = [ "cdc-ncm" ];
-  };
+  # zfsBootUnlock = {
+  #   enable = false;
+  #   authorizedKeys = [
+  #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
+  #   ];
+  #   interfaces = [ "cdc-ncm" ];
+  # };
 
   boot.kernelParams = [
     "psmouse.synaptics_intertouch=0"
