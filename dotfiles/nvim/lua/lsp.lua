@@ -140,9 +140,14 @@ local servers = {
     },
   },
   golangci_lint_ls = {},
-  html = {},
-  -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-  -- htmx = {}, -- TODO
+  html = {
+    filetypes = { 'html', 'templ' },
+  },
+  -- htmx = {
+  --   -- cmd = 'htmx-lsp2', -- TODO: vet code
+  --   cmd = 'htmx-lsp', -- https://github.com/ThePrimeagen/htmx-lsp/issues/53
+  --   filetypes = { 'html', 'templ' },
+  -- },
   nil_ls = {},
   pyright = {},
   rust_analyzer = {
@@ -174,7 +179,16 @@ local servers = {
     },
   },
   sqlls = {},
-  -- tailwindcss = {}, -- TODO
+  tailwindcss = {
+    filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
+    settings = {
+      tailwindCSS = {
+        includeLanguages = {
+          templ = 'html',
+        },
+      },
+    },
+  },
   -- ts_ls = {
   --   -- HACK: config defined in neovim.nix for javascript library nix store path.
   --   --       see ~/.config/nvim/lua/ts_ls.lua for rendered file.

@@ -97,11 +97,14 @@
 
       (telescope-hierarchy-nvim.overrideAttrs (_final: prev: {
         nvimSkipModule = [
-          "telescope-hierarchy.ui"
           "telescope-hierarchy"
           "telescope-hierarchy.actions"
-          "telescope-hierarchy.log"
+          "telescope-hierarchy.cache.entry"
           "telescope-hierarchy.defaults"
+          "telescope-hierarchy.log"
+          "telescope-hierarchy.lsp"
+          "telescope-hierarchy.tree.init"
+          "telescope-hierarchy.ui"
         ];
         # doCheck = false;
       }))
@@ -145,6 +148,8 @@
         eslint_d
         golangci-lint-langserver
         gopls
+        # htmx-lsp # TODO: https://github.com/ThePrimeagen/htmx-lsp/issues/53
+        # htmx-lsp2 # TODO: vet code
         jsonnet-language-server
         nil # nix
         nodePackages.prettier
@@ -155,7 +160,7 @@
         tailwindcss-language-server
         typescript
         typescript-language-server
-        vscode-langservers-extracted # vscode-eslint-language-server
+        vscode-langservers-extracted # vscode-eslint-language-server, vscode-html-language-server
         vue-language-server
         yaml-language-server
       ];
@@ -180,7 +185,7 @@
               },
             },
           },
-          filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+          filetypes = { 'json', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
         })
       '';
   };
