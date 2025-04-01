@@ -10,8 +10,8 @@ name:
 
 let
 
-  isDarwin = nixpkgs.stdenv.isDarwin;
-  isLinux = nixpkgs.stdenv.isLinux;
+  isDarwin = nixpkgs.hostPlatform.isDarwin;
+  isLinux = nixpkgs.hostPlatform.isLinux;
   hm =
     if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
 

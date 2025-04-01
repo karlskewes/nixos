@@ -19,7 +19,7 @@
       asahi-nvram
       asahi-wifisync
 
-      calibre
+      # calibre # 7.26.0 broken errors during test_piper, re-add when fixed.
     ]);
 
   # TODO: only if linux
