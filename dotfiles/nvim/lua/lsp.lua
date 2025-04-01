@@ -96,6 +96,27 @@ local lsp_on_attach = function(_, bufnr)
   )
 end
 
+--- get_current_gomod returns the current Go module for use in `goimports -local <here>`.
+---@return string
+local get_current_gomod = function()
+  local module = '' -- gopls default
+
+  if vim.fn.executable('go') ~= 1 then
+    return module
+  end
+
+  local list_module = vim.fn.trim(vim.fn.system('go list -m'))
+  if vim.v.shell_error ~= 0 then
+    return module
+  end
+
+  module = list_module:gsub('\n', ',')
+
+  vim.inspect('module:', module)
+
+  return module
+end
+
 local lspconfig = require('lspconfig')
 
 -- blink-cmp supports additional completion capabilities, so broadcast that to servers
@@ -106,19 +127,6 @@ local lua_runtime_path = vim.split(package.path, ';')
 table.insert(lua_runtime_path, 'lua/?.lua')
 table.insert(lua_runtime_path, 'lua/?/init.lua')
 
--- TODO: fetch go.mod path and then pass to goimports -local <here> to sort imports.
--- local get_current_gomod = function()
---   if vim.fn.executable('go') ~= 1 then
---     return
---   end
---
---   local module = vim.fn.trim(vim.fn.system('go list -m'))
---   if vim.v.shell_error ~= 0 then
---     return
---   end
---   module = module:gsub('\n', ',')
--- end
-
 -- Enable the following language servers, config passed to server config `settings` field.
 local servers = {
   bashls = {},
@@ -127,7 +135,7 @@ local servers = {
   eslint = {},
   gopls = {
     settings = {
-      -- local = get_current_gomod,
+      ['local'] = get_current_gomod(), -- keyword cannot be used as name workaround.
       usePlaceholders = true,
       codelenses = {
         generate = true,
