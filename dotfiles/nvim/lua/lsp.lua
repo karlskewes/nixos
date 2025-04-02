@@ -197,6 +197,7 @@ local servers = {
       },
     },
   },
+  terraformls = {},
   -- ts_ls = {
   --   -- HACK: config defined in neovim.nix for javascript library nix store path.
   --   --       see ~/.config/nvim/lua/ts_ls.lua for rendered file.
