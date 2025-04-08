@@ -6,11 +6,19 @@
 
     ./common/optional/dev.nix
     ./common/optional/gpg.nix
-  ] ++ (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
-    # ./common/optional/i3.nix
-    # ./common/optional/sway.nix
-    ./common/optional/hyprland.nix
-  ]);
+  ] # #
+    ++ (lib.optionals isDarwin [ ])
+    # #
+    ++ (lib.optionals isLinux [
+      # ./common/optional/i3.nix
+      # ./common/optional/sway.nix
+      ./common/optional/hyprland.nix
+    ]);
+
+  desktop.firefox = {
+    enable = true;
+    users = [ "karl" ];
+  };
 
   home.packages = with pkgs;
     [ ] ++ (lib.optionals isLinux [
