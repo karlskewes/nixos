@@ -120,6 +120,7 @@
 
       # other
       conform-nvim
+      image-nvim
       indent-blankline-nvim
       lualine-nvim
       oil-nvim
@@ -128,12 +129,15 @@
       which-key-nvim
     ];
 
+    extraLuaPackages = ps: [ ps.magick ];
     extraPackages = with pkgs;
       (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [ ]) ++ [
         git
 
         chafa # neovim telescope media_files image preview
         ffmpegthumbnailer # neovim telescope media_files video preview
+
+        imagemagick # github.com/3rd/image.nvim
 
         fd
         ripgrep
