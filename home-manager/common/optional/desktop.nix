@@ -44,7 +44,7 @@
     ];
 
     programs.firefox = lib.mkIf config.desktop.firefox.enable {
-      package = pkgs.firefox-esr;
+      package = pkgs.firefox;
       enable = true;
       # Check about:policies#documentation for options.
       # https://mozilla.github.io/policy-templates/
@@ -76,7 +76,7 @@
           "browser.newtabpage.activity-stream.system.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
         };
-        # SearchEngines = []; # Doesn't work.
+        # SearchEngines = []; # Doesn't work even with pkgs.firefox-esr.
       };
       # Check about:config for options.
 
@@ -163,6 +163,7 @@
       enable = true;
       font = "Hack Nerd Font 14";
       plugins = with pkgs; [ rofi-calc rofi-emoji rofi-power-menu ];
+      extraConfig = { modi = "window,run,ssh,drun,emoji,calc"; };
     };
 
     services.blueman-applet.enable = {

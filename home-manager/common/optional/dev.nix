@@ -37,6 +37,7 @@
       cargo
       cargo-audit
       cargo-watch
+      clang
       clippy
       pkg-config
       openssl
