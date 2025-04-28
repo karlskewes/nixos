@@ -43,7 +43,7 @@
       openssl
       rustc
       rustfmt
-      gcc
+      (lib.hiPrio gcc)
 
       sql-formatter
 
