@@ -45,6 +45,9 @@
     # brscan5 = { enable = true; };
   };
 
+  # required to use dvd/cdrom in some applications
+  programs.dconf.enable = true;
+
   # scanning
   services.avahi = {
     enable = true;

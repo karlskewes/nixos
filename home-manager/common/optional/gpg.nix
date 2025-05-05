@@ -18,7 +18,7 @@
   services.gpg-agent = {
     enable = isLinux;
     enableSshSupport = true;
-    pinentryPackage =
+    pinentry.package =
       if isDarwin then pkgs.pinentry_mac else pkgs.pinentry-gnome3;
 
     # cache the keys forever, rotate as require
