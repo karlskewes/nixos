@@ -1,5 +1,4 @@
-# X Windows additional configuration dependent on home-manager
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   imports = [ ./desktop.nix ./wayland.nix ];
 
   home.pointerCursor.hyprcursor.enable = true;

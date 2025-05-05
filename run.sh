@@ -92,16 +92,12 @@ switch_linux() {
 	sudo ./result/activate
 	sudo /run/current-system/bin/switch-to-configuration boot
 
-	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, consider:
-	rm -rf ~/.local/share/nvim/lazy/nvim-treesitter/parser/*'
-
 	# clean
-
 }
 switch() { ## Build latest and switch
 	build
 
-	if [ $(uname) == "Darwin" ]; then
+	if [ "$(uname)" == "Darwin" ]; then
 		echo "darwin detected, switching..."
 		switch_darwin
 	else
@@ -148,17 +144,6 @@ goutils() { ## Install go utils
 	go install -v golang.org/x/perf/cmd/benchstat@latest
 	go install -v honnef.co/go/tools/cmd/staticcheck@latest
 	go install -v github.com/pressly/goose/v3/cmd/goose@latest # TODO here or elsewhere
-}
-
-nvim_deps() { ## Install neovim dependencies with Mason
-	# grep this repo for comment convention: 'MasonInstall: <app1> <app2>'
-	apps="$(grep ':MasonInstall' dotfiles/nvim/lua/user/*.lua | cut -d ' ' -f 3- | xargs)"
-	echo "nvim -c 'MasonInstall ${apps}'"
-}
-
-tree-sitter() { ## Clear TreeSitter parsers
-	echo 'Tree-sitter may have parsers built for previous gcc version and require reinstalling parsers, removing...'
-	rm -rf ~/.local/share/nvim/lazy/nvim-treesitter/parser/*
 }
 
 fmt() { ## Format *.{lua,nix,sh}

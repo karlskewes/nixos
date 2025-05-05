@@ -1,13 +1,12 @@
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
 
   imports = [
     ./hardware-configuration.nix
 
     ../common/global
 
-    # ../common/optional/i3.nix
-    ../common/optional/hyprland.nix
-    # ../common/optional/sway.nix
+    # ../common/optional/hyprland.nix
+    ../common/optional/cosmic.nix
     # ../common/optional/zfs.nix
   ];
 

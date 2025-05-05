@@ -1,5 +1,4 @@
-# X Windows additional configuration dependent on home-manager
-{ config, lib, pkgs, ... }: {
+{ lib, pkgs, ... }: {
   imports = [ ./desktop.nix ];
 
   xdg.configFile."i3/config".text = builtins.readFile ../../../dotfiles/i3;
