@@ -1,4 +1,4 @@
-({ config, lib, pkgs, isDarwin, isLinux, ... }: {
+({ lib, pkgs, isDarwin, isLinux, ... }: {
   imports = [
     ./user-karl.nix
 
@@ -30,10 +30,5 @@
 
       # calibre # 7.26.0 broken errors during test_piper, re-add when fixed.
     ]);
-
-  # TODO: only if linux
-  # home.pointerCursor.size = 128; # 180; # 4k
-  # TODO: only if i3
-  # xresources.properties = lib.mkIf isLinux { "Xft.dpi" = "122"; };
 })
 

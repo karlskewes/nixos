@@ -7,6 +7,7 @@
 
   # manage XDG directories
   xdg.enable = true;
+  xdg.autostart.enable = true;
 
   #---------------------------------------------------------------------
   # Packages

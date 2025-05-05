@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   imports = [ ./windowing.nix ];
@@ -18,8 +18,6 @@
 
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
-  services.displayManager.environment = { XCURSOR_SIZE = 16; };
-
   security.pam.services.cosmic.enableGnomeKeyring = true;
 
   services.dbus.enable = true;
