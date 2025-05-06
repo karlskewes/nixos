@@ -1,12 +1,12 @@
-{ lib, pkgs, ... }: {
+{ lib, ... }: {
 
   imports = [
     ./hardware-configuration.nix
 
     ../common/global
 
-    # ../common/optional/hyprland.nix
-    ../common/optional/cosmic.nix
+    ../common/optional/hyprland.nix
+    # ../common/optional/cosmic.nix
     # ../common/optional/zfs.nix
   ];
 
