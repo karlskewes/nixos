@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./wayland.nix ];
@@ -7,6 +7,8 @@
     enable = true;
     xwayland.enable = true;
   };
+
+  services.upower.enable = true;
 
   services.greetd.settings.default_session = {
     command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
