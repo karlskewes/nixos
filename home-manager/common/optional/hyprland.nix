@@ -3,10 +3,11 @@
 
   home.pointerCursor.hyprcursor.enable = true;
 
-  home.packages = with pkgs;
-    [
-      hyprshot # terminal based screenshot application, use with satty --filename X.png --output-filename Y.png
-    ];
+  home.packages = with pkgs; [
+    ferrishot
+    hyprshot # terminal based screenshot application, use with satty --filename X.png --output-filename Y.png
+    xdg-desktop-portal-gtk
+  ];
 
   programs.swaylock = {
     enable = true;
@@ -264,4 +265,6 @@
       ];
     };
   };
+
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 }

@@ -1,6 +1,9 @@
 { config, lib, pkgs, currentSystem, ... }:
 
 {
+  # https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
+  environment.pathsToLink =
+    [ "/share/xdg-desktop-portal" "/share/applications" ];
   environment.systemPackages = with pkgs; [ libinput simple-scan ];
 
   # i18n  {

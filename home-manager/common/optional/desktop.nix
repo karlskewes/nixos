@@ -19,6 +19,17 @@
         "SKIP_HOST_UPDATE": true
       }
     '';
+    xdg.mime.enable = true;
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+      config = {
+        hyprland = {
+          default = [ "hyprland" "gtk" ];
+          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+        };
+      };
+    };
 
     fonts.fontconfig.enable = true;
 
