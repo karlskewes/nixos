@@ -1,13 +1,18 @@
-{ pkgs, ... }: {
+{ pkgs, currentSystem, ... }: {
   imports = [ ./desktop.nix ./wayland.nix ];
 
   home.pointerCursor.hyprcursor.enable = true;
 
   home.packages = with pkgs; [
-    ferrishot
     hyprshot # terminal based screenshot application, use with satty --filename X.png --output-filename Y.png
     xdg-desktop-portal-gtk
   ];
+
+  services.blueman-applet.enable = {
+    "x86_64-linux" = true;
+    "aarch64-linux" = false;
+    "aarch64-darwin" = false;
+  }."${currentSystem}"; # bluetooth
 
   programs.swaylock = {
     enable = true;

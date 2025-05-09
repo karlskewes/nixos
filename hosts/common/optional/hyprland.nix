@@ -12,6 +12,8 @@
   # security.pam.services.hyprlock = { };
   security.pam.services.hyprland.enableGnomeKeyring = true;
 
+  services.blueman.enable = true; # bluetooth
+
   services.dbus.enable = true;
 
   environment.systemPackages = with pkgs; [ greetd.tuigreet ];

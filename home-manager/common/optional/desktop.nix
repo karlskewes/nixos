@@ -24,6 +24,10 @@
       enable = true;
       xdgOpenUsePortal = true;
       config = {
+        cosmic = {
+          default = [ "cosmic" "gtk" ];
+          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+        };
         hyprland = {
           default = [ "hyprland" "gtk" ];
           "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
@@ -46,11 +50,8 @@
       ente-auth
       kdePackages.gwenview # image viewer & editor (crop, resize)
       helvum # pipewire patch bay gui
-      iwgtk # iwd gui, but issues on Wayland, consider swap for https://github.com/e-tho/iwmenu
       libnotify # required by dunst
-      pavucontrol # pulseaudio gui
       qalculate-gtk # calculator
-      rofi-power-menu # doesn't work as extra package
       vlc
     ];
 
@@ -168,20 +169,6 @@
         map ctrl+shift+enter new_window_with_cwd
       '';
     };
-
-    programs.rofi = {
-      package = lib.mkDefault pkgs.rofi;
-      enable = true;
-      font = "Hack Nerd Font 14";
-      plugins = with pkgs; [ rofi-calc rofi-emoji rofi-power-menu ];
-      extraConfig = { modi = "window,run,ssh,drun,emoji,calc"; };
-    };
-
-    services.blueman-applet.enable = {
-      "x86_64-linux" = true;
-      "aarch64-linux" = false;
-      "aarch64-darwin" = false;
-    }."${currentSystem}"; # bluetooth
 
     services.dunst = { enable = true; };
   };

@@ -8,6 +8,8 @@
   home.packages = with pkgs; [
     i3lock-fancy
     i3status # programs.i3status.enable = true # does not support custom M1 battery config.
+    iwgtk # iwd gui, but issues on Wayland, consider swap for https://github.com/e-tho/iwmenu
+    pavucontrol # pulseaudio gui
 
     xclip
   ];

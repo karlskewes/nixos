@@ -7,6 +7,8 @@
 
   environment.systemPackages = with pkgs; [ greetd.tuigreet ];
 
+  services.blueman.enable = true; # bluetooth
+
   services.greetd = {
     enable = true;
     settings = {

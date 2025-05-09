@@ -3,6 +3,18 @@
 {
   imports = [ ./windowing.nix ];
 
+  # https://support.system76.com/articles/audio/#audio-crackling-or-hardware-clicking
+  services.pipewire.extraConfig.pipewire."91-audio-stutter" = {
+    "session.suspend-timeout-seconds" = 0;
+  };
+  services.pipewire.extraConfig.pipewire-pulse."91-audio-stutter" = {
+    "session.suspend-timeout-seconds" = 0;
+  };
+
+  hardware.bluetooth.settings.General.ControllerMode = "bredr";
+
+  services.power-profiles-daemon.enable = false;
+
   nix.settings = {
     substituters = [ "https://cosmic.cachix.org/" ];
     trusted-public-keys =

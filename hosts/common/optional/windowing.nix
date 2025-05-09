@@ -18,7 +18,6 @@
     package = pkgs.bluez5-experimental;
     # [NEW] Device 94:DB:56:E0:AE:54 WH-1000XM4
   };
-  services.blueman.enable = true; # bluetooth
 
   hardware.graphics.enable = true;
 
