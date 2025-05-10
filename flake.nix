@@ -4,8 +4,8 @@
   inputs = {
     # use unstable by default for freshest packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.follows =
-      "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
+    # nixpkgs.follows =
+    #   "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
 
     nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
 
@@ -30,15 +30,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     apple-silicon-support = {
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
     };
 
     neovim-nightly-overlay = {
