@@ -4,10 +4,6 @@
   inputs = {
     # use unstable by default for freshest packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs.follows =
-    #   "nixos-cosmic/nixpkgs"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable NixOS release
-
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
 
     namu-nvim = {
       url = "github:bassamsdata/namu.nvim";
