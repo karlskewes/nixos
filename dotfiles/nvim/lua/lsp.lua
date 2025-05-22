@@ -1,11 +1,15 @@
 -- LSP Configuration & Plugins
 vim.diagnostic.config({
-  virtual_text = true,
+  virtual_text = {
+    source = true, -- "if_many"
+  },
   signs = true,
   update_in_insert = false, -- too noisy, signature help and completion enough.
   underline = true,
   severity_sort = true,
-  float = true,
+  float = {
+    source = true, -- "if_many"
+  },
 })
 
 --  This function gets run when an LSP connects to a particular buffer.
@@ -147,7 +151,9 @@ local servers = {
       staticcheck = true,
     },
   },
-  golangci_lint_ls = {},
+  golangci_lint_ls = {
+    cmd = { 'golangci-lint-langserver' },
+  },
   html = {
     filetypes = { 'html', 'templ' },
   },
