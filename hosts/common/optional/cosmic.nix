@@ -3,23 +3,25 @@
 {
   imports = [ ./windowing.nix ];
 
+  # xdg defaults not working.
+  # https://github.com/lilyinstarlight/nixos-cosmic/issues/273
+  systemd.user.extraConfig = ''
+    DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
+  '';
+  #
   # https://support.system76.com/articles/audio/#audio-crackling-or-hardware-clicking
-  services.pipewire.extraConfig.pipewire."91-audio-stutter" = {
-    "session.suspend-timeout-seconds" = 0;
-  };
-  services.pipewire.extraConfig.pipewire-pulse."91-audio-stutter" = {
-    "session.suspend-timeout-seconds" = 0;
-  };
+  # services.pipewire.extraConfig.pipewire."91-audio-stutter" = {
+  #   "session.suspend-timeout-seconds" = 0;
+  # };
+  # services.pipewire.extraConfig.pipewire-pulse."91-audio-stutter" = {
+  #   "session.suspend-timeout-seconds" = 0;
+  # };
 
-  hardware.bluetooth.settings.General.ControllerMode = "bredr";
+  # journalctl -u bluetooth
+  # May 17 18:35:39 karl-mba bluetoothd[927]: src/profile.c:record_cb() Unable to get Hands-Free Voice gateway SDP record: Host is down
+  # hardware.bluetooth.settings.General.ControllerMode = "bredr";
 
-  services.power-profiles-daemon.enable = false;
-
-  nix.settings = {
-    substituters = [ "https://cosmic.cachix.org/" ];
-    trusted-public-keys =
-      [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-  };
+  # services.power-profiles-daemon.enable = false;
 
   # enable clipboard management: zwlr_data_control_manager_v1
   environment.sessionVariables.COSMIC_DATA_CONTROL_ENABLED = 1;

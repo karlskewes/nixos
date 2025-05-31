@@ -1,5 +1,5 @@
 # X Windows additional configuration dependent on home-manager
-{ config, lib, pkgs, currentSystem, ... }: {
+{ config, lib, pkgs, ... }: {
   options.desktop.firefox = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -52,6 +52,7 @@
       helvum # pipewire patch bay gui
       libnotify # required by dunst
       qalculate-gtk # calculator
+      servo # rust web browser
       vlc
     ];
 
@@ -73,7 +74,7 @@
         };
         Preferences = { # `profiles.<name>.settings` for all profiles
           "browser.search.region" = "AU";
-          "browser.contentblocking.category" = "strict";
+          # "browser.contentblocking.category" = "strict";
           "browser.topsites.contile.enabled" = false;
           "browser.formfill.enable" = false;
           "browser.search.suggest.enabled" = false;
@@ -167,6 +168,7 @@
       settings = { enable_audio_bell = false; };
       extraConfig = ''
         map ctrl+shift+enter new_window_with_cwd
+        tab_title_template "{tab.active_wd.split('/')[-1]}: {title}"
       '';
     };
 
