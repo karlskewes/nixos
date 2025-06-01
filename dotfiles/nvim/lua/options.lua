@@ -24,6 +24,7 @@ vim.o.colorcolumn = '100'
 vim.o.termguicolors = true
 -- vim.o.textwidth = 99 -- wrap at this character number on whitespace, set per filetype.
 vim.o.undofile = true
+vim.o.winborder = 'single' -- floating window border style, padding not available.
 vim.o.wrap = true -- don't display lines as one long line
 vim.o.spelllang = 'en_us'
 vim.o.spell = true
