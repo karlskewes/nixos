@@ -13,7 +13,13 @@ vim.diagnostic.config({
 })
 
 --  This function gets run when an LSP connects to a particular buffer.
-local lsp_on_attach = function(_, bufnr)
+local lsp_on_attach = function(args)
+  local bufnr = args.buf
+  local client = vim.lsp.get_client_by_id(args.data.client_id)
+  if client == nil then
+    return
+  end
+
   local tsb = require('telescope.builtin')
   vim.keymap.set('n', 'gd', tsb.lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
   vim.keymap.set(
@@ -100,152 +106,57 @@ local lsp_on_attach = function(_, bufnr)
   )
 end
 
---- get_current_gomod returns the current Go module for use in `goimports -local <here>`.
----@return string
-local get_current_gomod = function()
-  local module = '' -- gopls default
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = lsp_on_attach,
+})
 
-  if vim.fn.executable('go') ~= 1 then
-    return module
-  end
-
-  local list_module = vim.fn.trim(vim.fn.system('go list -m'))
-  if vim.v.shell_error ~= 0 then
-    return module
-  end
-
-  module = list_module:gsub('\n', ',')
-
-  vim.inspect('module:', module)
-
-  return module
-end
-
-local lspconfig = require('lspconfig')
+-- require('lspconfig') -- TODO: is this still required?
 
 -- blink-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities =
   vim.tbl_deep_extend('force', capabilities, require('blink.cmp').get_lsp_capabilities())
-local lua_runtime_path = vim.split(package.path, ';')
-table.insert(lua_runtime_path, 'lua/?.lua')
-table.insert(lua_runtime_path, 'lua/?/init.lua')
 
--- Enable the following language servers, config passed to server config `settings` field.
-local servers = {
-  bashls = {},
-  buf_ls = {},
-  dockerls = {},
-  eslint = {},
-  gopls = {
-    settings = {
-      ['local'] = get_current_gomod(), -- keyword cannot be used as name workaround.
-      usePlaceholders = true,
-      codelenses = {
-        generate = true,
-        gc_details = true,
-        test = true,
-        tidy = true,
-      },
-      gofumpt = true,
-      staticcheck = true,
-    },
-  },
-  golangci_lint_ls = {
-    cmd = { 'golangci-lint-langserver' },
-  },
-  html = {
-    filetypes = { 'html', 'templ' },
-  },
-  -- htmx = {
-  --   -- cmd = 'htmx-lsp2', -- TODO: vet code
-  --   cmd = 'htmx-lsp', -- https://github.com/ThePrimeagen/htmx-lsp/issues/53
-  --   filetypes = { 'html', 'templ' },
-  -- },
-  nil_ls = {},
-  pyright = {},
-  rust_analyzer = {
-    settings = {
-      ['rust-analyzer'] = {
-        -- $ rust-analyzer --print-config-schema
-        cargo = {
-          features = 'all',
-        },
-        check = {
-          features = 'all',
-          command = 'clippy',
-          extraArgs = {
-            '--',
-            '--no-deps',
-            -- https://doc.rust-lang.org/stable/clippy/index.html
-            '-Dclippy::complexity',
-            '-Dclippy::correctness',
-            '-Wclippy::all',
-            '-Wclippy::cargo',
-            '-Wclippy::pedantic',
-            '-Wclippy::nursery',
-          },
-        },
-        procMacro = {
-          enable = true,
-        },
-      },
-    },
-  },
-  sqlls = {},
-  tailwindcss = {
-    filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
-    settings = {
-      tailwindCSS = {
-        includeLanguages = {
-          templ = 'html',
-        },
-      },
-    },
-  },
-  terraformls = {},
-  -- ts_ls = {
-  --   -- HACK: config defined in neovim.nix for javascript library nix store path.
-  --   --       see ~/.config/nvim/lua/ts_ls.lua for rendered file.
-  --   -- https://github.com/vuejs/language-tools
-  -- },
-  volar = {
-    -- vue-language-server, see ts_ls comment above.
-  },
-  yamlls = {},
-  lua_ls = {
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { 'vim' },
-          disable = { 'missing-fields' },
-        },
-        format = { enable = true },
-        runtime = {
-          version = 'luajit',
-          path = lua_runtime_path,
-        },
-        telemetry = { enable = false },
-        workspace = {
-          checkthirdparty = false,
-          -- make the server aware of neovim runtime files
-          library = vim.api.nvim_get_runtime_file('', true),
-        },
-      },
-    },
-  },
-}
+-- Extend all LSP servers with custom capabilities.
+vim.lsp.config('*', { capabilities = capabilities })
 
-local setup_handlers = function()
-  for k, v in pairs(servers) do
-    -- override/extend any server with custom capabilities.
-    v.capabilities = vim.tbl_deep_extend('force', {}, capabilities, v.capabilities or {})
-    v.on_attach = lsp_on_attach
+-- Enable the following language servers:
+-- default config from nvim-lspconfig
+-- extra config via ./lsp/*.lua
+vim.lsp.enable('bashls')
+vim.lsp.enable('buf_ls')
+vim.lsp.enable('dockerls')
+vim.lsp.enable('eslint')
+vim.lsp.enable('gopls')
+vim.lsp.enable('golangci_lint_ls')
+vim.lsp.enable('html')
+-- vim.lsp.enable("htmx") -- Both htmx and htmx2 troublesome
+vim.lsp.enable('nil_ls')
+vim.lsp.enable('pyright')
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('sqls')
+vim.lsp.enable('tailwindcss')
+vim.lsp.enable('terraformls')
+-- vim.lsp.enable('ts_ls') --
+vim.lsp.enable('volar')
+-- vim.lsp.enable('vue-language-server') -- see ts_ls comment above.
+vim.lsp.enable('yamlls')
+vim.lsp.enable('lua_ls')
 
-    lspconfig[k].setup(v)
-  end
-end
-setup_handlers()
+-- Unused and not migrated and tested language servers.
+-- local servers = {
+-- htmx = {
+--   -- cmd = 'htmx-lsp2', -- TODO: vet code
+--   cmd = 'htmx-lsp', -- https://github.com/ThePrimeagen/htmx-lsp/issues/53
+--   filetypes = { 'html', 'templ' },
+-- },
+-- ts_ls = {
+--   -- HACK: config defined in neovim.nix for javascript library nix store path.
+--   --       see ~/.config/nvim/lua/ts_ls.lua for rendered file.
+--   -- https://github.com/vuejs/language-tools
+-- },
+-- vue-language-server, see ts_ls comment above.
+-- }
 
 -- ui notifications and lsp progress messages.
 require('fidget').setup({})

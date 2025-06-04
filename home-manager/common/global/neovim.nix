@@ -1,4 +1,4 @@
-{ config, lib, pkgs, isDarwin, isLinux, ... }:
+{ lib, pkgs, isDarwin, isLinux, ... }:
 
 {
   xdg.configFile."nvim" = {
@@ -149,6 +149,7 @@
 
         # lsp's
         bash-language-server
+        docker-language-server
         eslint_d
         golangci-lint-langserver
         gopls

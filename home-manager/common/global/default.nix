@@ -1,4 +1,4 @@
-{ config, lib, pkgs, currentSystem, isDarwin, isLinux, ... }:
+{ lib, pkgs, isDarwin, isLinux, ... }:
 
 {
   # Let Home Manager install and manage itself.
