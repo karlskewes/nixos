@@ -196,6 +196,22 @@
       ca = "commit --amend";
       caa = "commit --amend --all";
       cf = "commit --fixup";
+      cff = ''
+        !f() {
+          commit=$(git log \
+            origin/main..HEAD \
+            --abbrev-commit \
+            --pretty=oneline | \
+            fzf --no-multi | \
+            cut -d ' ' -f1 \
+          )
+          if [ -z "$commit" ]; then
+            echo "WARNING: no commit specified, aborting...";
+          else
+            git commit --fixup "$commit";
+          fi
+        }; f
+      '';
       cm = "commit --message";
       d = "diff";
       fup = "fetch upstream";

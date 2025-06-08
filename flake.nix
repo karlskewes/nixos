@@ -26,6 +26,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # https://github.com/tascvh/trackpad-is-too-damn-big/compare/main...luqmanishere:trackpad-is-too-damn-big:main
+    titdb = {
+      url =
+        "github:luqmanishere/trackpad-is-too-damn-big-flake?rev=9712b426311195c8d3f0359c6086e1d651782d2e";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     apple-silicon-support = {
       url = "github:nix-community/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,7 +51,7 @@
   };
 
   outputs = { self, home-manager, nixpkgs, nix-darwin, apple-silicon-support
-    , nix-extra, ... }@inputs:
+    , titdb, nix-extra, ... }@inputs:
     let
       extraNeovimPlugins = (self: super:
         let
@@ -72,8 +79,17 @@
 
       user = "karl";
       extraModules = [ "${nix-extra.outPath}/nixos.nix" ];
-      appleModules = extraModules
-        ++ [ apple-silicon-support.nixosModules.apple-silicon-support ];
+      appleModules = extraModules ++ [
+        apple-silicon-support.nixosModules.apple-silicon-support
+        titdb.nixosModules.default
+        {
+          services.titdb = {
+            enable = true;
+            # udevadm info /dev/input/event* | grep -E '(DEVNAME|TOUCHPAD)'
+            device = "/dev/input/event1";
+          };
+        }
+      ];
 
     in {
       darwinConfigurations = {
