@@ -54,6 +54,7 @@
         p.csv
         p.diff
         p.dockerfile
+        p.fish
         p.git_config
         p.git_rebase
         p.gitattributes

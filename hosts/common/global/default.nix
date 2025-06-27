@@ -15,6 +15,7 @@
       acc // {
         ${user} = {
           home = "/home/${user}";
+          shell = lib.mkOverride 100 pkgs.fish;
           isNormalUser = true;
           extraGroups = [
             "audio"
@@ -33,6 +34,8 @@
         };
       }) { } (currentUsers);
   };
+
+  programs.fish.enable = true;
 
   time.timeZone = "Australia/Brisbane";
 

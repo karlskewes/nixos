@@ -74,12 +74,47 @@
     "$HOME/.local/bin" # tools
     "$HOME/go/bin" # golang
   ];
+  home.shellAliases = {
+    # Enable aliases to be run with sudo
+    sudo = "sudo ";
+
+    # One less char.
+    r = "./run.sh";
+    v = "nvim";
+
+    # Easier navigation: .., ..., ...., ....., ~ and -
+    ".." = "cd ..";
+    "..." = "cd ../..";
+    "...." = "cd ../../..";
+    "....." = "cd ../../../..";
+    "......" = "cd ../../../../..";
+
+    # Kitty Terminal inline image viewer kitten (plugin) icat
+    icat = "kitty +kitten icat";
+
+    # IP addresses
+    pubip = "dig +short myip.opendns.com @resolver1.opendns.com";
+    localip =
+      "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
+    ips =
+      "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
+  };
 
   #---------------------------------------------------------------------
   # Programs
   #---------------------------------------------------------------------
 
   imports = [ ./neovim.nix ];
+
+  programs.fish = {
+    enable = true; # TODO
+    shellInit = ''
+      # start daemon to connect to existing logged in session. Normally done by window manager.
+      # /run/wrappers/bin/gnome-keyring-daemon --start --daemonize
+      # tell ssh to use gnome keyring instead of gpg agent.
+      export SSH_AUTH_SOCK=/run/user/"$(id --user)"/keyring/ssh
+    '';
+  };
 
   programs.bash = {
     enable = true;
@@ -103,32 +138,6 @@
 
       ${builtins.readFile ../../../dotfiles/bash_prompt.sh}
     '';
-
-    # TODO: enable merging this dict from display manager.
-    shellAliases = {
-      # Enable aliases to be run with sudo
-      sudo = "sudo ";
-
-      # One less char.
-      v = "nvim";
-
-      # Easier navigation: .., ..., ...., ....., ~ and -
-      ".." = "cd ..";
-      "..." = "cd ../..";
-      "...." = "cd ../../..";
-      "....." = "cd ../../../..";
-      "......" = "cd ../../../../..";
-
-      # Kitty Terminal inline image viewer kitten (plugin) icat
-      icat = "kitty +kitten icat";
-
-      # IP addresses
-      pubip = "dig +short myip.opendns.com @resolver1.opendns.com";
-      localip =
-        "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
-      ips =
-        "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
-    };
   };
 
   programs.bat = {
