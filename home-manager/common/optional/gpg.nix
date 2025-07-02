@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs;
     [ ] ++ (lib.optionals isLinux [
+      gcr_4
       seahorse
       pinentry # gpg add ssh key
       # export GPG_TTY=$(tty)

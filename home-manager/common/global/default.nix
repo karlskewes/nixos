@@ -109,10 +109,8 @@
   programs.fish = {
     enable = true; # TODO
     shellInit = ''
-      # start daemon to connect to existing logged in session. Normally done by window manager.
-      # /run/wrappers/bin/gnome-keyring-daemon --start --daemonize
-      # tell ssh to use gnome keyring instead of gpg agent.
-      export SSH_AUTH_SOCK=/run/user/"$(id --user)"/keyring/ssh
+      # tell ssh to use gcr instead of gpg agent.
+      export SSH_AUTH_SOCK=/run/user/"$(id --user)"/gcr/ssh
     '';
   };
 
@@ -120,10 +118,8 @@
     enable = true;
 
     initExtra = ''
-      # start daemon to connect to existing logged in session. Normally done by window manager.
-      # /run/wrappers/bin/gnome-keyring-daemon --start --daemonize
-      # tell ssh to use gnome keyring instead of gpg agent.
-      export SSH_AUTH_SOCK=/run/user/"$UID"/keyring/ssh
+      # tell ssh to use gcr instead of gpg agent.
+      export SSH_AUTH_SOCK=/run/user/"$(id --user)"/gcr/ssh
 
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
