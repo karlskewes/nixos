@@ -10,10 +10,10 @@
     ++ (lib.optionals isDarwin [ ])
     # #
     ++ (lib.optionals isLinux [
-      # ./common/optional/cosmic.nix
+      ./common/optional/cosmic.nix
       # ./common/optional/i3.nix
       # ./common/optional/sway.nix
-      ./common/optional/hyprland.nix
+      # ./common/optional/hyprland.nix
     ]);
 
   desktop.firefox = {
