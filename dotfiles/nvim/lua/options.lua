@@ -112,5 +112,9 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
   desc = 'jump to last visited position in file',
   pattern = { '*' },
-  command = 'silent! normal! g`"zz',
+  callback = function()
+    if vim.bo.filetype ~= 'gitcommit' then
+      vim.api.nvim_command('silent! normal! g`"zz')
+    end
+  end,
 })
