@@ -347,24 +347,7 @@
         "nix-darwin": "nix-darwin",
         "nix-extra": "nix-extra",
         "nixpkgs": "nixpkgs",
-        "telescope-hierarchy-nvim": "telescope-hierarchy-nvim",
         "titdb": "titdb"
-      }
-    },
-    "telescope-hierarchy-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1742027863,
-        "narHash": "sha256-mSZ5CYl10pIcBsZuOivFnSdhI7lZT2QHz1AizrvSfZ4=",
-        "owner": "jmacadie",
-        "repo": "telescope-hierarchy.nvim",
-        "rev": "2ba4840d8ba9288ca85dc34b01cf946aee0b8fca",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jmacadie",
-        "repo": "telescope-hierarchy.nvim",
-        "type": "github"
       }
     },
     "titdb": {

@@ -10,11 +10,6 @@
       flake = false;
     };
 
-    telescope-hierarchy-nvim = {
-      url = "github:jmacadie/telescope-hierarchy.nvim";
-      flake = false;
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager/master";
       # tell home-manager to use same packages as nixpkgs
@@ -59,10 +54,6 @@
             namu-nvim = super.vimUtils.buildVimPlugin {
               name = "namu-nvim";
               src = inputs.namu-nvim;
-            };
-            telescope-hierarchy-nvim = super.vimUtils.buildVimPlugin {
-              name = "telescope-hierarchy-nvim";
-              src = inputs.telescope-hierarchy-nvim;
             };
           };
         in { vimPlugins = super.vimPlugins // customPlugins; });

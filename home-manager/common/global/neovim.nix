@@ -89,27 +89,6 @@
         p.zig
       ]))
 
-      # telescope
-      telescope-nvim
-      telescope-live-grep-args-nvim
-      telescope-fzf-native-nvim
-      # telescope-hierarchy-nvim
-      plenary-nvim
-
-      (telescope-hierarchy-nvim.overrideAttrs (_final: prev: {
-        nvimSkipModule = [
-          "telescope-hierarchy"
-          "telescope-hierarchy.actions"
-          "telescope-hierarchy.cache.entry"
-          "telescope-hierarchy.defaults"
-          "telescope-hierarchy.log"
-          "telescope-hierarchy.lsp"
-          "telescope-hierarchy.tree.init"
-          "telescope-hierarchy.ui"
-        ];
-        # doCheck = false;
-      }))
-
       # lang specific & debug
       namu-nvim
       nvim-nio
@@ -121,6 +100,7 @@
 
       # other
       conform-nvim
+      fzf-lua
       image-nvim
       indent-blankline-nvim
       lualine-nvim
@@ -135,16 +115,13 @@
       (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [ ]) ++ [
         git
 
-        chafa # neovim telescope media_files image preview
-        ffmpegthumbnailer # neovim telescope media_files video preview
-
+        chafa # neovim fzf-lua media_files image preview
         imagemagick # github.com/3rd/image.nvim
 
         fd
         ripgrep
 
-        gcc # treesitter & telescope-fzf-native-nvim
-        gnumake # telescope-fzf-native-nvim
+        gcc # treesitter
         tree-sitter
         vale
 

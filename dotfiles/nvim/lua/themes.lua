@@ -5,6 +5,7 @@ require('catppuccin').setup({
     dap = true,
     dap_ui = true,
     fidget = true,
+    fzf = true,
     indent_blankline = {
       enabled = true,
       scope_color = 'lavender', -- catppuccin color (eg. `lavender`) Default: text
@@ -33,7 +34,6 @@ require('catppuccin').setup({
         background = true,
       },
     },
-    telescope = true,
     treesitter = true,
     treesitter_context = true,
     which_key = true,

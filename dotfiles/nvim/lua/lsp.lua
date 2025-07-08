@@ -20,8 +20,9 @@ local lsp_on_attach = function(args)
     return
   end
 
-  local tsb = require('telescope.builtin')
-  vim.keymap.set('n', 'gd', tsb.lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
+  local fzf = require('fzf-lua')
+
+  vim.keymap.set('n', 'gd', fzf.lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
   vim.keymap.set(
     'n',
     'gD',
@@ -31,7 +32,7 @@ local lsp_on_attach = function(args)
   vim.keymap.set(
     'n',
     'gI',
-    tsb.lsp_implementations,
+    fzf.lsp_implementations,
     { buffer = bufnr, desc = '[G]oto [I]mplementation - Default: [gri]' }
   )
   vim.keymap.set(
@@ -48,14 +49,26 @@ local lsp_on_attach = function(args)
   )
   vim.keymap.set(
     'n',
+    '<leader>lc',
+    fzf.lsp_incoming_calls,
+    { desc = 'LSP: [S]earch Incoming [c]alls' }
+  )
+  vim.keymap.set(
+    'n',
+    '<leader>lC',
+    fzf.lsp_outgoing_calls,
+    { desc = 'LSP: [S]earch Outgoing [C]alls' }
+  )
+  vim.keymap.set(
+    'n',
     '<leader>ld',
     vim.diagnostic.setloclist,
     { buffer = bufnr, desc = '[L]SP [D]iagnostics list' }
   )
   vim.keymap.set(
     'n',
-    '<leader>lD',
-    tsb.lsp_type_definitions,
+    '<leader>lt',
+    fzf.lsp_typedefs,
     { buffer = bufnr, desc = '[L]SP Type [D]efinition' }
   )
   vim.keymap.set('n', '<leader>lh', function()
@@ -82,17 +95,17 @@ local lsp_on_attach = function(args)
   vim.keymap.set(
     'n',
     '<leader>lR',
-    tsb.lsp_references,
+    fzf.lsp_references,
     { buffer = bufnr, desc = '[L]SP [R]eferences - Default: [grr]' }
   )
   vim.keymap.set('n', '<leader>ls', function()
     -- methods in Go can get truncated, width based on vertical split in terminal.
-    tsb.lsp_document_symbols({ symbol_width = 60 })
+    fzf.lsp_document_symbols({ symbol_width = 60 })
   end, { buffer = bufnr, desc = '[L]SP Document [S]ymbols - Default: [g0]' })
   vim.keymap.set(
     'n',
     '<leader>lS',
-    tsb.lsp_dynamic_workspace_symbols,
+    fzf.lsp_live_workspace_symbols,
     { buffer = bufnr, desc = '[L]SP Workspace [S]ymbols' }
   )
 
@@ -109,8 +122,6 @@ end
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = lsp_on_attach,
 })
-
--- require('lspconfig') -- TODO: is this still required?
 
 -- blink-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -138,7 +149,7 @@ vim.lsp.enable('sqls')
 vim.lsp.enable('tailwindcss')
 vim.lsp.enable('terraformls')
 -- vim.lsp.enable('ts_ls') --
-vim.lsp.enable('volar')
+vim.lsp.enable('vue_ls')
 -- vim.lsp.enable('vue-language-server') -- see ts_ls comment above.
 vim.lsp.enable('yamlls')
 vim.lsp.enable('lua_ls')
