@@ -29,7 +29,7 @@
       stylua
 
       nodePackages.write-good
-      nodejs # neovim
+      nodejs_22 # neovim # nodejs_24 constantly builds
       # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
       openssl
