@@ -72,6 +72,7 @@
       # google-cloud-sdk # gsutil, etc
       docker-compose
       pulumi-bin
+      opentofu
       terraform
 
       # kubernetes

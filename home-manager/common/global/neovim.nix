@@ -141,7 +141,7 @@
         sqls
         sumneko-lua-language-server
         tailwindcss-language-server
-        terraform-ls
+        tofu-ls
         typescript
         typescript-language-server
         vscode-langservers-extracted # vscode-eslint-language-server, vscode-html-language-server

@@ -147,7 +147,7 @@ vim.lsp.enable('pyright')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('sqls')
 vim.lsp.enable('tailwindcss')
-vim.lsp.enable('terraformls')
+vim.lsp.enable('tofu_ls')
 -- vim.lsp.enable('ts_ls') --
 vim.lsp.enable('vue_ls')
 -- vim.lsp.enable('vue-language-server') -- see ts_ls comment above.
