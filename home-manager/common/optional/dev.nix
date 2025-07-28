@@ -34,15 +34,17 @@
 
       openssl
 
-      cargo
       cargo-audit
       cargo-watch
       clang
-      clippy
       pkg-config
       openssl
-      rustc
-      rustfmt
+      # managed by rustup in ~/.rustup/
+      # cargo
+      # clippy
+      # rustc
+      # rustfmt
+      rustup
       (lib.hiPrio gcc)
 
       sql-formatter
