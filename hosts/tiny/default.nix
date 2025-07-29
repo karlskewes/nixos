@@ -16,6 +16,10 @@
     interfaces = [ "e1000e" ];
   };
 
+  networking.firewall.allowedTCPPorts = [
+    8080 # basketball subs subbers,gosubs
+  ];
+
   # Define hostId for zfs pool machine 'binding'
   # :read !echo <hostname> | md5sum | cut -c1-8
   networking.hostId = "b38b36dc";
