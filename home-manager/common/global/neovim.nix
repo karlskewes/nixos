@@ -138,6 +138,7 @@
         nodePackages.prettier
         pyright
         rust-analyzer
+        rustup
         sqls
         sumneko-lua-language-server
         tailwindcss-language-server
