@@ -29,6 +29,11 @@
   # networking.interfaces.enp5s0f4u1u3c2.useDHCP = true; # dock # unused currently
   # hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr ]; # broken
 
+  services.fwupd = {
+    enable = true;
+    extraRemotes = [ "lvfs-testing" ];
+  };
+
   powerManagement.enable = true;
 
   # required to use dvd/cdrom in some applications

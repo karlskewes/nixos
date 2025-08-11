@@ -17,6 +17,7 @@
   };
 
   networking.firewall.allowedTCPPorts = [
+    3000 # basketball subs subbers,gosubs
     8080 # basketball subs subbers,gosubs
   ];
 
@@ -32,6 +33,11 @@
     vaapiVdpau
     libvdpau-va-gl
   ];
+
+  services.fwupd = {
+    enable = true;
+    extraRemotes = [ "lvfs-testing" ];
+  };
 
   services.tailscale = {
     enable = true;

@@ -13,6 +13,11 @@
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;
 
+  services.fwupd = {
+    enable = true;
+    extraRemotes = [ "lvfs-testing" ];
+  };
+
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "624e2a63";

@@ -101,6 +101,13 @@
       # other
       conform-nvim
       fzf-lua
+      # skip tests.
+      # (final: prev: {
+      #   fzf-lua = prev.fzf-lua.overrideAttrs (old: {
+      #     doCheck = false;
+      #     doInstallCheck = false;
+      #   });
+      # })
       image-nvim
       indent-blankline-nvim
       lualine-nvim

@@ -2,8 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, lib, pkgs, currentRevision, currentStateVersion, currentSystem
-, currentSystemName, currentUsers, ... }:
+{ lib, pkgs, currentStateVersion, currentSystem, currentSystemName, currentUsers
+, ... }:
 
 {
 
@@ -15,7 +15,7 @@
       acc // {
         ${user} = {
           home = "/home/${user}";
-          shell = lib.mkOverride 100 pkgs.fish;
+          shell = lib.mkOverride 100 pkgs.bash;
           isNormalUser = true;
           extraGroups = [
             "audio"
@@ -128,11 +128,6 @@
   security.polkit.enable = true;
 
   security.sudo.wheelNeedsPassword = false;
-
-  services.fwupd = {
-    enable = true;
-    extraRemotes = [ "lvfs-testing" ];
-  };
 
   services.gnome.gnome-keyring.enable = true;
   services.gnome.gcr-ssh-agent.enable =

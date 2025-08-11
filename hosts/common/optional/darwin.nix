@@ -19,7 +19,7 @@
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
         ];
-        shell = pkgs.fish; # $ chsh -s /run/current-system/sw/bin/fish
+        shell = pkgs.bash; # $ chsh -s /run/current-system/sw/bin/fish
       };
     }) { } (currentUsers);
 
