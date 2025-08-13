@@ -3,6 +3,12 @@
 local fzf = require('fzf-lua')
 
 fzf.setup({
+  keymap = {
+    fzf = {
+      ---https://github.com/ibhagwan/fzf-lua/issues/546#issuecomment-1736076539
+      ['ctrl-q'] = 'select-all+accept',
+    },
+  },
   previewers = {
     builtin = {
       extensions = {
@@ -38,9 +44,9 @@ vim.keymap.set('n', '<leader>sF', fzf.files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sf', fzf.git_files, { desc = '[S]earch git [f]iles' })
 vim.keymap.set('n', '<leader>sh', fzf.helptags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sk', fzf.keymaps, { desc = '[S]earch [K]eymaps' })
-vim.keymap.set('n', '<leader>sG', fzf.live_grep_glob, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sG', fzf.live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sg', function()
-  fzf.live_grep_glob({ cwd = git_root_or_cwd() })
+  fzf.live_grep({ cwd = git_root_or_cwd() })
 end, { desc = '[S]earch by [g]rep on Git Root' })
 vim.keymap.set('n', '<leader>sn', function()
   local working_dir = vim.fn.stdpath('config')
