@@ -34,8 +34,6 @@
     enable = true;
     # Specify path to peripheral firmware files copied during initial installation.
     peripheralFirmwareDirectory = /etc/nixos/firmware;
-    useExperimentalGPUDriver = true;
-    experimentalGPUInstallMode = "replace";
     setupAsahiSound = true;
   };
   # Or disable extraction and management of them completely (no wifi though).

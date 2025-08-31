@@ -72,6 +72,7 @@
   };
   home.sessionPath = [
     "$HOME/.local/bin" # tools
+    "$HOME/.cargo/bin" # rust
     "$HOME/go/bin" # golang
   ];
   home.shellAliases = {
@@ -79,7 +80,6 @@
     sudo = "sudo ";
 
     # One less char.
-    r = "./run.sh";
     v = "nvim";
 
     # Easier navigation: .., ..., ...., ....., ~ and -
@@ -107,7 +107,7 @@
   imports = [ ./neovim.nix ];
 
   programs.fish = {
-    enable = true; # TODO
+    enable = false; # TODO
     shellInit = ''
       # tell ssh to use gcr instead of gpg agent.
       export SSH_AUTH_SOCK=/run/user/"$(id --user)"/gcr/ssh

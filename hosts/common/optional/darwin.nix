@@ -1,4 +1,4 @@
-{ config, lib, pkgs, currentSystem, currentUsers, ... }: {
+{ lib, pkgs, currentSystem, currentUsers, ... }: {
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   nixpkgs.hostPlatform = currentSystem;
   nix.settings.experimental-features = "nix-command flakes";

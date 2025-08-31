@@ -35,7 +35,8 @@
       }) { } (currentUsers);
   };
 
-  programs.fish.enable = true;
+  programs.bash.enable = true;
+  programs.fish.enable = false;
 
   time.timeZone = "Australia/Brisbane";
 

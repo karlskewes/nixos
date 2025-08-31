@@ -48,6 +48,7 @@
       (lib.hiPrio gcc)
 
       sql-formatter
+      sqlitebrowser
 
       zig
 
