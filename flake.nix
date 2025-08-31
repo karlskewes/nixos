@@ -84,6 +84,13 @@
 
     in {
       darwinConfigurations = {
+        gl = mkHost "gl" {
+          inherit nixpkgs nix-darwin home-manager overlays configRev;
+          isDarwin = true;
+          user = "karlskewes";
+          system = "aarch64-darwin";
+          stateVersion = "25.06";
+        };
         karl-mba = mkHost "karl-mba" {
           inherit nixpkgs nix-darwin home-manager overlays configRev;
           isDarwin = true;
@@ -92,6 +99,7 @@
           stateVersion = "23.11";
         };
       };
+
       nixosConfigurations = {
         blake-laptop = mkHost "blake-laptop" {
           inherit nixpkgs home-manager overlays extraModules configRev user;
@@ -112,12 +120,6 @@
         };
 
         tiny = mkHost "tiny" {
-          inherit nixpkgs home-manager overlays extraModules configRev user;
-          system = "x86_64-linux";
-          stateVersion = "22.05";
-        };
-
-        tl = mkHost "tl" {
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";
           stateVersion = "22.05";
