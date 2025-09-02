@@ -81,7 +81,8 @@ diff() { ## Build and diff
 }
 
 switch_darwin() {
-	nix run nix-darwin \
+	# darwin-rebuild must now be run as root.
+	sudo nix run nix-darwin \
 		-- switch --impure --flake .#"${HOSTNAME%%.*}"
 }
 

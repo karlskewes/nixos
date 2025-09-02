@@ -7,7 +7,10 @@
     ./common/optional/dev.nix
     ./common/optional/gpg.nix
   ] # #
-    ++ (lib.optionals isDarwin [ ])
+    ++ (lib.optionals isDarwin [
+      ./common/optional/desktop.nix
+      # #
+    ])
     # #
     ++ (lib.optionals isLinux [
       ./common/optional/cosmic.nix
@@ -18,11 +21,11 @@
 
   desktop.firefox = {
     enable = true;
-    users = [ "karl" ];
+    users = [ "karlskewes" ];
   };
 
   home.packages = with pkgs;
-    [ ] ++ (lib.optionals isLinux [
+    [ slack ] ++ (lib.optionals isLinux [
       asahi-bless
       asahi-btsync
       asahi-nvram

@@ -2,13 +2,15 @@
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   nixpkgs.hostPlatform = currentSystem;
   nix.settings.experimental-features = "nix-command flakes";
-  ids.gids.nixbld = 30000; # 350 # Default in newer installations.
+  ids.gids.nixbld = 350; # Default in newer installations.
+  # ids.gids.nixbld = 30000; # karl-mba - old installations.
   system.defaults = {
     dock.autohide = true;
     dock.mru-spaces = false;
     finder.AppleShowAllExtensions = true;
     finder.FXPreferredViewStyle = "clmv";
   };
+  system.primaryUser = "karlskewes"; # TODO: pull from currentUsers?
 
   # Declare the user that will be running `nix-darwin`.
   users.users = builtins.foldl' (acc: user:

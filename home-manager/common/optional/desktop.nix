@@ -19,7 +19,7 @@
         "SKIP_HOST_UPDATE": true
       }
     '';
-    xdg.mime.enable = true;
+    xdg.mime.enable = isLinux;
     xdg.portal = {
       enable = isLinux;
       xdgOpenUsePortal = true;
@@ -38,10 +38,19 @@
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs;
-      (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+      (lib.optionals isDarwin [
+        # on Linux these are installed in host/NixOS configuration.
+        nerd-fonts.hack
+        font-awesome
+        # #
+      ]) ++ (lib.optionals isLinux [
         glxinfo
         vulkan-tools # vulkan-info
         helvum # pipewire patch bay gui
+
+        ente-auth
+        kdePackages.gwenview # image viewer & editor (crop, resize)
+        vlc
       ]) ++ [
         adwaita-qt
         adwaita-icon-theme
@@ -49,12 +58,9 @@
         nerd-fonts.hack
         font-awesome
 
-        ente-auth
-        kdePackages.gwenview # image viewer & editor (crop, resize)
         libnotify # required by dunst
         qalculate-gtk # calculator
         # servo # rust web browser # TODO: make / larger.
-        vlc
       ];
 
     programs.firefox = lib.mkIf config.desktop.firefox.enable {
@@ -173,6 +179,6 @@
       '';
     };
 
-    services.dunst = { enable = true; };
+    services.dunst = { enable = isLinux; };
   };
 }
