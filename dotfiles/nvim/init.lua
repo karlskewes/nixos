@@ -4,7 +4,6 @@ require('ts_ls') -- HACK neovim.nix supplied due to vue-language-server lib
 require('options')
 require('mini')
 require('plugins')
-require('fzf_lua')
 require('treesitter')
 require('debuggers') -- does not work when called debug.lua
 require('themes')

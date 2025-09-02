@@ -20,9 +20,12 @@ local lsp_on_attach = function(args)
     return
   end
 
-  local fzf = require('fzf-lua')
-
-  vim.keymap.set('n', 'gd', fzf.lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
+  vim.keymap.set(
+    'n',
+    'gd',
+    '<Cmd>Pick lsp scope="definition"<CR>',
+    { buffer = bufnr, desc = '[G]oto [D]efinition' }
+  )
   vim.keymap.set(
     'n',
     'gD',
@@ -32,7 +35,7 @@ local lsp_on_attach = function(args)
   vim.keymap.set(
     'n',
     'gI',
-    fzf.lsp_implementations,
+    '<Cmd>Pick lsp scope="implementation"<CR>',
     { buffer = bufnr, desc = '[G]oto [I]mplementation - Default: [gri]' }
   )
   vim.keymap.set(
@@ -47,18 +50,18 @@ local lsp_on_attach = function(args)
     vim.lsp.buf.code_action,
     { buffer = bufnr, desc = '[L]SP Code [A]ction - Default: [gra]' }
   )
-  vim.keymap.set(
-    'n',
-    '<leader>lc',
-    fzf.lsp_incoming_calls,
-    { desc = 'LSP: [S]earch Incoming [c]alls' }
-  )
-  vim.keymap.set(
-    'n',
-    '<leader>lC',
-    fzf.lsp_outgoing_calls,
-    { desc = 'LSP: [S]earch Outgoing [C]alls' }
-  )
+  -- vim.keymap.set(
+  --   'n',
+  --   '<leader>lc',
+  --   fzf.lsp_incoming_calls,
+  --   { desc = 'LSP: [S]earch Incoming [c]alls' }
+  -- )
+  -- vim.keymap.set(
+  --   'n',
+  --   '<leader>lC',
+  --   fzf.lsp_outgoing_calls,
+  --   { desc = 'LSP: [S]earch Outgoing [C]alls' }
+  -- )
   vim.keymap.set(
     'n',
     '<leader>ld',
@@ -68,7 +71,7 @@ local lsp_on_attach = function(args)
   vim.keymap.set(
     'n',
     '<leader>lt',
-    fzf.lsp_typedefs,
+    '<Cmd>Pick lsp scope="type_definition"<CR>',
     { buffer = bufnr, desc = '[L]SP Type [D]efinition' }
   )
   vim.keymap.set('n', '<leader>lh', function()
@@ -95,17 +98,20 @@ local lsp_on_attach = function(args)
   vim.keymap.set(
     'n',
     '<leader>lR',
-    fzf.lsp_references,
+    '<Cmd>Pick lsp scope="references"<CR>',
     { buffer = bufnr, desc = '[L]SP [R]eferences - Default: [grr]' }
   )
-  vim.keymap.set('n', '<leader>ls', function()
-    -- methods in Go can get truncated, width based on vertical split in terminal.
-    fzf.lsp_document_symbols({ symbol_width = 60 })
-  end, { buffer = bufnr, desc = '[L]SP Document [S]ymbols - Default: [g0]' })
+  vim.keymap.set(
+    'n',
+    '<leader>ls',
+    -- TODO: methods in Go can get truncated, width based on vertical split in terminal.
+    '<Cmd>Pick lsp scope="document_symbol"<CR>',
+    { buffer = bufnr, desc = '[L]SP Document [S]ymbols - Default: [g0]' }
+  )
   vim.keymap.set(
     'n',
     '<leader>lS',
-    fzf.lsp_live_workspace_symbols,
+    '<Cmd>Pick lsp scope="workspace_symbol"<CR>',
     { buffer = bufnr, desc = '[L]SP Workspace [S]ymbols' }
   )
 

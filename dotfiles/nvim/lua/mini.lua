@@ -29,6 +29,7 @@ vim.keymap.set('n', '<leader>gs', '<CMD>Git status<CR>', { desc = '[G]it [s]tatu
 
 require('mini.icons').setup()
 require('mini.pick').setup()
+require('mini.extra').setup() -- extra pickers for mini.pick
 require('mini.splitjoin').setup()
 
 -- :MiniVisits
@@ -203,3 +204,78 @@ vim.keymap.set(
   -- '<CMD>lua MiniPick.start({ source = { items = MiniVisits.list_paths()}})<CR>',
   { desc = '[V]isits [s]elect path' }
 )
+
+-- git_root utilises fzf-lua to return the git root, falling back to the
+-- current working directory.
+---@return string
+-- local function git_root_or_cwd()
+--   local path = fzf.path.git_root(vim.loop.cwd(), true)
+--   if path == nil then
+--     return vim.fn.getcwd()
+--   end
+--
+--   return path
+-- end
+
+-- See `:help fzf-lua-commands`
+vim.keymap.set(
+  'n',
+  '<leader>?',
+  '<Cmd>Pick oldfiles<CR>',
+  { desc = '[?] Find recently opened files' }
+)
+vim.keymap.set('n', '<leader>s/', '<Cmd>Pick buf_lines<CR>', { desc = '[S]earch [B]uffer' })
+vim.keymap.set(
+  'n',
+  '<leader><space>',
+  '<Cmd>Pick buffers<CR>',
+  { desc = '[ ] Find existing buffers' }
+)
+vim.keymap.set('n', '<leader>sb', '<Cmd>Pick buffers<CR>', { desc = '[S]earch [B]uffers' })
+vim.keymap.set('n', '<leader>sd', '<Cmd>Pick diagnostic<CR>', { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>sF', '<Cmd>Pick files<CR>', { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sf', '<Cmd>Pick git_files<CR>', { desc = '[S]earch git [f]iles' })
+vim.keymap.set('n', '<leader>sh', '<Cmd>Pick help<CR>', { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sk', '<Cmd>Pick keymaps<CR>', { desc = '[S]earch [K]eymaps' })
+vim.keymap.set('n', '<leader>sG', '<Cmd>Pick grep_live<CR>', { desc = '[S]earch by [G]rep' })
+vim.keymap.set(
+  'n',
+  '<leader>sg',
+  '<Cmd>Pick grep_live<CR>', -- todo git files?
+  { desc = '[S]earch by [G]rep' }
+)
+vim.keymap.set('n', '<leader>sn', function()
+  local working_dir = vim.fn.stdpath('config')
+  local picker = require('mini.pick')
+  picker.setup({
+    source = { cwd = working_dir },
+  })
+
+  picker.start()
+end, { desc = '[S]earch [N]eovim files' }) -- TODO: not working, grab new picker var?
+vim.keymap.set('n', '<leader>sr', '<Cmd>Pick resume<CR>', { desc = '[S]earch [R]esume' })
+-- vim.keymap.set('n', '<leader>ss', picker.builtin, { desc = '[S]earch [S]elect' }) -- TODO: not available?
+vim.keymap.set('n', '<leader>sv', '<Cmd>Pick git_commits<CR>', { desc = '[S]earch [v]cs' })
+vim.keymap.set(
+  'n',
+  '<leader>sv<CR>',
+  '<Cmd>Pick git_commits<CR>',
+  { desc = '[S]earch [v]cs commits' }
+)
+-- vim.keymap.set('n', '<leader>svb', picker.git_bcommits, { desc = '[S]earch [v]cs [b]uffer' })
+vim.keymap.set(
+  'n',
+  '<leader>svc',
+  '<Cmd>Pick git_commits<CR>',
+  { desc = '[S]earch [v]cs [c]ommits' }
+)
+vim.keymap.set('n', '<leader>svh', '<Cmd>Pick git_hunks<CR>', { desc = '[S]earch [v]cs [h]unks' })
+-- Not implemented: https://github.com/nvim-mini/mini.nvim/issues/550#issuecomment-1805477794
+-- vim.keymap.set('n', '<leader>svs', picker.git_status, { desc = '[S]earch [v]cs status' })
+-- vim.keymap.set('n', '<leader>svS', picker.git_stash, { desc = '[S]earch [v]cs [S]tash' })
+-- vim.keymap.set('n', '<leader>sw', function()
+--   picker.grep_cword({ cwd = git_root_or_cwd() })
+-- end, { desc = '[S]earch current [w]ord' })
+-- vim.keymap.set('n', '<leader>sW', function()
+--   picker.grep_cWORD({ cwd = git_root_or_cwd() })
+-- end, { desc = '[S]earch current [W]ORD' })
