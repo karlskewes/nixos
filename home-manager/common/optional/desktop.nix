@@ -171,7 +171,7 @@
 
     programs.kitty = {
       enable = true;
-      font.name = "Hack Nerd Font";
+      font.name = "Hack Nerd Font Mono";
       settings = { enable_audio_bell = false; };
       extraConfig = ''
         map ctrl+shift+enter new_window_with_cwd
