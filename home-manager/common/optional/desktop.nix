@@ -1,5 +1,5 @@
 # X Windows additional configuration dependent on home-manager
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, isDarwin, isLinux, ... }: {
   options.desktop.firefox = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -21,7 +21,7 @@
     '';
     xdg.mime.enable = true;
     xdg.portal = {
-      enable = true;
+      enable = isLinux;
       xdgOpenUsePortal = true;
       config = {
         cosmic = {
@@ -37,24 +37,25 @@
 
     fonts.fontconfig.enable = true;
 
-    home.packages = with pkgs; [
-      adwaita-qt
-      adwaita-icon-theme
+    home.packages = with pkgs;
+      (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+        glxinfo
+        vulkan-tools # vulkan-info
+        helvum # pipewire patch bay gui
+      ]) ++ [
+        adwaita-qt
+        adwaita-icon-theme
 
-      glxinfo
-      vulkan-tools # vulkan-info
+        nerd-fonts.hack
+        font-awesome
 
-      nerd-fonts.hack
-      font-awesome
-
-      ente-auth
-      kdePackages.gwenview # image viewer & editor (crop, resize)
-      helvum # pipewire patch bay gui
-      libnotify # required by dunst
-      qalculate-gtk # calculator
-      # servo # rust web browser # TODO: make / larger.
-      vlc
-    ];
+        ente-auth
+        kdePackages.gwenview # image viewer & editor (crop, resize)
+        libnotify # required by dunst
+        qalculate-gtk # calculator
+        # servo # rust web browser # TODO: make / larger.
+        vlc
+      ];
 
     programs.firefox = lib.mkIf config.desktop.firefox.enable {
       package = pkgs.firefox;

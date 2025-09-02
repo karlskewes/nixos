@@ -89,7 +89,7 @@
           isDarwin = true;
           user = "karlskewes";
           system = "aarch64-darwin";
-          stateVersion = "25.06";
+          stateVersion = "25.05";
         };
         karl-mba = mkHost "karl-mba" {
           inherit nixpkgs nix-darwin home-manager overlays configRev;
