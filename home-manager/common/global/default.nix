@@ -106,14 +106,6 @@
 
   imports = [ ./neovim.nix ];
 
-  programs.fish = {
-    enable = false; # TODO
-    shellInit = ''
-      # tell ssh to use gcr instead of gpg agent.
-      export SSH_AUTH_SOCK=/run/user/"$(id --user)"/gcr/ssh
-    '';
-  };
-
   programs.bash = {
     enable = true;
 

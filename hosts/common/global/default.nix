@@ -6,7 +6,6 @@
 , ... }:
 
 {
-
   # system user
   users = {
     mutableUsers = false;
@@ -36,7 +35,6 @@
   };
 
   programs.bash.enable = true;
-  programs.fish.enable = false;
 
   time.timeZone = "Australia/Brisbane";
 

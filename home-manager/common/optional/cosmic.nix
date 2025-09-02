@@ -20,12 +20,6 @@
     xdg-desktop-portal-gtk
   ];
 
-  programs.fish.shellAliases = {
-    # Copy Paste to clipboard.
-    pbcopy = "wl-copy";
-    pbpaste = "wl-paste";
-  };
-
   programs.bash.shellAliases = {
     # Copy Paste to clipboard.
     pbcopy = "wl-copy";

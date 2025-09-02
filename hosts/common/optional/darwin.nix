@@ -21,13 +21,12 @@
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
         ];
-        shell = pkgs.bash; # $ chsh -s /run/current-system/sw/bin/fish
+        shell = pkgs.bash; # $ chsh -s /run/current-system/sw/bin/bash
       };
     }) { } (currentUsers);
 
-  environment.shells = [ pkgs.bashInteractive pkgs.fish pkgs.zsh ];
+  environment.shells = [ pkgs.bashInteractive pkgs.zsh ];
   programs.bash.enable = true;
-  programs.fish.enable = true;
   programs.zsh.enable = true;
 
   environment.systemPackages = with pkgs;
