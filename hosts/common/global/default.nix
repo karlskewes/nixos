@@ -60,6 +60,7 @@
     git # can't build without it
     gnumake
     home-manager
+    ncdu # ncdu /nix/store # find stuck old packages 'rm /tmp/nixos-rebuild.*'
     nix-diff # nix-diff /run/current-system ./result
     nvd # nix diff tool
     vim
@@ -115,6 +116,20 @@
       # only allow users with sudo access ability to access nix daemon
       allowed-users = [ "@wheel" ];
       auto-optimise-store = true;
+      trusted-users =
+        [ "karl" "karlskewes" ]; # ability to add cache substituters.
+
+      substituters =
+        [ "https://cache.nixos.org" "https://nix-community.cachix.org" ];
+      trusted-public-keys = [
+        # cache.nixos.org key built-in
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+
+    optimise = {
+      automatic = true;
+      dates = [ "06:00" ];
     };
 
     # automatically trigger garbage collection
@@ -146,14 +161,12 @@
     };
   };
 
-  services.logind = {
-    lidSwitch = lib.mkDefault "ignore"; # default "suspend"
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "ignore";
-    extraConfig = ''
-      IdleAction=lock
-      IdleActionSec=3600
-    '';
+  services.logind.settings.Login = {
+    HandleLidSwitch = lib.mkDefault "ignore"; # default "suspend"
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    IdleAction = "lock";
+    IdleActionSec = 3600;
   };
 
   services.openssh = {
