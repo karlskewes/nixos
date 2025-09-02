@@ -51,11 +51,14 @@
     useRoutingFeatures = "both";
   };
 
-  services.logind.lidSwitch = "suspend";
+  services.logind.settings.Login.HandleLidSwitch = "suspend";
 
-  # dock "displaylink" driver must be manually installed, see run.sh
+  # dock "displaylink" driver mustHandleLid manually installed, see run.sh
   # TODO: convert to nix
   # modesetting required I think for actual display output to dock
   # TODO: disable for hyprland
-  services.xserver.videoDrivers = [ "displaylink" "modesetting" ];
+  # services.xserver.videoDrivers = [
+  #   "displaylink"
+  #   "modesetting"
+  # ];
 }

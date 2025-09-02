@@ -126,6 +126,9 @@ clean() { ## Clean old generations
 	sudo /run/current-system/bin/switch-to-configuration boot
 	# optimise store, soon nix.autoOptimise?
 	nix-store --optimise
+
+	echo "check for stuck/old builds in /tmp/nixos-rebuild*"
+	ls -l /tmp/nixos-rebuild*
 }
 
 update() { ## Update packages

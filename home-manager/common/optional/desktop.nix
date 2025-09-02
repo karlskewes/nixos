@@ -52,7 +52,7 @@
       helvum # pipewire patch bay gui
       libnotify # required by dunst
       qalculate-gtk # calculator
-      servo # rust web browser
+      # servo # rust web browser # TODO: make / larger.
       vlc
     ];
 
