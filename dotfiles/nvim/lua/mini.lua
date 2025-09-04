@@ -224,13 +224,19 @@ vim.keymap.set(
   '<Cmd>Pick oldfiles<CR>',
   { desc = '[?] Find recently opened files' }
 )
-vim.keymap.set('n', '<leader>s/', '<Cmd>Pick buf_lines<CR>', { desc = '[S]earch [B]uffer' })
 vim.keymap.set(
   'n',
-  '<leader><space>',
-  '<Cmd>Pick buffers<CR>',
-  { desc = '[ ] Find existing buffers' }
+  '<leader>sl',
+  '<Cmd>Pick buf_lines scope="current"<CR>',
+  { desc = '[S]earch buffer lines (current)' }
 )
+vim.keymap.set(
+  'n',
+  '<leader>sL',
+  '<Cmd>Pick buf_lines scope="all"<CR>',
+  { desc = '[S]earch buffer lines (all)' }
+)
+vim.keymap.set('n', '<leader><space>', '<Cmd>Pick buffers<CR>', { desc = '[ ] Pick Buffers' })
 vim.keymap.set('n', '<leader>sb', '<Cmd>Pick buffers<CR>', { desc = '[S]earch [B]uffers' })
 vim.keymap.set('n', '<leader>sd', '<Cmd>Pick diagnostic<CR>', { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sF', '<Cmd>Pick files<CR>', { desc = '[S]earch [F]iles' })
@@ -273,9 +279,15 @@ vim.keymap.set('n', '<leader>svh', '<Cmd>Pick git_hunks<CR>', { desc = '[S]earch
 -- Not implemented: https://github.com/nvim-mini/mini.nvim/issues/550#issuecomment-1805477794
 -- vim.keymap.set('n', '<leader>svs', picker.git_status, { desc = '[S]earch [v]cs status' })
 -- vim.keymap.set('n', '<leader>svS', picker.git_stash, { desc = '[S]earch [v]cs [S]tash' })
--- vim.keymap.set('n', '<leader>sw', function()
---   picker.grep_cword({ cwd = git_root_or_cwd() })
--- end, { desc = '[S]earch current [w]ord' })
--- vim.keymap.set('n', '<leader>sW', function()
---   picker.grep_cWORD({ cwd = git_root_or_cwd() })
--- end, { desc = '[S]earch current [W]ORD' })
+vim.keymap.set(
+  'n',
+  '<leader>sw',
+  '<Cmd>Pick grep pattern="<cword>"<CR>',
+  { desc = '[S]earch current [w]ord' }
+)
+vim.keymap.set(
+  'n',
+  '<leader>sW',
+  '<Cmd>Pick grep pattern="<cWORD>"<CR>',
+  { desc = '[S]earch current [W]ORD' }
+)
