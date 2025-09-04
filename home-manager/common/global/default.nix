@@ -110,8 +110,10 @@
     enable = true;
 
     initExtra = ''
-      # tell ssh to use gcr instead of gpg agent.
-      export SSH_AUTH_SOCK=/run/user/"$(id --user)"/gcr/ssh
+      # tell ssh to use gcr instead of gpg agent. Darwin uses MacOS agent.
+      if [ "$(uname)" != "Darwin" ]; then
+        export SSH_AUTH_SOCK=/run/user/"$(id --user)"/gcr/ssh
+      fi
 
       # Case-insensitive globbing (used in pathname expansion)
       shopt -s nocaseglob
