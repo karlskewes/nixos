@@ -42,9 +42,6 @@
     Weekday = 7;
   }];
   nix.optimise.automatic = true;
-  nix.settings.auto-optimise-store = true;
-
-  security.pam.enableSudoTouchIdAuth = true;
 
   services.aerospace = {
     enable = true;
