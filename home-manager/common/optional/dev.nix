@@ -1,4 +1,4 @@
-{ config, lib, pkgs, isDarwin, isLinux, ... }:
+{ lib, pkgs, isDarwin, isLinux, ... }:
 
 {
   home.packages = with pkgs;
@@ -32,8 +32,6 @@
       nodejs_22 # neovim # nodejs_24 constantly builds
       # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
-      openssl
-
       cargo-audit
       cargo-watch
       clang
@@ -52,15 +50,16 @@
 
       zig
 
-      python312 # neovim # https://docs.python.org/3/
-      python312Packages.black
-      python312Packages.flake8
-      python312Packages.isort
-      python312Packages.pylint
-      python312Packages.pip
-      python312Packages.pynvim
-      python312Packages.debugpy
-      python312Packages.pytest
+      python313 # neovim # https://docs.python.org/3/
+      python313Packages.black
+      python313Packages.flake8
+      python313Packages.isort
+      python313Packages.pylint
+      python313Packages.pip
+      python313Packages.pynvim
+      python313Packages.debugpy
+      python313Packages.pytest
+      python313Packages.uv # package manager
 
       # DO: npm install -D tailwindcss postcss-cli @fullhuman/postcss-purgecss
       # RUN: npx {tailwindcss, postcss, etc} --help
@@ -71,7 +70,8 @@
 
       # clouds
       awscli2
-      aws-vault
+      aws-vault # TODO: convert nixpkgs to maintained fork.
+      # azure?
       # google-cloud-sdk # gsutil, etc
       docker-compose
       pulumi-bin
