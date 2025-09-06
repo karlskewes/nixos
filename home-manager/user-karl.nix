@@ -30,10 +30,11 @@ in {
     enable = true;
     userName = "Karl Skewes";
     userEmail = lib.mkDefault "hello@karlskewes.com";
-    signing.key = lib.mkDefault "8A391F56B7EE82DA";
-    signing.signByDefault = lib.mkDefault true;
-    extraConfig.url."ssh://git@github.com/karlskewes/" = {
-      insteadOf = "https://github.com/karlskewes/";
-    };
+    # If we're signing then we have a key required to fetch via SSH, otherwise stick with HTTPS
+    # so public repositories can still be fetched.
+    extraConfig.url."ssh://git@github.com/karlskewes/" =
+      lib.mkIf config.common.git.signing.enable {
+        insteadOf = "https://github.com/karlskewes/";
+      };
   };
 }

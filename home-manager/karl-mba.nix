@@ -16,6 +16,8 @@
       # ./common/optional/hyprland.nix
     ]);
 
+  common.git.signing = { enable = true; };
+
   desktop.firefox = {
     enable = true;
     users = [ "karl" ];
