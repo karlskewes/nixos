@@ -26,12 +26,15 @@ in {
     '';
   };
 
+  # ssh verification: `git log --show-signature`
+  common.git.signing = { enable = true; };
+
   programs.git = {
     enable = true;
     userName = "Karl Skewes";
     userEmail = lib.mkDefault "hello@karlskewes.com";
-    signing.key = lib.mkDefault "8A391F56B7EE82DA";
-    signing.signByDefault = lib.mkDefault true;
+    # signing.key = lib.mkDefault "8A391F56B7EE82DA"; # gpg
+    # signing.format = lib.mkDefault "gpg"; # ssh
     extraConfig.url."ssh://git@github.com/karlskewes/" = {
       insteadOf = "https://github.com/karlskewes/";
     };
