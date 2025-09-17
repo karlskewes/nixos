@@ -11,9 +11,7 @@
     # #
     ++ (lib.optionals isLinux [
       ./common/optional/cosmic.nix
-      # ./common/optional/i3.nix
-      # ./common/optional/sway.nix
-      # ./common/optional/hyprland.nix
+      # #
     ]);
 
   common.git.signing = { enable = true; };
@@ -24,7 +22,10 @@
   };
 
   home.packages = with pkgs;
-    [ ] ++ (lib.optionals isLinux [
+    [ ] ++ (lib.optionals isDarwin [
+      podman # docker replacement
+      podman-compose
+    ]) ++ (lib.optionals isLinux [
       asahi-bless
       asahi-btsync
       asahi-nvram

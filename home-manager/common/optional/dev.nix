@@ -73,6 +73,7 @@
       aws-vault # TODO: convert nixpkgs to maintained fork.
       # azure?
       # google-cloud-sdk # gsutil, etc
+      flyctl # fly.io
       docker-compose
       pulumi-bin
       opentofu
