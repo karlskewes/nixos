@@ -25,6 +25,7 @@
 
   home.packages = with pkgs;
     [ ] ++ (lib.optionals isDarwin [
+      google-chrome # chromium variants not supported on darwin
       slack
       podman # docker replacement
       podman-compose
