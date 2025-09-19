@@ -89,6 +89,6 @@
     enable = true;
     package = lib.mkDefault pkgs.go_1_25;
     # export GOPRIVATE=github.com/karlskewes/*
-    goPrivate = [ "github.com/karlskewes/*" ];
+    env.GOPRIVATE = [ "github.com/karlskewes/*" ];
   };
 }
