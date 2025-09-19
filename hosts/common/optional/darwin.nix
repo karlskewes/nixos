@@ -26,10 +26,10 @@
 
   environment.shellAliases = { l = "ls -lah"; };
 
-  environment.systemPackages = with pkgs;
-    [
-      (pkgs.hiPrio uutils-coreutils-noprefix) # rust versions
-    ];
+  environment.systemPackages = with pkgs; [
+    watch # not included in darwin.
+    (pkgs.hiPrio uutils-coreutils-noprefix) # rust versions
+  ];
 
   networking.applicationFirewall.enable = true;
   networking.applicationFirewall.blockAllIncoming = false; # default

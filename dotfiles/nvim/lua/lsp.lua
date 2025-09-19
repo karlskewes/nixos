@@ -22,15 +22,15 @@ local lsp_on_attach = function(args)
 
   vim.keymap.set(
     'n',
-    'gd',
+    'gD',
     '<Cmd>Pick lsp scope="definition"<CR>',
     { buffer = bufnr, desc = '[G]oto [D]efinition' }
   )
   vim.keymap.set(
     'n',
-    'gD',
+    'gd',
     vim.lsp.buf.declaration,
-    { buffer = bufnr, desc = '[G]oto [D]eclaration' }
+    { buffer = bufnr, desc = '[G]oto [d]eclaration' }
   )
   vim.keymap.set(
     'n',

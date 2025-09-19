@@ -29,6 +29,7 @@
       slack
       podman # docker replacement
       podman-compose
+      yq
     ]) ++ (lib.optionals isLinux [
       asahi-bless
       asahi-btsync
