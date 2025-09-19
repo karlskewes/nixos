@@ -27,6 +27,8 @@
   environment.shellAliases = { l = "ls -lah"; };
 
   environment.systemPackages = with pkgs; [
+    gnumake
+    gnused
     watch # not included in darwin.
     (pkgs.hiPrio uutils-coreutils-noprefix) # rust versions
   ];

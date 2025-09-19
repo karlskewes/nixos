@@ -56,7 +56,7 @@
     (pkgs.hiPrio uutils-coreutils-noprefix) # rust versions
     disko
     git # can't build without it
-    gnumake
+    gnumake # gnused required for darwin only
     home-manager
     ncdu # ncdu /nix/store # find stuck old packages 'rm /tmp/nixos-rebuild.*'
     nix-diff # nix-diff /run/current-system ./result
