@@ -10,6 +10,8 @@
     # ../common/optional/zfs.nix
   ];
 
+  networking.firewall.allowedTCPPorts = [ 3000 ];
+
   # zfsBootUnlock = {
   #   enable = false;
   #   authorizedKeys = [
