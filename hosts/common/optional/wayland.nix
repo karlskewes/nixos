@@ -5,7 +5,7 @@
 
   services.dbus.enable = true;
 
-  environment.systemPackages = with pkgs; [ greetd.tuigreet ];
+  environment.systemPackages = with pkgs; [ tuigreet ];
 
   services.blueman.enable = true; # bluetooth
 

@@ -173,13 +173,15 @@
     };
 
     # Create approved git signing ssh key list.
-    home.file.".ssh/allowed_signers".text =
-      lib.mkIf config.common.git.signing.enable ''
-        ${config.programs.git.userEmail} namespaces="git" ${
-          builtins.readFile
-          (config.home.homeDirectory + "/.ssh/machine_default.pub")
-        }
-      '';
+    home.file.".ssh/allowed_signers" =
+      lib.mkIf config.common.git.signing.enable {
+        text = ''
+          ${config.programs.git.userEmail} namespaces="git" ${
+            builtins.readFile
+            (config.home.homeDirectory + "/.ssh/machine_default.pub")
+          }
+        '';
+      };
 
     programs.git = {
       # ssh verification: `git log --show-signature`

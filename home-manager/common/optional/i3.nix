@@ -12,6 +12,7 @@
     pavucontrol # pulseaudio gui
 
     xclip
+    xdg-desktop-portal-gtk
   ];
 
   home.pointerCursor = {
@@ -45,6 +46,8 @@
     # disable xautolock when mouse in bottom right corner
     xautolock.extraOptions = [ "-corners" "000-" ];
   };
+
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   xsession = {
     enable = true;

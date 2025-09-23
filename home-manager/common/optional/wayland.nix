@@ -35,7 +35,6 @@
     pbpaste = "wl-paste";
   };
 
-  programs.rofi = { package = pkgs.rofi-wayland; };
   programs.waybar = { enable = true; };
 
   services.playerctld.enable = true;

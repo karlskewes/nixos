@@ -30,10 +30,7 @@
   };
 
   home.packages = with pkgs;
-    [ ] ++ (lib.optionals isDarwin [
-      google-chrome # chromium variants not supported on darwin
-      slack
-
+    [
       awscli2
       google-cloud-sdk
       azure-cli
@@ -47,10 +44,11 @@
       jsonnet-bundler
       tanka
       yq
+    ] ++ (lib.optionals isDarwin [
+      google-chrome # chromium variants not supported on darwin
+      slack
     ]) ++ (lib.optionals isLinux [
-      asahi-bless
-      asahi-btsync
-      asahi-nvram
-      asahi-wifisync
+      ungoogled-chromium
+      # #
     ]);
 })
