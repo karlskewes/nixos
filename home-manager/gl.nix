@@ -18,10 +18,7 @@
 
   common.git.signing = { enable = true; };
 
-  desktop.firefox = {
-    enable = true;
-    users = [ "karlskewes" ];
-  };
+  desktop.firefox = { enable = true; };
 
   programs.bash.shellAliases = {
     dco = "docker-compose";
@@ -55,8 +52,5 @@
       asahi-btsync
       asahi-nvram
       asahi-wifisync
-
-      # calibre # 7.26.0 broken errors during test_piper, re-add when fixed.
     ]);
 })
-

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, currentStateVersion, isDarwin, isLinux, ... }:
+{ config, lib, currentStateVersion, isDarwin, ... }:
 
 let
   user = if isDarwin then "karlskewes" else "karl";
@@ -9,6 +9,8 @@ in {
   home.username = "${user}";
   home.homeDirectory = homeDir;
   home.stateVersion = "${currentStateVersion}";
+
+  desktop.firefox.users = [ "${user}" ];
 
   programs.bash = {
     enable = true;
