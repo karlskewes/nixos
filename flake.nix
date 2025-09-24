@@ -119,6 +119,12 @@
           ];
         };
 
+        gl-vm = mkHost "gl-vm" {
+          inherit nixpkgs home-manager overlays extraModules configRev user;
+          system = "aarch64-linux";
+          stateVersion = "25.05";
+        };
+
         tiny = mkHost "tiny" {
           inherit nixpkgs home-manager overlays extraModules configRev user;
           system = "x86_64-linux";

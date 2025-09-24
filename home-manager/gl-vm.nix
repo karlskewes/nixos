@@ -6,6 +6,7 @@
   in {
     imports = [
       ./user-karl.nix
+
       ./common/global
 
       ./common/optional/dev.nix
@@ -43,9 +44,6 @@
         slack # not supported on aarch64-linux
       ]) ++ (lib.optionals isLinux [
         ungoogled-chromium
-        asahi-bless
-        asahi-btsync
-        asahi-nvram
-        asahi-wifisync
+        # #
       ]);
   })
