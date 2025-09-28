@@ -119,7 +119,7 @@
 
   # https://github.com/pi-hole/pi-hole
   virtualisation.oci-containers.containers.pihole = {
-    image = "pihole/pihole:2024.07.0";
+    image = "pihole/pihole:2025.08.0";
     extraOptions = [ "--hostname=pihole" ];
     ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" "443:443/tcp" ];
     environment = {

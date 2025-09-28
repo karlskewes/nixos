@@ -51,7 +51,7 @@
     useRoutingFeatures = "both";
   };
 
-  services.logind.settings.Login.HandleLidSwitch = "suspend";
+  # services.logind.settings.Login.HandleLidSwitch = "suspend";
 
   # dock "displaylink" driver mustHandleLid manually installed, see run.sh
   # TODO: convert to nix
