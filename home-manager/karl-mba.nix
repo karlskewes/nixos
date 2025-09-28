@@ -30,5 +30,34 @@
 
       # calibre # 7.26.0 broken errors during test_piper, re-add when fixed.
     ]);
+
+  # IRC client via ZNC IRC bouncer - https://halloy.chat/configuration/servers.html
+  programs.halloy = {
+    enable = true;
+    settings = {
+      buffer.channel.topic = { enabled = true; };
+      servers.oftc = {
+        channels =
+          [ "#asahi" "#asahi-alt" "#asahi-dev" "asahi-gpu" "asahi-re" ];
+        nickname = "k70";
+        alt_nicks = [ "k70_" "k70__" ];
+        username = "karl";
+        password_file = "~/.config/halloy/pfile";
+        server = "tiny";
+        port = 16667;
+        use_tls = false;
+      };
+      actions.buffer = {
+        click_channel_name = "replace-pane";
+        click_highlight = "replace-pane";
+        click_username = "replace-pane";
+        local = "replace-pane";
+        message_channel = "replace-pane";
+        message_user = "replace-pane";
+      };
+      actions.sidebar = { buffer = "replace-pane"; };
+
+    };
+  };
 })
 

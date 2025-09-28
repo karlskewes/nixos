@@ -49,6 +49,74 @@
     ${pkgs.ethtool}/bin/ethtool -K enp0s31f6 rx off tx off
   '';
 
+  # https://discourse.nixos.org/t/znc-config-without-putting-password-hash-in-configuration-nix/14236/3
+  # cyrusauth module talks to saslauthd, default auth mechanism is PAM
+  services.saslauthd.enable = true;
+
+  environment.etc = {
+    # need to add a PAM service config, cyrusauth identifies itself as "znc"
+    # very standard config, copied from others in /etc/pam.d
+    # just checks that you have a valid account/password
+    "pam.d/znc" = {
+      source = pkgs.writeText "znc.pam" ''
+        # Account management.
+        account required pam_unix.so
+
+        # Authentication management.
+        auth sufficient pam_unix.so likeauth try_first_pass
+        auth required pam_deny.so
+
+        # Password management.
+        password sufficient pam_unix.so nullok sha512
+
+        # Session management.
+        session required pam_env.so conffile=/etc/pam/environment readenv=0
+        session required pam_unix.so
+      '';
+    };
+  };
+
+  # znc service config has some hardening options that otherwise block
+  # interaction with saslauthd's unix socket
+  systemd.services.znc.serviceConfig.RestrictAddressFamilies = [ "AF_UNIX" ];
+
+  services.znc = {
+    enable = true;
+    mutable = false;
+    openFirewall = true;
+    useLegacyConfig = false;
+    config = {
+      LoadModule = [ "adminlog" "cyrusauth saslauthd" "webadmin" ];
+      Listener.l = {
+        Port = 16667;
+        AllowIRC = true;
+        AllowWeb = true;
+        SSL = false;
+      };
+      User.karl = {
+        Admin = true;
+        # fake hash, auth against this will always fail, user can only login via SASL
+        # znc compains if you have no Pass
+        Pass = "md5#::#::#";
+        Nick = "k70";
+        AltNick = "k70_";
+        Ident = "karl";
+        ChanBufferSize = 200;
+        Network.oftc = {
+          Server = "irc.oftc.net +6697";
+          LoadModule = [ "keepnick" "simple_away" ];
+          Chan = {
+            "#asahi" = { };
+            "#asahi-alt" = { };
+            "#asahi-dev" = { };
+            "#asahi-gpu" = { };
+            "#asahi-re" = { };
+          };
+        };
+      };
+    };
+  };
+
   # https://github.com/pi-hole/pi-hole
   virtualisation.oci-containers.containers.pihole = {
     image = "pihole/pihole:2024.07.0";
