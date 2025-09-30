@@ -36,6 +36,13 @@
     enable = true;
     settings = {
       buffer.channel.topic = { enabled = true; };
+      buffer.server_messages = {
+        join.enabled = false;
+        part.enabled = false;
+        quit.enabled = false;
+        topic.enabled = false;
+      };
+      font.size = 16; # default 13 bit small.
       servers.oftc = {
         channels =
           [ "#asahi" "#asahi-alt" "#asahi-dev" "asahi-gpu" "asahi-re" ];

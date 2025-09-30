@@ -101,7 +101,8 @@
         Nick = "k70";
         AltNick = "k70_";
         Ident = "karl";
-        ChanBufferSize = 200;
+        ChanBufferSize = 1000;
+        QuitMsg = "";
         Network.oftc = {
           Server = "irc.oftc.net +6697";
           LoadModule = [ "keepnick" "simple_away" ];
