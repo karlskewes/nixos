@@ -154,9 +154,8 @@ vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('sqls')
 vim.lsp.enable('tailwindcss')
 vim.lsp.enable('tofu_ls')
--- vim.lsp.enable('ts_ls') --
+vim.lsp.enable('ts_ls')
 vim.lsp.enable('vue_ls')
--- vim.lsp.enable('vue-language-server') -- see ts_ls comment above.
 vim.lsp.enable('yamlls')
 vim.lsp.enable('lua_ls')
 
@@ -172,7 +171,6 @@ vim.lsp.enable('lua_ls')
 --   --       see ~/.config/nvim/lua/ts_ls.lua for rendered file.
 --   -- https://github.com/vuejs/language-tools
 -- },
--- vue-language-server, see ts_ls comment above.
 -- }
 
 -- ui notifications and lsp progress messages.
