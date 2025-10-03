@@ -85,6 +85,21 @@
       kubeval
     ];
 
+  programs.bash.shellAliases = {
+    docker = lib.mkIf (isDarwin) "podman";
+    dco = "docker-compose";
+    k = "kubectl";
+    # podman docker host export
+    # https://podman-desktop.io/docs/migrating-from-docker/using-the-docker_host-environment-variable
+    pdh =
+      "export DOCKER_HOST=unix://$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')";
+  };
+
+  programs.bash.initExtra = ''
+    source <(kubectl completion bash) # set up autocomplete in bash into the current shell, bash-completion package should be installed first.
+    complete -F __start_kubectl k
+  '';
+
   programs.go = {
     enable = true;
     package = lib.mkDefault pkgs.go_1_25;

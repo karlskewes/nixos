@@ -24,16 +24,6 @@
 
     desktop.firefox = { enable = true; };
 
-    programs.bash.shellAliases = {
-      docker = lib.mkIf (isDarwin) "podman";
-      dco = "docker-compose";
-      k = "kubectl";
-      # podman docker host export
-      # https://podman-desktop.io/docs/migrating-from-docker/using-the-docker_host-environment-variable
-      pdh =
-        "export DOCKER_HOST=unix://$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')";
-    };
-
     home.packages = with pkgs;
       [ ] ++ (lib.optionals isDarwin [
         google-chrome # chromium variants not supported on darwin
