@@ -127,6 +127,9 @@ PS1+="\\[${hostStyle}\\]${cloud}\\h" # host
 PS1+="\\[${white}\\] in "
 PS1+="\\[${green}\\]\\w"                        # working directory
 PS1+="\$(prompt_git \"${white} on ${violet}\")" # Git repository details
+PS1+="\\[${white}\\] kube: "
+source "${HOME}/kube-ps1.sh"
+PS1+="\$(kube_ps1)"
 PS1+="\\n"
 PS1+="\\[${white}\\]\$ \\[${reset}\\]" # `$` (and reset color)
 export PS1

@@ -80,13 +80,14 @@
       MANPAGER = "less --ignore-case --hilite-unread --silent";
     };
     home.sessionPath = [
-      "$HOME/.local/bin" # tools
+      "$HOME/.local/bin" # toolseh
       "$HOME/.cargo/bin" # rust
       "$HOME/go/bin" # golang
     ];
     home.shellAliases = {
-      # Enable aliases to be run with sudo
+      # Enable aliases to be evaluated when provided to the following commands (HACK trailing space):
       sudo = "sudo ";
+      watch = "watch ";
 
       # One less char.
       v = "nvim";
@@ -113,6 +114,7 @@
     # Programs
     #---------------------------------------------------------------------
 
+    home.file."kube-ps1.sh" = { source = ../../../dotfiles/kube-ps1.sh; };
     programs.bash = {
       enable = true;
 
