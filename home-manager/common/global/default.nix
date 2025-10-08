@@ -120,6 +120,7 @@
 
       initExtra = ''
         # tell ssh to use gcr instead of gpg agent. Darwin uses MacOS agent.
+        # Darwin: ssh-add --apple-use-keychain /path/to/private_key
         if [ "$(uname)" != "Darwin" ]; then
           export SSH_AUTH_SOCK=/run/user/"$(id --user)"/gcr/ssh
         fi

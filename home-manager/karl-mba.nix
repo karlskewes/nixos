@@ -5,7 +5,6 @@
     ./common/global
 
     ./common/optional/dev.nix
-    ./common/optional/gpg.nix
   ] # #
     ++ (lib.optionals isDarwin [ ])
     # #

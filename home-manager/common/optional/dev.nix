@@ -5,6 +5,10 @@
     (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
       glibc # golangci-lint ?
       vokoscreen-ng # screencasting
+
+      # ssh key related
+      gcr_4
+      seahorse
     ]) ++ [
       bats
       shellcheck
