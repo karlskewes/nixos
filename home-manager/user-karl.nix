@@ -38,5 +38,10 @@ in {
       lib.mkIf config.common.git.signing.enable {
         insteadOf = "https://github.com/karlskewes/";
       };
+    # go get repo@branch can also get confused and fail. Force to SSH.
+    extraConfig.url."ssh://git@github.com/" =
+      lib.mkIf config.common.git.signing.enable {
+        insteadOf = "https://github.com/";
+      };
   };
 }
