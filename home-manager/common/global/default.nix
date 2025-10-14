@@ -40,6 +40,7 @@
 
         fd
         file
+        fswatch # fswatch path/to/file(s) | (while read fname; do echo "$fname"; <cmd> "$fname"; done)
         gron # sed'able json
         zenith # htop replacement
         jq
