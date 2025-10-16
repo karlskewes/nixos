@@ -24,6 +24,12 @@ vim.keymap.set(
   { desc = '[G]it show at cursor' }
 )
 vim.keymap.set('n', '<leader>gl', '<CMD>Git log --oneline<CR>', { desc = '[G]it [l]og --oneline' })
+vim.keymap.set(
+  'n',
+  '<leader>go',
+  '<CMD>lua MiniDiff.toggle_overlay()<CR>',
+  { desc = '[G]it [o]verlay' }
+)
 vim.keymap.set('n', '<leader>gr', '<CMD>Git reset %<CR>', { desc = '[G]it [r]eset buffer' })
 vim.keymap.set('n', '<leader>gs', '<CMD>Git status<CR>', { desc = '[G]it [s]tatus' })
 
@@ -259,6 +265,7 @@ vim.keymap.set('n', '<leader>sn', function()
 
   picker.start()
 end, { desc = '[S]earch [N]eovim files' }) -- TODO: not working, grab new picker var?
+vim.keymap.set('n', '<leader>sq', '<Cmd>Pick list="quickfix"<CR>', { desc = '[S]earch [q]uickfix' })
 vim.keymap.set('n', '<leader>sr', '<Cmd>Pick resume<CR>', { desc = '[S]earch [R]esume' })
 -- vim.keymap.set('n', '<leader>ss', picker.builtin, { desc = '[S]earch [S]elect' }) -- TODO: not available?
 vim.keymap.set('n', '<leader>sv', '<Cmd>Pick git_commits<CR>', { desc = '[S]earch [v]cs' })
