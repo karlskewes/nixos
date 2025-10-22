@@ -137,6 +137,15 @@ update() { ## Update packages
 	build
 }
 
+pr() { ## Check PR landed on NixOS branch
+	if [[ $# -ne 2 ]]; then
+		pr="${1}"
+	fi
+
+	# Purely a bookmark.
+	echo https://nixpkgs-tracker.ocfox.me/?pr="${pr:=451386}"
+}
+
 ## END Nix
 
 ## START Extras
