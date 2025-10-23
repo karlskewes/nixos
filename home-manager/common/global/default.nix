@@ -180,7 +180,7 @@
     home.file.".ssh/allowed_signers" =
       lib.mkIf config.common.git.signing.enable {
         text = ''
-          ${config.programs.git.userEmail} namespaces="git" ${
+          ${config.programs.git.settings.user.email} namespaces="git" ${
             builtins.readFile
             (config.home.homeDirectory + "/.ssh/machine_default.pub")
           }
@@ -188,6 +188,7 @@
       };
 
     programs.git = {
+      enable = true;
       # ssh verification: `git log --show-signature`
       signing = lib.mkIf config.common.git.signing.enable {
         signByDefault = true;
@@ -195,90 +196,88 @@
         key = "${config.home.homeDirectory}/.ssh/machine_default.pub";
 
       };
-      extraConfig.gpg.ssh.allowedSignersFile =
+      settings.gpg.ssh.allowedSignersFile =
         lib.mkIf config.common.git.signing.enable "~/.ssh/allowed_signers";
 
-      enable = true;
-
-      aliases = {
-        bd = ''
-          !f() {
-            local curbr;
-            curbr=$(git rev-parse --abbrev-ref HEAD);
-            if [ "$curbr" == "main" ] || [ "$curbr" == "master" ]; then
-              echo "WARNING: won't delete '$curbr' branch";
-            else
-              git checkout main && git branch -D $curbr;
-            fi;
-          }; f
-        '';
-        co = "checkout";
-        cob = "checkout -b";
-        # https://github.com/junegunn/fzf/wiki/examples#git
-        cof = ''
-          !f() {
-            local branches branch;
-            branches=$(git --no-pager branch -vv);
-            branch=$(echo "$branches" | fzf +m);
-            git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //");
-          }; f
-        '';
-        com = "checkout main";
-        coms = "checkout master";
-        c = "commit";
-        ca = "commit --amend";
-        caa = "commit --amend --all";
-        cf = "commit --fixup";
-        cff = ''
-          !f() {
-            commit=$(git log \
-              origin/main..HEAD \
+      settings = {
+        alias = {
+          bd = ''
+            !f() {
+              local curbr;
+              curbr=$(git rev-parse --abbrev-ref HEAD);
+              if [ "$curbr" == "main" ] || [ "$curbr" == "master" ]; then
+                echo "WARNING: won't delete '$curbr' branch";
+              else
+                git checkout main && git branch -D $curbr;
+              fi;
+            }; f
+          '';
+          co = "checkout";
+          cob = "checkout -b";
+          # https://github.com/junegunn/fzf/wiki/examples#git
+          cof = ''
+            !f() {
+              local branches branch;
+              branches=$(git --no-pager branch -vv);
+              branch=$(echo "$branches" | fzf +m);
+              git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //");
+            }; f
+          '';
+          com = "checkout main";
+          coms = "checkout master";
+          c = "commit";
+          ca = "commit --amend";
+          caa = "commit --amend --all";
+          cf = "commit --fixup";
+          cff = ''
+            !f() {
+              commit=$(git log \
+                origin/main..HEAD \
+                --abbrev-commit \
+                --pretty=oneline | \
+                fzf --no-multi | \
+                cut -d ' ' -f1 \
+              )
+              if [ -z "$commit" ]; then
+                echo "WARNING: no commit specified, aborting...";
+              else
+                git commit --fixup "$commit";
+              fi
+            }; f
+          '';
+          cm = "commit --message";
+          d = "diff";
+          fup = "fetch upstream";
+          fuppr =
+            "!f() { git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
+          fopr =
+            "!f() { git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
+          lg = ''
+            !f() {
+              git log \
+              --color \
+              --graph \
               --abbrev-commit \
-              --pretty=oneline | \
-              fzf --no-multi | \
-              cut -d ' ' -f1 \
-            )
-            if [ -z "$commit" ]; then
-              echo "WARNING: no commit specified, aborting...";
-            else
-              git commit --fixup "$commit";
-            fi
-          }; f
-        '';
-        cm = "commit --message";
-        d = "diff";
-        fup = "fetch upstream";
-        fuppr =
-          "!f() { git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
-        fopr =
-          "!f() { git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
-        lg = ''
-          !f() {
-            git log \
-            --color \
-            --graph \
-            --abbrev-commit \
-            --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset';
-          }; f
-        '';
-        mupm = "merge upstream/main";
-        mupms = "merge upstream/master";
-        pr = "pull --rebase";
-        pf = "push --force-with-lease";
-        rba = "rebase --abort";
-        rbc = "rebase --continue";
-        rbi = "rebase --interactive";
-        rbim = "rebase --interactive main";
-        rbims = "rebase --interactive master";
-        rbm = "rebase main";
-        rbms = "rebase master";
-        rbupm = "rebase upstream/main";
-        rbupms = "rebase upstream/master";
-        raup = "remote add upstream";
-        s = "status";
-      };
+              --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset';
+            }; f
+          '';
+          mupm = "merge upstream/main";
+          mupms = "merge upstream/master";
+          pr = "pull --rebase";
+          pf = "push --force-with-lease";
+          rba = "rebase --abort";
+          rbc = "rebase --continue";
+          rbi = "rebase --interactive";
+          rbim = "rebase --interactive main";
+          rbims = "rebase --interactive master";
+          rbm = "rebase main";
+          rbms = "rebase master";
+          rbupm = "rebase upstream/main";
+          rbupms = "rebase upstream/master";
+          raup = "remote add upstream";
+          s = "status";
+        };
 
-      extraConfig = {
         branch.sort = "committerdate";
         commit.verbose = "true";
         diff.algorithm = "histogram";
@@ -286,6 +285,7 @@
         diff.mnemonicPrefix = "true";
         diff.renames = "true";
         fetch.prune = "true";
+
         init.defaultBranch = "main";
         merge.conflictstyle = "zdiff3";
         pull.rebase = "true";

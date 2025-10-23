@@ -30,18 +30,20 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "Karl Skewes";
-    userEmail = lib.mkDefault "hello@karlskewes.com";
-    # If we're signing then we have a key required to fetch via SSH, otherwise stick with HTTPS
-    # so public repositories can still be fetched.
-    extraConfig.url."ssh://git@github.com/karlskewes/" =
-      lib.mkIf config.common.git.signing.enable {
-        insteadOf = "https://github.com/karlskewes/";
-      };
-    # go get repo@branch can also get confused and fail. Force to SSH.
-    extraConfig.url."ssh://git@github.com/" =
-      lib.mkIf config.common.git.signing.enable {
+
+    settings = {
+      user.name = "Karl Skewes";
+      user.email = lib.mkDefault "hello@karlskewes.com";
+      # If we're signing then we have a key required to fetch via SSH, otherwise stick with HTTPS
+      # so public repositories can still be fetched.
+      url."ssh://git@github.com/karlskewes/" =
+        lib.mkIf config.common.git.signing.enable {
+          insteadOf = "https://github.com/karlskewes/";
+        };
+      # go get repo@branch can also get confused and fail. Force to SSH.
+      url."ssh://git@github.com/" = lib.mkIf config.common.git.signing.enable {
         insteadOf = "https://github.com/";
       };
+    };
   };
 }
