@@ -137,11 +137,12 @@
         nil # nix
         nodePackages.prettier
         pyright
-        rust-analyzer
+        rust-analyzer # generally `rustup component add rust-analyzer`
         rustup
         sqls
         sumneko-lua-language-server
         tailwindcss-language-server
+        tombi # toml formatter
         tofu-ls
         typescript
         typescript-language-server

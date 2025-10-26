@@ -47,6 +47,7 @@ local conform_opts = {
     sh = { 'shfmt' },
     sql = { 'sql_formatter' },
     templ = { 'templ' },
+    toml = { 'tombi' },
     terraform = { 'terraform_fmt' },
     yaml = { 'prettier', stop_after_first = true },
     zig = { 'zigfmt' },
