@@ -21,6 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: switch to heavily restricted module: https://github.com/GarrettGR/titdb-nix
     # https://github.com/tascvh/trackpad-is-too-damn-big/compare/main...luqmanishere:trackpad-is-too-damn-big:main
     titdb = {
       url =
@@ -77,7 +78,12 @@
           services.titdb = {
             enable = true;
             # udevadm info /dev/input/event* | grep -E '(DEVNAME|TOUCHPAD)'
-            device = "/dev/input/event1";
+            # Use `by-path/` instead of `/dev/input/event#` to consistently target the correct device
+            # as `event#` numbers can change.
+            # $ ls /dev/input/by-path/plat form-23510c000.spi-cs-0-event-mouse -la
+            # lrwxrwxrwx 1 root root 9 Oct 27 08:43 /dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse -> ../event2
+            device =
+              "/dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse";
           };
         }
       ];
