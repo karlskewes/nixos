@@ -34,6 +34,11 @@ vim.keymap.set('n', '<leader>gr', '<CMD>Git reset %<CR>', { desc = '[G]it [r]ese
 vim.keymap.set('n', '<leader>gs', '<CMD>Git status<CR>', { desc = '[G]it [s]tatus' })
 
 require('mini.icons').setup()
+-- Send all to quickfix
+-- <query> (e.g: files with `after/`)
+-- <C-a> to select all (mark_all)
+-- (optional) <C-u> to clear query (keeps marked), then new query (`tiny/`), mark_all, <repeat>
+-- <M-CR> to send to quickfix if appropriate (choose_marked) (`after/` and `tiny/`)
 require('mini.pick').setup()
 require('mini.extra').setup() -- extra pickers for mini.pick
 require('mini.splitjoin').setup()
