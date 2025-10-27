@@ -111,7 +111,9 @@ install() { ## Install NixOS for the first time
 	nix-extra
 	sed -i 's@home/karl/src/nix-extra@home/nixos/src/nix-extra@' flake.nix
 	nix --extra-experimental-features "nix-command flakes" flake update nix-extra
-	sudo hostname "$(read -rp 'hostname: ' temp && echo "$temp")"
+	if [[ $(hostname) == "nixos" ]]; then
+		sudo hostname "$(read -rp 'hostname: ' temp && echo "$temp")"
+	fi
 	nixos-rebuild build --flake .#"$(hostname)"
 	sudo nixos-install --impure --root /mnt/ --flake .#"$(hostname)"
 }

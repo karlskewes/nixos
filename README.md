@@ -154,9 +154,9 @@ nix \
   --extra-experimental-features nix-command \
   --extra-experimental-features flakes \
   run github:nix-community/disko --no-write-lock-file -- \
+    --mode destroy,format,mount \
     --dry-run \
-    --mode disko \
-    ./"${machine}-disko.nix"
+    ./hosts/"${machine}/disko.nix"
 ```
 
 Then if ready do a run for real:
@@ -200,10 +200,11 @@ cd nixos
 sudo mount -o remount,size=10G /nix/.rw-store
 
 # consider mounting swap if run out of memory during build
+sudo mkswap /dev/disk/by-id/<disk>-part2
 sudo swapon /dev/disk/by-id/<disk>-part2
 
 # if still run out of memory, reduce imports, for example
-# comment: desktop, dev, xserver
+# comment: desktop, dev, wm
 vim flake.nix
 
 # build and install flake

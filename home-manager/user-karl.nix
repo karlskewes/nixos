@@ -10,8 +10,6 @@ in {
   home.homeDirectory = homeDir;
   home.stateVersion = "${currentStateVersion}";
 
-  desktop.firefox.users = [ "${user}" ];
-
   programs.bash = {
     enable = true;
 

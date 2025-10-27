@@ -15,7 +15,12 @@
 
   common.git.signing = { enable = true; };
 
-  desktop.firefox = { enable = true; };
+  desktop.firefox = {
+    enable = true;
+    users = [ ] # #
+      ++ (lib.optionals isDarwin [ "karlskewes" ])
+      ++ (lib.optionals isLinux [ "karl" ]);
+  };
 
   home.packages = with pkgs;
     [ ] ++ (lib.optionals isDarwin [
