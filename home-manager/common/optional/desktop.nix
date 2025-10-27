@@ -68,7 +68,13 @@
       ];
 
     programs.firefox = lib.mkIf config.desktop.firefox.enable {
-      package = pkgs.firefox;
+      # package = pkgs.firefox;
+      package = if isDarwin then
+      # https://github.com/NixOS/nixpkgs/issues/451884
+        pkgs.firefox.overrideAttrs (_: { gtk_modules = [ ]; })
+      else
+        pkgs.firefox;
+
       enable = true;
       # Check about:policies#documentation for options.
       # https://mozilla.github.io/policy-templates/

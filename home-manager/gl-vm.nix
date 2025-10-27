@@ -17,13 +17,13 @@
       ])
       # #
       ++ (lib.optionals isLinux [
-        ./common/optional/cosmic.nix
+        # ./common/optional/cosmic.nix
         # #
       ]);
 
     common.git.signing = { enable = true; };
 
-    desktop.firefox = { enable = true; };
+    # desktop.firefox = { enable = true; };
 
     home.packages = with pkgs;
       [
@@ -43,7 +43,7 @@
         google-chrome # chromium variants not supported on darwin
         slack # not supported on aarch64-linux
       ]) ++ (lib.optionals isLinux [
-        ungoogled-chromium
+        # ungoogled-chromium
         # #
       ]);
   })

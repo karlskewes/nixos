@@ -1,15 +1,19 @@
-{ lib, pkgs, ... }: {
+{ lib, ... }: {
 
   imports = [
-    ./hardware-configuration.nix
+    ./hardware-configuration_apple.nix
+    # ./hardware-configuration_qemu.nix
 
     ../common/global
 
-    ../common/optional/cosmic.nix
+    # ../common/optional/cosmic.nix
     # ../common/optional/hyprland.nix
     # ../common/optional/zfs.nix
   ];
 
+  users.users.karl.openssh.authorizedKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFiGTZKrOJF/E+CvHZ0ZGgFOAACNRU2MuDP2YdYjAM2v"
+  ];
   # networking.firewall.allowedTCPPorts = [ 3000 ];
 
   # UTM Apple/QEMU guest integration - clipboard sharing/etc.
