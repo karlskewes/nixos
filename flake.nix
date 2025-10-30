@@ -42,12 +42,20 @@
       # "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
     };
 
+    kolide-launcher = {
+      # ARM64 support: https://github.com/kolide/nix-agent/pull/35
+      #url = "github:/kolide/nix-agent/becca/arm-support";
+      url = "github:/karlskewes/nix-agent/arm-support";
+      # url = "github:/kolide/nix-agent/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-extra.url = "path:/home/karl/src/nix-extra";
     nix-extra.flake = false;
   };
 
   outputs = { self, home-manager, nixpkgs, nix-darwin, apple-silicon-support
-    , titdb, nix-extra, ... }@inputs:
+    , titdb, kolide-launcher, nix-extra, ... }@inputs:
     let
       extraNeovimPlugins = (self: super:
         let
@@ -87,6 +95,8 @@
           };
         }
       ];
+      vmModules = extraModules
+        ++ [ kolide-launcher.nixosModules.kolide-launcher ];
 
     in {
       darwinConfigurations = {
@@ -126,9 +136,10 @@
         };
 
         gl-vm = mkHost "gl-vm" {
-          inherit nixpkgs home-manager overlays extraModules configRev user;
+          inherit nixpkgs home-manager overlays configRev user;
           system = "aarch64-linux";
           stateVersion = "25.05";
+          extraModules = vmModules;
         };
 
         tiny = mkHost "tiny" {
