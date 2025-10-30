@@ -43,10 +43,7 @@
     };
 
     kolide-launcher = {
-      # ARM64 support: https://github.com/kolide/nix-agent/pull/35
-      #url = "github:/kolide/nix-agent/becca/arm-support";
-      url = "github:/karlskewes/nix-agent/arm-support";
-      # url = "github:/kolide/nix-agent/main";
+      url = "github:/kolide/nix-agent/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

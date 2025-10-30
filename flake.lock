@@ -205,16 +205,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1761784251,
-        "narHash": "sha256-DVpgqPODULv9j8thyx+elo0FFlZ195iGPc36/XlAlOk=",
-        "owner": "karlskewes",
+        "lastModified": 1761833670,
+        "narHash": "sha256-qtoeYL1DaNzmOIOLaThsmxJmoSHvVixH/Clw8h9mhlM=",
+        "owner": "kolide",
         "repo": "nix-agent",
-        "rev": "a434bf768f6a69c3332bb639085ba7bd28e20172",
+        "rev": "a20e7eb5a63053f8cd8e9315c206a1c5be1707b5",
         "type": "github"
       },
       "original": {
-        "owner": "karlskewes",
-        "ref": "arm-support",
+        "owner": "kolide",
+        "ref": "main",
         "repo": "nix-agent",
         "type": "github"
       }
