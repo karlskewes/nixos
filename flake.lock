@@ -198,6 +198,27 @@
         "type": "github"
       }
     },
+    "kolide-launcher": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1761784251,
+        "narHash": "sha256-DVpgqPODULv9j8thyx+elo0FFlZ195iGPc36/XlAlOk=",
+        "owner": "karlskewes",
+        "repo": "nix-agent",
+        "rev": "a434bf768f6a69c3332bb639085ba7bd28e20172",
+        "type": "github"
+      },
+      "original": {
+        "owner": "karlskewes",
+        "ref": "arm-support",
+        "repo": "nix-agent",
+        "type": "github"
+      }
+    },
     "namu-nvim": {
       "flake": false,
       "locked": {
@@ -324,6 +345,7 @@
       "inputs": {
         "apple-silicon-support": "apple-silicon-support",
         "home-manager": "home-manager",
+        "kolide-launcher": "kolide-launcher",
         "namu-nvim": "namu-nvim",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nix-darwin": "nix-darwin",

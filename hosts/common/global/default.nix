@@ -44,7 +44,7 @@
       "x86_64-linux" = true;
       "aarch64-linux" = false;
     }."${currentSystem}";
-    loader.efi.canTouchEfiVariables = {
+    loader.efi.canTouchEfiVariables = lib.mkDefault {
       "x86_64-linux" = true;
       "aarch64-linux" = false;
     }."${currentSystem}";
@@ -141,7 +141,7 @@
 
   security.polkit.enable = true;
 
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo.wheelNeedsPassword = lib.mkDefault false;
 
   services.gnome.gnome-keyring.enable = true;
   services.gnome.gcr-ssh-agent.enable =
