@@ -33,6 +33,18 @@
 
   services.clamav = {
     daemon.enable = true;
+    daemon.settings = {
+      # exclude various package caches.
+      "ExcludePath" =
+        [ "/node_modules/" "/go/" "/\\.rustup/" "/\\.yarn/" "/yarn/berry/" ];
+
+      # $ journalctl -u clamdscan.service
+      # `clamdscan[22040]: LibClamAV Warning: cli_realpath: Invalid arguments.`
+      # $ cd DIRECTORY_TO_SCAN # cd /var/lib
+      # $ find . | awk 'FS="/" {print(NF)}' | sort --general-numeric-sort | tail --lines 1
+      # 26
+      MaxDirectoryRecursion = 30;
+    };
     scanner.enable = true;
     updater.enable = true;
   };
