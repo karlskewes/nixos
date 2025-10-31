@@ -48,7 +48,7 @@
         font-awesome
         # #
       ]) ++ (lib.optionals isLinux [
-        glxinfo
+        mesa-demos
         vulkan-tools # vulkan-info
         helvum # pipewire patch bay gui
 

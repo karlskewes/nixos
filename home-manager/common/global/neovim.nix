@@ -140,7 +140,7 @@
         rust-analyzer # generally `rustup component add rust-analyzer`
         rustup
         sqls
-        sumneko-lua-language-server
+        lua-language-server
         tailwindcss-language-server
         tombi # toml formatter
         tofu-ls
