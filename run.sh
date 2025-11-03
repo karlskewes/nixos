@@ -173,8 +173,14 @@ mikrotik() { ## Backup Mikrotik router config
 	ssh 192.168.1.1 export terse >../mikrotik_r1_backup_"$(date -Iseconds)".rsc
 }
 
-tiny() { ## Tiny ZFS Unlock
-	local host="192.168.1.5"
+zfs() { ## ZFS Unlock over SSH
+	local host=""
+	if [ $# -ne 1 ]; then
+		host=$(echo -e "gl-vm\ntiny\n" | fzf --no-multi)
+	else
+		host="$1"
+	fi
+
 	ssh -v -p 2222 root@"${host}" "zpool import -a; zfs load-key -a && killall zfs"
 }
 

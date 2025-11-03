@@ -60,6 +60,9 @@
             # the keys are copied to initrd from the path specified; multiple keys can be set
             # you can generate any number of host keys using
             # `ssh-keygen -t ed25519 -N "" -f /path/to/ssh_host_ed25519_key`
+            # config.zfsBootUnlock.enable must be set to false during NixOS
+            # install (./run.sh install) because the host key below is not set
+            # and can't be copied to initrd.
             hostKeys = [ /etc/ssh/ssh_host_ed25519_key ];
             authorizedKeys = config.zfsBootUnlock.authorizedKeys;
             # Unlock with:

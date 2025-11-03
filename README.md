@@ -162,7 +162,9 @@ nix \
 Then if ready do a run for real:
 
 ```sh
-# as above without `--dry-run` flag
+# as above, but with `sudo` and without `--dry-run` flag
+# if zfs encryption enabled, then expect prompt for passphrase.
+sudo ...
 ```
 
 #### Add machine to repository
@@ -170,7 +172,7 @@ Then if ready do a run for real:
 Generate hardware:
 
 ```sh
-nixos-generate-config --show-hardware-config
+nixos-generate-config --root /mnt --show-hardware-config
 ```
 
 Copy into git repository:
@@ -208,6 +210,8 @@ sudo swapon /dev/disk/by-id/<disk>-part2
 vim flake.nix
 
 # build and install flake
+# ensure that config.zfsBootUnlock.enable = false as host key doesn't yet exist
+# for copying to initrd.
 ./run.sh install
 
 reboot
