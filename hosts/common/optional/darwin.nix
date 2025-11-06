@@ -30,7 +30,7 @@
     gnumake
     gnused
     watch # not included in darwin.
-    (pkgs.hiPrio uutils-coreutils-noprefix) # rust versions
+    (lib.hiPrio uutils-coreutils-noprefix) # rust versions
   ];
 
   networking.applicationFirewall.enable = true;

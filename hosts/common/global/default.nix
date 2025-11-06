@@ -53,7 +53,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (pkgs.hiPrio uutils-coreutils-noprefix) # rust versions
+    (lib.hiPrio uutils-coreutils-noprefix) # rust versions
     disko
     git # can't build without it
     gnumake # gnused required for darwin only

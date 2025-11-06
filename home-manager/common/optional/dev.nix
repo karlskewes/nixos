@@ -39,6 +39,10 @@
       cargo-audit
       cargo-watch
       clang
+      gdb
+      lldb_19 # lldb_21 not supported - crashes.
+      # https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#using-codelldb-for-debugging
+      # vscode-extensions.vadimcn.vscode-lldb # `codelldb` not found in path, TODO
 
       # https://nixos.wiki/wiki/FAQ/I_installed_a_library_but_my_compiler_is_not_finding_it._Why%3F
       # `nix-shell -p pkg-config openssl`

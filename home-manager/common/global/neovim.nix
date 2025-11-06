@@ -91,6 +91,10 @@
       ]))
 
       # lang specific & debug
+      (rustaceanvim.overrideAttrs {
+        doCheck = false; # neotest is broken in nixos-unstable
+      })
+
       namu-nvim
       nvim-nio
       nvim-dap
@@ -137,7 +141,7 @@
         nil # nix
         nodePackages.prettier
         pyright
-        rust-analyzer # generally `rustup component add rust-analyzer`
+        # rust-analyzer # generally `rustup component add rust-analyzer`
         rustup
         sqls
         lua-language-server

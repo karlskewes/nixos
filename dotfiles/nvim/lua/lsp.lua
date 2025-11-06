@@ -145,7 +145,7 @@ vim.lsp.enable('html')
 -- vim.lsp.enable("htmx") -- Both htmx and htmx2 troublesome
 vim.lsp.enable('nil_ls')
 vim.lsp.enable('pyright')
-vim.lsp.enable('rust_analyzer')
+-- vim.lsp.enable('rust_analyzer') -- rustaceanvim managing.
 vim.lsp.enable('sqls')
 vim.lsp.enable('tailwindcss')
 vim.lsp.enable('tofu_ls')
