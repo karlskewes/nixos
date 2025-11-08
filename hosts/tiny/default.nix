@@ -25,12 +25,13 @@
   # :read !echo <hostname> | md5sum | cut -c1-8
   networking.hostId = "b38b36dc";
   nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+    intel-vaapi-driver =
+      pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
   };
   hardware.graphics.extraPackages = with pkgs; [
     intel-media-driver # LIBVA_DRIVER_NAME=iHD
-    vaapiIntel # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-    vaapiVdpau
+    intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
+    libva-vdpau-driver
     libvdpau-va-gl
   ];
 
@@ -102,7 +103,7 @@
         AltNick = "k70_";
         Ident = "karl";
         ChanBufferSize = 1000;
-        QuitMsg = "";
+        QuitMsg = "gone";
         Network.oftc = {
           Server = "irc.oftc.net +6697";
           LoadModule = [ "keepnick" "simple_away" ];
@@ -120,7 +121,7 @@
 
   # https://github.com/pi-hole/pi-hole
   virtualisation.oci-containers.containers.pihole = {
-    image = "pihole/pihole:2025.08.0";
+    image = "pihole/pihole:2025.11.0";
     extraOptions = [ "--hostname=pihole" ];
     ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" "443:443/tcp" ];
     environment = {
