@@ -26,6 +26,13 @@ in {
     '';
   };
 
+  programs.jujutsu.settings = {
+    user = {
+      email = config.programs.git.settings.user.email;
+      name = config.programs.git.settings.user.name;
+    };
+  };
+
   programs.git = {
     enable = true;
 

@@ -187,6 +187,30 @@
         '';
       };
 
+    programs.jujutsu = {
+      enable = true;
+      settings = {
+        # user = {
+        #   email = "jdoe@example.org";
+        #   name = "John Doe";
+        # };
+
+        ui = {
+          # paginate = "never";
+          default-command = "log"; # default, or try "status";
+        };
+
+        # https://github.com/jj-vcs/jj/blob/main/docs/config.md#ssh-signing
+        signing = lib.mkIf config.common.git.signing.enable {
+          behavior = "own";
+          backend = "ssh";
+          key = "${config.home.homeDirectory}/.ssh/machine_default.pub";
+          backends.ssh.allowed-signers =
+            "${config.home.homeDirectory}/.ssh/allowed_signers";
+        };
+      };
+    };
+
     programs.git = {
       enable = true;
       # ssh verification: `git log --show-signature`
