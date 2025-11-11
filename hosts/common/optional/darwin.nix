@@ -117,8 +117,6 @@
     };
   };
 
-  services.tailscale.enable = true;
-
   system.defaults = {
     dock.autohide = true;
     dock.mru-spaces = false;

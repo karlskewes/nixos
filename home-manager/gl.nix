@@ -35,7 +35,6 @@
         gdk
         azure-cli
 
-        docker-buildx
         kind
         kubernetes-helm
 
@@ -45,6 +44,8 @@
         yq
       ] ++ (lib.optionals isDarwin [
         google-chrome # chromium variants not supported on darwin
+        podman
+        podman-compose
         slack # not supported on aarch64-linux
       ]) ++ (lib.optionals isLinux [
         ungoogled-chromium

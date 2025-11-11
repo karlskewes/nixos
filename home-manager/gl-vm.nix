@@ -36,7 +36,6 @@
         gdk
         azure-cli
 
-        docker-buildx
         kind
         kubernetes-helm
 

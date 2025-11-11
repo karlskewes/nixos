@@ -29,6 +29,7 @@
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
   networking.hostId = "b4db4b8f";
+  networking.interfaces.wlan0.useDHCP = true;
 
   hardware.asahi = {
     enable = true;

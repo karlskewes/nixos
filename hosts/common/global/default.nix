@@ -85,11 +85,11 @@
     settings.General.EnableNetworkConfiguration = true;
   };
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  # set network interface in ${machine}.nix
+  # Network manager required for `iwd` wifi on last check but can conflict with this.
+  # However, without useDHCP=true, then an IP address may be retrieved but nameservers in /etc/resolv.conf may not be setup.
+  # Set true per interface when interface is known.
+  networking.useDHCP = lib.mkDefault false;
+  # set network interface in ${machine}/default.nix
   # :read !ip link | grep ': en'
   # networking.interfaces.ens33.useDHCP = true;
 

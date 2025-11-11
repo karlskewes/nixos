@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+cat <<EOF
+-----------------------------------
+     WRAPPING "docker" command
+-----------------------------------
+EOF
+
+podman "$@"

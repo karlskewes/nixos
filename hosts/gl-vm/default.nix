@@ -31,6 +31,9 @@
 
   # Only one interface `eth0` and require name matching hardcoded upstream tests.
   networking.usePredictableInterfaceNames = false;
+  # "eth0" predictable name per above, /proc/sys/net/ipv4/conf/eth0
+  # journalctl -u systemd-sysctl.service
+  networking.interfaces.eth0.useDHCP = true;
 
   security.sudo.wheelNeedsPassword = true;
 
@@ -60,4 +63,7 @@
   # UTM Apple/QEMU guest integration - clipboard sharing/etc.
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
+
+  service.tailscale.enable = true;
+  virtualisation.docker.enable = true;
 }

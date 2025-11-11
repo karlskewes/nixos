@@ -54,6 +54,10 @@ vim.keymap.set('n', '<leader>W', '<cmd>noautocmd w<CR>', { desc = 'Write/Save (n
 vim.keymap.set('n', '<leader>q', '<cmd>confirm q<CR>', { desc = 'Quit' })
 vim.keymap.set('n', 'zz', 'zA', { desc = 'Toggle folds' })
 
+-- Yank filename/filepath with or without path
+vim.keymap.set('n', '<leader>p', ":let @+=expand('%:.')<cr>", { desc = 'Copy relative path' })
+vim.keymap.set('n', '<leader>P', ':let @+=@%<cr>', { desc = 'Copy absolute path' })
+
 -- Resize buffers with arrows
 vim.keymap.set('n', '<C-Up>', ':resize -2<CR>', {})
 vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', {})
@@ -73,8 +77,8 @@ vim.keymap.set('n', 'n', 'nzzzv', {})
 vim.keymap.set('n', 'N', 'Nzzzv', {})
 
 -- Quickfix list navigation
-vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', {}) -- [q but without zz centering
-vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz', {}) -- ]q but without zz centering
+vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', {}) -- [q but with zz centering
+vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz', {}) -- ]q but with zz centering
 -- vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz", {}) -- ]l
 -- vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz", {}) -- [l
 vim.cmd([[
