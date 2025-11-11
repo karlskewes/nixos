@@ -77,8 +77,11 @@
       LC_CTYPE = "en_US.UTF-8";
       LC_ALL = "en_US.UTF-8";
       EDITOR = "nvim";
-      PAGER = "less --ignore-case --hilite-unread --silent";
-      MANPAGER = "less --ignore-case --hilite-unread --silent";
+      PAGER = "bat";
+      # "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent --quit-if-one-screen --quit-on-intr";
+      # https://github.com/sharkdp/bat?tab=readme-ov-file#man
+      MANPAGER =
+        "sh -c 'awk '''{ gsub(/x1B[[0-9;]*m/, \"\", $0); gsub(/.x08/, \"\", $0); print }''' | bat -p -lman'";
     };
     home.sessionPath = [
       "$HOME/.local/bin" # toolseh
@@ -147,21 +150,28 @@
         style = "plain";
         theme = "catppuccin";
         pager =
-          "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent";
+          "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent --quit-if-one-screen --quit-on-intr";
       };
       themes = {
         catppuccin = {
           src = pkgs.fetchFromGitHub {
             owner = "catppuccin";
             repo = "bat";
-            rev = "d714cc1d358ea51bfc02550dabab693f70cccea0";
-            # nix-shell -p nix-prefetch
-            # nix-prefetch --option extra-experimental-features flakes fetchFromGitHub --owner catppuccin --repo bat --rev d714cc1d358ea51bfc02550dabab693f70cccea0
-            sha256 = "sha256-Q5B4NDrfCIK3UAMs94vdXnR42k4AXCqZz6sRn8bzmf4=";
+            rev = "6810349b28055dce54076712fc05fc68da4b8ec0";
+            # sha256 = lib.fakeSha256; # use when bump rev, build and copy failed sha256.
+            sha256 = "sha256-lJapSgRVENTrbmpVyn+UQabC9fpV1G1e+CdlJ090uvg=";
           };
           file = "themes/Catppuccin Mocha.tmTheme";
         };
       };
+    };
+
+    programs.delta = {
+      enable = true;
+      enableGitIntegration = true;
+      enableJujutsuIntegration = true;
+      # for theme will probably need to do this: https://github.com/catppuccin/nix
+      # git -c delta.line-numbers=true show
     };
 
     programs.fzf = {
@@ -198,6 +208,7 @@
         ui = {
           # paginate = "never";
           default-command = "log"; # default, or try "status";
+          # pager = "delta"; # set vai programs.delta.enableJujutsu...
         };
 
         # https://github.com/jj-vcs/jj/blob/main/docs/config.md#ssh-signing

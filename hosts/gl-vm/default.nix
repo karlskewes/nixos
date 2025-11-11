@@ -64,6 +64,6 @@
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
 
-  service.tailscale.enable = true;
+  services.tailscale.enable = true;
   virtualisation.docker.enable = true;
 }
