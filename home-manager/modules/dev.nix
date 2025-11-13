@@ -6,6 +6,20 @@
   ...
 }:
 
+let
+  maudfmt = pkgs.rustPlatform.buildRustPackage {
+    pname = "maudfmt";
+    version = "0.1.9";
+    doCheck = false; # bypass tests that fail due to different source tree layout.
+    src = pkgs.fetchFromGitHub {
+      owner = "jeosas";
+      repo = "maudfmt";
+      rev = "d72b822023dad4d70e2a78e2345ee326050f6e47";
+      hash = "sha256-uDpVczivGCHafJ8k4vT+rgXvFRws5UcJlKq2WXHXHzU=";
+    };
+    cargoHash = "sha256-k7ZZQBsa72jlHSunFrg8wQsmJ/ICJK94/NVK9DQr12A=";
+  };
+in
 {
   home.packages =
     with pkgs;
@@ -45,6 +59,7 @@
       nodejs_22 # neovim # nodejs_24 constantly builds
       # wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
+      maudfmt
       sccache # Mozilla's shared compilation cache. ~/.cache/sccache
       bacon # replace cargo-watch
       cargo-audit

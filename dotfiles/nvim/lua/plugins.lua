@@ -29,6 +29,12 @@ local conform_opts = {
       lsp_fallback = lsp_format_opt,
     }
   end,
+  formatters = {
+    maudfmt = { -- https://github.com/Jeosas/maudfmt
+      command = 'maudfmt',
+      args = { '-s' }, -- add any config you wish
+    },
+  },
   formatters_by_ft = {
     go = { 'goimports', 'gofumpt', 'gofmt' },
     hcl = { 'terraform_fmt' },
@@ -40,7 +46,7 @@ local conform_opts = {
     nix = { 'nixfmt' },
     -- proto = { 'buf' }, -- TODO: toggle disable.
     python = { 'isort', 'black' },
-    rust = { 'rustfmt' },
+    rust = { 'rustfmt', 'maudfmt' },
     sh = { 'shfmt' },
     sql = { 'sql_formatter' },
     templ = { 'templ' },
