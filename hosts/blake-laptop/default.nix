@@ -3,10 +3,10 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/global
+    ../modules
 
-    ../common/optional/i3.nix
-    ../common/optional/zfs.nix
+    ../modules/i3.nix
+    ../modules/zfs.nix
   ];
 
   powerManagement.enable = true;

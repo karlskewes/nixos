@@ -100,7 +100,7 @@
   # On Darwin, use of `docker` in scripts will fail to match an alias or function named docker.
   # Perhaps worth moving from Podman to Colima or the new Apple native docker containerization?
   home.file.".local/bin/docker" =
-    lib.mkIf isDarwin { source = ../../../dotfiles/docker; };
+    lib.mkIf isDarwin { source = ../../dotfiles/docker; };
 
   programs.bash.shellAliases = {
     dco = "docker-compose";

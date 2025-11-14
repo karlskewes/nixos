@@ -1,21 +1,21 @@
 ({ lib, pkgs, isDarwin, isLinux, ... }: {
   imports = [
     ./user-karl.nix
-    ./common/global
+    ./modules
 
-    ./common/optional/dev.nix
+    ./modules/dev.nix
   ] # #
     ++ (lib.optionals isDarwin [
-      ./common/optional/desktop.nix
+      ./modules/desktop.nix
       # #
     ]) ++ (lib.optionals isLinux [
-      ./common/optional/cosmic.nix
+      ./modules/cosmic.nix
       # #
     ]);
 
-  common.git.signing = { enable = true; };
+  custom.git.signing = { enable = true; };
 
-  desktop.firefox = {
+  custom.firefox = {
     enable = true;
     users = [ ] # #
       ++ (lib.optionals isDarwin [ "karlskewes" ])

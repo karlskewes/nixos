@@ -3,10 +3,10 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/global
+    ../modules
 
-    ../common/optional/cosmic.nix
-    ../common/optional/zfs.nix
+    ../modules/cosmic.nix
+    ../modules/zfs.nix
   ];
 
   zfsBootUnlock = {

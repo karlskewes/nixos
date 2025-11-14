@@ -14,7 +14,7 @@ let
     if isDarwin then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
 
   hostConfig =
-    if isDarwin then ../hosts/common/optional/darwin.nix else ../hosts/${name};
+    if isDarwin then ../hosts/modules/darwin.nix else ../hosts/${name};
 
 in systemFunc rec {
   inherit system;

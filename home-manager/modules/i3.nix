@@ -1,9 +1,9 @@
 { lib, pkgs, ... }: {
   imports = [ ./desktop.nix ];
 
-  xdg.configFile."i3/config".text = builtins.readFile ../../../dotfiles/i3;
+  xdg.configFile."i3/config".text = builtins.readFile ../../dotfiles/i3;
   xdg.configFile."i3status/config".text =
-    builtins.readFile ../../../dotfiles/i3status_config;
+    builtins.readFile ../../dotfiles/i3status_config;
 
   home.packages = with pkgs; [
     i3lock-fancy

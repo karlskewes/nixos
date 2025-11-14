@@ -3,12 +3,12 @@
   imports = [
     ./user-karl.nix
 
-    ./common/global
+    ./modules
 
-    ./common/optional/i3.nix
+    ./modules/i3.nix
   ];
 
-  desktop.firefox = {
+  custom.firefox = {
     enable = true;
     users = [ "blake" "karl" ];
   };

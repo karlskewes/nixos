@@ -1,6 +1,6 @@
 # X Windows additional configuration dependent on home-manager
 { config, lib, pkgs, isDarwin, isLinux, ... }: {
-  options.desktop.firefox = {
+  options.custom.firefox = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -67,7 +67,7 @@
         # servo # rust web browser # TODO: make / larger.
       ];
 
-    programs.firefox = lib.mkIf config.desktop.firefox.enable {
+    programs.firefox = lib.mkIf config.custom.firefox.enable {
       # package = pkgs.firefox;
       package = if isDarwin then
       # https://github.com/NixOS/nixpkgs/issues/451884
@@ -176,7 +176,7 @@
               };
             };
           };
-        }) config.desktop.firefox.users);
+        }) config.custom.firefox.users);
     };
 
     programs.kitty = {

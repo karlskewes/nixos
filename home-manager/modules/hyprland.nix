@@ -259,7 +259,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    extraConfig = builtins.readFile ../../../dotfiles/hyprland.conf;
+    extraConfig = builtins.readFile ../../dotfiles/hyprland.conf;
     settings = {
       exec-once = [
         # start gnome-keyring for ssh to replace gpg agent

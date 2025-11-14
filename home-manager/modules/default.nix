@@ -1,7 +1,7 @@
 { config, lib, pkgs, isDarwin, isLinux, ... }: {
   imports = [ ./neovim.nix ];
 
-  options.common.git.signing = {
+  options.custom.git.signing = {
     enable = lib.mkOption {
       description = "sign git commits and tags using machine_default.pub";
       type = lib.types.bool;
@@ -118,7 +118,7 @@
     # Programs
     #---------------------------------------------------------------------
 
-    home.file."kube-ps1.sh" = { source = ../../../dotfiles/kube-ps1.sh; };
+    home.file."kube-ps1.sh" = { source = ../../dotfiles/kube-ps1.sh; };
     programs.bash = {
       enable = true;
 
@@ -138,9 +138,9 @@
         # Autocorrect typos in path names when using `cd`
         shopt -s cdspell
 
-        ${builtins.readFile ../../../dotfiles/functions.sh}
+        ${builtins.readFile ../../dotfiles/functions.sh}
 
-        ${builtins.readFile ../../../dotfiles/bash_prompt.sh}
+        ${builtins.readFile ../../dotfiles/bash_prompt.sh}
       '';
     };
 
@@ -188,7 +188,7 @@
 
     # Create approved git signing ssh key list.
     home.file.".ssh/allowed_signers" =
-      lib.mkIf config.common.git.signing.enable {
+      lib.mkIf config.custom.git.signing.enable {
         text = ''
           ${config.programs.git.settings.user.email} namespaces="git" ${
             builtins.readFile
@@ -212,7 +212,7 @@
         };
 
         # https://github.com/jj-vcs/jj/blob/main/docs/config.md#ssh-signing
-        signing = lib.mkIf config.common.git.signing.enable {
+        signing = lib.mkIf config.custom.git.signing.enable {
           behavior = "own";
           backend = "ssh";
           key = "${config.home.homeDirectory}/.ssh/machine_default.pub";
@@ -225,14 +225,14 @@
     programs.git = {
       enable = true;
       # ssh verification: `git log --show-signature`
-      signing = lib.mkIf config.common.git.signing.enable {
+      signing = lib.mkIf config.custom.git.signing.enable {
         signByDefault = true;
         format = "ssh";
         key = "${config.home.homeDirectory}/.ssh/machine_default.pub";
 
       };
       settings.gpg.ssh.allowedSignersFile =
-        lib.mkIf config.common.git.signing.enable "~/.ssh/allowed_signers";
+        lib.mkIf config.custom.git.signing.enable "~/.ssh/allowed_signers";
 
       settings = {
         alias = {

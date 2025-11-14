@@ -2,9 +2,9 @@
   imports = [
     ./user-karl.nix
 
-    ./common/global
+    ./modules
 
-    ./common/optional/dev.nix
+    ./modules/dev.nix
   ];
 
   home.packages = with pkgs; [ tmux ];

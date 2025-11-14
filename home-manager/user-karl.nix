@@ -42,11 +42,11 @@ in {
       # If we're signing then we have a key required to fetch via SSH, otherwise stick with HTTPS
       # so public repositories can still be fetched.
       url."ssh://git@github.com/karlskewes/" =
-        lib.mkIf config.common.git.signing.enable {
+        lib.mkIf config.custom.git.signing.enable {
           insteadOf = "https://github.com/karlskewes/";
         };
       # go get repo@branch can also get confused and fail. Force to SSH.
-      url."ssh://git@github.com/" = lib.mkIf config.common.git.signing.enable {
+      url."ssh://git@github.com/" = lib.mkIf config.custom.git.signing.enable {
         insteadOf = "https://github.com/";
       };
     };
