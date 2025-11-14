@@ -12,28 +12,35 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/aa4b0570-27fb-46af-8ab9-5c8651917824";
-    fsType = "ext4";
+    device = "gm/snap/root";
+    fsType = "zfs";
+    neededForBoot = true;
   };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/d751e1c4-a492-431f-984e-c6bdea8bb238";
-    fsType = "ext4";
+  fileSystems."/nix" = {
+    device = "gm/nosnap/nix";
+    fsType = "zfs";
+    neededForBoot = true;
   };
 
-  fileSystems."/mnt/data" = {
-    device = "/dev/disk/by-uuid/4a0619bb-6a8e-4a1a-a62d-9c4c0d3e405a";
-    fsType = "ext4";
+  fileSystems."/var/lib/containers" = {
+    device = "gm/nosnap/containers";
+    fsType = "zfs";
+  };
+
+  fileSystems."/var/lib/docker" = {
+    device = "gm/nosnap/docker";
+    fsType = "zfs";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/4B2A-1C11";
+    device = "/dev/disk/by-uuid/48C2-31B8";
     fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
   };
 
   swapDevices =
-    [{ device = "/dev/disk/by-uuid/a271a0d2-b662-4e74-85d8-935d49ab6111"; }];
+    [{ device = "/dev/disk/by-id/virtio-0E6E853EAFC44A4ABA03-part2"; }];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 }

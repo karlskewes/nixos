@@ -154,12 +154,12 @@ nix \
   --extra-experimental-features nix-command \
   --extra-experimental-features flakes \
   run github:nix-community/disko --no-write-lock-file -- \
-    --mode destroy,format,mount \
+    --mode format,mount \
     --dry-run \
     ./hosts/"${machine}/disko.nix"
 ```
 
-Then if ready do a run for real:
+Then if ready do a run for real, adding `--mode destroy,format,mount` when not running with existing partitions (e.g: MacOS with Asahi Linux).
 
 ```sh
 # as above, but with `sudo` and without `--dry-run` flag

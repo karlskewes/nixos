@@ -104,6 +104,13 @@
           system = "aarch64-darwin";
           stateVersion = "25.05";
         };
+        gm = mkHost "gm" {
+          inherit nixpkgs nix-darwin home-manager overlays configRev;
+          isDarwin = true;
+          user = "karlskewes";
+          system = "aarch64-darwin";
+          stateVersion = "25.11";
+        };
         karl-mba = mkHost "karl-mba" {
           inherit nixpkgs nix-darwin home-manager overlays configRev;
           isDarwin = true;
@@ -137,6 +144,18 @@
           system = "aarch64-linux";
           stateVersion = "25.05";
           extraModules = vmModules;
+        };
+
+        gm = mkHost "gm" {
+          inherit nixpkgs home-manager configRev user;
+          system = "aarch64-linux";
+          stateVersion = "25.11";
+          extraModules = appleModules;
+          overlays = [
+            apple-silicon-support.overlays.apple-silicon-overlay
+            inputs.neovim-nightly-overlay.overlays.default
+            extraNeovimPlugins
+          ];
         };
 
         tiny = mkHost "tiny" {
