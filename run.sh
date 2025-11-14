@@ -45,10 +45,6 @@ nix-displaylink() { ## Setup DisplayLink driver in nix store
 		file://"$HOME"/Downloads/displaylink-"${displaylink_version}".zip
 }
 
-# TODO: only needed during initial install
-# --extra-experimental-features nix-command \
-# --extra-experimental-features flakes \
-
 build_darwin() {
 	# Hack to supply real hostname, as friendly hostname "ABC-Macbook-Air" not found.
 	nix run nix-darwin \
@@ -114,7 +110,7 @@ install() { ## Install NixOS for the first time
 	if [[ $(hostname) == "nixos" ]]; then
 		sudo hostname "$(read -rp 'hostname: ' temp && echo "$temp")"
 	fi
-	nixos-rebuild build --flake .#"$(hostname)"
+	nixos-rebuild build --impure --flake .#"$(hostname)"
 	sudo nixos-install --impure --root /mnt/ --flake .#"$(hostname)"
 }
 

@@ -16,88 +16,30 @@ git clone git@github.com:karlskewes/nixos.git
 
 ## New machine
 
-### Macbook M1
+### Darwin
+
+Install nix from https://nixos.org/download/.
+
+```sh
+mkdir -p ~/src/github.com/karlskewes/
+git clone https://github.com/karlskewes/nixos.git ~/src/github.com/karlskewes/nixos/
+cd ~/src/github.com/karlskewes/nixos/
+
+nix-shell -p mkpasswd
+./run.sh nix-extra
+./run.sh switch
+```
+
+### Asahi Linux - btrfs
 
 #### Prepare UEFI boot loader & Install base NixOS
 
-Follow instructions at [https://github.com/tpwrules/nixos-apple-silicon] with the
+Follow instructions at [https://github.com/nix-community/nixos-apple-silicon] with the
 following variations.
 
-Setup partitions with ext4 because zfs support on new kernels is [spotty](https://github.com/tpwrules/nixos-apple-silicon/issues/111):
+Setup `disko.nix` partitions with luks encrypted `btrfs` because `zfs` support on new kernels is [spotty](https://github.com/nix-community/nixos-apple-silicon/issues/111):
 
-```sh
-lsblk
-
-fdisk /dev/nvme0n1
-
-# confirm partition numbers before setting partition type
-- `n`, enter, `+8G` -> `t`, `6`, `swap`
-# TODO: change to BTRFS + LUKS + subvolumes for root, home, nix
-- `n`, enter, `+100G` -> `t`, `7`, `linux` - `/` root, nix store
-- `n`, enter, enter -> `t`, `8`, `linux` - `/home`
-- `p`
-- `w`
-```
-
-Mount partitions:
-
-```sh
-# print partition info
-lsblk -o name,mountpoint,label,size,uuid
-
-NAME        MOUNTP LABEL           SIZE UUID
-nvme0n1                          931.5G
-├─nvme0n1p1 /boot                  512M C0B8-20DA
-├─nvme0n1p2 [SWAP] swap            7.5G b85bdf70-c212-4641-a96b-e2d0b9ad9f16
-├─nvme0n1p3        rpool-desktop 492.7G 14791146668368940249
-└─nvme0n1p7        data          329.4G 28385FE6385FB194
-
-# root
-mount /dev/disk/by-id/.... /mnt/
-
-# home
-mkdir -p /mnt/home
-mount /dev/disk/by-id/.... /mnt/home
-
-# swap
-mkswap -L swap /dev/disk/by-id/....
-swapon -av
-```
-
-Generate config:
-
-```sh
-nixos-generate-config --root /mnt/
-```
-
-Add to `/etc/nixos/configuration.nix`:
-
-```
-nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-environment.systemPackages = with pkgs; [
-  vim # edit files
-  git # git clone this repo
-];
-
-# ensure iwd present for wifi
-
-# consider adding ssh with password authentication
-```
-
-Install:
-
-```sh
-nixos-install --root /mnt/
-```
-
-#### Flake installation
-
-- scp or git clone this repo
-- set nix-extra username to root, or mkdir /home/nixos
-- increase tmpfs storage for /run/user/0 to 10G (less ok?)
-
-### x86/arm64
+### x86/arm64 - zfs
 
 #### Prepare USB stick
 
@@ -115,7 +57,42 @@ lsblk
 # dd bs=4M status=progress if=~/Downloads/nixos-minimal-22.05.538.d9794b04bff-x86_64-linux.iso of=
 ```
 
-Boot machine with NixOS minimal image.
+### Prepare machine branch
+
+```sh
+machine=new
+git checkout -b "${machine}"
+cp -a hosts/tl hosts/"${machine}"`
+
+vim flake.nix
+vim hosts/"${machine}"
+```
+
+### Create Disko declarative partition file
+
+disko.nix: `uuid = "<partuuid>";` per:
+
+```sh
+ls /dev/disk/by-partuuid/ -l
+total 0
+lrwxrwxrwx 1 root root 15 Jan  1  1970 0113ae75-de9c-4165-95db-f2c8a297c2d6 -> ../../nvme0n1p3
+lrwxrwxrwx 1 root root 15 Jan  1  1970 68ec9ab1-1413-45bb-9553-e14aca305696 -> ../../nvme0n1p4
+lrwxrwxrwx 1 root root 15 Jan  1  1970 ca58ee0f-d4de-4e27-a809-ac1c42d6fc24 -> ../../nvme0n1p1
+lrwxrwxrwx 1 root root 15 Jan  1  1970 ec531500-04e8-4e3c-969d-f6f106b4e653 -> ../../nvme0n1p2
+lrwxrwxrwx 1 root root 15 Jan  1  1970 fd9e528c-fe2d-49e9-afcd-c9cc9a0c65d2 -> ../../nvme0n1p5
+```
+
+Upstream: https://github.com/nix-community/disko
+
+```sh
+nvim ./hosts/"${machine}"/disko.nix
+
+git add ./hosts/"${machine}"/
+git commit
+git push
+```
+
+### Boot machine with NixOS minimal image
 
 Create a password so we can SCP and SSH:
 
@@ -123,87 +100,135 @@ Create a password so we can SCP and SSH:
 passwd
 ```
 
-### Create Disko declarative partition file
-
-Upstream: https://github.com/nix-community/disko
-
-** CAUTION: This wipes away existing partitions **
-
-```sh
-machine=new_machine
-cp ./hardware/tl-disko.nix ./hardware/"${machine}"-disko.nix
-
-vim ./hardware/"${machine}"-disko.nix
-```
-
-Copy `disko` file to new machine:
-
-```sh
-host=
-scp ./hardware/"${machine}"-disko.nix "${host}":.
-
-```
+### Install over ssh
 
 ssh to host and configure partitions:
 
 ```sh
 ssh nixos@"${host}"
 
-machine=
-nix \
-  --extra-experimental-features nix-command \
-  --extra-experimental-features flakes \
-  run github:nix-community/disko --no-write-lock-file -- \
-    --mode destroy,format,mount \
-    --dry-run \
-    ./hosts/"${machine}/disko.nix"
-```
-
-Then if ready do a run for real:
-
-```sh
-# as above, but with `sudo` and without `--dry-run` flag
-# if zfs encryption enabled, then expect prompt for passphrase.
-sudo ...
-```
-
-#### Add machine to repository
-
-Generate hardware:
-
-```sh
-nixos-generate-config --root /mnt --show-hardware-config
-```
-
-Copy into git repository:
-
-```sh
-vim ./hardware/${machine}.nix
-```
-
-Add machine to this repository:
-
-```sh
-scp nixos@<new_machine>:/mnt/etc/nixos/hardware-configuration.nix machines/<name>.nix
-vim flake.nix
-git add .
-...
-```
-
-Login and clone this repository on new machine:
-
-```sh
-nix-shell -p git
+nix-shell -p git neovim
 
 git clone https://github.com/karlskewes/nixos.git
 cd nixos
 
+# set machine to be setting up
+machine=
+
+git checkout "${machine}"
+
+nix \
+  --extra-experimental-features nix-command \
+  --extra-experimental-features flakes \
+  run github:nix-community/disko --no-write-lock-file -- \
+    --mode format,mount \
+    --dry-run \
+    ./hosts/"${machine}/disko.nix"
+```
+
+Run for real (not dry run!):
+
+```sh
+# as above, but
+# 1. `--mode destroy,format,mount` if clearing existing partitions
+# 2. without `--dry-run`
+# 3. `sudo`
+# if zfs or luks encryption enabled, then expect prompt for passphrase.
+sudo ...
+```
+
+#### Update machines hardware configuration
+
+Generate hardware and copy output to repo config:
+
+```sh
+# sudo required when using luks encryption with btrfs otherwise will get:
+# `Failed to retrieve subvolume info for /`
+# Specifically note the `crypted` LUKS uuid is for the partition `nvme0n1p6`, i.e: `061...`.
+#
+# [nix-shell:~/nixos]$ lsblk -f | grep crypt
+# └─nvme0n1p6 crypto_LUKS 2                                    061de1ff-676d-4258-956e-ef67facb6de8
+#   └─crypted btrfs                                            f49f6715-7b78-4f25-900d-9990388b750c  261.3G     3% /mnt/swap
+#
+sudo nixos-generate-config --root /mnt
+
+# copy to repo via git or ssh
+sudo nixos-generate-config --root /mnt --show-hardware-config
+sudo nixos-generate-config --root /mnt --show-hardware-config > ./hosts/"${machine}"/hardware-configuration.nix
+```
+
+#### Apple Silicon only
+
+```sh
+sudo cp -a /etc/nixos/apple-silicon-support/ /mnt/etc/nixos/
+
+# copy firmware
+sudo mkdir -p /mnt/etc/nixos/firmware
+sudo cp /mnt/boot/asahi/{all_firmware.tar.gz,kernelcache*} /mnt/etc/nixos/firmware
+
+sudo nvim /mnt/etc/nixos/configuration.nix
+# Add below:
+cat<<EOF
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ./apple-silicon-support
+    ];
+
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = false; # NOTE: toggled from default true
+  boot.initrd.kernelModules = [ "cryptd" "dm-snapshot" ];
+  boot.supportedFilesystems = [ "btrfs" ];
+
+  # networking.hostName = "nixos"; # Define your hostname.
+  networking.networkmanager.wifi.backend = "iwd";
+  networking.wireless.enable = false;
+  networking.wireless.iwd = {
+    enable = true;
+    settings.General.EnableNetworkConfiguration = true;
+  };
+EOF
+```
+
+#### Non-flake initial install
+
+```sh
+sudo nixos-install --root /mnt
+
+reboot
+```
+
+#### Flake initial install
+
+Move nix store from tmpfs to harddrive to avoid lack of space or inodes (`df -ih`):
+
+```sh
+sudo mkdir -p /mnt/install-nix-store/{upper,work}
+sudo mkdir -p /mnt/install-nix-store-merged
+
+sudo mount -t overlay overlay \
+  -o lowerdir=/nix/store,upperdir=/mnt/install-nix-store/upper,workdir=/mnt/install-nix-store/work \
+  /mnt/install-nix-store-merged
+
+mount | grep overlay
+```
+
+Mount swap and remount nix-store with larger partition:
+
+```sh
 # increase tmpfs so we don't run out of space during nix build & install
-sudo mount -o remount,size=10G /nix/.rw-store
+# particularly when building a kernel for asahi.
+sudo mount -o remount,size=14G /nix/.rw-store
 
 # consider mounting swap if run out of memory during build
+# zfs|ext4 swap partition
 sudo mkswap /dev/disk/by-id/<disk>-part2
 sudo swapon /dev/disk/by-id/<disk>-part2
+# btrfs
+sudo swapon --fixpgsz /mnt/swap/swapfile
+
+sudo swapon -s
 
 # if still run out of memory, reduce imports, for example
 # comment: desktop, dev, wm
@@ -216,6 +241,8 @@ vim flake.nix
 
 reboot
 ```
+
+#### Install desktop and the rest
 
 Login and install `home-manager`:
 

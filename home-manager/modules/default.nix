@@ -80,8 +80,9 @@
       PAGER = "bat";
       # "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent --quit-if-one-screen --quit-on-intr";
       # https://github.com/sharkdp/bat?tab=readme-ov-file#man
-      MANPAGER =
-        "sh -c 'awk '''{ gsub(/x1B[[0-9;]*m/, \"\", $0); gsub(/.x08/, \"\", $0); print }''' | bat -p -lman'";
+      # TODO: fix
+      # MANPAGER =
+      #   "sh -c 'awk '''{ gsub(/x1B[[0-9;]*m/, \"\", $0); gsub(/.x08/, \"\", $0); print }''' | bat -p -lman'";
     };
     home.sessionPath = [
       "$HOME/.local/bin" # toolseh

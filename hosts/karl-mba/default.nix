@@ -22,14 +22,6 @@
     "psmouse.synaptics_intertouch=0"
   ]; # Enables libinput settings to take effect.
   boot.zfs.removeLinuxDRM = true;
-  virtualisation.docker = {
-    storageDriver = lib.mkForce "overlay2";
-  }; # TODO, change after migrate to ZFS
-
-  # Define hostId for zfs pool machine 'binding'
-  # :read !head -c4 /dev/urandom | od -A none -t x4
-  networking.hostId = "b4db4b8f";
-  networking.interfaces.wlan0.useDHCP = true;
 
   hardware.asahi = {
     enable = true;
@@ -37,8 +29,14 @@
     peripheralFirmwareDirectory = /etc/nixos/firmware;
     setupAsahiSound = true;
   };
+
   # Or disable extraction and management of them completely (no wifi though).
   # hardware.asahi.extractPeripheralFirmware = false;
+
+  # Define hostId for zfs pool machine 'binding'
+  # :read !head -c4 /dev/urandom | od -A none -t x4
+  networking.hostId = "b4db4b8f";
+  networking.interfaces.wlan0.useDHCP = true;
 
   powerManagement.enable = true;
 
@@ -75,4 +73,9 @@
   #   "displaylink"
   #   "modesetting"
   # ];
+
+  virtualisation.docker = {
+    storageDriver = lib.mkForce "overlay2";
+  }; # TODO, change after migrate to ZFS
+
 }
