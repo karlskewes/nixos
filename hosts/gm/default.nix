@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -6,22 +6,16 @@
     ../modules
 
     ../modules/cosmic.nix
-    # ../modules/hyprland.nix
-    # ../modules/zfs.nix
   ];
 
-  # zfsBootUnlock = {
-  #   enable = false;
-  #   authorizedKeys = [
-  #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-  #   ];
-  #   interfaces = [ "cdc-ncm" ];
-  # };
+  users.users.karl.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFiGTZKrOJF/E+CvHZ0ZGgFOAACNRU2MuDP2YdYjAM2v"
+  ];
+  # networking.firewall.allowedTCPPorts = [ 3000 ];
 
-  boot.kernelParams = [
-    "psmouse.synaptics_intertouch=0"
-  ]; # Enables libinput settings to take effect.
-  boot.zfs.removeLinuxDRM = true;
+  boot.supportedFilesystems = [ "btrfs" ];
+  # Set in ./hardware-configuration.nix
+  # boot.initrd.luks.devices."crypted".device = { ... };
 
   hardware.asahi = {
     enable = true;
@@ -35,10 +29,23 @@
 
   # Define hostId for zfs pool machine 'binding'
   # :read !head -c4 /dev/urandom | od -A none -t x4
-  networking.hostId = "b4db4b8f";
+  networking.hostId = "163f2f31";
+
+  # Only one interface `eth0` and require name matching hardcoded upstream tests.
+  networking.usePredictableInterfaceNames = false;
+  # "eth0" predictable name per above, /proc/sys/net/ipv4/conf/eth0
+  # journalctl -u systemd-sysctl.service
+  networking.interfaces.eth0.useDHCP = true;
   networking.interfaces.wlan0.useDHCP = true;
 
-  powerManagement.enable = true;
+  security.sudo.wheelNeedsPassword = true;
+
+  # btrfs scrub status /
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    fileSystems = [ "/" ];
+  };
 
   services.clamav = {
     daemon.enable = true;
@@ -58,24 +65,11 @@
     updater.enable = true;
   };
 
-  services.tailscale = {
+  services.kolide-launcher = {
     enable = true;
-    useRoutingFeatures = "both";
+    updateChannel = "stable";
   };
 
-  # services.logind.settings.Login.HandleLidSwitch = "suspend";
-
-  # dock "displaylink" driver mustHandleLid manually installed, see run.sh
-  # TODO: convert to nix
-  # modesetting required I think for actual display output to dock
-  # TODO: disable for hyprland
-  # services.xserver.videoDrivers = [
-  #   "displaylink"
-  #   "modesetting"
-  # ];
-
-  virtualisation.docker = {
-    storageDriver = lib.mkForce "overlay2";
-  }; # TODO, change after migrate to ZFS
-
+  services.tailscale.enable = true;
+  virtualisation.docker.enable = true;
 }
