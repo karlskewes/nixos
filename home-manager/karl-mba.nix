@@ -1,14 +1,14 @@
 ({ lib, pkgs, isDarwin, isLinux, ... }: {
   imports = [
     ./user-karl.nix
-
     ./common/global
 
     ./common/optional/dev.nix
   ] # #
-    ++ (lib.optionals isDarwin [ ])
-    # #
-    ++ (lib.optionals isLinux [
+    ++ (lib.optionals isDarwin [
+      ./common/optional/desktop.nix
+      # #
+    ]) ++ (lib.optionals isLinux [
       ./common/optional/cosmic.nix
       # #
     ]);

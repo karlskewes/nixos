@@ -1,9 +1,9 @@
-{ lib, pkgs, currentSystem, currentUsers, ... }: {
+{ lib, pkgs, currentSystem, currentUsers, currentStateVersion, ... }: {
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   nixpkgs.hostPlatform = currentSystem;
   nix.settings.experimental-features = "nix-command flakes";
-  ids.gids.nixbld = 350; # Default in newer installations.
-  # ids.gids.nixbld = 30000; # karl-mba - old installations.
+  ids.gids.nixbld = if currentStateVersion == "23.11" then 30000 else 350;
+
   system.primaryUser = "karlskewes"; # TODO: pull from currentUsers?
 
   # Declare the user that will be running `nix-darwin`.
