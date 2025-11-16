@@ -32,10 +32,6 @@
           default = [ "hyprland" "gtk" ];
           "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
         };
-        i3 = {
-          default = [ "gtk" ];
-          "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
-        };
       };
     };
 

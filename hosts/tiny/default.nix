@@ -4,7 +4,7 @@
 
     ../modules
 
-    ../modules/i3.nix
+    ../modules/cosmic.nix
     ../modules/zfs.nix
   ];
 

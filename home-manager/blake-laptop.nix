@@ -1,11 +1,11 @@
-({ config, pkgs, ... }: {
+({ pkgs, ... }: {
   # TODO: multiple users
   imports = [
     ./user-karl.nix
 
     ./modules
 
-    ./modules/i3.nix
+    ./modules/cosmic.nix
   ];
 
   custom.firefox = {
@@ -14,5 +14,4 @@
   };
 
   home.packages = with pkgs; [ ];
-  xresources.properties = { "Xft.dpi" = "96"; };
 })

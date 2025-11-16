@@ -5,13 +5,12 @@
 
     ../modules
 
-    ../modules/i3.nix
+    ../modules/cosmic.nix
     ../modules/zfs.nix
   ];
 
   powerManagement.enable = true;
   services.thermald.enable = true;
-  services.auto-cpufreq.enable = true;
 
   services.fwupd = {
     enable = true;
