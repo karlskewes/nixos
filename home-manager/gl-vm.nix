@@ -44,10 +44,8 @@
         jsonnet-bundler
         yq
       ] ++ (lib.optionals isDarwin [
-        google-chrome # chromium variants not supported on darwin
         slack # not supported on aarch64-linux
       ]) ++ (lib.optionals isLinux [
-        chromium
         # #
       ]);
   })
