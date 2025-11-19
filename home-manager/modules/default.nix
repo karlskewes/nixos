@@ -205,6 +205,11 @@
         #   name = "John Doe";
         # };
 
+        git = {
+          push-new-bookmarks = true;
+          # #
+        };
+
         ui = {
           # paginate = "never";
           default-command = "log"; # default, or try "status";
@@ -212,6 +217,7 @@
         };
 
         # https://github.com/jj-vcs/jj/blob/main/docs/config.md#ssh-signing
+        # git.sign-on-push = true; # if slow, for now sign on commit so can validate.
         signing = lib.mkIf config.custom.git.signing.enable {
           behavior = "own";
           backend = "ssh";
@@ -219,6 +225,40 @@
           backends.ssh.allowed-signers =
             "${config.home.homeDirectory}/.ssh/allowed_signers";
         };
+
+        aliases = {
+          # jj retrunk --source <bookmark|change-id> # rebase bookmark on trunk() (main|master/etc)
+          retrunk = [ "rebase" "-d" "trunk()" ];
+          # https://github.com/jj-vcs/jj/discussions/5568#discussioncomment-13034102
+          tug = [
+            "util"
+            "exec"
+            "--"
+            "sh"
+            "-c"
+            ''
+              if [ "x$1" = "x" ]; then
+                jj bookmark move --from "closest_bookmark(@)" --to "closest_pushable(@)"
+              else
+                jj bookmark move --to "closest_pushable(@)" "$@"
+              fi
+            ''
+            ""
+          ];
+        };
+
+        revset-aliases = {
+          # jj log -r "<revset-alias(<change-id>)"
+          "closest_bookmark(to)" = "heads(::to & bookmarks())";
+          "closest_pushable(to)" = ''
+            heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'';
+        };
+
+        template-aliases = {
+          # only show unique part of change id's
+          "format_short_change_id(id)" = "id.shortest()";
+        };
+
       };
     };
 
