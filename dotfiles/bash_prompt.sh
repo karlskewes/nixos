@@ -12,58 +12,93 @@ elif infocmp xterm-256color >/dev/null 2>&1; then
 	export TERM='xterm-256color'
 fi
 
+# https://github.com/jj-vcs/jj/wiki/Shell-Prompt
+# Dedicated to the Public Domain under the Unlicense: https://unlicense.org/UNLICENSE
+prompt_jj() {
+	if ! jj root &>/dev/null; then
+		return
+	fi
+
+	template=$(
+		cat <<EOF
+"@ " ++ concat(
+		separate(
+			" ",
+			format_short_change_id_with_hidden_and_divergent_info(self),
+			format_short_commit_id(commit_id),
+			bookmarks,
+			if(conflict,label("conflict","conflict")
+		)
+	)
+)
+EOF
+	)
+
+	# --ignore-working-copy: avoid inspecting $PWD and concurrent snapshotting which could create divergent commits
+	output="$(
+		jj \
+			--ignore-working-copy \
+			--no-pager log \
+			--no-graph \
+			--color=always \
+			-r @ \
+			-T "${template}" 2>/dev/null
+	)"
+
+	echo -e "${1}[${output}${bold}]"
+}
+
 prompt_git() {
 	local s=''
 	local branchName=''
 
 	# Check if the current directory is in a Git repository.
-	if [ "$(
+	if ! [ "$(
 		git rev-parse --is-inside-work-tree &>/dev/null
 		echo "${?}"
 	)" == '0' ]; then
-
-		# check if the current directory is in .git before running git checks
-		if [ "$(git rev-parse --is-inside-git-dir 2>/dev/null)" == 'false' ]; then
-
-			if [[ -O "$(git rev-parse --show-toplevel)/.git/index" ]]; then
-				git update-index --really-refresh -q &>/dev/null
-			fi
-
-			# Check for uncommitted changes in the index.
-			if ! git diff --quiet --ignore-submodules --cached; then
-				s+='+'
-			fi
-
-			# Check for unstaged changes.
-			if ! git diff-files --quiet --ignore-submodules --; then
-				s+='!'
-			fi
-
-			# Check for untracked files.
-			if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-				s+='?'
-			fi
-
-			# Check for stashed files.
-			if git rev-parse --verify refs/stash &>/dev/null; then
-				s+='$'
-			fi
-
-		fi
-
-		# Get the short symbolic ref.
-		# If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
-		# Otherwise, just give up.
-		branchName="$(git symbolic-ref --quiet --short HEAD 2>/dev/null ||
-			git rev-parse --short HEAD 2>/dev/null ||
-			echo '(unknown)')"
-
-		[ -n "${s}" ] && s=" [${s}]"
-
-		echo -e "${1}${branchName}${blue}${s}"
-	else
 		return
 	fi
+
+	# check if the current directory is in .git before running git checks
+	if [ "$(git rev-parse --is-inside-git-dir 2>/dev/null)" == 'false' ]; then
+
+		if [[ -O "$(git rev-parse --show-toplevel)/.git/index" ]]; then
+			git update-index --really-refresh -q &>/dev/null
+		fi
+
+		# Check for uncommitted changes in the index.
+		if ! git diff --quiet --ignore-submodules --cached; then
+			s+='+'
+		fi
+
+		# Check for unstaged changes.
+		if ! git diff-files --quiet --ignore-submodules --; then
+			s+='!'
+		fi
+
+		# Check for untracked files.
+		if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+			s+='?'
+		fi
+
+		# Check for stashed files.
+		if git rev-parse --verify refs/stash &>/dev/null; then
+			s+='$'
+		fi
+
+	fi
+
+	# Get the short symbolic ref.
+	# If HEAD isn’t a symbolic ref, get the short SHA for the latest commit
+	# Otherwise, just give up.
+	branchName="$(git symbolic-ref --quiet --short HEAD 2>/dev/null ||
+		git rev-parse --short HEAD 2>/dev/null ||
+		echo '(unknown)')"
+
+	[ -n "${s}" ] && s=" [${s}]"
+
+	echo -e "${1}${branchName}${blue}${s}"
 }
 
 cloud=""
@@ -125,8 +160,9 @@ PS1+="\\[${userStyle}\\]\\u" # username
 PS1+="\\[${white}\\] at "
 PS1+="\\[${hostStyle}\\]${cloud}\\h" # host
 PS1+="\\[${white}\\] in "
-PS1+="\\[${green}\\]\\w"                        # working directory
-PS1+="\$(prompt_git \"${white} on ${violet}\")" # Git repository details
+PS1+="\\[${green}\\]\\w"                             # working directory
+PS1+="\$(prompt_git \"${white} on git: ${violet}\")" # git repository
+PS1+="\$(prompt_jj \"${white} jj: \")"               # jj repository
 PS1+="\\[${white}\\] kube: "
 source "${HOME}/kube-ps1.sh"
 PS1+="\$(kube_ps1)"
