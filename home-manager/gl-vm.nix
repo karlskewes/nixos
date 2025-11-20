@@ -1,5 +1,6 @@
 ({ lib, pkgs, isDarwin, isLinux, ... }:
   let
+    az = pkgs.azure-cli.withExtensions [ pkgs.azure-cli-extensions.account ];
     gdk = pkgs.google-cloud-sdk.withExtraComponents
       (with pkgs.google-cloud-sdk.components; [ gke-gcloud-auth-plugin ]);
 
@@ -33,8 +34,8 @@
     home.packages = with pkgs;
       [
         awscli2
+        az
         gdk
-        azure-cli
 
         kind
         kubernetes-helm
