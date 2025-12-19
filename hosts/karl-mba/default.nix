@@ -10,18 +10,17 @@
     # ../modules/zfs.nix
   ];
 
-  # zfsBootUnlock = {
-  #   enable = false;
-  #   authorizedKeys = [
-  #     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
-  #   ];
-  #   interfaces = [ "cdc-ncm" ];
-  # };
-
   boot.kernelParams = [
     "psmouse.synaptics_intertouch=0"
   ]; # Enables libinput settings to take effect.
-  boot.zfs.removeLinuxDRM = true;
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = false;
+  boot.initrd.luks.devices."crypted".allowDiscards = true; # SSD TRIM
+  boot.initrd.kernelModules = [ "cryptd" "dm-snapshot" ];
+  boot.supportedFilesystems = [ "btrfs" ];
+  # Set in ./hardware-configuration.nix
+  # boot.initrd.luks.devices."crypted".device = { ... };
 
   hardware.asahi = {
     enable = true;

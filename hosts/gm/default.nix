@@ -13,10 +13,9 @@
   ];
   # networking.firewall.allowedTCPPorts = [ 3000 ];
 
-  # pass TRIM through to device.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
-  boot.initrd.luks.devices."crypted".allowDiscards = true;
+  boot.initrd.luks.devices."crypted".allowDiscards = true; # SSD TRIM
   boot.initrd.kernelModules = [ "cryptd" "dm-snapshot" ];
   boot.supportedFilesystems = [ "btrfs" ];
   # Set in ./hardware-configuration.nix
