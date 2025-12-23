@@ -206,9 +206,14 @@
         #   name = "John Doe";
         # };
 
-        git = {
-          push-new-bookmarks = true;
-          # #
+        # https://github.com/jj-vcs/jj/blob/v0.36.0/docs/revsets.md#string-patterns
+        git.remotes = {
+          origin = {
+            auto-track-bookmarks = "glob:'{main,master,trunk,karlskewes/*}'";
+          };
+          upstream = {
+            auto-track-bookmarks = "glob:'{main,master,trunk,karlskewes/*}'";
+          };
         };
 
         ui = {
