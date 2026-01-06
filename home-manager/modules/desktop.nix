@@ -101,6 +101,15 @@
           "browser.newtabpage.activity-stream.showSponsored" = false;
           "browser.newtabpage.activity-stream.system.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          # scrollbars are sometimes so small it's hard to see them and where on page.
+          "layout.css.scrollbar-width-thin.disabled" = true;
+          # scroll bars aren't shown when page is scrollable until move mouse,
+          # and then they disappear again. Subject to change given 'testing' namespacing?
+          "layout.testing.overlay-scrollbars.always-visible" = true;
+          # Settings -> Browsing -> "Always show scrollbars" -> ticked. Unusual setting name though.
+          "widget.gtk.overlay-scrollbars.enabled" = false;
+          # link previews on long press and right click are not helpful.
+          "browser.ml.linkPreview.enabled" = false;
         };
         # SearchEngines = []; # Doesn't work even with pkgs.firefox-esr.
       };

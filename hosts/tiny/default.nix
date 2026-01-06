@@ -123,6 +123,7 @@
   };
 
   # https://github.com/pi-hole/pi-hole
+  # https://github.com/pi-hole/docker-pi-hole
   virtualisation.oci-containers.containers.pihole = {
     image = "pihole/pihole:2025.11.0";
     extraOptions = [ "--hostname=pihole" ];
@@ -149,7 +150,7 @@
   # https://docs.pi-hole.net/core/pihole-command/
   systemd.services."docker-pihole".postStart = ''
     sleep 120s
-    docker exec pihole pihole -w link.nzpost.co.nz
+    docker exec pihole pihole -w click.discord.com
   '';
 
   # add any custom Docker networks like this:
