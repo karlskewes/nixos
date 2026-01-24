@@ -40,6 +40,13 @@
     enable = true;
     settings = {
       buffer.channel.topic = { enabled = true; };
+      buffer.nickname = {
+        away = "none"; # otherwise away usernames too faint to read.
+        brackets = {
+          left = "<";
+          right = ">";
+        };
+      };
       buffer.server_messages = {
         join.enabled = false;
         part.enabled = false;

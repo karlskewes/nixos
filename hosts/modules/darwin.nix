@@ -30,6 +30,7 @@
     gnumake
     gnused
     watch # not included in darwin.
+    wget # not included in darwin.
     (lib.hiPrio uutils-coreutils-noprefix) # rust versions
   ];
 
