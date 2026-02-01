@@ -24,8 +24,7 @@
     # TODO: switch to heavily restricted module: https://github.com/GarrettGR/titdb-nix
     # https://github.com/tascvh/trackpad-is-too-damn-big/compare/main...luqmanishere:trackpad-is-too-damn-big:main
     titdb = {
-      url =
-        "github:luqmanishere/trackpad-is-too-damn-big-flake?rev=9712b426311195c8d3f0359c6086e1d651782d2e";
+      url = "github:luqmanishere/trackpad-is-too-damn-big-flake?rev=9712b426311195c8d3f0359c6086e1d651782d2e";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -51,10 +50,21 @@
     nix-extra.flake = false;
   };
 
-  outputs = { self, home-manager, nixpkgs, nix-darwin, apple-silicon-support
-    , titdb, kolide-launcher, nix-extra, ... }@inputs:
+  outputs =
+    {
+      self,
+      home-manager,
+      nixpkgs,
+      nix-darwin,
+      apple-silicon-support,
+      titdb,
+      kolide-launcher,
+      nix-extra,
+      ...
+    }@inputs:
     let
-      extraNeovimPlugins = (self: super:
+      extraNeovimPlugins = (
+        self: super:
         let
           customPlugins = {
             namu-nvim = super.vimUtils.buildVimPlugin {
@@ -62,11 +72,17 @@
               src = inputs.namu-nvim;
             };
           };
-        in { vimPlugins = super.vimPlugins // customPlugins; });
+        in
+        {
+          vimPlugins = super.vimPlugins // customPlugins;
+        }
+      );
 
       # Overlays is the list of overlays we want to apply from flake inputs.
-      overlays =
-        [ inputs.neovim-nightly-overlay.overlays.default extraNeovimPlugins ];
+      overlays = [
+        inputs.neovim-nightly-overlay.overlays.default
+        extraNeovimPlugins
+      ];
 
       # Function to render out our hosts
       mkHost = import ./lib/mkHost.nix;
@@ -87,30 +103,48 @@
             # as `event#` numbers can change.
             # $ ls /dev/input/by-path/plat form-23510c000.spi-cs-0-event-mouse -la
             # lrwxrwxrwx 1 root root 9 Oct 27 08:43 /dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse -> ../event2
-            device =
-              "/dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse";
+            device = "/dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse";
           };
         }
       ];
 
-    in {
+    in
+    {
       darwinConfigurations = {
         gl = mkHost "gl" {
-          inherit nixpkgs nix-darwin home-manager overlays configRev;
+          inherit
+            nixpkgs
+            nix-darwin
+            home-manager
+            overlays
+            configRev
+            ;
           isDarwin = true;
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "25.05";
         };
         gm = mkHost "gm" {
-          inherit nixpkgs nix-darwin home-manager overlays configRev;
+          inherit
+            nixpkgs
+            nix-darwin
+            home-manager
+            overlays
+            configRev
+            ;
           isDarwin = true;
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "25.11";
         };
         karl-mba = mkHost "karl-mba" {
-          inherit nixpkgs nix-darwin home-manager overlays configRev;
+          inherit
+            nixpkgs
+            nix-darwin
+            home-manager
+            overlays
+            configRev
+            ;
           isDarwin = true;
           user = "karlskewes";
           system = "aarch64-darwin";
@@ -120,13 +154,25 @@
 
       nixosConfigurations = {
         blake-laptop = mkHost "blake-laptop" {
-          inherit nixpkgs home-manager overlays extraModules configRev user;
+          inherit
+            nixpkgs
+            home-manager
+            overlays
+            extraModules
+            configRev
+            user
+            ;
           system = "x86_64-linux";
           stateVersion = "22.05";
         };
 
         karl-mba = mkHost "karl-mba" {
-          inherit nixpkgs home-manager configRev user;
+          inherit
+            nixpkgs
+            home-manager
+            configRev
+            user
+            ;
           system = "aarch64-linux";
           stateVersion = "23.11";
           extraModules = appleModules;
@@ -138,19 +184,28 @@
         };
 
         gl-vm = mkHost "gl-vm" {
-          inherit nixpkgs home-manager overlays configRev user;
+          inherit
+            nixpkgs
+            home-manager
+            overlays
+            configRev
+            user
+            ;
           system = "aarch64-linux";
           stateVersion = "25.05";
-          extraModules = extraModules
-            ++ [ kolide-launcher.nixosModules.kolide-launcher ];
+          extraModules = extraModules ++ [ kolide-launcher.nixosModules.kolide-launcher ];
         };
 
         gm = mkHost "gm" {
-          inherit nixpkgs home-manager configRev user;
+          inherit
+            nixpkgs
+            home-manager
+            configRev
+            user
+            ;
           system = "aarch64-linux";
           stateVersion = "25.11";
-          extraModules = appleModules
-            ++ [ kolide-launcher.nixosModules.kolide-launcher ];
+          extraModules = appleModules ++ [ kolide-launcher.nixosModules.kolide-launcher ];
           overlays = [
             apple-silicon-support.overlays.apple-silicon-overlay
             inputs.neovim-nightly-overlay.overlays.default
@@ -159,7 +214,14 @@
         };
 
         tiny = mkHost "tiny" {
-          inherit nixpkgs home-manager overlays extraModules configRev user;
+          inherit
+            nixpkgs
+            home-manager
+            overlays
+            extraModules
+            configRev
+            user
+            ;
           system = "x86_64-linux";
           stateVersion = "22.05";
         };

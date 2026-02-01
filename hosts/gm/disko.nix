@@ -3,7 +3,8 @@ let
   # Find base disk ID `read !ls /dev/disk/by-id/*`
   disk = "/dev/disk/by-id/nvme-APPLE_SSD_AP0512Z_0ba01f0c22591a20";
   disk_friendly = "nvme";
-in {
+in
+{
   disko.devices = {
     disk = {
       "${disk_friendly}" = {
@@ -73,15 +74,24 @@ in {
                   subvolumes = {
                     "/root" = {
                       mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
                     "/home" = {
                       mountpoint = "/home";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
                     "/nix" = {
                       mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
                     };
                     "/swap" = {
                       mountpoint = "/swap";

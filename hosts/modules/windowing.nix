@@ -1,10 +1,21 @@
-{ config, lib, pkgs, currentSystem, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  currentSystem,
+  ...
+}:
 
 {
   # https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
-  environment.pathsToLink =
-    [ "/share/xdg-desktop-portal" "/share/applications" ];
-  environment.systemPackages = with pkgs; [ libinput simple-scan ];
+  environment.pathsToLink = [
+    "/share/xdg-desktop-portal"
+    "/share/applications"
+  ];
+  environment.systemPackages = with pkgs; [
+    libinput
+    simple-scan
+  ];
 
   # i18n  {
   #   inputMethod = {
@@ -29,10 +40,12 @@
   # }];
 
   hardware.sane = {
-    enable = {
-      "x86_64-linux" = true;
-      "aarch64-linux" = false;
-    }."${currentSystem}";
+    enable =
+      {
+        "x86_64-linux" = true;
+        "aarch64-linux" = false;
+      }
+      ."${currentSystem}";
 
     brscan4 = {
       enable = true;
@@ -64,8 +77,7 @@
   services.libinput.enable = true;
   # Confirm below with `xinput list-props <id>`
   services.libinput.touchpad.disableWhileTyping = true; # ineffective.
-  services.libinput.touchpad.tapping =
-    false; # disabling due to undesired focus changes. Right click = Shift+F10(+fn)
+  services.libinput.touchpad.tapping = false; # disabling due to undesired focus changes. Right click = Shift+F10(+fn)
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

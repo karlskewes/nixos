@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.zfsBootUnlock = {
@@ -42,7 +47,8 @@
 
       kernelParams = [
         "nohibernate" # not supported by zfs
-      ] ++ lib.optionals config.zfsBootUnlock.enable [
+      ]
+      ++ lib.optionals config.zfsBootUnlock.enable [
         "ip=dhcp" # ssh remote unlock, works but will show warning "can't find device ip=dhcp"
       ];
 
@@ -78,6 +84,8 @@
       trim.enable = true;
     };
 
-    virtualisation.docker = { storageDriver = lib.mkDefault "zfs"; };
+    virtualisation.docker = {
+      storageDriver = lib.mkDefault "zfs";
+    };
   };
 }

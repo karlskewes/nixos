@@ -1,7 +1,10 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, ... }:
+{
   imports = [ ./desktop.nix ];
 
-  home.sessionVariables = { NIXOS_OZONE_WL = "1"; };
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
 
   home.pointerCursor = {
     gtk.enable = true;
@@ -28,9 +31,15 @@
 
   services.gnome-keyring = {
     enable = true;
-    components = [ "pkcs11" "secrets" "ssh" ];
+    components = [
+      "pkcs11"
+      "secrets"
+      "ssh"
+    ];
   };
 
-  xdg.portal.extraPortals =
-    [ pkgs.xdg-desktop-portal-cosmic pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal.extraPortals = [
+    pkgs.xdg-desktop-portal-cosmic
+    pkgs.xdg-desktop-portal-gtk
+  ];
 }

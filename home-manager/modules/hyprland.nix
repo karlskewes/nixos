@@ -1,5 +1,9 @@
-{ pkgs, currentSystem, ... }: {
-  imports = [ ./desktop.nix ./wayland.nix ];
+{ pkgs, currentSystem, ... }:
+{
+  imports = [
+    ./desktop.nix
+    ./wayland.nix
+  ];
 
   home.pointerCursor.hyprcursor.enable = true;
 
@@ -8,15 +12,19 @@
     xdg-desktop-portal-gtk
   ];
 
-  services.blueman-applet.enable = {
-    "x86_64-linux" = true;
-    "aarch64-linux" = false;
-    "aarch64-darwin" = false;
-  }."${currentSystem}"; # bluetooth
+  services.blueman-applet.enable =
+    {
+      "x86_64-linux" = true;
+      "aarch64-linux" = false;
+      "aarch64-darwin" = false;
+    }
+    ."${currentSystem}"; # bluetooth
 
   programs.swaylock = {
     enable = true;
-    settings = { color = "404040"; };
+    settings = {
+      color = "404040";
+    };
   };
 
   # TODO: figure out how to get it to work.
@@ -30,26 +38,29 @@
         no_fade_in = false;
       };
 
-      background = [{
-        path = "screenshot";
-        blur_passes = 3;
-        blur_size = 8;
-      }];
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
 
-      input-field = [{
-        size = "200, 50";
-        position = "0, -80";
-        monitor = "";
-        dots_center = true;
-        fade_on_empty = false;
-        font_color = "rgb(202, 211, 245)";
-        inner_color = "rgb(91, 96, 120)";
-        outer_color = "rgb(24, 25, 38)";
-        outline_thickness = 5;
-        placeholder_text =
-          ''<span foreground="##cad3f5">Password...</sfalsepan>'';
-        shadow_passes = 2;
-      }];
+      input-field = [
+        {
+          size = "200, 50";
+          position = "0, -80";
+          monitor = "";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(202, 211, 245)";
+          inner_color = "rgb(91, 96, 120)";
+          outer_color = "rgb(24, 25, 38)";
+          outline_thickness = 5;
+          placeholder_text = ''<span foreground="##cad3f5">Password...</sfalsepan>'';
+          shadow_passes = 2;
+        }
+      ];
     };
   };
 
@@ -135,8 +146,11 @@
       mainBar = {
         layer = "top";
         position = "bottom";
-        modules-left =
-          [ "hyprland/workspaces" "hyprland/submap" "hyprland/window" ];
+        modules-left = [
+          "hyprland/workspaces"
+          "hyprland/submap"
+          "hyprland/window"
+        ];
         modules-center = [ ];
         modules-right = [
           "pulseaudio"
@@ -151,7 +165,9 @@
           "clock"
           "tray"
         ];
-        "hyprland/window" = { max-length = 50; };
+        "hyprland/window" = {
+          max-length = 50;
+        };
         "hyprland/workspaces" = {
           active-only = false;
           format = "{icon}: {windows}";
@@ -169,7 +185,13 @@
           interval = 5;
           format = "B: {capacity}%";
           # format = "{icon}  {capacity}%";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
           states = {
             warning = 30;
             critical = 15;
@@ -182,18 +204,30 @@
             <big>{:%Y %B}</big>
             <tt><small>{calendar}</small></tt>'';
         };
-        cpu = { format = " {usage}%"; };
-        load = { format = "L: {load1}"; };
-        disk = { format = "D: {used} / {total}"; };
+        cpu = {
+          format = " {usage}%";
+        };
+        load = {
+          format = "L: {load1}";
+        };
+        disk = {
+          format = "D: {used} / {total}";
+        };
         memory = {
           format = "M: {used:0.1f} / {total:0.1f}";
-          states = { "critical" = 80; };
+          states = {
+            "critical" = 80;
+          };
           tooltip-format = "Swap: {swapUsed:0.1f} / {swapAvail:0.1f}";
         };
         temperature = {
           critical-threshold = 60;
           format = "{icon} {temperatureC}°C";
-          format-icons = [ "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+          ];
         };
         idle_inhibitor = {
           format = "{icon}";
@@ -224,7 +258,11 @@
             "phone" = "";
             "portable" = "";
             "car" = "";
-            "default" = [ "" "" "" ];
+            "default" = [
+              ""
+              ""
+              ""
+            ];
           };
           on-click = "pavucontrol";
         };
@@ -255,7 +293,9 @@
     };
   };
 
-  services.swayosd = { enable = true; };
+  services.swayosd = {
+    enable = true;
+  };
 
   wayland.windowManager.hyprland = {
     enable = true;

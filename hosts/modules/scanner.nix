@@ -1,25 +1,36 @@
-{ config, pkgs, currentUsers, currentSystem, ... }:
+{
+  config,
+  pkgs,
+  currentUsers,
+  currentSystem,
+  ...
+}:
 
 {
   # system user
   # for each user in currentUsers, generate users.user.${user} config.
-  users.users = builtins.foldl' (acc: user:
-    acc // {
+  users.users = builtins.foldl' (
+    acc: user:
+    acc
+    // {
       ${user} = {
         extraGroups = [
           "scanner" # scanning
           "lp" # scanning
         ];
       };
-    }) { } (currentUsers);
+    }
+  ) { } (currentUsers);
 
   environment.systemPackages = with pkgs; [ simple-scan ];
 
   hardware.sane = {
-    enable = {
-      "x86_64-linux" = true;
-      "aarch64-linux" = false;
-    }."${currentSystem}";
+    enable =
+      {
+        "x86_64-linux" = true;
+        "aarch64-linux" = false;
+      }
+      ."${currentSystem}";
 
     brscan4 = {
       enable = true;

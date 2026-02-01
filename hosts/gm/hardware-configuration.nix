@@ -6,7 +6,11 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+  ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
@@ -16,32 +20,48 @@
   fileSystems."/" = {
     device = "/dev/mapper/crypted";
     fsType = "btrfs";
-    options = [ "subvol=root" "compress=zstd" "noatime" ];
+    options = [
+      "subvol=root"
+      "compress=zstd"
+      "noatime"
+    ];
   };
 
-  /* install says EFI PARTUUID = 68ec9ab1-1413-45bb-9553-e14aca305696
-     ls /dev/disk/by-partuuid/
-          0113ae75-de9c-4165-95db-f2c8a297c2d6  ec531500-04e8-4e3c-969d-f6f106b4e653
-          68ec9ab1-1413-45bb-9553-e14aca305696  fd9e528c-fe2d-49e9-afcd-c9cc9a0c65d2
-          ca58ee0f-d4de-4e27-a809-ac1c42d6fc24
+  /*
+    install says EFI PARTUUID = 68ec9ab1-1413-45bb-9553-e14aca305696
+    ls /dev/disk/by-partuuid/
+         0113ae75-de9c-4165-95db-f2c8a297c2d6  ec531500-04e8-4e3c-969d-f6f106b4e653
+         68ec9ab1-1413-45bb-9553-e14aca305696  fd9e528c-fe2d-49e9-afcd-c9cc9a0c65d2
+         ca58ee0f-d4de-4e27-a809-ac1c42d6fc24
   */
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/43BC-121B";
     fsType = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   fileSystems."/home" = {
     device = "/dev/mapper/crypted";
     fsType = "btrfs";
-    options = [ "subvol=home" "compress=zstd" "noatime" ];
+    options = [
+      "subvol=home"
+      "compress=zstd"
+      "noatime"
+    ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/mapper/crypted";
     fsType = "btrfs";
-    options = [ "subvol=nix" "compress=zstd" "noatime" ];
+    options = [
+      "subvol=nix"
+      "compress=zstd"
+      "noatime"
+    ];
   };
 
   fileSystems."/swap" = {
@@ -50,7 +70,7 @@
     options = [ "subvol=swap" ];
   };
 
-  swapDevices = [{ device = "/swap/swapfile"; }];
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

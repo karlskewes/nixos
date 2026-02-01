@@ -6,8 +6,12 @@
 {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
-  boot.initrd.availableKernelModules =
-    [ "virtio_pci" "xhci_pci" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [
+    "virtio_pci"
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
@@ -37,11 +41,13 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/48C2-31B8";
     fsType = "vfat";
-    options = [ "fmask=0022" "dmask=0022" ];
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
-  swapDevices =
-    [{ device = "/dev/disk/by-id/virtio-0E6E853EAFC44A4ABA03-part2"; }];
+  swapDevices = [ { device = "/dev/disk/by-id/virtio-0E6E853EAFC44A4ABA03-part2"; } ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

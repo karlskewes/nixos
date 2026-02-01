@@ -2,16 +2,25 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, pkgs, currentStateVersion, currentSystem, currentSystemName, currentUsers
-, ... }:
+{
+  lib,
+  pkgs,
+  currentStateVersion,
+  currentSystem,
+  currentSystemName,
+  currentUsers,
+  ...
+}:
 
 {
   # system user
   users = {
     mutableUsers = false;
     # for each user in currentUsers, generate users.user.${user} config.
-    users = builtins.foldl' (acc: user:
-      acc // {
+    users = builtins.foldl' (
+      acc: user:
+      acc
+      // {
         ${user} = {
           home = "/home/${user}";
           shell = lib.mkOverride 100 pkgs.bash;
@@ -31,7 +40,8 @@
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFHa6kemH+dg/qistkK0BRME83j+uhN50ckV7DwyfXew hello@karlskewes.com"
           ];
         };
-      }) { } (currentUsers);
+      }
+    ) { } (currentUsers);
   };
 
   programs.bash.enable = true;
@@ -40,14 +50,19 @@
 
   boot = {
     loader.systemd-boot.enable = true;
-    loader.systemd-boot.memtest86.enable = {
-      "x86_64-linux" = true;
-      "aarch64-linux" = false;
-    }."${currentSystem}";
-    loader.efi.canTouchEfiVariables = lib.mkDefault {
-      "x86_64-linux" = true;
-      "aarch64-linux" = false;
-    }."${currentSystem}";
+    loader.systemd-boot.memtest86.enable =
+      {
+        "x86_64-linux" = true;
+        "aarch64-linux" = false;
+      }
+      ."${currentSystem}";
+    loader.efi.canTouchEfiVariables =
+      lib.mkDefault
+        {
+          "x86_64-linux" = true;
+          "aarch64-linux" = false;
+        }
+        ."${currentSystem}";
   };
 
   # List packages installed in system profile. To search, run:
@@ -67,11 +82,16 @@
   ];
 
   fonts.fontconfig.useEmbeddedBitmaps = true;
-  fonts.packages = with pkgs; [ nerd-fonts.hack font-awesome ];
+  fonts.packages = with pkgs; [
+    nerd-fonts.hack
+    font-awesome
+  ];
 
   hardware.enableAllFirmware = true;
 
-  i18n = { defaultLocale = "en_US.UTF-8"; };
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+  };
 
   # Still problematic in 2021
   networking.enableIPv6 = false;
@@ -93,8 +113,7 @@
   # :read !ip link | grep ': en'
   # networking.interfaces.ens33.useDHCP = true;
 
-  networking.firewall.enable =
-    lib.mkDefault true; # disable for Kubernetes Kind, breaks inter-pod traffic.
+  networking.firewall.enable = lib.mkDefault true; # disable for Kubernetes Kind, breaks inter-pod traffic.
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPorts
   # networking.firewall.allowedTCPPorts = [ 22 ];
   # https://nixos.org/manual/nixos/stable/options.html#opt-networking.firewall.allowedTCPPortRanges
@@ -114,8 +133,10 @@
       # only allow users with sudo access ability to access nix daemon
       allowed-users = [ "@wheel" ];
       auto-optimise-store = true;
-      trusted-users =
-        [ "karl" "karlskewes" ]; # ability to add cache substituters.
+      trusted-users = [
+        "karl"
+        "karlskewes"
+      ]; # ability to add cache substituters.
 
       substituters = [
         "https://cache.nixos.org"
@@ -152,8 +173,7 @@
   security.sudo.wheelNeedsPassword = lib.mkDefault false;
 
   services.gnome.gnome-keyring.enable = true;
-  services.gnome.gcr-ssh-agent.enable =
-    true; # default true if above gnome-keyring enabled.
+  services.gnome.gcr-ssh-agent.enable = true; # default true if above gnome-keyring enabled.
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.login.enableGnomeKeyring = true;
 
@@ -162,7 +182,11 @@
     keyboards = {
       default = {
         ids = [ "*" ];
-        settings = { main = { capslock = "overload(meta, esc)"; }; };
+        settings = {
+          main = {
+            capslock = "overload(meta, esc)";
+          };
+        };
       };
     };
   };
@@ -187,7 +211,9 @@
   # system.configurationRevision = currentRevision;
 
   # Docker seems to be more reliable for the containers running.
-  virtualisation.docker = { enable = true; };
+  virtualisation.docker = {
+    enable = true;
+  };
   virtualisation.oci-containers.backend = "docker";
 
   # virtualisation = {

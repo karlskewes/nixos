@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   imports = [
     ./hardware-configuration.nix
 
@@ -28,8 +29,7 @@
   # networking.interfaces.wlp1s0.useDHCP = true;
 
   nixpkgs.config.packageOverrides = pkgs: {
-    intel-vaapi-driver =
-      pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
   };
   hardware.graphics.extraPackages = with pkgs; [
     intel-media-driver # LIBVA_DRIVER_NAME=iHD
@@ -90,7 +90,11 @@
     openFirewall = true;
     useLegacyConfig = false;
     config = {
-      LoadModule = [ "adminlog" "cyrusauth saslauthd" "webadmin" ];
+      LoadModule = [
+        "adminlog"
+        "cyrusauth saslauthd"
+        "webadmin"
+      ];
       Listener.l = {
         Port = 16667;
         AllowIRC = true;
@@ -109,7 +113,10 @@
         QuitMsg = "gone";
         Network.oftc = {
           Server = "irc.oftc.net +6697";
-          LoadModule = [ "keepnick" "simple_away" ];
+          LoadModule = [
+            "keepnick"
+            "simple_away"
+          ];
           Chan = {
             "#asahi" = { };
             "#asahi-alt" = { };
@@ -127,7 +134,12 @@
   virtualisation.oci-containers.containers.pihole = {
     image = "pihole/pihole:2025.11.0";
     extraOptions = [ "--hostname=pihole" ];
-    ports = [ "53:53/udp" "53:53/tcp" "80:80/tcp" "443:443/tcp" ];
+    ports = [
+      "53:53/udp"
+      "53:53/tcp"
+      "80:80/tcp"
+      "443:443/tcp"
+    ];
     environment = {
       TZ = "Australia/Brisbane";
       FTLCONF_LOCAL_IPV4 = "192.168.1.5"; # host machine IP
@@ -169,5 +181,9 @@
 
   virtualisation.libvirtd.enable = false;
   programs.dconf.enable = true;
-  environment.systemPackages = with pkgs; [ cdrkit ethtool virt-manager ];
+  environment.systemPackages = with pkgs; [
+    cdrkit
+    ethtool
+    virt-manager
+  ];
 }

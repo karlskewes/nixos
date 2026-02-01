@@ -1,4 +1,12 @@
-{ lib, pkgs, currentSystem, currentUsers, currentStateVersion, ... }: {
+{
+  lib,
+  pkgs,
+  currentSystem,
+  currentUsers,
+  currentStateVersion,
+  ...
+}:
+{
   nixpkgs.config.allowUnfree = lib.mkDefault true;
   nixpkgs.hostPlatform = currentSystem;
   nix.settings.experimental-features = "nix-command flakes";
@@ -7,8 +15,10 @@
   system.primaryUser = "karlskewes"; # TODO: pull from currentUsers?
 
   # Declare the user that will be running `nix-darwin`.
-  users.users = builtins.foldl' (acc: user:
-    acc // {
+  users.users = builtins.foldl' (
+    acc: user:
+    acc
+    // {
       ${user} = {
         name = "${user}";
         home = "/Users/${user}";
@@ -17,14 +27,20 @@
         ];
         shell = pkgs.bash; # $ chsh -s /run/current-system/sw/bin/bash
       };
-    }) { } (currentUsers);
+    }
+  ) { } (currentUsers);
 
-  environment.shells = [ pkgs.bashInteractive pkgs.zsh ];
+  environment.shells = [
+    pkgs.bashInteractive
+    pkgs.zsh
+  ];
   programs.bash.enable = true;
   programs.bash.completion.enable = true;
   programs.zsh.enable = true;
 
-  environment.shellAliases = { l = "ls -lah"; };
+  environment.shellAliases = {
+    l = "ls -lah";
+  };
 
   environment.systemPackages = with pkgs; [
     gnumake
@@ -39,11 +55,13 @@
   networking.applicationFirewall.enableStealthMode = false; # default
 
   nix.gc.automatic = true;
-  nix.gc.interval = [{
-    Hour = 7;
-    Minute = 30;
-    Weekday = 7;
-  }];
+  nix.gc.interval = [
+    {
+      Hour = 7;
+      Minute = 30;
+      Weekday = 7;
+    }
+  ];
   nix.optimise.automatic = true;
 
   services.aerospace = {
@@ -100,11 +118,15 @@
       # aerospace list-apps --json
       on-window-detected = [
         {
-          "if" = { app-id = "net.kovidgoyal.kitty"; };
+          "if" = {
+            app-id = "net.kovidgoyal.kitty";
+          };
           run = [ "move-node-to-workspace 1" ];
         }
         {
-          "if" = { app-id = "org.nixos.firefox"; };
+          "if" = {
+            app-id = "org.nixos.firefox";
+          };
           run = [ "move-node-to-workspace 2" ];
         }
         {

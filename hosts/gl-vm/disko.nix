@@ -5,7 +5,8 @@ let
   # For UTMAPP Apple VM's this is parts 1-4 of the backing file <1>-<2>-<3>-<4>-<5>.img
   disk = "/dev/disk/by-id/virtio-0E6E853EAFC44A4ABA03";
   disk_friendly = "virtio-one";
-in {
+in
+{
   disko.devices = {
     disk = {
       "${disk_friendly}" = {

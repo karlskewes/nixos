@@ -1,15 +1,24 @@
-{ lib, pkgs, isDarwin, isLinux, ... }:
+{
+  lib,
+  pkgs,
+  isDarwin,
+  isLinux,
+  ...
+}:
 
 {
-  home.packages = with pkgs;
-    (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+  home.packages =
+    with pkgs;
+    (lib.optionals isDarwin [ ])
+    ++ (lib.optionals isLinux [
       glibc # golangci-lint ?
       vokoscreen-ng # screencasting
 
       # ssh key related
       gcr_4
       seahorse
-    ]) ++ [
+    ])
+    ++ [
       bats
       shellcheck
       shfmt
@@ -99,16 +108,14 @@
 
   # On Darwin, use of `docker` in scripts will fail to match an alias or function named docker.
   # Perhaps worth moving from Podman to Colima or the new Apple native docker containerization?
-  home.file.".local/bin/docker" =
-    lib.mkIf isDarwin { source = ../../dotfiles/docker; };
+  home.file.".local/bin/docker" = lib.mkIf isDarwin { source = ../../dotfiles/docker; };
 
   programs.bash.shellAliases = {
     dco = "docker-compose";
     k = "kubectl";
     # podman docker host export
     # https://podman-desktop.io/docs/migrating-from-docker/using-the-docker_host-environment-variable
-    pdh =
-      "export DOCKER_HOST=unix://$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')";
+    pdh = "export DOCKER_HOST=unix://$(podman machine inspect --format '{{.ConnectionInfo.PodmanSocket.Path}}')";
   };
 
   programs.bash.initExtra = ''

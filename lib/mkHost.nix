@@ -1,22 +1,30 @@
 # Based on: https://github.com/mitchellh/nixos-config/blob/74ede9378860d4807780eac80c5d685e334d59e9/lib/mksystem.nix
 name:
-{ nixpkgs, nix-darwin ? { }, home-manager, overlays, configRev, system
-, isDarwin ? false, user, stateVersion, extraModules ? [ ] }:
+{
+  nixpkgs,
+  nix-darwin ? { },
+  home-manager,
+  overlays,
+  configRev,
+  system,
+  isDarwin ? false,
+  user,
+  stateVersion,
+  extraModules ? [ ],
+}:
 
 let
   isLinux = !isDarwin;
-  hm =
-    if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
+  hm = if isDarwin then home-manager.darwinModules else home-manager.nixosModules;
 
   homeModule = ../home-manager/${name}.nix;
 
-  systemFunc =
-    if isDarwin then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
+  systemFunc = if isDarwin then nix-darwin.lib.darwinSystem else nixpkgs.lib.nixosSystem;
 
-  hostConfig =
-    if isDarwin then ../hosts/modules/darwin.nix else ../hosts/${name};
+  hostConfig = if isDarwin then ../hosts/modules/darwin.nix else ../hosts/${name};
 
-in systemFunc rec {
+in
+systemFunc rec {
   inherit system;
 
   modules = extraModules ++ [
@@ -33,7 +41,12 @@ in systemFunc rec {
 
     { nixpkgs.overlays = overlays; }
 
-    ({ config, lib, ... }: { nixpkgs.config.allowUnfree = lib.mkDefault true; })
+    (
+      { config, lib, ... }:
+      {
+        nixpkgs.config.allowUnfree = lib.mkDefault true;
+      }
+    )
 
     hostConfig
 
@@ -41,7 +54,9 @@ in systemFunc rec {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.users = { ${user} = homeModule; };
+      home-manager.users = {
+        ${user} = homeModule;
+      };
 
       # expose arguments for imports to use as parameters
       home-manager.extraSpecialArgs = {

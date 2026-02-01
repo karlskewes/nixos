@@ -1,5 +1,13 @@
 # X Windows additional configuration dependent on home-manager
-{ config, lib, pkgs, isDarwin, isLinux, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  isDarwin,
+  isLinux,
+  ...
+}:
+{
   options.custom.firefox = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -25,11 +33,17 @@
       xdgOpenUsePortal = true;
       config = {
         cosmic = {
-          default = [ "cosmic" "gtk" ];
+          default = [
+            "cosmic"
+            "gtk"
+          ];
           "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
         };
         hyprland = {
-          default = [ "hyprland" "gtk" ];
+          default = [
+            "hyprland"
+            "gtk"
+          ];
           "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
         };
       };
@@ -37,13 +51,15 @@
 
     fonts.fontconfig.enable = true;
 
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       (lib.optionals isDarwin [
         # on Linux these are installed in host/NixOS configuration.
         nerd-fonts.hack
         font-awesome
         # #
-      ]) ++ (lib.optionals isLinux [
+      ])
+      ++ (lib.optionals isLinux [
         mesa-demos
         vulkan-tools # vulkan-info
         helvum # pipewire patch bay gui
@@ -51,7 +67,8 @@
         ente-auth
         kdePackages.gwenview # image viewer & editor (crop, resize)
         vlc
-      ]) ++ [
+      ])
+      ++ [
         adwaita-qt
         adwaita-icon-theme
 
@@ -65,11 +82,14 @@
 
     programs.firefox = lib.mkIf config.custom.firefox.enable {
       # package = pkgs.firefox;
-      package = if isDarwin then
-      # https://github.com/NixOS/nixpkgs/issues/451884
-        pkgs.firefox.overrideAttrs (_: { gtk_modules = [ ]; })
-      else
-        pkgs.firefox;
+      package =
+        if isDarwin then
+          # https://github.com/NixOS/nixpkgs/issues/451884
+          pkgs.firefox.overrideAttrs (_: {
+            gtk_modules = [ ];
+          })
+        else
+          pkgs.firefox;
 
       enable = true;
       # Check about:policies#documentation for options.
@@ -85,7 +105,8 @@
           Cryptomining = true;
           Fingerprinting = true;
         };
-        Preferences = { # `profiles.<name>.settings` for all profiles
+        Preferences = {
+          # `profiles.<name>.settings` for all profiles
           "browser.search.region" = "AU";
           # "browser.contentblocking.category" = "strict";
           "browser.topsites.contile.enabled" = false;
@@ -96,8 +117,7 @@
           "browser.urlbar.suggest.searches" = false;
           "browser.urlbar.showSearchSuggestionsFirst" = false;
           "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-            false;
+          "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
           "browser.newtabpage.activity-stream.showSponsored" = false;
           "browser.newtabpage.activity-stream.system.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
@@ -115,85 +135,96 @@
       };
       # Check about:config for options.
 
-      profiles = builtins.listToAttrs (lib.imap0 (i: user:
-        lib.nameValuePair "${user}" {
-          id = i;
-          name = "${user}";
-          path = "${user}";
-          isDefault = if i == 0 then true else false;
-          search = {
-            force = true;
-            default = "ddg";
-            order = [ "ddg" ];
-            engines = {
-              "Nix Options" = {
-                urls = [{
-                  template = "https://search.nixos.org/options";
-                  params = [
+      profiles = builtins.listToAttrs (
+        lib.imap0 (
+          i: user:
+          lib.nameValuePair "${user}" {
+            id = i;
+            name = "${user}";
+            path = "${user}";
+            isDefault = if i == 0 then true else false;
+            search = {
+              force = true;
+              default = "ddg";
+              order = [ "ddg" ];
+              engines = {
+                "Nix Options" = {
+                  urls = [
                     {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }];
-                icon =
-                  "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                definedAliases = [ "@no" ];
-              };
-              "Nix Packages" = {
-                urls = [{
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
+                      template = "https://search.nixos.org/options";
+                      params = [
+                        {
+                          name = "type";
+                          value = "packages";
+                        }
+                        {
+                          name = "channel";
+                          value = "unstable";
+                        }
+                        {
+                          name = "query";
+                          value = "{searchTerms}";
+                        }
+                      ];
                     }
                   ];
-                }];
-                icon =
-                  "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                definedAliases = [ "@np" ];
-              };
-              "NixOS Wiki" = {
-                urls = [{
-                  template =
-                    "https://nixos.wiki/index.php?search={searchTerms}";
-                }];
-                icon = "https://nixos.wiki/favicon.png";
-                updateInterval = 24 * 60 * 60 * 1000; # every day
-                definedAliases = [ "@nw" ];
+                  icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                  definedAliases = [ "@no" ];
+                };
+                "Nix Packages" = {
+                  urls = [
+                    {
+                      template = "https://search.nixos.org/packages";
+                      params = [
+                        {
+                          name = "type";
+                          value = "packages";
+                        }
+                        {
+                          name = "channel";
+                          value = "unstable";
+                        }
+                        {
+                          name = "query";
+                          value = "{searchTerms}";
+                        }
+                      ];
+                    }
+                  ];
+                  icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+                  definedAliases = [ "@np" ];
+                };
+                "NixOS Wiki" = {
+                  urls = [
+                    {
+                      template = "https://nixos.wiki/index.php?search={searchTerms}";
+                    }
+                  ];
+                  icon = "https://nixos.wiki/favicon.png";
+                  updateInterval = 24 * 60 * 60 * 1000; # every day
+                  definedAliases = [ "@nw" ];
+                };
               };
             };
-          };
-        }) config.custom.firefox.users);
+          }
+        ) config.custom.firefox.users
+      );
     };
 
     programs.kitty = {
       enable = true;
       font.name = "Hack Nerd Font Mono";
-      settings = { enable_audio_bell = false; };
+      settings = {
+        enable_audio_bell = false;
+      };
       extraConfig = ''
         map ctrl+shift+enter new_window_with_cwd
         tab_title_template "{tab.active_wd.split('/')[-1]}: {title}"
       '';
     };
 
-    services.dunst = { enable = isLinux; };
+    services.dunst = {
+      enable = isLinux;
+    };
   };
 }

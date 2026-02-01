@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
 
   imports = [
     ./hardware-configuration.nix
@@ -41,8 +42,13 @@
     daemon.enable = true;
     daemon.settings = {
       # exclude various package caches.
-      "ExcludePath" =
-        [ "/node_modules/" "/go/" "/\\.rustup/" "/\\.yarn/" "/yarn/berry/" ];
+      "ExcludePath" = [
+        "/node_modules/"
+        "/go/"
+        "/\\.rustup/"
+        "/\\.yarn/"
+        "/yarn/berry/"
+      ];
 
       # $ journalctl -u clamdscan.service
       # `clamdscan[22040]: LibClamAV Warning: cli_realpath: Invalid arguments.`

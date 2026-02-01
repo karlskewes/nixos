@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
 
   imports = [
     ./hardware-configuration.nix
@@ -16,7 +17,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
   boot.initrd.luks.devices."crypted".allowDiscards = true; # SSD TRIM
-  boot.initrd.kernelModules = [ "cryptd" "dm-snapshot" ];
+  boot.initrd.kernelModules = [
+    "cryptd"
+    "dm-snapshot"
+  ];
   boot.supportedFilesystems = [ "btrfs" ];
   # Set in ./hardware-configuration.nix
   # boot.initrd.luks.devices."crypted".device = { ... };
@@ -55,8 +59,13 @@
     daemon.enable = true;
     daemon.settings = {
       # exclude various package caches.
-      "ExcludePath" =
-        [ "/node_modules/" "/go/" "/\\.rustup/" "/\\.yarn/" "/yarn/berry/" ];
+      "ExcludePath" = [
+        "/node_modules/"
+        "/go/"
+        "/\\.rustup/"
+        "/\\.yarn/"
+        "/yarn/berry/"
+      ];
 
       # $ journalctl -u clamdscan.service
       # `clamdscan[22040]: LibClamAV Warning: cli_realpath: Invalid arguments.`

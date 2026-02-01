@@ -1,9 +1,16 @@
-{ config, lib, currentStateVersion, isDarwin, ... }:
+{
+  config,
+  lib,
+  currentStateVersion,
+  isDarwin,
+  ...
+}:
 
 let
   user = if isDarwin then "karlskewes" else "karl";
   homeDir = if isDarwin then "/Users/${user}" else "/home/${user}";
-in {
+in
+{
   imports = [ ];
 
   home.username = "${user}";
@@ -41,10 +48,9 @@ in {
       user.email = lib.mkDefault "hello@karlskewes.com";
       # If we're signing then we have a key required to fetch via SSH, otherwise stick with HTTPS
       # so public repositories can still be fetched.
-      url."ssh://git@github.com/karlskewes/" =
-        lib.mkIf config.custom.git.signing.enable {
-          insteadOf = "https://github.com/karlskewes/";
-        };
+      url."ssh://git@github.com/karlskewes/" = lib.mkIf config.custom.git.signing.enable {
+        insteadOf = "https://github.com/karlskewes/";
+      };
       # go get repo@branch can also get confused and fail. Force to SSH.
       url."ssh://git@github.com/" = lib.mkIf config.custom.git.signing.enable {
         insteadOf = "https://github.com/";

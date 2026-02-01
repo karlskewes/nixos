@@ -1,17 +1,23 @@
-({ pkgs, ... }: {
-  # TODO: multiple users
-  imports = [
-    ./user-karl.nix
+(
+  { pkgs, ... }:
+  {
+    # TODO: multiple users
+    imports = [
+      ./user-karl.nix
 
-    ./modules
+      ./modules
 
-    ./modules/cosmic.nix
-  ];
+      ./modules/cosmic.nix
+    ];
 
-  custom.firefox = {
-    enable = true;
-    users = [ "blake" "karl" ];
-  };
+    custom.firefox = {
+      enable = true;
+      users = [
+        "blake"
+        "karl"
+      ];
+    };
 
-  home.packages = with pkgs; [ ];
-})
+    home.packages = with pkgs; [ ];
+  }
+)

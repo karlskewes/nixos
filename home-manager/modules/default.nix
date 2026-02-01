@@ -1,4 +1,12 @@
-{ config, lib, pkgs, isDarwin, isLinux, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  isDarwin,
+  isLinux,
+  ...
+}:
+{
   imports = [ ./neovim.nix ];
 
   options.custom.git.signing = {
@@ -22,15 +30,18 @@
     # Packages
     #---------------------------------------------------------------------
 
-    home.packages = with pkgs;
-      (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [
+    home.packages =
+      with pkgs;
+      (lib.optionals isDarwin [ ])
+      ++ (lib.optionals isLinux [
         lshw
         psmisc
         usbutils
         brightnessctl
         alsa-utils
         iptraf-ng
-      ]) ++ [
+      ])
+      ++ [
         dnsutils
         pciutils
 
@@ -46,7 +57,7 @@
         jq
         libqalculate # qalc - CLI calculator
         lsof
-        nixfmt-classic
+        nixfmt
         nix-diff # nix-diff /run/current-system ./result
         nvd # nix diff tool
         rename
@@ -109,17 +120,17 @@
 
       # IP addresses
       pubip = "dig +short myip.opendns.com @resolver1.opendns.com";
-      localip =
-        "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
-      ips =
-        "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
+      localip = "sudo ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'";
+      ips = "sudo ip add | grep -o 'inet6\\? \\(addr:\\)\\?\\s\\?\\(\\(\\([0-9]\\+\\.\\)\\{3\\}[0-9]\\+\\)\\|[a-fA-F0-9:]\\+\\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'";
     };
 
     #---------------------------------------------------------------------
     # Programs
     #---------------------------------------------------------------------
 
-    home.file."kube-ps1.sh" = { source = ../../dotfiles/kube-ps1.sh; };
+    home.file."kube-ps1.sh" = {
+      source = ../../dotfiles/kube-ps1.sh;
+    };
     programs.bash = {
       enable = true;
 
@@ -150,8 +161,7 @@
       config = {
         style = "plain";
         theme = "catppuccin";
-        pager =
-          "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent --quit-if-one-screen --quit-on-intr";
+        pager = "less --RAW-CONTROL-CHARS --ignore-case --hilite-unread --silent --quit-if-one-screen --quit-on-intr";
       };
       themes = {
         catppuccin = {
@@ -188,15 +198,13 @@
     };
 
     # Create approved git signing ssh key list.
-    home.file.".ssh/allowed_signers" =
-      lib.mkIf config.custom.git.signing.enable {
-        text = ''
-          ${config.programs.git.settings.user.email} namespaces="git" ${
-            builtins.readFile
-            (config.home.homeDirectory + "/.ssh/machine_default.pub")
-          }
-        '';
-      };
+    home.file.".ssh/allowed_signers" = lib.mkIf config.custom.git.signing.enable {
+      text = ''
+        ${config.programs.git.settings.user.email} namespaces="git" ${
+          builtins.readFile (config.home.homeDirectory + "/.ssh/machine_default.pub")
+        }
+      '';
+    };
 
     programs.jujutsu = {
       enable = true;
@@ -228,13 +236,16 @@
           behavior = "own";
           backend = "ssh";
           key = "${config.home.homeDirectory}/.ssh/machine_default.pub";
-          backends.ssh.allowed-signers =
-            "${config.home.homeDirectory}/.ssh/allowed_signers";
+          backends.ssh.allowed-signers = "${config.home.homeDirectory}/.ssh/allowed_signers";
         };
 
         aliases = {
           # jj retrunk --source <bookmark|change-id> # rebase bookmark on trunk() (main|master/etc)
-          retrunk = [ "rebase" "-d" "trunk()" ];
+          retrunk = [
+            "rebase"
+            "-d"
+            "trunk()"
+          ];
           # https://github.com/jj-vcs/jj/discussions/5568#discussioncomment-13034102
           tug = [
             "util"
@@ -256,8 +267,8 @@
         revset-aliases = {
           # jj log -r "<revset-alias(<change-id>)"
           "closest_bookmark(to)" = "heads(::to & bookmarks())";
-          "closest_pushable(to)" = ''
-            heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'';
+          "closest_pushable(to)" =
+            ''heads(::to & mutable() & ~description(exact:"") & (~empty() | merges()))'';
         };
 
         template-aliases = {
@@ -277,8 +288,7 @@
         key = "${config.home.homeDirectory}/.ssh/machine_default.pub";
 
       };
-      settings.gpg.ssh.allowedSignersFile =
-        lib.mkIf config.custom.git.signing.enable "~/.ssh/allowed_signers";
+      settings.gpg.ssh.allowedSignersFile = lib.mkIf config.custom.git.signing.enable "~/.ssh/allowed_signers";
 
       settings = {
         alias = {
@@ -329,10 +339,8 @@
           cm = "commit --message";
           d = "diff";
           fup = "fetch upstream";
-          fuppr =
-            "!f() { git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
-          fopr =
-            "!f() { git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
+          fuppr = "!f() { git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
+          fopr = "!f() { git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
           lg = ''
             !f() {
               git log \
@@ -413,7 +421,9 @@
     };
 
     # z - jump rust replacement
-    programs.zoxide = { enable = true; };
+    programs.zoxide = {
+      enable = true;
+    };
 
   };
 }

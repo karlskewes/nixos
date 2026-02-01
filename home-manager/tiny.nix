@@ -1,11 +1,14 @@
-({ config, pkgs, ... }: {
-  imports = [
-    ./user-karl.nix
+(
+  { config, pkgs, ... }:
+  {
+    imports = [
+      ./user-karl.nix
 
-    ./modules
+      ./modules
 
-    ./modules/dev.nix
-  ];
+      ./modules/dev.nix
+    ];
 
-  home.packages = with pkgs; [ tmux ];
-})
+    home.packages = with pkgs; [ tmux ];
+  }
+)

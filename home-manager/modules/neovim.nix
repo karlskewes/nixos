@@ -1,4 +1,10 @@
-{ lib, pkgs, isDarwin, isLinux, ... }:
+{
+  lib,
+  pkgs,
+  isDarwin,
+  isLinux,
+  ...
+}:
 
 {
   xdg.configFile."nvim" = {
@@ -8,7 +14,9 @@
 
   # run `vale sync` after fresh install to create `~/styles` directory.
   # https://github.com/errata-ai/vale/issues/211
-  home.file.".vale.ini" = { source = ../../dotfiles/vale.ini; };
+  home.file.".vale.ini" = {
+    source = ../../dotfiles/vale.ini;
+  };
 
   programs.neovim = {
     enable = true;
@@ -115,8 +123,11 @@
     ];
 
     extraLuaPackages = ps: [ ps.magick ];
-    extraPackages = with pkgs;
-      (lib.optionals isDarwin [ ]) ++ (lib.optionals isLinux [ ]) ++ [
+    extraPackages =
+      with pkgs;
+      (lib.optionals isDarwin [ ])
+      ++ (lib.optionals isLinux [ ])
+      ++ [
         git
 
         chafa # neovim fzf-lua media_files image preview
