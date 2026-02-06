@@ -2,6 +2,11 @@
   description = "NixOS Flake";
 
   inputs = {
+    # .url conventions
+    # github:org/repo => primary branch, e.g: main or master
+    # github:org/repo/custom_branch => custom_branch
+    # github:org/repo?rev=ABC => commit ABC
+
     # use unstable by default for freshest packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
