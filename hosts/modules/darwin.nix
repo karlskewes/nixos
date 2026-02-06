@@ -142,8 +142,27 @@
   };
 
   system.defaults = {
-    dock.autohide = true;
-    dock.mru-spaces = false;
+    dock = {
+      autohide = true;
+      mru-spaces = false;
+      orientation = "left";
+      persistent-apps = [
+        {
+          spacer = {
+            small = true;
+          };
+        }
+        { app = "/Applications/Firefox.app"; }
+        { app = "/Applications/kitty.app"; }
+        {
+          spacer = {
+            small = true;
+          };
+        }
+      ];
+
+    };
+
     finder.AppleShowAllExtensions = true;
     finder.FXPreferredViewStyle = "clmv";
     screencapture.location = "/Users/${config.system.primaryUser}/Pictures/";

@@ -23,7 +23,7 @@
       # #
     ]);
 
-    custom.cosmic.screen = "eDP-1";
+    # custom.cosmic.screen = lib.optionals isLinux "eDP-1";
     custom.git.signing = {
       enable = true;
     };

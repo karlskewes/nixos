@@ -88,21 +88,6 @@
         }
       );
 
-      # Apply Darwin-specific gdb patch
-      gdbDarwinPatch = (
-        self: super:
-        super.lib.optionalAttrs super.stdenv.isDarwin {
-          gdb = super.gdb.overrideAttrs (oldAttrs: {
-            patches = (oldAttrs.patches or [ ]) ++ [
-              ./home-manager/modules/gdb-tic4x-darwin.patch
-            ];
-            configureFlags = (oldAttrs.configureFlags or [ ]) ++ [
-              (super.lib.enableFeature false "werror")
-            ];
-          });
-        }
-      );
-
       # Add tree-sitter v0.26.6 CLI for nvim-treesitter plugin
       treeSitterCLI = (
         self: super: {
@@ -141,9 +126,7 @@
             configRev
             ;
           isDarwin = true;
-          overlays = overlays ++ [
-            gdbDarwinPatch
-          ];
+          overlays = overlays;
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "25.05";
@@ -156,9 +139,7 @@
             configRev
             ;
           isDarwin = true;
-          overlays = overlays ++ [
-            gdbDarwinPatch
-          ];
+          overlays = overlays;
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "25.11";
@@ -171,9 +152,7 @@
             configRev
             ;
           isDarwin = true;
-          overlays = overlays ++ [
-            gdbDarwinPatch
-          ];
+          overlays = overlays;
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "23.11";
