@@ -45,7 +45,12 @@
 
   services.clamav = {
     daemon.enable = true;
+    clamonacc.enable = true;
+    scanner.enable = false; # no need to scan whole filesystem every day (scanner.interval).
+    updater.enable = true;
     daemon.settings = {
+      OnAccessPrevention = true;
+      OnAccessIncludePath = "/home/karl/Downloads";
       # exclude various package caches.
       "ExcludePath" = [
         "/node_modules/"
@@ -62,8 +67,6 @@
       # 26
       MaxDirectoryRecursion = 30;
     };
-    scanner.enable = true;
-    updater.enable = true;
   };
 
   services.tailscale = {
