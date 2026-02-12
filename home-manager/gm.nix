@@ -48,6 +48,7 @@
       with pkgs;
       [
         awscli2
+        aws-iam-authenticator
         az
         gdk
 
