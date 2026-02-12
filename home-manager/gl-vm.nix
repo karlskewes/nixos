@@ -58,6 +58,9 @@
         pre-commit
         jsonnet-bundler
         yq
+
+        claude-code
+        codex
       ]
       ++ (lib.optionals isDarwin [
         slack # not supported on aarch64-linux

@@ -37,7 +37,10 @@
 
     home.packages =
       with pkgs;
-      [ ]
+      [
+        claude-code
+        codex
+      ]
       ++ (lib.optionals isDarwin [
         podman # docker replacement
         podman-compose

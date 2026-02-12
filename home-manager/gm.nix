@@ -58,6 +58,9 @@
         pre-commit
         jsonnet-bundler
         yq
+
+        claude-code
+        codex
       ]
       ++ (lib.optionals isDarwin [
         podman
