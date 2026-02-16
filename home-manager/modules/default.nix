@@ -240,13 +240,38 @@
         };
 
         aliases = {
+          # fetches all remotes: origin, upstream, etc
+          gf = [
+            "git"
+            "fetch"
+          ];
+          gp = [
+            "git"
+            "push"
+          ];
+
+          # rebasing - e.g: `git rebase main`, can run on feature branch/bookmark.
+          rbm = [
+            "rebase"
+            "-d"
+            "main"
+          ];
+          rbms = [
+            "rebase"
+            "-d"
+            "master"
+          ];
+          rbt = [ "retrunk" ];
+
           # jj retrunk --source <bookmark|change-id> # rebase bookmark on trunk() (main|master/etc)
           retrunk = [
             "rebase"
             "-d"
             "trunk()"
           ];
+
           # https://github.com/jj-vcs/jj/discussions/5568#discussioncomment-13034102
+          # move (stale) bookmark to closest change, do before running `jj git push`
           tug = [
             "util"
             "exec"
