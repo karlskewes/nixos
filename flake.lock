@@ -60,11 +60,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1769996383,
-        "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
+        "lastModified": 1772408722,
+        "narHash": "sha256-rHuJtdcOjK7rAHpHphUb1iCvgkU3GpfvicLMwwnfMT0=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
+        "rev": "f20dc5d9b8027381c474144ecabc9034d6a839a3",
         "type": "github"
       },
       "original": {
@@ -159,11 +159,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771805129,
-        "narHash": "sha256-jImy2muXQakAQZMnnuB4hrv3LAs9A4QJ27QRC5t2uyg=",
+        "lastModified": 1772496284,
+        "narHash": "sha256-pDGgYqXFU5cY1Jn11R7N/Q6DFazg6CQq8KDlqvyl/XE=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "22b5739bd49f70630d038d727e3336a8ab2968aa",
+        "rev": "fc9e6626baffb5b577810269713aedc37e95ef60",
         "type": "github"
       },
       "original": {
@@ -175,11 +175,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1771804826,
-        "narHash": "sha256-WuhN3URlw/F1qAgL4pbYqM1Q0GU/N5RfLaluamI7x/A=",
+        "lastModified": 1772473891,
+        "narHash": "sha256-E/0dAqFsUm4DggmHBl8rfI67yK227RXpzbEkZ7729bM=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "14fe370564367ef4d600d3179e15fc269b0183c5",
+        "rev": "a8361c3afc5b9281814e9f16a9d4291e095b38fa",
         "type": "github"
       },
       "original": {
@@ -262,7 +262,8 @@
         "nix-darwin": "nix-darwin",
         "nix-extra": "nix-extra",
         "nixpkgs": "nixpkgs",
-        "titdb": "titdb"
+        "titdb": "titdb",
+        "tree-sitter": "tree-sitter"
       }
     },
     "titdb": {
@@ -284,6 +285,27 @@
         "owner": "luqmanishere",
         "repo": "trackpad-is-too-damn-big-flake",
         "rev": "9712b426311195c8d3f0359c6086e1d651782d2e",
+        "type": "github"
+      }
+    },
+    "tree-sitter": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1772414264,
+        "narHash": "sha256-5XD4NCF0iM5+edwy44Q7k7yfsGUAqnytnIqM1qA5mLs=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter",
+        "rev": "c802b44dff608b86d95e5ea3f9c415aebaafc1de",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "ref": "release-0.26",
+        "repo": "tree-sitter",
         "type": "github"
       }
     }

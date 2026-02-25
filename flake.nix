@@ -41,9 +41,8 @@
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-      # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
-      # inputs.nixpkgs.url =
-      # "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
+      # Override tree-sitter to use v0.26.6 from our tree-sitter input
+      inputs.neovim-dependencies.inputs.treesitter.follows = "tree-sitter";
     };
 
     kolide-launcher = {
@@ -53,6 +52,12 @@
 
     nix-extra.url = "path:/home/karl/src/nix-extra";
     nix-extra.flake = false;
+
+    tree-sitter = {
+      url = "github:tree-sitter/tree-sitter/release-0.26";
+      # tree-sitter has its own flake, use it!
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -98,11 +103,19 @@
         }
       );
 
+      # Add tree-sitter v0.26.6 CLI for nvim-treesitter plugin
+      treeSitterCLI = (
+        self: super: {
+          tree-sitter-latest = inputs.tree-sitter.packages.${super.system}.cli;
+        }
+      );
+
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [
         inputs.neovim-nightly-overlay.overlays.default
         extraNeovimPlugins
         gdbDarwinPatch
+        treeSitterCLI
       ];
 
       # Function to render out our hosts
