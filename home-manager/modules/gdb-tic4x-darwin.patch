@@ -1,0 +1,37 @@
+From dece3865c2d6420e8193598a33e8a9cd71598547 Mon Sep 17 00:00:00 2001
+From: Alan Modra <amodra@gmail.com>
+Date: Wed, 1 Oct 2025 13:29:27 +0930
+Subject: [PATCH] Remove tic4x_scan always false condition
+
+The numeric check was always false, and correcting it to match the
+comment causes lots of testsuite failures.  "tic4x" is a valid string.
+
+    * cpu-tic4x.c (tic4x_scan): Remove always false condition.
+    Fix comment.
+---
+ bfd/cpu-tic4x.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/bfd/cpu-tic4x.c b/bfd/cpu-tic4x.c
+index 0cfacf3c0eb..e154b8fa3f0 100644
+--- a/bfd/cpu-tic4x.c
++++ b/bfd/cpu-tic4x.c
+@@ -28,15 +28,12 @@ static bool
+ tic4x_scan (const struct bfd_arch_info *info,
+         const char *string)
+ {
+-  /* Allow strings of form [ti][Cc][34][0-9], let's not be too picky
++  /* Allow strings of form [ti][Cc][34], let's not be too picky
+      about strange numbered machines in C3x or C4x series.  */
+   if (string[0] == 't' && string[1] == 'i')
+     string += 2;
+   if (*string == 'C' || *string == 'c')
+     string++;
+-  if (string[1] < '0' && string[1] > '9')
+-    return false;
+-
+   if (*string == '3')
+     return (info->mach == bfd_mach_tic3x);
+   else if (*string == '4')
+--
+2.43.7

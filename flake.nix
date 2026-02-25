@@ -83,10 +83,26 @@
         }
       );
 
+      # Apply Darwin-specific gdb patch
+      gdbDarwinPatch = (
+        self: super:
+        super.lib.optionalAttrs super.stdenv.isDarwin {
+          gdb = super.gdb.overrideAttrs (oldAttrs: {
+            patches = (oldAttrs.patches or [ ]) ++ [
+              ./home-manager/modules/gdb-tic4x-darwin.patch
+            ];
+            configureFlags = (oldAttrs.configureFlags or [ ]) ++ [
+              (super.lib.enableFeature false "werror")
+            ];
+          });
+        }
+      );
+
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [
         inputs.neovim-nightly-overlay.overlays.default
         extraNeovimPlugins
+        gdbDarwinPatch
       ];
 
       # Function to render out our hosts
