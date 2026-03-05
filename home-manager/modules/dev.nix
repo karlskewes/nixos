@@ -45,6 +45,7 @@
       nodejs_22 # neovim # nodejs_24 constantly builds
       # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
+      sccache # Mozilla's shared compilation cache. ~/.cache/sccache
       cargo-audit
       cargo-watch
       clang
@@ -129,4 +130,10 @@
     # export GOPRIVATE=github.com/karlskewes/*
     env.GOPRIVATE = [ "github.com/karlskewes/*" ];
   };
+
+  # Tell rust to use sccache, default 10GB to ~/.cache/sccache
+  home.file.".cargo/config.toml".text = ''
+    [build]
+    rustc-wrapper = "${pkgs.sccache}/bin/sccache"
+  '';
 }
