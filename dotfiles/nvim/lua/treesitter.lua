@@ -6,10 +6,16 @@ require('treesitter-context').setup({
 })
 
 -- See `:help nvim-treesitter`
+
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
+  -- Get nix-provided parser directory
+  local nix_config = require('treesitter-nix-config')
+
   require('nvim-treesitter.config').setup({
-    auto_install = false, -- default
+    -- Directory to install parsers and queries to (automatically prepended to runtimepath)
+    install_dir = nix_config.parser_install_dir,
+    auto_install = false, -- parsers installed via nix
     highlight = { enable = true },
     indent = { enable = true },
     incremental_selection = {
