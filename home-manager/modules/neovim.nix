@@ -49,10 +49,19 @@ let
     p.zig
   ]);
 
-  # Combine all parser dependencies into a single directory
+  # Combine all parser dependencies plus query-only packages
   treesitter-parsers-combined = pkgs.symlinkJoin {
     name = "treesitter-parsers";
-    paths = treesitter-parsers.dependencies;
+    paths =
+      treesitter-parsers.dependencies
+      ++ (with pkgs.vimPlugins.nvim-treesitter.passthru.queries; [
+        ecma
+        hcl
+        html_tags
+        jinja_inline
+        jsx
+        tsv
+      ]);
   };
 in
 {

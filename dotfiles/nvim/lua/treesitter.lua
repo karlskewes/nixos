@@ -7,18 +7,39 @@ require('treesitter-context').setup({
 
 -- See `:help nvim-treesitter`
 
--- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
-vim.defer_fn(function()
-  -- Get nix-provided parser directory
-  local nix_config = require('treesitter-nix-config')
+-- Get nix-provided parser directory
+local nix_config = require('treesitter-nix-config')
 
-  require('nvim-treesitter.config').setup({
-    -- Directory to install parsers and queries to (automatically prepended to runtimepath)
-    install_dir = nix_config.parser_install_dir,
-    auto_install = false, -- parsers installed via nix
-    highlight = { enable = true },
-    indent = { enable = true },
-    incremental_selection = {
+-- Auto-enable treesitter highlighting for all filetypes
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    local buf, filetype = args.buf, args.match
+
+    -- Get the treesitter language for this filetype
+    local language = vim.treesitter.language.get_lang(filetype)
+    if not language then
+      return
+    end
+
+    -- Check if parser exists and load it
+    if not pcall(vim.treesitter.language.add, language) then
+      return
+    end
+
+    -- Enable syntax highlighting and other treesitter features
+    vim.treesitter.start(buf, language)
+
+    -- Enable treesitter based indentation
+    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  end,
+})
+
+-- Configure nvim-treesitter
+require('nvim-treesitter.config').setup({
+  -- Directory to install parsers and queries to (automatically prepended to runtimepath)
+  install_dir = nix_config.parser_install_dir,
+  auto_install = false, -- parsers installed via nix
+  incremental_selection = {
       enable = true,
       keymaps = {
         init_selection = '<c-space>',
@@ -63,4 +84,3 @@ vim.defer_fn(function()
       },
     },
   })
-end, 0)
