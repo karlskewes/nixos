@@ -1,12 +1,14 @@
 ---@type vim.lsp.Config
 local config = {
-  filetypes = { 'opentofu', 'opentofu-vars', 'terraform', 'terraform-vars' },
+  -- Use standard terraform filetypes
+  filetypes = { 'terraform', 'terraform-vars' },
+  -- Tell LSP server to treat terraform files as opentofu
   get_language_id = function(_, filetype)
     if filetype == 'terraform' then
-      return 'opentofu'
+      return 'terraform'
     end
     if filetype == 'terraform-vars' then
-      return 'opentofu-vars'
+      return 'terraform-vars'
     end
     return filetype
   end,

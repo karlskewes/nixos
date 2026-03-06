@@ -1,6 +1,15 @@
 ---@type vim.lsp.Config
 local config = {
-  filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
+  filetypes = {
+    'templ',
+    'astro',
+    'html',
+    'css',
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+  },
   settings = {
     tailwindCSS = {
       includeLanguages = {
