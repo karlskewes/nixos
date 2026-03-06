@@ -15,6 +15,12 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function(args)
     local buf, filetype = args.buf, args.match
 
+    -- Skip special buffer types that shouldn't have treesitter
+    local buftype = vim.bo[buf].buftype
+    if buftype ~= '' then
+      return
+    end
+
     -- Get the treesitter language for this filetype
     local language = vim.treesitter.language.get_lang(filetype)
     if not language then
@@ -26,8 +32,11 @@ vim.api.nvim_create_autocmd('FileType', {
       return
     end
 
-    -- Enable syntax highlighting and other treesitter features
-    vim.treesitter.start(buf, language)
+    -- Try to enable syntax highlighting (may fail if parser not available)
+    local ok = pcall(vim.treesitter.start, buf, language)
+    if not ok then
+      return
+    end
 
     -- Enable treesitter based indentation
     vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
