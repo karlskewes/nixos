@@ -62,7 +62,6 @@
       ++ (lib.optionals isLinux [
         mesa-demos
         vulkan-tools # vulkan-info
-        helvum # pipewire patch bay gui
 
         ente-auth
         kdePackages.gwenview # image viewer & editor (crop, resize)

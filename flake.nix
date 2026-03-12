@@ -106,7 +106,7 @@
       # Add tree-sitter v0.26.6 CLI for nvim-treesitter plugin
       treeSitterCLI = (
         self: super: {
-          tree-sitter-latest = inputs.tree-sitter.packages.${super.system}.cli;
+          tree-sitter-latest = inputs.tree-sitter.packages.${super.stdenv.hostPlatform.system}.cli;
         }
       );
 
