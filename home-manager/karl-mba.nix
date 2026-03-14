@@ -54,6 +54,33 @@
         # calibre # 7.26.0 broken errors during test_piper, re-add when fixed.
       ]);
 
+    # TODO: validate this for every Cosmic system.
+    home.file.".config/cosmic/com.system76.CosmicSettings.WindowRules/v1/workspace_assignment_custom_nixos" =
+      {
+        text = ''
+          [
+            (
+              enabled: true,
+              appid: ".*",
+              title: "kitty",
+              workspace_id: 1
+            ),
+            (
+              enabled: true,
+              appid: ".*",
+              title: "firefox",
+              workspace_id: 2
+            ),
+            (
+              enabled: true,
+              appid: ".*",
+              title: "Halloy",
+              workspace_id: 3
+            )
+          ]
+        '';
+      };
+
     # https://github.com/catppuccin/halloy/blob/main/themes/catppuccin-mocha.toml
     home.file.".config/halloy/themes/catppuccin-mocha.toml" = {
       text = ''

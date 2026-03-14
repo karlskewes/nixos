@@ -110,6 +110,118 @@
         }
       );
 
+      # Override example-app, build once to get src.hash, then repeat for cargoHash:
+      #   nix build .#nixosConfigurations.$HOSTNAME.config.system.build.toplevel
+      # exampleAppOverlay = final: prev: {
+      #   example-app = prev.example-app.overrideAttrs (old: {
+      #     src = prev.fetchFromGitHub {
+      #       owner = "your-github-user";
+      #       repo = "example-app";
+      #       rev = "my-branch";
+      #       hash = prev.lib.fakeSha256;
+      #     };
+      #
+      #     cargoHash = prev.lib.fakeSha256;
+      #   });
+      # };
+
+      # Cosmic DE Window Assignment Development, override package set so dependencies managed together.
+      # $ nix eval .#nixosConfigurations.karl-mba.pkgs.cosmic-comp.src
+      # /home/karl/src/github.com/karlskewes/cosmic-comp
+      # Validate version
+      # $ nix eval .#nixosConfigurations.karl-mba.pkgs.cosmic-settings-daemon.version
+      # "local-dev"
+      #
+      # cosmicOverlay2 =
+      #   final: prev:
+      #   let
+      #     overrideCosmic =
+      #       pname: pkg: cargoDepsHash:
+      #       let
+      #         repoPath = "/home/karl/src/github.com/karlskewes/${pname}";
+      #       in
+      #       if builtins.pathExists repoPath then
+      #         pkg.overrideAttrs (_: {
+      #           src = prev.lib.cleanSource repoPath;
+      #           cargoDeps = prev.rustPlatform.fetchCargoVendor {
+      #             src = prev.lib.cleanSource repoPath;
+      #             hash = cargoDepsHash; # use "" for first build.
+      #           };
+      #           cargoHash = prev.lib.fakeSha256;
+      #           version = "local-dev";
+      #         })
+      #       else
+      #         pkg;
+      #   in
+      #   {
+      #     cosmic-comp =
+      #       overrideCosmic "cosmic-comp" prev.cosmic-comp
+      #         "sha256-rXaKLTNtQjIgGeO9nHHA5JjhcLqdO8xwhVjxd43IpKo=";
+      #     cosmic-settings-daemon =
+      #       overrideCosmic "cosmic-settings-daemon" prev.cosmic-settings-daemon
+      #         "sha256-I4pzDq3NoKQsiadiwgA1CIfFE2Sfo+hbUUlrTjFG5x0=";
+      #   };
+
+      # cosmicOverlay = final: prev: {
+      #   cosmic-comp = prev.cosmic-comp.overrideAttrs (_: {
+      #     src = prev.fetchFromGitHub {
+      #       owner = "karlskewes";
+      #       repo = "cosmic-comp";
+      #       rev = "workspace-pinning"; # commit SHA or branch
+      #       # hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # fake to get started
+      #       hash = "sha256-4RDUW6vfHOHfQolAF70C0mYxU0/eChghvE8L6YF9bAU=";
+      #     };
+      #     cargoHash = prev.lib.fakeSha256;
+      #     # cargoHash = "";
+      #     version = "workspace-pinning";
+      #   });
+      #   cosmic-settings-daemon = prev.cosmic-settings-daemon.overrideAttrs (_: {
+      #     src = prev.fetchFromGitHub {
+      #       owner = "karlskewes";
+      #       repo = "cosmic-settings-daemon";
+      #       rev = "workspace-pinning"; # commit SHA or branch
+      #       # hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      #       hash = "sha256-mofV6VFG7w3JfriAOpY8FQAw68C5uQZErWx2K6GHMaY=";
+      #     };
+      #     # cargoHash = prev.lib.fakeSha256;
+      #     cargoHash = "";
+      #     version = "workspace-pinning";
+      #   });
+      # };
+
+      githubOrgPath = "/home/karl/src/github.com/karlskewes";
+
+      # NOTE: dependencies between overridden applications defined in Cargo.toml must be
+      # git and not local paths due to nix store offline mode plus potentially other issues.
+      # push changes to git, ensure Cargo.lock updated and do `hash = ""; hash = "sha-real-thing";` loop.
+      cosmicOverlay = final: prev: {
+        cosmic-comp = prev.cosmic-comp.overrideAttrs (_: {
+          doCheck = false; # skip checks after build whilst iterating.
+          doInstallCheck = false;
+          src = prev.lib.cleanSource "${githubOrgPath}/cosmic-comp";
+          cargoDeps = prev.rustPlatform.fetchCargoVendor {
+            src = prev.lib.cleanSource "${githubOrgPath}/cosmic-comp";
+            hash = "sha256-JYL571a5VPwO694sp4FY7PROumE58epRO8SDTcJjlD0=";
+            # hash = ""; # set whenever source changes to trigger fresh build.
+          };
+          cargoHash = prev.lib.fakeSha256;
+          version = "local-dev";
+        });
+        cosmic-settings-daemon = prev.cosmic-settings-daemon.overrideAttrs (_: {
+          doCheck = false; # skip checks after build whilst iterating.
+          doInstallCheck = false;
+          src = prev.lib.cleanSource "${githubOrgPath}/cosmic-settings-daemon";
+
+          cargoDeps = prev.rustPlatform.fetchCargoVendor {
+            src = prev.lib.cleanSource "${githubOrgPath}/cosmic-settings-daemon";
+            hash = "sha256-I4pzDq3NoKQsiadiwgA1CIfFE2Sfo+hbUUlrTjFG5x0=";
+            # hash = ""; # set whenever source changes to trigger fresh build.
+          };
+          cargoHash = prev.lib.fakeSha256;
+          version = "local-dev";
+        });
+      };
+
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [
         inputs.neovim-nightly-overlay.overlays.default
@@ -214,6 +326,7 @@
             apple-silicon-support.overlays.apple-silicon-overlay
             inputs.neovim-nightly-overlay.overlays.default
             extraNeovimPlugins
+            # cosmicOverlay # TODO: enable
           ];
         };
 
