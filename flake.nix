@@ -112,6 +112,7 @@
 
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [
+        (import ./cosmic-overlay.nix)
         # inputs.neovim-nightly-overlay.overlays.default
         extraNeovimPlugins
         treeSitterCLI
