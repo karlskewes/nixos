@@ -107,6 +107,17 @@
       enable = true;
       settings = {
         theme = "catppuccin-mocha";
+        actions.buffer = {
+          click_channel_name = "replace-pane";
+          click_highlight = "replace-pane";
+          click_username = "replace-pane";
+          local = "replace-pane";
+          message_channel = "replace-pane";
+          message_user = "replace-pane";
+        };
+        actions.sidebar = {
+          buffer = "replace-pane";
+        };
         buffer.channel.topic = {
           enabled = true;
         };
@@ -124,6 +135,8 @@
           topic.enabled = false;
         };
         font.size = 16; # default 13 bit small.
+        # consider allow list https://halloy.chat/configuration/preview
+        preview.enabled = true;
         servers.oftc = {
           channels = [
             "#asahi"
@@ -143,18 +156,6 @@
           port = 16667;
           use_tls = false;
         };
-        actions.buffer = {
-          click_channel_name = "replace-pane";
-          click_highlight = "replace-pane";
-          click_username = "replace-pane";
-          local = "replace-pane";
-          message_channel = "replace-pane";
-          message_user = "replace-pane";
-        };
-        actions.sidebar = {
-          buffer = "replace-pane";
-        };
-
       };
     };
   }
