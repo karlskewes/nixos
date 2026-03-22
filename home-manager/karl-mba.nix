@@ -23,6 +23,7 @@
       # #
     ]);
 
+    custom.cosmic.screen = "eDP-1";
     custom.git.signing = {
       enable = true;
     };

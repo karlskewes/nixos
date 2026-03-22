@@ -32,6 +32,7 @@
       # #
     ]);
 
+    custom.cosmic.screen = "HDMI-A-1";
     custom.git.signing = {
       enable = true;
     };

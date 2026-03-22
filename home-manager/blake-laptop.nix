@@ -10,6 +10,7 @@
       ./modules/cosmic.nix
     ];
 
+    custom.cosmic.screen = "eDP-1";
     custom.firefox = {
       enable = true;
       users = [
