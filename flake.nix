@@ -114,7 +114,6 @@
       overlays = [
         inputs.neovim-nightly-overlay.overlays.default
         extraNeovimPlugins
-        gdbDarwinPatch
         treeSitterCLI
       ];
 
@@ -150,10 +149,12 @@
             nixpkgs
             nix-darwin
             home-manager
-            overlays
             configRev
             ;
           isDarwin = true;
+          overlays = overlays ++ [
+            gdbDarwinPatch
+          ];
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "25.05";
@@ -163,10 +164,12 @@
             nixpkgs
             nix-darwin
             home-manager
-            overlays
             configRev
             ;
           isDarwin = true;
+          overlays = overlays ++ [
+            gdbDarwinPatch
+          ];
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "25.11";
@@ -176,10 +179,12 @@
             nixpkgs
             nix-darwin
             home-manager
-            overlays
             configRev
             ;
           isDarwin = true;
+          overlays = overlays ++ [
+            gdbDarwinPatch
+          ];
           user = "karlskewes";
           system = "aarch64-darwin";
           stateVersion = "23.11";
@@ -210,10 +215,8 @@
           system = "aarch64-linux";
           stateVersion = "23.11";
           extraModules = appleModules;
-          overlays = [
+          overlays = overlays ++ [
             apple-silicon-support.overlays.apple-silicon-overlay
-            inputs.neovim-nightly-overlay.overlays.default
-            extraNeovimPlugins
           ];
         };
 
@@ -240,10 +243,8 @@
           system = "aarch64-linux";
           stateVersion = "25.11";
           extraModules = appleModules ++ [ kolide-launcher.nixosModules.kolide-launcher ];
-          overlays = [
+          overlays = overlays ++ [
             apple-silicon-support.overlays.apple-silicon-overlay
-            inputs.neovim-nightly-overlay.overlays.default
-            extraNeovimPlugins
           ];
         };
 

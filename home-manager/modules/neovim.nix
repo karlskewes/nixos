@@ -76,6 +76,10 @@ in
     source = ../../dotfiles/vale.ini;
   };
 
+  home.packages = with pkgs; [
+    tree-sitter-latest # v0.26.6 - required by nvim-treesitter plugin
+  ];
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;

@@ -61,7 +61,6 @@
 
         claude-code
         codex
-        tree-sitter-latest # v0.26.6 - required by nvim-treesitter plugin
       ]
       ++ (lib.optionals isDarwin [
         podman
