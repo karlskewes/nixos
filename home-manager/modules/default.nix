@@ -178,9 +178,9 @@
     };
 
     programs.delta = {
-      enable = false;
-      enableGitIntegration = false;
-      enableJujutsuIntegration = false;
+      enable = true;
+      enableGitIntegration = true;
+      enableJujutsuIntegration = true;
       # for theme will probably need to do this: https://github.com/catppuccin/nix
       # git -c delta.line-numbers=true show
     };
