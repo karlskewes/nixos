@@ -127,18 +127,6 @@
       extraModules = [ "${nix-extra.outPath}/nixos.nix" ];
       appleModules = extraModules ++ [
         apple-silicon-support.nixosModules.apple-silicon-support
-        titdb.nixosModules.default
-        {
-          services.titdb = {
-            enable = true;
-            # udevadm info /dev/input/event* | grep -E '(DEVNAME|TOUCHPAD)'
-            # Use `by-path/` instead of `/dev/input/event#` to consistently target the correct device
-            # as `event#` numbers can change.
-            # $ ls /dev/input/by-path/plat form-23510c000.spi-cs-0-event-mouse -la
-            # lrwxrwxrwx 1 root root 9 Oct 27 08:43 /dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse -> ../event2
-            device = "/dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse";
-          };
-        }
       ];
 
     in
@@ -214,7 +202,20 @@
             ;
           system = "aarch64-linux";
           stateVersion = "23.11";
-          extraModules = appleModules;
+          extraModules = appleModules ++ [
+            titdb.nixosModules.default
+            {
+              services.titdb = {
+                enable = true;
+                # udevadm info /dev/input/event* | grep -E '(DEVNAME|TOUCHPAD)'
+                # Use `by-path/` instead of `/dev/input/event#` to consistently target the correct device
+                # as `event#` numbers can change.
+                # $ ls /dev/input/by-path/plat form-23510c000.spi-cs-0-event-mouse -la
+                # lrwxrwxrwx 1 root root 9 Oct 27 08:43 /dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse -> ../event2
+                device = "/dev/input/by-path/platform-23510c000.spi-cs-0-event-mouse";
+              };
+            }
+          ];
           overlays = overlays ++ [
             apple-silicon-support.overlays.apple-silicon-overlay
           ];
