@@ -247,11 +247,9 @@
             "git"
             "fetch"
           ];
-          # alternatively set git.push-new-bookmarks but this way we can do either and most of the time using the alias.
           gp = [
             "git"
             "push"
-            "--allow-new"
           ];
 
           # rebasing - e.g: `git rebase main`, can run on feature branch/bookmark.
