@@ -104,6 +104,10 @@
           Cryptomining = true;
           Fingerprinting = true;
         };
+        Homepage = {
+          StartPage = "previous-session"; # browser.startup.page = 3; ?
+        };
+        OfferToSaveLogins = false; # using other password manager
         Preferences = {
           # `profiles.<name>.settings` for all profiles
           "browser.search.region" = "AU";

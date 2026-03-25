@@ -215,12 +215,14 @@
         # };
 
         # https://github.com/jj-vcs/jj/blob/v0.36.0/docs/revsets.md#string-patterns
-        git.remotes = {
+        remotes = {
           origin = {
-            auto-track-bookmarks = "glob:'{main,master,trunk,karlskewes/*}'";
+            auto-track-bookmarks = "main | master | karlskewes*";
+            auto-track-created-bookmarks = "*";
           };
           upstream = {
-            auto-track-bookmarks = "glob:'{main,master,trunk,karlskewes/*}'";
+            auto-track-bookmarks = "main | master | karlskewes*";
+            auto-track-created-bookmarks = "*";
           };
         };
 
