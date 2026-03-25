@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   currentSystem,
@@ -145,6 +146,7 @@
     dock.mru-spaces = false;
     finder.AppleShowAllExtensions = true;
     finder.FXPreferredViewStyle = "clmv";
+    screencapture.location = "/Users/${config.system.primaryUser}/Pictures/";
   };
 
   system.startup.chime = false;
