@@ -137,7 +137,7 @@
         };
         font.size = 16; # default 13 bit small.
         # consider allow list https://halloy.chat/configuration/preview
-        preview.enabled = true;
+        preview.enabled = false;
         servers.oftc = {
           channels = [
             "#asahi"
