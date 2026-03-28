@@ -223,6 +223,7 @@
       extraConfig = ''
         map ctrl+shift+enter new_window_with_cwd
         tab_title_template "{tab.active_wd.split('/')[-1]}: {title}"
+        scrollback_pager nvim --cmd 'set eventignore=FileType' +'nnoremap q ZQ' +'call nvim_open_term(0, {})' +'set nomodified nolist' +'$' -
       '';
     };
 

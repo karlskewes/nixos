@@ -1,6 +1,3 @@
--- Add indentation guides even on blank lines
-require('ibl').setup()
-
 --  'mfussenegger/nvim-lint',
 -- require('lint').linters_by_ft = { markdown = { 'vale' } }
 -- vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
@@ -204,23 +201,3 @@ wk.add({
   { '<leader>v', group = '[V]isits' },
   { '<leader>v_', hidden = true },
 })
-
--- Set lualine as statusline
--- See `:help lualine.txt`
-local lualine_opts = {
-  options = {
-    theme = 'catppuccin',
-    component_separators = '|',
-    section_separators = '',
-  },
-  sections = {
-    lualine_a = { 'mode' },
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
-    lualine_c = { 'filename' },
-    lualine_x = {},
-    lualine_y = { 'progress' },
-    lualine_z = { 'location' },
-  },
-}
-
-require('lualine').setup(lualine_opts)

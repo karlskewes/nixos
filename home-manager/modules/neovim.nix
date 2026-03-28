@@ -103,9 +103,11 @@ in
       mini-diff
       mini-git
       mini-icons
+      mini-indentscope
       mini-pick
       mini-extra # pickers for mini-pick
       mini-splitjoin
+      mini-statusline
       mini-visits
 
       # lsp
@@ -137,7 +139,6 @@ in
       conform-nvim
       image-nvim
       indent-blankline-nvim
-      lualine-nvim
       oil-nvim
       trouble-nvim
       vim-sleuth

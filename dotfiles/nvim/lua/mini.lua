@@ -34,6 +34,11 @@ vim.keymap.set('n', '<leader>gr', '<CMD>Git reset %<CR>', { desc = '[G]it [r]ese
 vim.keymap.set('n', '<leader>gs', '<CMD>Git status<CR>', { desc = '[G]it [s]tatus' })
 
 require('mini.icons').setup()
+require('mini.indentscope').setup({
+  draw = {
+    animation = require('mini.indentscope').gen_animation.none(),
+  },
+})
 -- Send all to quickfix
 -- <query> (e.g: files with `after/`)
 -- <C-a> to select all (mark_all)
@@ -42,6 +47,7 @@ require('mini.icons').setup()
 require('mini.pick').setup()
 require('mini.extra').setup() -- extra pickers for mini.pick
 require('mini.splitjoin').setup()
+require('mini.statusline').setup()
 
 -- :MiniVisits
 -- find_git_root finds the git root directory starting with the provided file and

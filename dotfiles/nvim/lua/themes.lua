@@ -6,14 +6,12 @@ require('catppuccin').setup({
     dap_ui = true,
     fidget = true,
     fzf = true,
-    indent_blankline = {
-      enabled = true,
-      scope_color = 'lavender', -- catppuccin color (eg. `lavender`) Default: text
-      colored_indent_levels = false,
-    },
     lsp_trouble = true,
     markdown = true,
-    mini = true,
+    mini = {
+      enabled = true,
+      indentscope_color = 'overlay0',
+    },
     native_lsp = {
       enabled = true,
       virtual_text = {
