@@ -64,33 +64,7 @@
           Terminal: "kitty",
       }
     '';
-    # TODO: remove _nixos
-    home.file.".config/cosmic/com.system76.CosmicSettings.WindowRules/v1/workspace_assignment_custom_nixos".text =
-      ''
-        [
-          (
-            enabled: true,
-            appid: ".*",
-            title: "kitty",
-            workspace_id: "terminal",
-          ),
-          (
-            enabled: true,
-            appid: ".*",
-            title: "firefox",
-            workspace_id: "browser",
-          ),
-          (
-            enabled: true,
-            appid: ".*",
-            title: "Halloy",
-            workspace_id: "chat"
-          )
-        ]
-      '';
-
-    # TODO: remove _nixos
-    home.file.".config/cosmic/com.system76.CosmicComp/v1/pinned_workspaces_nixos".text = ''
+    home.file.".config/cosmic/com.system76.CosmicComp/v1/pinned_workspaces".text = ''
       [
         (
           output: (
@@ -118,6 +92,29 @@
         ),
       ]
     '';
+    home.file.".config/cosmic/com.system76.CosmicSettings.WindowRules/v1/workspace_assignment_custom".text =
+      ''
+        [
+          (
+            enabled: true,
+            appid: ".*",
+            title: "kitty",
+            workspace_id: "terminal",
+          ),
+          (
+            enabled: true,
+            appid: ".*",
+            title: "firefox",
+            workspace_id: "browser",
+          ),
+          (
+            enabled: true,
+            appid: ".*",
+            title: "Halloy",
+            workspace_id: "chat"
+          )
+        ]
+      '';
 
   };
 }
