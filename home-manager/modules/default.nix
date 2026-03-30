@@ -272,11 +272,39 @@
             "trunk()"
           ];
 
-          # jj git remote add upstream ${1} # <repo>
-          rau = [
-            "remote"
-            "add"
-            "upstream"
+          # jj grau $1 $2 # <branch> <repo>
+          # https://docs.jj-vcs.dev/latest/guides/multiple-remotes/#contributing-upstream-with-a-github-style-fork
+          grau = [
+            "util"
+            "exec"
+            "--"
+            "bash"
+            "-c"
+            ''
+              set -euo pipefail
+
+              # Add the remote
+              jj git remote add upstream "$2"
+
+              # Fetch from both remotes by default
+              jj config set --repo git.fetch '["upstream", "origin"]'
+
+              # Push only to the fork by default
+              jj config set --repo git.push origin
+
+              # Track both remote bookmarks
+              jj bookmark track "$1"
+
+              # The upstream repository defines the trunk
+              jj config set --repo 'revset-aliases."trunk()"' "$1"@upstream
+
+              # Show config
+              jj config list --repo
+
+              # Fetch upstream
+              jj git fetch
+            ''
+            ""
           ];
 
           # https://github.com/jj-vcs/jj/discussions/5568#discussioncomment-13034102

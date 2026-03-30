@@ -29,16 +29,11 @@ local lsp_on_attach = function(args)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = '[G]oto [d]efintion' })
   vim.keymap.set(
     'n',
-    'gI',
-    '<Cmd>Pick lsp scope="implementation"<CR>',
-    { buffer = bufnr, desc = '[G]oto [I]mplementation - Default: [gri]' }
-  )
-  vim.keymap.set(
-    'n',
     'gl',
     vim.diagnostic.open_float,
     { buffer = bufnr, desc = '[G]oto [L]ine diagnostic' }
   )
+  -- default keymap sends list to quickfix, below sends to Mini Pick which has preview (<tab>).
   vim.keymap.set(
     'n',
     '<leader>la',
@@ -63,12 +58,6 @@ local lsp_on_attach = function(args)
     vim.diagnostic.setloclist,
     { buffer = bufnr, desc = '[L]SP [D]iagnostics list' }
   )
-  vim.keymap.set(
-    'n',
-    '<leader>lt',
-    '<Cmd>Pick lsp scope="type_definition"<CR>',
-    { buffer = bufnr, desc = '[L]SP Type [D]efinition' }
-  )
   vim.keymap.set('n', '<leader>lh', function()
     local enabled = vim.lsp.inlay_hint.is_enabled()
     vim.lsp.inlay_hint.enable(not enabled)
@@ -77,19 +66,33 @@ local lsp_on_attach = function(args)
     desc = '[L]SP Inlay [H]ints Toggle',
   })
   vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format, { buffer = bufnr, desc = '[L]SP [F]ormat' })
-  vim.keymap.set('n', '<leader>li', '<Cmd>LspInfo<CR>', { buffer = bufnr, desc = '[L]SP [I]nfo' })
+  vim.keymap.set(
+    'n',
+    '<leader>li',
+    '<Cmd>checkhealth lsp<CR>',
+    { buffer = bufnr, desc = '[L]SP [I]nfo' }
+  )
+  -- default keymap sends list to quickfix, below sends to Mini Pick which has preview (<tab>).
+  vim.keymap.set(
+    'n',
+    '<leader>lI',
+    '<Cmd>Pick lsp scope="implementation"<CR>',
+    { buffer = bufnr, desc = '[G]oto [I]mplementation - Default: [gri]' }
+  )
   vim.keymap.set(
     'n',
     '<leader>ll',
     vim.diagnostic.open_float,
     { buffer = bufnr, desc = '[L]SP [L]ine Diagnostics' }
   )
+  -- default keymap sends list to quickfix, below sends to Mini Pick which has preview (<tab>).
   vim.keymap.set(
     'n',
     '<leader>lr',
     vim.lsp.buf.rename,
     { buffer = bufnr, desc = '[L]SP [R]ename - Default: [grn]' }
   )
+  -- default keymap sends list to quickfix, below sends to Mini Pick which has preview (<tab>).
   vim.keymap.set(
     'n',
     '<leader>lR',
@@ -101,7 +104,7 @@ local lsp_on_attach = function(args)
     '<leader>ls',
     -- TODO: methods in Go can get truncated, width based on vertical split in terminal.
     '<Cmd>Pick lsp scope="document_symbol"<CR>',
-    { buffer = bufnr, desc = '[L]SP Document [S]ymbols - Default: [g0]' }
+    { buffer = bufnr, desc = '[L]SP Document [S]ymbols' }
   )
   vim.keymap.set(
     'n',
