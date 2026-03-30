@@ -59,6 +59,8 @@
 
     home.file.".config/cosmic/com.system76.CosmicComp/v1/autotile".text = "true";
     home.file.".config/cosmic/com.system76.CosmicComp/v1/autotile_behavior".text = "PerWorkspace";
+    # disable dock, use launcher or keyboard shortcuts instead.
+    home.file.".config/cosmic/com.system76.CosmicPanel.Panel/v1/autohide".text = "None";
     home.file.".config/cosmic/com.system76.CosmicSettings.Shortcuts/v1/system_actions".text = ''
       {
           Terminal: "kitty",
