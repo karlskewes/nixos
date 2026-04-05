@@ -112,7 +112,7 @@
 
       # Overlays is the list of overlays we want to apply from flake inputs.
       overlays = [
-        inputs.neovim-nightly-overlay.overlays.default
+        # inputs.neovim-nightly-overlay.overlays.default
         extraNeovimPlugins
         treeSitterCLI
       ];

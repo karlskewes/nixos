@@ -85,8 +85,9 @@ in
     defaultEditor = true;
     withNodeJs = true;
     withPython3 = true;
+    withRuby = true;
     # package = pkgs.neovim-unwrapped; # unstable
-    package = pkgs.neovim; # nightly via overlay
+    # package = pkgs.neovim; # nightly via overlay
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -123,9 +124,7 @@ in
       treesitter-parsers
 
       # lang specific & debug
-      (rustaceanvim.overrideAttrs {
-        doCheck = false; # neotest is broken in nixos-unstable
-      })
+      rustaceanvim
 
       namu-nvim
       nvim-nio
@@ -138,7 +137,6 @@ in
       # other
       conform-nvim
       image-nvim
-      indent-blankline-nvim
       oil-nvim
       trouble-nvim
       vim-sleuth
@@ -173,7 +171,7 @@ in
         # htmx-lsp2 # TODO: vet code
         jsonnet-language-server
         nil # nix
-        nodePackages.prettier
+        prettier
         pyright
         # rust-analyzer # generally `rustup component add rust-analyzer`
         rustup

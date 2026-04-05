@@ -41,13 +41,13 @@
       luarocks
       stylua
 
-      nodePackages.write-good
+      write-good
       nodejs_22 # neovim # nodejs_24 constantly builds
-      # nodePackages_latest.wrangler # Cloudflare # FIXME, broken, nixpkgs issue
+      # wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
       sccache # Mozilla's shared compilation cache. ~/.cache/sccache
+      bacon # replace cargo-watch
       cargo-audit
-      cargo-watch
       clang
       gdb
       lldb_19 # lldb_21 not supported - crashes.
@@ -63,7 +63,8 @@
       # cargo
       # clippy
       # rustc
-      # rustfmt
+      # rustfmt # rustup component add rustfmt
+      # rust-analyzer # rustup component add rust-analyzer
       rustup
       (lib.hiPrio gcc)
 
@@ -87,8 +88,8 @@
       # RUN: npx {tailwindcss, postcss, etc} --help
       # WARNING: Below packages need to be in node_modules dir, not nix store.
       # tailwindcss
-      # nodePackages.autoprefixer
-      # nodePackages.postcss-cli
+      # autoprefixer
+      # postcss-cli
 
       # clouds
       awscli2
