@@ -252,6 +252,13 @@
             "push"
           ];
 
+          # paging log of all changes
+          lg = [
+            "log"
+            "-r"
+            "::trunk()"
+          ];
+
           # rebasing - e.g: `git rebase main`, can run on feature branch/bookmark.
           rbm = [
             "rebase"
@@ -336,6 +343,8 @@
         template-aliases = {
           # only show unique part of change id's
           "format_short_change_id(id)" = "id.shortest()";
+          # relative timestamps, e.g: "5 months ago()";
+          "format_timestamp(timestamp)" = "timestamp.ago()";
         };
 
       };
