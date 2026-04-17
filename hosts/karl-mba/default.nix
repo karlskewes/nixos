@@ -86,7 +86,7 @@
   # ];
 
   virtualisation.docker = {
-    storageDriver = lib.mkForce "overlay2";
-  }; # TODO, change after migrate to ZFS
+    storageDriver = lib.mkForce "btrfs";
+  };
 
 }

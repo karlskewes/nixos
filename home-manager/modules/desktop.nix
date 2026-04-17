@@ -133,6 +133,14 @@
           "widget.gtk.overlay-scrollbars.enabled" = false;
           # link previews on long press and right click are not helpful.
           "browser.ml.linkPreview.enabled" = false;
+
+          # M2 Mini not using GPU for rendering. Manifests as Firefox stops rendering new pages and
+          # stops responding to mouse clicks on Menu, etc.
+          # Help -> More Troubleshooting Information -> Compositing WebRender
+          # If it shows `WebRender (Software)` and missing `Driver Renderer Mesa...` it's wrong.
+          "browser.preferences.defaultPerformanceSettings.enabled" = false;
+          "layers.acceleration.disabled" = false; # default
+          "network.proxy.type" = 0; # no proxy
         };
         # SearchEngines = []; # Doesn't work even with pkgs.firefox-esr.
       };

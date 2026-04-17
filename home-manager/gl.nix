@@ -57,7 +57,7 @@
         gh
         pre-commit
         jsonnet-bundler
-        yq
+        yq-go
 
         claude-code
         codex
