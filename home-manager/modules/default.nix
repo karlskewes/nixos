@@ -251,6 +251,13 @@
             "git"
             "push"
           ];
+          # push auto-created new bookmark named after current change id.
+          gpc = [
+            "git"
+            "push"
+            "-c"
+            "@"
+          ];
 
           # paging log of all changes
           lg = [

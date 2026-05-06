@@ -91,6 +91,7 @@
           pkgs.firefox;
 
       enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
       # Check about:policies#documentation for options.
       # https://mozilla.github.io/policy-templates/
       policies = {
