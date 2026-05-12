@@ -99,20 +99,20 @@
         [
           (
             enabled: true,
-            appid: ".*",
-            title: "kitty",
+            appid: "kitty",
+            title: ".*",
             workspace_id: "terminal",
           ),
           (
             enabled: true,
-            appid: ".*",
-            title: "firefox",
+            appid: "firefox",
+            title: ".*",
             workspace_id: "browser",
           ),
           (
             enabled: true,
-            appid: ".*",
-            title: "Halloy",
+            appid: "org.squidowl.halloy",
+            title: ".*",
             workspace_id: "chat"
           )
         ]
