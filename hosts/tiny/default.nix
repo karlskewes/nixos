@@ -132,7 +132,7 @@
   # https://github.com/pi-hole/pi-hole
   # https://github.com/pi-hole/docker-pi-hole
   virtualisation.oci-containers.containers.pihole = {
-    image = "pihole/pihole:2026.2.0";
+    image = "pihole/pihole:2026.5.0";
     extraOptions = [ "--hostname=pihole" ];
     ports = [
       "53:53/udp"
@@ -142,14 +142,10 @@
     ];
     environment = {
       TZ = "Australia/Brisbane";
-      FTLCONF_LOCAL_IPV4 = "192.168.1.5"; # host machine IP
       WEB_PORT = "80";
-      # VIRTUAL_HOST = "192.168.1.114";
-      PIHOLE_DNS_ = "1.1.1.3;1.0.0.3";
-      REV_SERVER = "true";
-      REV_SERVER_DOMAIN = "home.arpa";
-      REV_SERVER_TARGET = "192.168.1.1";
-      REV_SERVER_CIDR = "192.168.1.0/24";
+      FTLCONF_dns_reply_host_IPv4 = "192.168.1.5"; # host machine IP
+      FTLCONF_dns_upstreams = "1.1.1.3;1.0.0.3";
+      FTLCONF_dns_revServers = "true,192.168.1.0/24,192.168.1.1#53,home.arpa";
       # Podman (10/8) and Docker (172.16/12) differ to LAN 192.168/16 so we need
       # to tell Pihole to reply to  all source IP's (~similar to listen on all interfaces)
       DNSMASQ_LISTENING = "all";
