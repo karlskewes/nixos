@@ -259,11 +259,21 @@
             "@"
           ];
 
-          # paging log of all changes
+          # paging log of all changes, optional branch arg e.g: `jj lg main`
           lg = [
-            "log"
-            "-r"
-            "::trunk()"
+            "util"
+            "exec"
+            "--"
+            "sh"
+            "-c"
+            ''
+              if [ "x$1" = "x" ]; then
+                jj log -r "::trunk()"
+              else
+                jj log -r "::$1"
+              fi
+            ''
+            ""
           ];
 
           # rebasing - e.g: `git rebase main`, can run on feature branch/bookmark.
