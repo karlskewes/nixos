@@ -7,7 +7,6 @@
     ../modules
 
     ../modules/cosmic.nix
-    # ../modules/hyprland.nix
     # ../modules/zfs.nix
   ];
 
