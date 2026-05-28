@@ -7,7 +7,6 @@
     ../modules
 
     ../modules/cosmic.nix
-    # ../modules/zfs.nix
   ];
 
   boot.kernelParams = [

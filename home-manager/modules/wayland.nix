@@ -22,13 +22,6 @@
   home.packages = with pkgs; [
     rofi-power-menu # doesn't work as extra package
     wl-clipboard
-
-    ferrishot
-    grim
-    slurp
-    grimblast # screenshot combo grim, slurp, etc
-    swappy # screenshot annotation
-    satty # screenshot annotation - use with satty --filename X.png --output-filename Y.png
   ];
 
   home.pointerCursor = {

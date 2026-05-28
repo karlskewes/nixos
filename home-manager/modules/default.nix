@@ -177,6 +177,12 @@
       };
     };
 
+    programs.broot = {
+      enable = true;
+      enableBashIntegration = true;
+      # TODO: override up/down to match vim/etc instead of having to use arrows.
+    };
+
     programs.delta = {
       enable = true;
       enableGitIntegration = true;

@@ -31,7 +31,6 @@
       wl-clipboard
 
       ferrishot
-      satty # screenshot annotation - use with satty --filename X.png --output-filename Y.png
 
       cosmic-ext-calculator
       xdg-desktop-portal-gtk
@@ -64,6 +63,19 @@
     home.file.".config/cosmic/com.system76.CosmicSettings.Shortcuts/v1/system_actions".text = ''
       {
           Terminal: "kitty",
+      }
+    '';
+
+    home.file.".config/cosmic/com.system76.CosmicSettings.Shortcuts/v1/custom".text = ''
+      {
+        (
+            modifiers: [
+                Super,
+                Shift,
+            ],
+            key: "s",
+            description: Some("screenshot"),
+        ): Spawn("flameshot gui"),
       }
     '';
     home.file.".config/cosmic/com.system76.CosmicComp/v1/pinned_workspaces".text = ''

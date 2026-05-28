@@ -232,5 +232,9 @@
     services.dunst = {
       enable = isLinux;
     };
+
+    services.flameshot = {
+      enable = isLinux;
+    };
   };
 }
