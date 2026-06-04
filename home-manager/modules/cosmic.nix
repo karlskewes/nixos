@@ -123,6 +123,12 @@
           ),
           (
             enabled: true,
+            appid: "chromium",
+            title: ".*",
+            workspace_id: "browser",
+          ),
+          (
+            enabled: true,
             appid: "org.squidowl.halloy",
             title: ".*",
             workspace_id: "chat"

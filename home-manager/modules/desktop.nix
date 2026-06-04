@@ -235,6 +235,11 @@
 
     services.flameshot = {
       enable = isLinux;
+      settings = {
+        General = {
+          showStartupLaunchMessage = false;
+        };
+      };
     };
   };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
 
   imports = [
@@ -83,7 +83,15 @@
     updateChannel = "stable";
   };
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
+  # https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
+  networking.localCommands = ''
+    ${pkgs.ethtool}/bin/ethtool -K eth0 rx off tx off
+  '';
+
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
 }
