@@ -12,6 +12,7 @@
       ./modules
 
       ./modules/dev.nix
+      ./modules/llm.nix
     ]
     # #
     ++ (lib.optionals isDarwin [
@@ -36,12 +37,14 @@
         ++ (lib.optionals isLinux [ "karl" ]);
     };
 
+    custom.llm.claude-code = {
+      enable = true;
+      # extraPackages = with pkgs; [ ];
+    };
+
     home.packages =
       with pkgs;
-      [
-        claude-code
-        codex
-      ]
+      [ ]
       ++ (lib.optionals isDarwin [
         podman # docker replacement
         podman-compose

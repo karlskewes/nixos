@@ -19,6 +19,7 @@
       ./modules
 
       ./modules/dev.nix
+      ./modules/llm.nix
     ]
     # #
     ++ (lib.optionals isDarwin [
@@ -43,9 +44,16 @@
         ++ (lib.optionals isLinux [ "karl" ]);
     };
 
+    custom.llm.claude-code = {
+      enable = true;
+      extraPackages = with pkgs; [ gcx ];
+    };
+
     home.packages =
       with pkgs;
       [
+        gcx
+
         awscli2
         aws-iam-authenticator
         az
@@ -58,9 +66,6 @@
         pre-commit
         jsonnet-bundler
         yq-go
-
-        claude-code
-        codex
       ]
       ++ (lib.optionals isDarwin [
         podman
