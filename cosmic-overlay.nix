@@ -42,12 +42,19 @@
     # Note: [patch] sections in Cargo.toml are NOT processed by fetchCargoVendor
     # (it reads only Cargo.lock). Cross-repo git deps must be direct references
     # with a pinned rev in Cargo.toml so they appear in Cargo.lock.
+    # cosmic-comp = mkCosmicOverride {
+    #   repo = "cosmic-comp";
+    #   rev = "ffcec1787342b645859fc99706eb0a7084dd68b9"; # workspace-pinning
+    #   srcHash = "sha256-/t7YmkAnld8uDKp0z0MKaW6I0YxGI6x5gD81cGrUI30=";
+    #   depsHash = "sha256-USJp2Ux7yVkAFCzsiuYqHF0dKTIuot4Ftohj2b5xc9c=";
+    #   version = "workspace-pinning";
+    # };
     cosmic-comp = mkCosmicOverride {
       repo = "cosmic-comp";
-      rev = "ffcec1787342b645859fc99706eb0a7084dd68b9"; # workspace-pinning
-      srcHash = "sha256-/t7YmkAnld8uDKp0z0MKaW6I0YxGI6x5gD81cGrUI30=";
+      rev = "4acac85564725e7d9192ebd94cccce90b108940b"; # ws-pin,ws-name,nix flake
+      srcHash = "sha256-lCBftKrgSuFedAh8LIiiNKG5GT29eUg/E/eKCytIiYA=";
       depsHash = "sha256-USJp2Ux7yVkAFCzsiuYqHF0dKTIuot4Ftohj2b5xc9c=";
-      version = "workspace-pinning";
+      version = "ws-name";
     };
     cosmic-settings-daemon = mkCosmicOverride {
       repo = "cosmic-settings-daemon";
