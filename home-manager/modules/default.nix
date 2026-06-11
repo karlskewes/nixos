@@ -253,6 +253,37 @@
             "git"
             "fetch"
           ];
+
+          # fetch origin or upstream PR and jj new of it.
+          # Does not support pushing to branch.
+          # See: https://github.com/jj-vcs/jj/discussions/5388
+          gfopr = [
+            "util"
+            "exec"
+            "--"
+            "sh"
+            "-c"
+            ''
+              set -euo pipefail
+              git fetch origin pull/"$1"/head:pr-"$1"
+              jj new pr-"$1"
+            ''
+            ""
+          ];
+          gfuppr = [
+            "util"
+            "exec"
+            "--"
+            "sh"
+            "-c"
+            ''
+              set -euo pipefail
+              git fetch upstream pull/"$1"/head:pr-"$1"
+              jj new pr-"$1"
+            ''
+            ""
+          ];
+
           gp = [
             "git"
             "push"
@@ -433,8 +464,8 @@
           cm = "commit --message";
           d = "diff";
           fup = "fetch upstream";
-          fuppr = "!f() { git fetch upstream pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
-          fopr = "!f() { git fetch origin pull/\${1}/head:pr\${1}; git checkout pr\${1}; }; f";
+          fuppr = "!f() { git fetch upstream pull/\${1}/head:pr-\${1}; git checkout pr-\${1}; }; f";
+          fopr = "!f() { git fetch origin pull/\${1}/head:pr-\${1}; git checkout pr-\${1}; }; f";
           lg = ''
             !f() {
               git log \
