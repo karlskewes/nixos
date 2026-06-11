@@ -87,6 +87,7 @@
           ),
           tiling_enabled: true,
           id: Some("terminal"),
+          name: Some("terminal"),
         ),
         (
           output: (
@@ -95,6 +96,7 @@
           ),
           tiling_enabled: true,
           id: Some("browser"),
+          name: Some("browser"),
         ),
         (
           output: (
@@ -103,6 +105,7 @@
           ),
           tiling_enabled: true,
           id: Some("chat"),
+          name: Some("chat"),
         ),
       ]
     '';
