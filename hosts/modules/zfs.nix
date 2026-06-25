@@ -43,6 +43,7 @@
       kernelPackages = lib.mkDefault pkgs.linuxKernel.packages.linux_6_18;
       supportedFilesystems = [ "zfs" ];
       zfs.devNodes = "/dev/disk/by-path";
+      zfs.forceImportRoot = false;
       zfs.requestEncryptionCredentials = true; # prompt for encryption password
 
       kernelParams = [
@@ -72,8 +73,22 @@
             hostKeys = [ /etc/ssh/ssh_host_ed25519_key ];
             authorizedKeys = config.zfsBootUnlock.authorizedKeys;
             # Unlock with:
-            # host=<IP> ssh -p 2222 root@"${host}" "zpool import -a; zfs load-key -a && killall zfs"
+            # host=<IP> ssh -p 2222 root@"${host}"
+            # 🔐 Enter key for <pool>: ••••••••••••••••••
           };
+        };
+        # Write a .profile to /var/empty (root's home in the systemd initrd)
+        # so that logging in over SSH automatically starts the password agent.
+        systemd.services.zfs-setup-root-profile = {
+          description = "Prepare root .profile for ZFS unlocking via SSH";
+          wantedBy = [ "initrd.target" ];
+          before = [ "initrd-root-fs.target" ];
+          unitConfig.DefaultDependencies = false;
+          script = ''
+            mkdir -p /var/empty
+            echo "systemd-tty-ask-password-agent --watch" > /var/empty/.profile
+          '';
+          serviceConfig.Type = "oneshot";
         };
       };
     };

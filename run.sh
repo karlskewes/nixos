@@ -170,12 +170,13 @@ mikrotik() { ## Backup Mikrotik router config
 }
 
 zfs() { ## ZFS Unlock
-	if [ $# -ne 1 ]; then
+	if [ $# -ne 2 ]; then
 		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <host>"
 		exit 1
 	fi
 	local host="$1"
-	ssh -v -p 2222 root@"${host}" "zpool import -a; zfs load-key -a && killall zfs"
+	ssh -p 2222 root@"${host}"
+	# 🔐 Enter key for <pool>: ••••••••••••••••••
 }
 
 guestdisk() { ## Create a guest qcow2 file from base qcow2 file <input.img> <output.qcow2>
