@@ -69,6 +69,9 @@
     useRoutingFeatures = "both";
   };
 
+  # Apple iPhone USB tethering.
+  services.usbmuxd.enable = true;
+
   # services.logind.settings.Login.HandleLidSwitch = "suspend";
 
   # dock "displaylink" driver mustHandleLid manually installed, see run.sh

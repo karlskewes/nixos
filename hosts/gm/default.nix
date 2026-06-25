@@ -89,6 +89,9 @@
     ${pkgs.ethtool}/bin/ethtool -K eth0 rx off tx off
   '';
 
+  # Apple iPhone USB tethering.
+  services.usbmuxd.enable = true;
+
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.docker.daemon.settings = {
