@@ -132,7 +132,7 @@
   # https://github.com/pi-hole/pi-hole
   # https://github.com/pi-hole/docker-pi-hole
   virtualisation.oci-containers.containers.pihole = {
-    image = "pihole/pihole:2026.5.0";
+    image = "pihole/pihole:2026.07.2";
     extraOptions = [ "--hostname=pihole" ];
     ports = [
       "53:53/udp"
