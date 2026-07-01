@@ -86,7 +86,7 @@
               edid: None,
           ),
           tiling_enabled: true,
-          id: Some("terminal"),
+          id: Some("foo"),
           name: Some("terminal"),
         ),
         (
@@ -95,7 +95,7 @@
               edid: None,
           ),
           tiling_enabled: true,
-          id: Some("browser"),
+          id: Some("bar"),
           name: Some("browser"),
         ),
         (
@@ -104,7 +104,7 @@
               edid: None,
           ),
           tiling_enabled: true,
-          id: Some("chat"),
+          id: Some("baz"),
           name: Some("chat"),
         ),
       ]
@@ -116,25 +116,25 @@
             enabled: true,
             appid: "kitty",
             title: ".*",
-            workspace_id: "terminal",
+            workspace_name: "terminal",
           ),
           (
             enabled: true,
             appid: "firefox",
             title: ".*",
-            workspace_id: "browser",
+            workspace_name: "browser",
           ),
           (
             enabled: true,
             appid: "chromium",
             title: ".*",
-            workspace_id: "browser",
+            workspace_name: "browser",
           ),
           (
             enabled: true,
             appid: "org.squidowl.halloy",
             title: ".*",
-            workspace_id: "chat"
+            workspace_name: "chat"
           )
         ]
       '';

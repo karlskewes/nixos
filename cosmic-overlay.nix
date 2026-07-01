@@ -51,18 +51,31 @@
     # };
     cosmic-comp = mkCosmicOverride {
       repo = "cosmic-comp";
-      rev = "4acac85564725e7d9192ebd94cccce90b108940b"; # ws-pin,ws-name,nix flake
-      srcHash = "sha256-lCBftKrgSuFedAh8LIiiNKG5GT29eUg/E/eKCytIiYA=";
-      depsHash = "sha256-USJp2Ux7yVkAFCzsiuYqHF0dKTIuot4Ftohj2b5xc9c=";
-      version = "ws-name";
+      rev = "2c93958b0f79f6703d3d8baba6e0ec45fe0e9602"; # nix-flake-workspace-pinning
+      srcHash = "sha256-0gnyNZcouJZ1+Pg95ds1VvvH7SwninRdANHaCWFVqIk=";
+      depsHash = "sha256-OKgxZaE92/CRpQBHwIv/5lhGdt+Cu4ueZtyQxsB0bfw=";
+      version = "1.2.0-nix-flake-workspace-pinning";
     };
-    cosmic-settings-daemon = mkCosmicOverride {
-      repo = "cosmic-settings-daemon";
-      rev = "bf74a86d301881ec7d57678c417a3bea495b7b60"; # workspace-pinning
-      srcHash = "sha256-1EpSi4GgNlRvxc2+B8R8XKIbu1gsxVpszoaqzE9itWw=";
-      depsHash = "sha256-pvoCqFvMVqNTfdU5WidGijfFNsC9i2XNuNV33F8aKZw=";
-      version = "workspace-pinning";
-    };
+    cosmic-settings-daemon =
+      (mkCosmicOverride {
+        repo = "cosmic-settings-daemon";
+        rev = "117942b0ac420c26a0af1f18c99af8bb10914c72"; # workspace-pinning
+        srcHash = "sha256-E3z/NJGzmDiDNUyMFyBN/nrjMFAjdUddkwd1KaJ5hIg=";
+        depsHash = "sha256-rpyMdwmcddsrXuIOI5T6Kh9+cB28DdUxotiqpeGqvCc=";
+        version = "1.2.0-workspace-pinning";
+      }).overrideAttrs
+        # required until pull updated nixpkgs with extra config.
+        (
+          old: {
+            buildInputs = old.buildInputs ++ [
+              prev.pipewire
+            ];
+            nativeBuildInputs = old.nativeBuildInputs ++ [
+              prev.pkg-config
+              prev.rustPlatform.bindgenHook
+            ];
+          }
+        );
     # shutdown bug
     # xdg-desktop-portal-cosmic = mkCosmicOverride {
     #   repo = "xdg-desktop-portal-cosmic";
