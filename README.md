@@ -163,8 +163,12 @@ sudo nixos-generate-config --root /mnt --show-hardware-config > ./hosts/"${machi
 sudo cp -a /etc/nixos/apple-silicon-support/ /mnt/etc/nixos/
 
 # copy firmware
+# TODO: this is deprecated in favour of a default /boot/vendorfw/
+# TODO: figure out next time re-install.
+# TODO: https://github.com/nix-community/nixos-apple-silicon/pull/494/
+
 sudo mkdir -p /mnt/etc/nixos/firmware
-sudo cp /mnt/boot/asahi/{all_firmware.tar.gz,kernelcache*} /mnt/etc/nixos/firmware
+sudo cp /mnt/boot/asahi/{firmware.cpio,all_firmware.tar.gz,kernelcache*} /mnt/etc/nixos/firmware
 
 sudo nvim /mnt/etc/nixos/configuration.nix
 # Add below:
@@ -174,6 +178,12 @@ cat<<EOF
       ./hardware-configuration.nix
       ./apple-silicon-support
     ];
+
+  hardware.asahi.enable = true;
+  # TODO: deprecated potentially, revisit during next fresh install.
+  # See: https://github.com/nix-community/nixos-apple-silicon/pull/494/
+  # Specify path to peripheral firmware files copied during initial installation.
+  hardware.asahi.peripheralFirmwareDirectory = /etc/nixos/firmware;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

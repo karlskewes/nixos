@@ -21,6 +21,7 @@
     };
 
     home.pointerCursor = {
+      enable = true;
       gtk.enable = true;
       name = "Vanilla-DMZ";
       package = pkgs.vanilla-dmz;

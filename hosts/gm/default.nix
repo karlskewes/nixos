@@ -25,12 +25,9 @@
   # Set in ./hardware-configuration.nix
   # boot.initrd.luks.devices."crypted".device = { ... };
 
-  hardware.asahi = {
-    enable = true;
-    # Specify path to peripheral firmware files copied during initial installation.
-    peripheralFirmwareDirectory = /etc/nixos/firmware;
-    setupAsahiSound = true;
-  };
+  hardware.asahi.enable = true;
+  # Specify path to peripheral firmware files copied during initial installation.
+  # hardware.asahi.peripheralFirmwareDirectory = /etc/nixos/firmware;
 
   # Or disable extraction and management of them completely (no wifi though).
   # hardware.asahi.extractPeripheralFirmware = false;
