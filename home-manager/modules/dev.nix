@@ -88,16 +88,16 @@ in
 
       zig
 
-      python313 # neovim # https://docs.python.org/3/
-      python313Packages.black
-      python313Packages.flake8
-      python313Packages.isort
-      python313Packages.pylint
-      python313Packages.pip
-      python313Packages.pynvim
-      python313Packages.debugpy
-      python313Packages.pytest
-      python313Packages.uv # package manager
+      python314 # neovim # https://docs.python.org/3/
+      python314Packages.black
+      python314Packages.flake8
+      python314Packages.isort
+      python314Packages.pylint
+      python314Packages.pip
+      python314Packages.pynvim
+      python314Packages.debugpy
+      python314Packages.pytest
+      python314Packages.uv # package manager
 
       # DO: npm install -D tailwindcss postcss-cli @fullhuman/postcss-purgecss
       # RUN: npx {tailwindcss, postcss, etc} --help

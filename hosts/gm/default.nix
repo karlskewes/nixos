@@ -91,4 +91,11 @@
 
   virtualisation.docker.enable = true;
   virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker.daemon.settings = {
+    features = {
+      # ERROR: failed to build: Multi-platform build is not supported for the docker driver.
+      # https://docs.docker.com/engine/storage/containerd/#enable-containerd-image-store-on-docker-engine
+      containerd-snapshotter = true;
+    };
+  };
 }

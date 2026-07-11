@@ -75,6 +75,7 @@
         slack # not supported on aarch64-linux
       ])
       ++ (lib.optionals isLinux [
+        chromium
         asahi-bless
         asahi-btsync
         asahi-nvram
