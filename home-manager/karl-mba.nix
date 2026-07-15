@@ -132,6 +132,8 @@
             right = ">";
           };
         };
+        # Don't show `Connection to server lost|restored`, etc in channel buffers.
+        buffer.internal_messages.default.enabled = false;
         buffer.server_messages = {
           join.enabled = false;
           part.enabled = false;

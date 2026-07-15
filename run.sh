@@ -170,7 +170,7 @@ mikrotik() { ## Backup Mikrotik router config
 }
 
 zfs() { ## ZFS Unlock
-	if [ $# -ne 2 ]; then
+	if [ $# -ne 1 ]; then
 		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <host>"
 		exit 1
 	fi
