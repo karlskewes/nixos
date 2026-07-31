@@ -57,6 +57,20 @@
       pkgs.xdg-desktop-portal-gtk
     ];
 
+    home.file.".config/cosmic/com.system76.CosmicTheme.Dark/v1/corner_radii".text = ''
+      (
+          radius_0: (0.0, 0.0, 0.0, 0.0),
+          radius_xs: (2.0, 2.0, 2.0, 2.0),
+          radius_s: (2.0, 2.0, 2.0, 2.0),
+          radius_m: (2.0, 2.0, 2.0, 2.0),
+          radius_l: (2.0, 2.0, 2.0, 2.0),
+          radius_xl: (2.0, 2.0, 2.0, 2.0),
+      )
+    '';
+    home.file.".config/cosmic/com.system76.CosmicTheme.Dark/v1/gaps".text = "(0,3)";
+    home.file.".config/cosmic/com.system76.CosmicTheme.Dark/v1/active_hint".text = "3";
+    home.file.".config/cosmic/com.system76.CosmicTk/v1/header_size".text = "Compact";
+    home.file.".config/cosmic/com.system76.CosmicTk/v1/interface_density".text = "Compact";
     home.file.".config/cosmic/com.system76.CosmicComp/v1/autotile".text = "true";
     home.file.".config/cosmic/com.system76.CosmicComp/v1/autotile_behavior".text = "PerWorkspace";
     # disable dock, use launcher or keyboard shortcuts instead.
