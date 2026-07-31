@@ -113,7 +113,7 @@ in
       # google-cloud-sdk # gsutil, etc
       flyctl # fly.io
       docker-compose
-      pulumi-bin
+      # pulumi-bin # has to build each nixpkgs update, slow, nix-shell -p pulumi-bin as need.
       opentofu
       terraform
 
