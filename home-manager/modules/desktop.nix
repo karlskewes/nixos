@@ -84,7 +84,13 @@
           pkgs.firefox;
 
       enable = true;
-      configPath = "${config.xdg.configHome}/mozilla/firefox";
+      configPath =
+        # Fixed upstream but current state version too old.
+        if isDarwin then
+          "${config.home.homeDirectory}/Library/Application Support/Firefox"
+        else
+          "${config.xdg.configHome}/mozilla/firefox";
+
       # Check about:policies#documentation for options.
       # https://mozilla.github.io/policy-templates/
       policies = {
