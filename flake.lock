@@ -262,8 +262,7 @@
         "nix-darwin": "nix-darwin",
         "nix-extra": "nix-extra",
         "nixpkgs": "nixpkgs",
-        "titdb": "titdb",
-        "tree-sitter": "tree-sitter"
+        "titdb": "titdb"
       }
     },
     "titdb": {
@@ -285,27 +284,6 @@
         "owner": "luqmanishere",
         "repo": "trackpad-is-too-damn-big-flake",
         "rev": "9712b426311195c8d3f0359c6086e1d651782d2e",
-        "type": "github"
-      }
-    },
-    "tree-sitter": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1787474899,
-        "narHash": "sha256-W+43VmpHihq651eeKoECtxCSQyTGEv9ySMdmPwDFVhM=",
-        "owner": "tree-sitter",
-        "repo": "tree-sitter",
-        "rev": "d97971e24500218865c05ed1febdee2acf41bae1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tree-sitter",
-        "ref": "release-0.26",
-        "repo": "tree-sitter",
         "type": "github"
       }
     }

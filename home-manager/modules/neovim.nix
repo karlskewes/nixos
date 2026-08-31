@@ -77,7 +77,7 @@ in
   };
 
   home.packages = with pkgs; [
-    tree-sitter-latest # v0.26.6 - required by nvim-treesitter plugin
+    tree-sitter
   ];
 
   programs.neovim = {
