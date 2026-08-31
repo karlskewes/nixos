@@ -105,6 +105,7 @@ in
       mini-git
       mini-icons
       mini-indentscope
+      mini-pairs
       mini-pick
       mini-extra # pickers for mini-pick
       mini-splitjoin

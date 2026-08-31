@@ -39,6 +39,10 @@ require('mini.indentscope').setup({
     animation = require('mini.indentscope').gen_animation.none(),
   },
 })
+-- consider:
+-- 1. a keymap to toggle enable/disable
+-- 2. language specific settings, like <> for Rust.
+require('mini.pairs').setup()
 -- Send all to quickfix
 -- <query> (e.g: files with `after/`)
 -- <C-a> to select all (mark_all)
