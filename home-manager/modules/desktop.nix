@@ -52,11 +52,14 @@
         font-awesome
         # #
       ])
+      # https://github.com/NixOS/nixpkgs/issues/558555
+      ++ (lib.optionals (isLinux && pkgs.stdenv.hostPlatform.system != "aarch64-linux") [
+        ente-auth
+      ])
       ++ (lib.optionals isLinux [
         mesa-demos
         vulkan-tools # vulkan-info
 
-        ente-auth
         kdePackages.gwenview # image viewer & editor (crop, resize)
         vlc
       ])
