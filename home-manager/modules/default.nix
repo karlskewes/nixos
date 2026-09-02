@@ -248,10 +248,25 @@
         };
 
         aliases = {
-          # fetches all remotes: origin, upstream, etc
+          # fetch all remotes: origin, upstream, etc
           gf = [
             "git"
             "fetch"
+          ];
+
+          # fetch all remotes, create a new change off trunk
+          gfnt = [
+            "util"
+            "exec"
+            "--"
+            "sh"
+            "-c"
+            ''
+              set -euo pipefail
+              jj git fetch
+              jj new trunk
+            ''
+            ""
           ];
 
           # fetch origin or upstream PR and jj new of it.
