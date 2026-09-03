@@ -264,7 +264,7 @@
             ''
               set -euo pipefail
               jj git fetch
-              jj new trunk
+              jj new 'trunk()'
             ''
             ""
           ];
