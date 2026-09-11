@@ -19,22 +19,31 @@ prompt_jj() {
 		return
 	fi
 
+	# --ignore-working-copy: avoid inspecting $PWD and concurrent
+	# snapshotting which could create divergent commits
+	bookmark="$(
+		jj \
+			--ignore-working-copy \
+			--no-pager log \
+			--no-graph \
+			--color=always \
+			-r 'closest_bookmark(@)' \
+			-T 'bookmarks ++ "\n"' 2>/dev/null | head -n1
+
+	)"
+
 	template=$(
 		cat <<EOF
-"@ " ++ concat(
-		separate(
-			" ",
-			format_short_change_id_with_hidden_and_divergent_info(self),
-			format_short_commit_id(commit_id),
-			bookmarks,
-			if(conflict,label("conflict","conflict")
-		)
-	)
+concat(
+		format_short_change_id(self.change_id()),
+		if(conflict, label("conflict", "(conflict)")),
+		if(divergent, label("divergent", "??")),
+		if(hidden, label("hidden", "(hidden)")),
+		if(!empty, label("diff", "*")),
 )
 EOF
 	)
 
-	# --ignore-working-copy: avoid inspecting $PWD and concurrent snapshotting which could create divergent commits
 	output="$(
 		jj \
 			--ignore-working-copy \
@@ -45,7 +54,7 @@ EOF
 			-T "${template}" 2>/dev/null
 	)"
 
-	echo -e "${1}[${output}${bold}]"
+	echo -e "${1}[${bookmark:+${bookmark} }${output}${bold}]"
 }
 
 prompt_git() {
