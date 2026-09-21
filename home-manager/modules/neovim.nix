@@ -44,7 +44,6 @@ let
     p.typescript
     p.vimdoc
     p.vim
-    p.vue
     p.yaml
     p.zig
   ]);
@@ -184,36 +183,35 @@ in
         typescript
         typescript-language-server
         vscode-langservers-extracted # vscode-eslint-language-server, vscode-html-language-server
-        vue-language-server
         yaml-language-server
       ];
   };
 
   # This file needs to be imported by `~/.config/nvim/init.lua`.
-  xdg.configFile."nvim/after/lsp/ts_ls.lua" = {
-    # HACK: We need to provide nix store path to libraries which is only accessible
-    # from .nix files, unless there's a way with lua using `$(which vue-language-server)` or
-    # similar.
-    # Solves for error: `Can't find typescript.js or tsserverlibrary.js in \"\"`
-    text = # lua
-      ''
-        ---@type vim.lsp.Config
-        local config = {
-          filetypes = { 'json', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
-          init_options = {
-            plugins = {
-              {
-                name = '@vue/typescript-plugin',
-                -- location = 'vue-language-server',
-                location = '${pkgs.vue-language-server}/lib/node_modules/@vue/language-server',
-                languages = { 'vue' },
-              },
-            },
-          },
-        }
-        return config
-      '';
-  };
+  # xdg.configFile."nvim/after/lsp/ts_ls.lua" = {
+  #   # HACK: We need to provide nix store path to libraries which is only accessible
+  #   # from .nix files, unless there's a way with lua using `$(which vue-language-server)` or
+  #   # similar.
+  #   # Solves for error: `Can't find typescript.js or tsserverlibrary.js in \"\"`
+  #   text = # lua
+  #     ''
+  #       ---@type vim.lsp.Config
+  #       local config = {
+  #         filetypes = { 'json', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+  #         init_options = {
+  #           plugins = {
+  #             {
+  #               name = '@vue/typescript-plugin',
+  #               -- location = 'vue-language-server',
+  #               location = '${pkgs.vue-language-server}/lib/node_modules/@vue/language-server',
+  #               languages = { 'vue' },
+  #             },
+  #           },
+  #         },
+  #       }
+  #       return config
+  #     '';
+  # };
 
   # Provide nix store path for treesitter parsers
   xdg.configFile."nvim/lua/treesitter-nix-config.lua" = {
