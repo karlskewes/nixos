@@ -169,6 +169,15 @@ mikrotik() { ## Backup Mikrotik router config
 	ssh 192.168.1.1 export terse >../mikrotik_r1_backup_"$(date -Iseconds)".rsc
 }
 
+faikin() { ## Fetch Faikin config
+	if [ $# -ne 1 ]; then
+		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <host>"
+		exit 1
+	fi
+	curl -s -X POST -d '_settingsave=1' http://"${1}":80/revk-settings
+	echo
+}
+
 zfs() { ## ZFS Unlock
 	if [ $# -ne 1 ]; then
 		echo 1>&2 "Usage: $0 ${FUNCNAME[0]} <host>"
