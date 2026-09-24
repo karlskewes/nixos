@@ -207,6 +207,8 @@
     };
   };
 
+  services.resolved.enable = true;
+
   # Let 'nixos-version --json' know about the Git revision
   # system.configurationRevision = currentRevision;
 
