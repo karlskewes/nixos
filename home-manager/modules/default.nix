@@ -311,7 +311,9 @@
             "@"
           ];
 
-          # paging log of all changes, optional branch arg e.g: `jj lg main`
+          # paging log of all changes.
+          # optional revset (or branch) first, optional paths after "--".
+          # e.g: `jj lg`, `jj lg main`, `jj lg --flake.nix`, `jj lg main -- flake.nix`
           lg = [
             "util"
             "exec"
@@ -319,11 +321,14 @@
             "sh"
             "-c"
             ''
-              if [ "x$1" = "x" ]; then
-                jj log -r "::trunk()"
-              else
-                jj log -r "::$1"
+              rev=""
+              if [ $# -gt 0 ] && [ "$1" != "--" ]; then
+                rev="$1";
+                shift;
               fi
+              if [ "$1" = "--" ]; then shift; fi
+              if [ -z "$rev" ]; then rev="@ | trunk()"; fi
+              jj log -r "::($rev)" -- "$@"
             ''
             ""
           ];
