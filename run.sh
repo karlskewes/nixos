@@ -55,6 +55,7 @@ build_nixos() {
 	# update nix-extra reference if first time after install
 	nix flake update nix-extra
 	# rebuild configuration per --flake .#${hostname}
+	# Add `--offline` if required.
 	nixos-rebuild build --impure --flake .# --show-trace
 }
 

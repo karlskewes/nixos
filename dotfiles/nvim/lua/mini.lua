@@ -301,15 +301,23 @@ vim.keymap.set('n', '<leader>svh', '<Cmd>Pick git_hunks<CR>', { desc = '[S]earch
 -- Not implemented: https://github.com/nvim-mini/mini.nvim/issues/550#issuecomment-1805477794
 -- vim.keymap.set('n', '<leader>svs', picker.git_status, { desc = '[S]earch [v]cs status' })
 -- vim.keymap.set('n', '<leader>svS', picker.git_stash, { desc = '[S]earch [v]cs [S]tash' })
-vim.keymap.set(
-  'n',
-  '<leader>sw',
-  '<Cmd>Pick grep pattern="<cword>"<CR>',
-  { desc = '[S]earch current [w]ord' }
-)
-vim.keymap.set(
-  'n',
-  '<leader>sW',
-  '<Cmd>Pick grep pattern="<cWORD>"<CR>',
-  { desc = '[S]earch current [W]ORD' }
-)
+-- `builtin.grep` leaves the query box empty, so the search term is invisible.
+-- `grep_live` uses the query as the `rg` pattern. Prefill it on picker start.
+-- `method = 'plain'` matches the word literally. `<C-e>` switches to regex.
+local function grep_word(word)
+  local picker = require('mini.pick')
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'MiniPickStart',
+    once = true,
+    callback = function()
+      picker.set_picker_query({ word })
+    end,
+  })
+  picker.builtin.grep_live({ method = 'plain' })
+end
+vim.keymap.set('n', '<leader>sw', function()
+  grep_word(vim.fn.expand('<cword>'))
+end, { desc = '[S]earch current [w]ord' })
+vim.keymap.set('n', '<leader>sW', function()
+  grep_word(vim.fn.expand('<cWORD>'))
+end, { desc = '[S]earch current [W]ord' })
