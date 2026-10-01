@@ -51,18 +51,18 @@
     # };
     cosmic-comp = mkCosmicOverride {
       repo = "cosmic-comp";
-      rev = "03d82e7ce04751de41d2ca4ec7d2bfeaac40349c"; # nix-flake-workspace-pinning
-      srcHash = "sha256-UmfSYFnfuZKbYNJTn0ox3kTWEgKcaHPlg0JQapFwPHA=";
-      depsHash = "sha256-z2MHs52oFOUt+GWrwhnlywj7uhdfqadUFkm2yBSgfYc=";
-      version = "1.7.0-nix-flake-workspace-pinning";
+      rev = "4869ddd383cfe63e4fd74efce1a221cd616249f0"; # nix-flake-workspace-pinning
+      srcHash = "sha256-ykRr0YKN2x4Fq1jtxi/5yFRuBhbssXM/FvMlM6nFthI=";
+      depsHash = "sha256-hrdHTp4DYkpQ7K8moN8hcacL/2o46KkkXAOagPsDQ4Q=";
+      version = "1.9.0-nix-flake-workspace-pinning";
     };
     cosmic-settings-daemon =
       (mkCosmicOverride {
         repo = "cosmic-settings-daemon";
-        rev = "875511967217707ded550794621edd688b388a4a"; # workspace-pinning
+        rev = "6b8d6420bc72027106e444ddb148fd61583251d1"; # workspace-pinning
         srcHash = "sha256-QAP4/qRrgWCHXCHDpxJV2gwqMVdvSYdK6gEbrxwKkfk=";
         depsHash = "sha256-4rGgRc7EDdxGvFmAUY4kJ9aO/Pas9S2Q+b5ArZNydvs=";
-        version = "1.7.0-workspace-pinning";
+        version = "1.9.0-workspace-pinning";
       }).overrideAttrs
         # required until pull updated nixpkgs with extra config.
         (
