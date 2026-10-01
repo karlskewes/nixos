@@ -116,6 +116,11 @@ if not ok then
   vim.notify('image.nvim failed to load: ' .. tostring(err), vim.log.levels.WARN)
 end
 
+-- Navigator
+require('namu').setup({})
+vim.keymap.set('n', '<leader>ln', '<cmd>Namu symbols<cr>', { desc = 'Namu symbols' })
+vim.keymap.set('n', '<leader>lN', '<cmd>Namu workspace<cr>', { desc = 'Namu workspace symbols' })
+
 -- File explorer, edit like a Neovim buffer
 require('oil').setup({
   keymaps = { ['<M-h>'] = 'actions.select_split' },
