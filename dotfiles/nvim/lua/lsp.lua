@@ -143,6 +143,7 @@ vim.lsp.enable('buf_ls')
 vim.lsp.enable('dockerls')
 vim.lsp.enable('eslint')
 vim.lsp.enable('jsonnet')
+vim.lsp.enable('jsonls')
 vim.lsp.enable('gopls')
 vim.lsp.enable('golangci_lint_ls')
 vim.lsp.enable('html')
@@ -154,7 +155,6 @@ vim.lsp.enable('sqls')
 vim.lsp.enable('tailwindcss')
 vim.lsp.enable('tofu_ls')
 vim.lsp.enable('ts_ls')
-vim.lsp.enable('vue_ls')
 vim.lsp.enable('yamlls')
 vim.lsp.enable('lua_ls')
 
@@ -164,11 +164,6 @@ vim.lsp.enable('lua_ls')
 --   -- cmd = 'htmx-lsp2', -- TODO: vet code
 --   cmd = 'htmx-lsp', -- https://github.com/ThePrimeagen/htmx-lsp/issues/53
 --   filetypes = { 'html', 'templ' },
--- },
--- ts_ls = {
---   -- HACK: config defined in neovim.nix for javascript library nix store path.
---   --       see ~/.config/nvim/lua/ts_ls.lua for rendered file.
---   -- https://github.com/vuejs/language-tools
 -- },
 -- }
 

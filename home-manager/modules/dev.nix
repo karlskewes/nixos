@@ -56,7 +56,7 @@ in
       stylua
 
       write-good
-      nodejs_22 # neovim # nodejs_24 constantly builds
+      nodejs_24 # neovim
       # wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
       maudfmt
