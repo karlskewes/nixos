@@ -26,6 +26,7 @@
   # boot.initrd.luks.devices."crypted".device = { ... };
 
   hardware.asahi.enable = true;
+  hardware.asahi.avd.enable = false; # missing firmware
   # Specify path to peripheral firmware files copied during initial installation.
   # hardware.asahi.peripheralFirmwareDirectory = /etc/nixos/firmware;
 

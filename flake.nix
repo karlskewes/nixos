@@ -35,7 +35,8 @@
 
     apple-silicon-support = {
       url = "github:nix-community/nixos-apple-silicon";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Don't follow else have to rebuild kernel on every nixpkgs update.
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     neovim-nightly-overlay = {
