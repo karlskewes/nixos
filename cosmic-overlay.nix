@@ -27,10 +27,10 @@
   {
     # Adding or updating a package:
     #   1. Set rev to the new commit SHA and version to a descriptive string.
-    #   2. Set srcHash = prev.lib.fakeHash
+    #   2. Set srcHash = "" to force new fetch.
     #      Run: nix build '.#nixosConfigurations.karl-mba.pkgs.<name>' --no-link 2>&1 | grep "got:"
     #      Update srcHash with the printed value.
-    #   3. Set depsHash = prev.lib.fakeHash
+    #   3. Set depsHash = "" to force new fetch.
     #      Run the same nix build command again.
     #      Update depsHash with the printed value.
     #   4. Run: ./run.sh build
@@ -60,8 +60,8 @@
       (mkCosmicOverride {
         repo = "cosmic-settings-daemon";
         rev = "6b8d6420bc72027106e444ddb148fd61583251d1"; # workspace-pinning
-        srcHash = "sha256-QAP4/qRrgWCHXCHDpxJV2gwqMVdvSYdK6gEbrxwKkfk=";
-        depsHash = "sha256-4rGgRc7EDdxGvFmAUY4kJ9aO/Pas9S2Q+b5ArZNydvs=";
+        srcHash = "sha256-9+UK07XPmBVYTvToJ8izhrGouvVbKJ3n+dvRCJVZuds=";
+        depsHash = "sha256-ba3JKWTC5f0DSIILayUFmQQfA3oHaq477AzL3qo3CDE=";
         version = "1.9.0-workspace-pinning";
       }).overrideAttrs
         # required until pull updated nixpkgs with extra config.
