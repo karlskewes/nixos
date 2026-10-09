@@ -98,14 +98,7 @@
   networking.hostName = "${currentSystemName}";
   networking.nat.enableIPv6 = true;
   networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
-  networking.wireless.enable = false;
-  networking.wireless.iwd = {
-    enable = true;
-    settings.General.EnableNetworkConfiguration = true;
-  };
 
-  # Network manager required for `iwd` wifi on last check but can conflict with this.
   # However, without useDHCP=true, then an IP address may be retrieved but nameservers in /etc/resolv.conf may not be setup.
   # Set true per interface when interface is known.
   networking.useDHCP = lib.mkDefault false;
