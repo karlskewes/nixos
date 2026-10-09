@@ -334,21 +334,29 @@
           ];
 
           # rebasing - e.g: `git rebase main`, can run on feature branch/bookmark.
+          # --skip-emptied to drop now-empty changes, particularly common in stacked PR's.
           rbm = [
             "rebase"
+            "--skip-emptied"
             "-d"
             "main"
           ];
           rbms = [
             "rebase"
+            "--skip-emptied"
             "-d"
             "master"
+          ];
+          rbs = [
+            "rebase"
+            "--skip-emptied"
           ];
           rbt = [ "retrunk" ];
 
           # jj retrunk --source <bookmark|change-id> # rebase bookmark on trunk() (main|master/etc)
           retrunk = [
             "rebase"
+            "--skip-emptied"
             "-d"
             "trunk()"
           ];
