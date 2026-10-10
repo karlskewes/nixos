@@ -18,7 +18,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
-      # tell home-manager to use same packages as nixpkgs
+      # use separate nixpkgs so can bump user independently of system.
       inputs.nixpkgs.follows = "nixpkgs-user";
     };
 
