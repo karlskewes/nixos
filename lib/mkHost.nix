@@ -2,6 +2,7 @@
 name:
 {
   nixpkgs,
+  nixpkgs-user,
   nix-darwin ? { },
   home-manager,
   overlays,
@@ -52,7 +53,7 @@ systemFunc rec {
 
     hm.home-manager
     {
-      home-manager.useGlobalPkgs = true;
+      home-manager.useGlobalPkgs = false; # separate nixpkgs for faster independent bumps.
       home-manager.useUserPackages = true;
       home-manager.users = {
         ${user} = homeModule;
@@ -66,7 +67,13 @@ systemFunc rec {
         isDarwin = isDarwin;
         isLinux = isLinux;
       };
-      home-manager.sharedModules = [ ];
+      home-manager.sharedModules = [
+        {
+          _module.args.pkgsPath = nixpkgs-user;
+          nixpkgs.config.allowUnfree = true;
+          nixpkgs.overlays = overlays;
+        }
+      ];
     }
   ];
 }

@@ -9,6 +9,7 @@
 
     # use unstable by default for freshest packages
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-user.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     namu-nvim = {
       url = "github:bassamsdata/namu.nvim";
@@ -18,7 +19,7 @@
     home-manager = {
       url = "github:nix-community/home-manager/master";
       # tell home-manager to use same packages as nixpkgs
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-user";
     };
 
     nix-darwin = {
@@ -58,6 +59,7 @@
       self,
       home-manager,
       nixpkgs,
+      nixpkgs-user,
       nix-darwin,
       apple-silicon-support,
       titdb,
@@ -106,6 +108,7 @@
         gl = mkHost "gl" {
           inherit
             nixpkgs
+            nixpkgs-user
             nix-darwin
             home-manager
             configRev
@@ -119,6 +122,7 @@
         gm = mkHost "gm" {
           inherit
             nixpkgs
+            nixpkgs-user
             nix-darwin
             home-manager
             configRev
@@ -132,6 +136,7 @@
         karl-mba = mkHost "karl-mba" {
           inherit
             nixpkgs
+            nixpkgs-user
             nix-darwin
             home-manager
             configRev
@@ -148,6 +153,7 @@
         blake-laptop = mkHost "blake-laptop" {
           inherit
             nixpkgs
+            nixpkgs-user
             home-manager
             overlays
             extraModules
@@ -161,6 +167,7 @@
         karl-mba = mkHost "karl-mba" {
           inherit
             nixpkgs
+            nixpkgs-user
             home-manager
             configRev
             user
@@ -189,6 +196,7 @@
         gl-vm = mkHost "gl-vm" {
           inherit
             nixpkgs
+            nixpkgs-user
             home-manager
             overlays
             configRev
@@ -202,6 +210,7 @@
         gm = mkHost "gm" {
           inherit
             nixpkgs
+            nixpkgs-user
             home-manager
             configRev
             user
@@ -217,6 +226,7 @@
         tiny = mkHost "tiny" {
           inherit
             nixpkgs
+            nixpkgs-user
             home-manager
             overlays
             extraModules
