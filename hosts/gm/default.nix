@@ -81,6 +81,13 @@
     updateChannel = "stable";
   };
 
+  services.orbit = {
+    enable = true;
+    desktop.enable = false;
+    enableScripts = false;
+    hostIdentifier = "uuid";
+  };
+
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";

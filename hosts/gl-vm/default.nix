@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
 
   imports = [
@@ -66,10 +66,33 @@
     updateChannel = "stable";
   };
 
+  services.orbit = {
+    enable = true;
+    desktop.enable = false;
+    enableScripts = false;
+    hostIdentifier = "uuid";
+  };
+
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+  };
+  # https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
+  networking.localCommands = ''
+    ${pkgs.ethtool}/bin/ethtool -K eth0 rx off tx off
+  '';
+
   # UTM Apple/QEMU guest integration - clipboard sharing/etc.
   services.qemuGuest.enable = true;
   services.spice-vdagentd.enable = true;
 
-  services.tailscale.enable = true;
   virtualisation.docker.enable = true;
+  # virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker.daemon.settings = {
+    features = {
+      # ERROR: failed to build: Multi-platform build is not supported for the docker driver.
+      # https://docs.docker.com/engine/storage/containerd/#enable-containerd-image-store-on-docker-engine
+      containerd-snapshotter = true;
+    };
+  };
 }
