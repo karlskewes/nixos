@@ -128,35 +128,34 @@
         ),
       ]
     '';
-    home.file.".config/cosmic/com.system76.CosmicSettings.WindowRules/v1/workspace_assignment_custom".text =
-      ''
-        [
-          (
-            enabled: true,
-            appid: "kitty",
-            title: ".*",
-            workspace_name: "terminal",
-          ),
-          (
-            enabled: true,
-            appid: "firefox",
-            title: ".*",
-            workspace_name: "browser",
-          ),
-          (
-            enabled: true,
-            appid: "chromium",
-            title: ".*",
-            workspace_name: "browser",
-          ),
-          (
-            enabled: true,
-            appid: "org.squidowl.halloy",
-            title: ".*",
-            workspace_name: "chat"
-          )
-        ]
-      '';
+    home.file.".config/cosmic/com.system76.CosmicSettings.WindowRules/v1/workspace_assignment".text = ''
+      [
+        (
+          enabled: true,
+          appid: "kitty",
+          title: ".*",
+          workspace_name: "terminal",
+        ),
+        (
+          enabled: true,
+          appid: "firefox",
+          title: ".*",
+          workspace_name: "browser",
+        ),
+        (
+          enabled: true,
+          appid: "chromium",
+          title: ".*",
+          workspace_name: "browser",
+        ),
+        (
+          enabled: true,
+          appid: "org.squidowl.halloy",
+          title: ".*",
+          workspace_name: "chat"
+        )
+      ]
+    '';
 
   };
 }
