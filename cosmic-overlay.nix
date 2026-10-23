@@ -18,6 +18,7 @@
       in
       prev.${repo}.overrideAttrs (_: {
         inherit src version;
+        doCheck = false; # Skip upstream unit tests which does 3 extra fat LTO compiles, swapping.
         cargoDeps = prev.rustPlatform.fetchCargoVendor {
           inherit src;
           hash = depsHash;
@@ -49,13 +50,20 @@
     #   depsHash = "sha256-USJp2Ux7yVkAFCzsiuYqHF0dKTIuot4Ftohj2b5xc9c=";
     #   version = "workspace-pinning";
     # };
-    cosmic-comp = mkCosmicOverride {
-      repo = "cosmic-comp";
-      rev = "8ef962e6b865c6067914347a8c61e909a4c90d4c"; # nix-flake-workspace-pinning
-      srcHash = "sha256-X7levLLuLHJCwHhpXs+5T8MKEweO7MKUHlzX47916+s=";
-      depsHash = "sha256-B+ur3btvc/jGu6xx3e6iw1TF/gJFQ/jVOrGDXLSaZY4=";
-      version = "pre-1.11.0-nix-flake-workspace-pinning";
-    };
+    cosmic-comp =
+      (mkCosmicOverride {
+        repo = "cosmic-comp";
+        rev = "8ef962e6b865c6067914347a8c61e909a4c90d4c"; # nix-flake-workspace-pinning
+        srcHash = "sha256-X7levLLuLHJCwHhpXs+5T8MKEweO7MKUHlzX47916+s=";
+        depsHash = "sha256-B+ur3btvc/jGu6xx3e6iw1TF/gJFQ/jVOrGDXLSaZY4=";
+        version = "pre-1.11.0-nix-flake-workspace-pinning";
+      }).overrideAttrs
+        (old: {
+          env = old.env // {
+            # Cargo.toml sets lto = "fat". Fat linking uses >16GB memory and takes ~14m vs 3m.
+            CARGO_PROFILE_RELEASE_LTO = "thin";
+          };
+        });
     cosmic-settings-daemon =
       (mkCosmicOverride {
         repo = "cosmic-settings-daemon";
