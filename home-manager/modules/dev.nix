@@ -23,7 +23,9 @@ in
 {
   home.packages =
     with pkgs;
-    (lib.optionals isDarwin [ ])
+    (lib.optionals isDarwin [
+      docker-compose
+    ])
     ++ (lib.optionals isLinux [
       glibc # golangci-lint ?
       vokoscreen-ng # screencasting
@@ -112,7 +114,6 @@ in
       # azure?
       # google-cloud-sdk # gsutil, etc
       flyctl # fly.io
-      docker-compose
       # pulumi-bin # has to build each nixpkgs update, slow, nix-shell -p pulumi-bin as need.
       opentofu
       terraform
@@ -128,7 +129,8 @@ in
   home.file.".local/bin/docker" = lib.mkIf isDarwin { source = ../../dotfiles/docker; };
 
   programs.bash.shellAliases = {
-    dco = "docker-compose";
+    # docker compose supports buildx, docker-compose does not.
+    dco = if isDarwin then "docker-compose" else "docker compose";
     k = "kubectl";
     # podman docker host export
     # https://podman-desktop.io/docs/migrating-from-docker/using-the-docker_host-environment-variable
