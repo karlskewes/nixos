@@ -144,7 +144,7 @@ in
 
   programs.go = {
     enable = true;
-    package = lib.mkDefault pkgs.go_1_26;
+    package = lib.mkDefault pkgs.go_1_27;
     # export GOPRIVATE=github.com/karlskewes/*
     env.GOPRIVATE = [ "github.com/karlskewes/*" ];
   };
