@@ -73,8 +73,10 @@ diff() { ## Build and diff
 	build
 	nvd diff /nix/var/nix/profiles/system/ result/
 
-	echo "see also: 'nvd list | grep asahi'"
-	echo "see also: 'nix-diff /run/current-system ./result'"
+	echo "see also:
+	  nvd list | grep asahi
+	  nix-diff /run/current-system ./result
+        "
 }
 
 switch_darwin() {

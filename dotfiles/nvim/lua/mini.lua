@@ -261,7 +261,18 @@ vim.keymap.set('n', '<leader><space>', '<Cmd>Pick buffers<CR>', { desc = '[ ] Pi
 vim.keymap.set('n', '<leader>sb', '<Cmd>Pick buffers<CR>', { desc = '[S]earch [B]uffers' })
 vim.keymap.set('n', '<leader>sd', '<Cmd>Pick diagnostic<CR>', { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>sF', '<Cmd>Pick files<CR>', { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sf', '<Cmd>Pick git_files<CR>', { desc = '[S]earch git [f]iles' })
+-- jj workspaces other than the primary have .jj but no .git.
+vim.keymap.set('n', '<leader>sf', function()
+  local picker = require('mini.pick')
+  if not vim.fs.root(0, '.git') and vim.fs.root(0, '.jj') then
+    picker.builtin.cli(
+      { command = { 'jj', '--no-pager', 'file', 'list' } },
+      { source = { name = 'jj files' } }
+    )
+  else
+    vim.cmd('Pick git_files')
+  end
+end, { desc = '[S]earch git/jj [f]iles' })
 vim.keymap.set('n', '<leader>sh', '<Cmd>Pick help<CR>', { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sk', '<Cmd>Pick keymaps<CR>', { desc = '[S]earch [K]eymaps' })
 vim.keymap.set('n', '<leader>sG', '<Cmd>Pick grep_live<CR>', { desc = '[S]earch by [G]rep' })

@@ -42,7 +42,13 @@ mkd() {
 }
 
 gc() {
-	base="${HOME}/src"
+	if [[ -z "${1}" ]]; then
+		echo "usage: gc <repo_git_url>"
+		return 2
+	fi
+
+	local base="${HOME}/src"
+	local server org_repo fullpath
 
 	# check http prefix otherwise assume ssh
 	if [[ -z "${1##http*}" ]]; then
@@ -58,14 +64,20 @@ gc() {
 	if [[ -d "${fullpath}" ]]; then
 		echo "${fullpath} already exists, changing directory without re-cloning..."
 	else
-		git clone "${1}" "${fullpath}"
+		git clone "${1}" "${fullpath}" || return 1
 	fi
-	cd "${fullpath}" || echo "*** FAILED to change directory to: ${fullpath} ***"
+
+	cd "${fullpath}" || {
+		echo "*** FAILED to change directory to: ${fullpath} ***"
+		return 1
+	}
 }
 
 # `flushgit` deletes any branches merged with a merge commit
 # squash merged branches aren't listed by git command
 flushgit() {
+	local branch confirm
+
 	# handle merge commits
 	git branch --merged |
 		grep -v 'stashes\|master\|main' >/tmp/merged-branches &&
@@ -88,6 +100,58 @@ flushdns() {
 	sudo systemd-resolve --flush-caches
 }
 
+# `jjgc` clones with `gc`, then makes the clone a colocated jj repo
+jjgc() {
+	gc "${1}" || return 1
+	[[ -d .jj ]] || jj git init
+}
+
+# `jjwn` creates a jj workspace as a sibling <repo>.ws/<name> and changes to it
+jjwn() {
+	if [[ -z "${1}" ]]; then
+		echo "usage: jjwn <name> [rev]"
+		return 2
+	fi
+
+	local root
+	root=$(jj workspace root) || return 1
+
+	local rev="${2:-trunk()}"
+
+	local dest
+	# convention: /path/to/repo.ws/<workspace_name>
+	dest="$(dirname "${root}")/$(basename "${root}").ws/${1}"
+	if [[ -e "${dest}" ]]; then
+		echo "${dest} already exists"
+		return 1
+	fi
+
+	mkdir -p "$(dirname "${dest}")" || return 1
+	jj workspace add --name "${1}" -r "${rev}" "${dest}" || return 1
+	cd "${dest}" || echo "*** FAILED to change directory to: ${dest} ***"
+}
+
+# `jjwf` stops tracking a jj workspace, run from the primary workspace
+jjwf() {
+	if [[ -z "${1}" ]]; then
+		echo "usage: jjwf <name>"
+		return 2
+	fi
+
+	local root
+	root=$(jj workspace root) || return 1
+
+	case "$(basename "$(dirname "${root}")")" in *.ws)
+		echo "run jjwf from the the primary workspace"
+		return 1
+		;;
+	esac
+
+	jj workspace forget "${1}" || return 1
+	echo "forgotten, remove the directory yourself:"
+	echo "  rm -rf $(dirname "${root}")/$(basename "${root}").ws/${1}"
+}
+
 kdiff() {
 	kitty +kitten diff "$@"
 }
@@ -104,8 +168,9 @@ kubeconfigs() {
 
 	if [[ -d "${HOME}/.kube" ]]; then
 
-		kubeconfig_dirs=("${HOME}/.kube")
-		kubeconfigs=""
+		local kubeconfig_dirs=("${HOME}/.kube")
+		local kubeconfigs=""
+		local dir
 
 		# Loop through directories looking for kubeconfigs
 		for dir in "${kubeconfig_dirs[@]}"; do

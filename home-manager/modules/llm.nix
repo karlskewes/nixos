@@ -46,6 +46,7 @@ in
         buildInputs = [ pkgs.makeWrapper ];
         postBuild = ''
           wrapProgram $out/bin/claude \
+          --set-default ANTHROPIC_MODEL claude-opus-5-5 \
           --prefix PATH : ${
             lib.makeBinPath (cfg.claude-code.defaultPackages ++ cfg.claude-code.extraPackages)
           }
