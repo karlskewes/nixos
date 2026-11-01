@@ -6,6 +6,7 @@
 
     ../modules
 
+    ../modules/asahi-kernel.nix
     ../modules/cosmic.nix
   ];
 

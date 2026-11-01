@@ -73,7 +73,7 @@
   swapDevices = [
     {
       device = "/swap/swapfile";
-      size = 48 * 1024; # unit MIB
+      size = 48 * 1024; # unit MiB
     }
   ];
 
