@@ -142,7 +142,7 @@ jjwf() {
 	root=$(jj workspace root) || return 1
 
 	case "$(basename "$(dirname "${root}")")" in *.ws)
-		echo "run jjwf from the the primary workspace"
+		echo "run jjwf from the primary workspace"
 		return 1
 		;;
 	esac
