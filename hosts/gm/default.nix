@@ -92,6 +92,11 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";
+    extraSetFlags = [
+      "--accept-routes"
+      "--report-posture"
+      "--shields-up"
+    ];
   };
   # https://tailscale.com/kb/1320/performance-best-practices#ethtool-configuration
   networking.localCommands = ''
