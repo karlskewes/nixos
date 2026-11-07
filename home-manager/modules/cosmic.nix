@@ -150,6 +150,12 @@
         ),
         (
           enabled: true,
+          appid: "servo",
+          title: ".*",
+          workspace_name: "browser",
+        ),
+        (
+          enabled: true,
           appid: "org.squidowl.halloy",
           title: ".*",
           workspace_name: "chat"

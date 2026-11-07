@@ -55,6 +55,21 @@
         asahi-nvram
         asahi-wifisync
 
+        (
+          (servo.overrideAttrs {
+            # https://github.com/servo/servo/releases/tag/v0.6.0
+            # Potentially need one of these env vars instead of use-system-allocator.
+            # env = {
+            #   # one of these
+            #   JEMALLOC_SYS_WITH_LG_PAGE = 16;
+            #   AARCH64_UNKNOWN_LINUX_GNU_JEMALLOC_SYS_WITH_LG_PAGE = 16;
+            # };
+            buildFeatures = [
+              "use-system-allocator"
+            ];
+          })
+        )
+
         # calibre # 7.26.0 broken errors during test_piper, re-add when fixed.
       ]);
 
