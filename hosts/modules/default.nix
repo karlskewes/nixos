@@ -200,7 +200,7 @@
     };
   };
 
-  services.resolved.enable = true;
+  services.resolved.enable = lib.mkDefault true;
 
   # Let 'nixos-version --json' know about the Git revision
   # system.configurationRevision = currentRevision;

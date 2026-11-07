@@ -5,7 +5,6 @@
 
     ../modules
 
-    ../modules/cosmic.nix
     ../modules/zfs.nix
   ];
 
@@ -128,6 +127,9 @@
       };
     };
   };
+
+  # Disable so pihole can run.
+  services.resolved.enable = false;
 
   # https://github.com/pi-hole/pi-hole
   # https://github.com/pi-hole/docker-pi-hole
