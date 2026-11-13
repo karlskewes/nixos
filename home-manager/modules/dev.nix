@@ -62,11 +62,11 @@ in
       # wrangler # Cloudflare # FIXME, broken, nixpkgs issue
 
       maudfmt
-      sccache # Mozilla's shared compilation cache. ~/.cache/sccache
-      bacon # replace cargo-watch
+      bacon
       cargo-audit
       clang
       gdb
+      kache # Compiler cache for Rust, C/C++, CUDA, alternative to sccache
       lldb_19 # lldb_21 not supported - crashes.
       # https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#using-codelldb-for-debugging
       # vscode-extensions.vadimcn.vscode-lldb # `codelldb` not found in path, TODO
@@ -149,9 +149,11 @@ in
     env.GOPRIVATE = [ "github.com/karlskewes/*" ];
   };
 
-  # Tell rust to use sccache, default 10GB to ~/.cache/sccache
+  # Tell rust to use kache, defaults 50GB in ~/.cache/kache
   home.file.".cargo/config.toml".text = ''
     [build]
-    rustc-wrapper = "${pkgs.sccache}/bin/sccache"
+    rustc-wrapper = "${pkgs.kache}/bin/kache"
+    [cache]
+    local_max_size = "20GiB"
   '';
 }
