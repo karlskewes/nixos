@@ -180,10 +180,6 @@ cat<<EOF
     ];
 
   hardware.asahi.enable = true;
-  # TODO: deprecated potentially, revisit during next fresh install.
-  # See: https://github.com/nix-community/nixos-apple-silicon/pull/494/
-  # Specify path to peripheral firmware files copied during initial installation.
-  hardware.asahi.peripheralFirmwareDirectory = /etc/nixos/firmware;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
